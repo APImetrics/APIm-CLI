@@ -1,20 +1,26 @@
-oclif-hello-world
-=================
+APImetrics CLI
+==============
 
-oclif example Hello World CLI
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+An easy way to interact with APImetrics, the unbiased SaaS Platform
+ensuring API products perform as agreed, are secure, meet business
+objectives, and comply with regulations.
 
 <!-- toc -->
+* [Install](#install)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
+# Install
+
+## With npm
+```sh-session
+$ npm install -g @apimetrics/cli
+```
+
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g cli
 $ apimetrics COMMAND
 running command...
 $ apimetrics (--version)
