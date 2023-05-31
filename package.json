@@ -19,13 +19,15 @@
   "dependencies": {
     "@oclif/core": "^2",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.4.7"
+    "@oclif/plugin-plugins": "^2.4.7",
+    "fs-extra": "^11.1.1"
   },
   "devDependencies": {
     "@oclif/test": "^2.3.20",
     "@types/chai": "^4",
+    "@types/fs-extra": "^11.0.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.18.31",
+    "@types/node": "^16.18.34",
     "chai": "^4",
     "eslint": "^7.32.0",
     "eslint-config-oclif": "^4",
@@ -51,8 +53,8 @@
       "hello": {
         "description": "Say hello to the world and others"
       },
-      "config": {
-        "description": "Manage CLI configuration options"
+      "auth": {
+        "description": "Manage authentication options"
       }
     }
   },
