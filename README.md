@@ -33,9 +33,11 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`apimetrics auth login`](#apimetrics-auth-login)
 * [`apimetrics hello PERSON`](#apimetrics-hello-person)
 * [`apimetrics hello world`](#apimetrics-hello-world)
 * [`apimetrics help [COMMANDS]`](#apimetrics-help-commands)
+* [`apimetrics login`](#apimetrics-login)
 * [`apimetrics plugins`](#apimetrics-plugins)
 * [`apimetrics plugins:install PLUGIN...`](#apimetrics-pluginsinstall-plugin)
 * [`apimetrics plugins:inspect PLUGIN...`](#apimetrics-pluginsinspect-plugin)
@@ -45,6 +47,32 @@ USAGE
 * [`apimetrics plugins:uninstall PLUGIN...`](#apimetrics-pluginsuninstall-plugin-1)
 * [`apimetrics plugins:uninstall PLUGIN...`](#apimetrics-pluginsuninstall-plugin-2)
 * [`apimetrics plugins update`](#apimetrics-plugins-update)
+
+## `apimetrics auth login`
+
+Login to APImetrics
+
+```
+USAGE
+  $ apimetrics auth login [--json] [--key <value>]
+
+FLAGS
+  --key=<value>  API key when using API key auth
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Login to APImetrics
+
+ALIASES
+  $ apimetrics login
+
+EXAMPLES
+  $ apimetrics auth login
+
+  $ apimetrics auth login --key <api key>
+```
 
 ## `apimetrics hello PERSON`
 
@@ -105,6 +133,32 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.9/src/commands/help.ts)_
+
+## `apimetrics login`
+
+Login to APImetrics
+
+```
+USAGE
+  $ apimetrics login [--json] [--key <value>]
+
+FLAGS
+  --key=<value>  API key when using API key auth
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Login to APImetrics
+
+ALIASES
+  $ apimetrics login
+
+EXAMPLES
+  $ apimetrics login
+
+  $ apimetrics login --key <api key>
+```
 
 ## `apimetrics plugins`
 
