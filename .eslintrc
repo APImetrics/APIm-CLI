@@ -1,3 +1,7 @@
 {
+  "rules": {
+    "valid-jsdoc": "off",
+    "no-useless-constructor": "off"
+  },
   "extends": ["oclif", "oclif-typescript", "prettier"]
 }
