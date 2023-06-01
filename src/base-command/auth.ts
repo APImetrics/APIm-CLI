@@ -3,40 +3,34 @@ import path = require('path');
 import * as fs from 'fs-extra';
 
 export class Auth {
-  authServer = process.env.APIMETRICS_AUTH_SERVER || 'https://auth.apimetrics.io';
-
   /** Is the user considered to be logged in? */
   public loggedIn = false;
 
   private token = '';
   private mode: Auth.AuthType | undefined;
 
-  constructor(private readonly config: Interfaces.Config) {}
+  constructor(private readonly config: Interfaces.Config) {
+    this.loadAuth();
+  }
 
   /**
    * Attempt to login the user
    * @param options Login options passed by user
    */
   public async login(options: Auth.Options): Promise<void> {
-    if (!options.type) {
-      options.type = options.key ? Auth.AuthType.Key : Auth.AuthType.Bearer;
-    }
+    // Force API key auth - OAuth not yet implemented
+    options.type = Auth.AuthType.Key;
 
-    switch (options.type) {
-      case Auth.AuthType.Key:
-        await this.key(options.key);
-        break;
-
-      case Auth.AuthType.Bearer:
-        await this.oauth();
-        break;
-    }
-
+    await this.key(options.key);
     await this.saveToken();
+    this.loggedIn = true;
   }
 
-  private async oauth(): Promise<void> {
-    // Pass
+  /**
+   * Formatted authorization header including credentials
+   */
+  public get header(): string {
+    return `Authorization: Bearer ${this.token}`;
   }
 
   /**
@@ -66,6 +60,26 @@ export class Auth {
     const filePath = path.join(this.config.configDir, 'auth.json');
     await fs.writeJson(filePath, {mode: this.mode, token: this.token});
   }
+
+  /**
+   * Load the authentication settings from disk
+   */
+  private loadAuth(): void {
+    const filePath = path.join(this.config.configDir, 'auth.json');
+    if (fs.existsSync(filePath)) {
+      // Handling for malformed contents?
+      const auth: Auth.ConfigFile = fs.readJsonSync(filePath);
+      this.token = auth.token;
+      this.mode = auth.mode;
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+      return;
+    }
+
+    // If one or both are blank, we don't have valid details
+    this.loggedIn = Boolean(this.token && this.mode);
+  }
 }
 
 export namespace Auth {
@@ -76,5 +90,10 @@ export namespace Auth {
   export interface Options {
     type?: AuthType;
     key?: string;
+  }
+
+  export interface ConfigFile {
+    mode: AuthType | undefined;
+    token: string;
   }
 }
