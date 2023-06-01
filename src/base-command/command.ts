@@ -1,12 +1,15 @@
 import {Command as Base, Flags, Interfaces} from '@oclif/core';
 import * as fs from 'fs-extra';
 
-export type Flags<T extends typeof Base> = Interfaces.InferredFlags<
-  (typeof Command)['baseFlags'] & T['flags']
->;
-export type Args<T extends typeof Base> = Interfaces.InferredArgs<T['args']>;
+export type Flags<T> = Interfaces.InferredFlags<(typeof Command)['baseFlags'] & T>;
+export type Args<T> = Interfaces.InferredArgs<T>;
 
-export abstract class Command<T extends typeof Base> extends Base {
+export type ErrorJson = {
+  success: boolean;
+  message: string;
+};
+
+export abstract class Command<T> extends Base {
   static enableJsonFlag = true;
 
   // define flags that can be inherited by any command that extends BaseCommand
@@ -39,6 +42,11 @@ export abstract class Command<T extends typeof Base> extends Base {
   }
 
   protected async catch(err: Interfaces.CommandError): Promise<any> {
-    this.error(err.message);
+    if (this.jsonEnabled()) {
+      // Won't have highlighting but for an error this is fine
+      this.error(JSON.stringify({success: false, message: err.message}));
+    } else {
+      this.error(err.message);
+    }
   }
 }
