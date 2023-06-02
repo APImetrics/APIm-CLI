@@ -41,6 +41,10 @@ export abstract class Command<T> extends Base {
     }
   }
 
+  /**
+   * Custom error handling for commands.
+   * Includes JSON output when --json passed
+   */
   protected async catch(err: Interfaces.CommandError): Promise<any> {
     if (this.jsonEnabled()) {
       // Won't have highlighting but for an error this is fine
