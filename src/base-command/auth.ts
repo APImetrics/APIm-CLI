@@ -1,5 +1,5 @@
 import {Interfaces} from '@oclif/core';
-import path = require('path');
+import * as path from 'node:path';
 import * as fs from 'fs-extra';
 
 export class Auth {
