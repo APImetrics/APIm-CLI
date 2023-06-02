@@ -19,14 +19,12 @@ export default class Login extends Command<LoginJson> {
 
   public async run(): Promise<LoginJson> {
     const {flags} = await this.parse(Login);
-    // Auth should be moved into API handler
-    const auth = new Auth(this.config);
     const mode = Auth.AuthType.Key;
     if (flags.key === '') {
       this.error('No key specified');
     }
 
-    await auth.login({type: mode, key: flags.key});
+    await this.api.login({type: mode, key: flags.key});
     this.log('Logged in using API key');
     return {success: true, message: 'Logged in using API key'};
   }
