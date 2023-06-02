@@ -1,5 +1,6 @@
 import {Command as Base, Flags, Interfaces} from '@oclif/core';
 import * as fs from 'fs-extra';
+import {Api} from './api';
 
 export type Flags<T> = Interfaces.InferredFlags<(typeof Command)['baseFlags'] & T>;
 export type Args<T> = Interfaces.InferredArgs<T>;
@@ -17,6 +18,7 @@ export abstract class Command<T> extends Base {
 
   protected flags!: Flags<T>;
   protected args!: Args<T>;
+  protected api!: Api;
 
   public async init(): Promise<void> {
     await super.init();
@@ -28,6 +30,7 @@ export abstract class Command<T> extends Base {
     });
     this.flags = flags as Flags<T>;
     this.args = args as Args<T>;
+    this.api = new Api(this.config);
     await this.initConfig();
   }
 

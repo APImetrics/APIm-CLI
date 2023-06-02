@@ -29,8 +29,8 @@ export class Auth {
   /**
    * Formatted authorization header including credentials
    */
-  public get header(): string {
-    return `Authorization: Bearer ${this.token}`;
+  public get header(): {Authorization: string} {
+    return {Authorization: `Bearer ${this.token}`};
   }
 
   /**
