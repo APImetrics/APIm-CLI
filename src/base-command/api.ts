@@ -72,7 +72,7 @@ export class Api {
    * @param options Login options passed to user
    */
   public async login(options: Auth.Options): Promise<void> {
-    this.auth.login(options);
+    return this.auth.login(options);
   }
 
   /**
