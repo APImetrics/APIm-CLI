@@ -5,6 +5,8 @@ import {Api} from './api';
 export type Flags<T> = Interfaces.InferredFlags<(typeof Command)['baseFlags'] & T>;
 export type Args<T> = Interfaces.InferredArgs<T>;
 
+export type CustomError = Interfaces.CommandError & {skipOclifErrorHandling?: boolean};
+
 export type ErrorJson = {
   success: boolean;
   message: string;
@@ -67,14 +69,24 @@ export abstract class Command<T> extends Base {
     }
   }
 
+  private formatErrorJson(err: CustomError): string {
+    if (this.config.debug && err.stack) {
+      return err.stack;
+    }
+
+    return JSON.stringify({success: false, message: err.message}, undefined, 2);
+  }
+
   /**
    * Custom error handling for commands.
    * Includes JSON output when --json passed
    */
-  protected async catch(err: Interfaces.CommandError): Promise<any> {
+  protected async catch(err: CustomError): Promise<any> {
     if (this.jsonEnabled()) {
       // Won't have highlighting but for an error this is fine
-      this.error(JSON.stringify({success: false, message: err.message}));
+      console.error(this.formatErrorJson(err));
+      err.skipOclifErrorHandling = true; // Prevent extra logs to stderr by run
+      throw err;
     } else {
       this.error(err.message);
     }
