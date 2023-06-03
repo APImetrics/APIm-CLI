@@ -101,6 +101,12 @@ export class Api {
       ...opts.headers,
       ...this.auth.header,
     };
+    if (!plain) {
+      opts.headers = {
+        ...opts.headers,
+        Accept: 'application/json',
+      };
+    }
 
     const response = await fetch(new URL(path, this.baseUrl), opts);
     if (!response.ok) {

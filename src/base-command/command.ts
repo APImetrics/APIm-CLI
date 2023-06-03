@@ -1,4 +1,4 @@
-import {Command as Base, Flags, Interfaces} from '@oclif/core';
+import {Command as Base, Flags, Interfaces, ux} from '@oclif/core';
 import * as fs from 'fs-extra';
 import {Api} from './api';
 
@@ -8,6 +8,11 @@ export type Args<T> = Interfaces.InferredArgs<T>;
 export type ErrorJson = {
   success: boolean;
   message: string;
+};
+
+export type ConfirmOptions = {
+  message: string;
+  default: boolean;
 };
 
 export abstract class Command<T> extends Base {
@@ -32,6 +37,24 @@ export abstract class Command<T> extends Base {
     this.args = args as Args<T>;
     this.api = new Api(this.config);
     await this.initConfig();
+  }
+
+  /**
+   * Prompt the user to confirm with default value
+   * @param options Message to prompt user with and default response type
+   * @returns Did the user select yes (true) or no (false)?
+   */
+  public async confirm(options: ConfirmOptions): Promise<boolean> {
+    const promptOpts = {
+      required: false, // We handle empty input ourselves
+    };
+    const message = `${options.message} [${options.default ? 'y'.toUpperCase() : 'y'}/${
+      options.default ? 'n' : 'n'.toUpperCase()
+    }]`;
+    const response = await ux.prompt(message, promptOpts);
+    if (['y', 'yes'].includes(response.toLowerCase())) return true;
+    if (['n', 'no'].includes(response.toLowerCase())) return false;
+    return options.default;
   }
 
   /**
