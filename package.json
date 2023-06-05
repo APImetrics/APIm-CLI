@@ -24,7 +24,7 @@
     "node-fetch": "^2.6.11"
   },
   "devDependencies": {
-    "@oclif/test": "^2.3.20",
+    "@oclif/test": "^2.3.22",
     "@types/chai": "^4",
     "@types/fs-extra": "^11.0.1",
     "@types/mocha": "^9.0.0",
