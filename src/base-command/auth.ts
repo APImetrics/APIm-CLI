@@ -45,6 +45,9 @@ export class Auth {
   private codeUrl =
     process.env.APIMETRICS_CODE_URL || 'https://qc-auth.apimetrics.io/oauth/device/code';
 
+  private revokeUrl =
+    process.env.APIMETRICS_REVOKE_URL || 'https://qc-auth.apimetrics.io/oauth/revoke';
+
   private clientId = process.env.APIMETRICS_CLIENT_ID || '4fhqu4lEH5ExaRh00X1B9WJSkjTnUmuK';
 
   constructor(private readonly config: Interfaces.Config) {
@@ -71,6 +74,35 @@ export class Auth {
 
     await this.saveToken();
     this.loggedIn = true;
+  }
+
+  /**
+   * Log out of application
+   * If using OAuth, revoke the refresh token
+   */
+  public async logout(): Promise<void> {
+    if (this.token.mode === Auth.AuthType.Device) {
+      const options = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: `{"client_id": "${this.clientId}", "token": "${this.token.refresh}"}`,
+      };
+      const response = await fetch(this.revokeUrl, options);
+      if (!response.ok) {
+        ux.warn(
+          `Failed to revoke refresh token. Got HTTP ${response.status} ${response.statusText}`
+        );
+      }
+    }
+
+    this.token.token = '';
+    this.token.refresh = '';
+    this.token.expires = undefined;
+    this.token.mode = undefined;
+    this.loggedIn = false;
+    this.saveToken();
   }
 
   /**
@@ -150,6 +182,7 @@ export class Auth {
     const now = new Date();
     now.setTime(now.getTime() + token.expires_in * 1000);
     this.token.expires = now;
+    this.token.mode = Auth.AuthType.Device;
     await this.saveToken();
     ux.action.stop(chalk.green('Logged in'));
   }

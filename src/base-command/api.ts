@@ -76,6 +76,13 @@ export class Api {
   }
 
   /**
+   * Log out the user
+   */
+  public async logout(): Promise<void> {
+    return this.auth.logout();
+  }
+
+  /**
    * Actually perform the request to the API
    * @param path Endpoint path
    * @param method HTTP method
