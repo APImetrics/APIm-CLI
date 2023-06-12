@@ -136,6 +136,10 @@ export class Auth {
    * Authenticate the user using the Device Flow
    */
   private async deviceFlow(): Promise<void> {
+    if (this.loggedIn) {
+      throw new Error('User already logged in. Run apimetrics auth logout first');
+    }
+
     const options = {
       method: 'post',
       headers: {
