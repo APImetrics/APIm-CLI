@@ -106,7 +106,7 @@ export class Api {
     };
     opts.headers = {
       ...opts.headers,
-      ...this.auth.header,
+      ...(await this.auth.headers()),
     };
     if (!plain) {
       opts.headers = {

@@ -108,7 +108,15 @@ export class Auth {
   /**
    * Formatted authorization header including credentials
    */
-  public get header(): {Authorization: string} {
+  public async headers(): Promise<{Authorization: string}> {
+    const tenMinutes = 1000 * 60 * 10;
+    if (
+      this.token.expires !== undefined &&
+      new Date(this.token.expires).getTime() - Date.now() < tenMinutes
+    ) {
+      await this.refreshToken();
+    }
+
     return {Authorization: `Bearer ${this.token.token}`};
   }
 
@@ -233,6 +241,36 @@ export class Auth {
   private async saveToken(): Promise<void> {
     const filePath = path.join(this.config.configDir, 'auth.json');
     await fs.writeJson(filePath, this.token);
+  }
+
+  /**
+   * Attempt to refresh the access token
+   */
+  private async refreshToken(): Promise<void> {
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `grant_type=refresh_token&client_id=${this.clientId}&refresh_token=${encodeURIComponent(
+        this.token.refresh
+      )}`,
+    };
+    const response = await fetch(this.tokenUrl, options);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to refresh access token - API error - HTTP ${response.status} ${response.statusText}`
+      );
+    }
+
+    const token = await response.json();
+    this.token.token = token.access_token;
+    this.token.refresh = token.refresh_token;
+    const now = new Date();
+    now.setTime(now.getTime() + token.expires_in * 1000);
+    this.token.expires = now;
+    this.token.mode = Auth.AuthType.Device;
+    await this.saveToken();
   }
 
   /**
