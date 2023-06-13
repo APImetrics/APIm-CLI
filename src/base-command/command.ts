@@ -19,6 +19,7 @@ export type ConfirmOptions = {
 
 export abstract class Command<T> extends Base {
   static enableJsonFlag = true;
+  static projectOnly = false;
 
   // define flags that can be inherited by any command that extends BaseCommand
   static baseFlags = {};
@@ -37,7 +38,7 @@ export abstract class Command<T> extends Base {
     });
     this.flags = flags as Flags<T>;
     this.args = args as Args<T>;
-    this.api = new Api(this.config);
+    this.api = new Api(this.config, Command.projectOnly);
     await this.initConfig();
   }
 

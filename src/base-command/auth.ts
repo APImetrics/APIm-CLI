@@ -121,6 +121,14 @@ export class Auth {
   }
 
   /**
+   * Is the user restricted to only project actions
+   * Normally only restricted when user is using API key authentication
+   */
+  public get projectOnly(): boolean {
+    return this.token.mode === Auth.AuthType.Key;
+  }
+
+  /**
    * Perform basic validation of user API key
    * Checks that the key is present and is of the correct length, but
    * does not check that it actually works.

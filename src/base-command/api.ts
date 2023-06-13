@@ -6,7 +6,13 @@ export class Api {
   private auth: Auth;
   private baseUrl = process.env.APIMETRICS_API_URL || 'https://client.apimetrics.io/api/2/';
 
-  constructor(private readonly config: Interfaces.Config) {
+  /**
+   *
+   * @param config Command config
+   * @param projectOnly Can this command be run by a user with project
+   * only access? E.g. an API key
+   */
+  constructor(private readonly config: Interfaces.Config, private readonly projectOnly: boolean) {
     this.auth = new Auth(this.config);
   }
 
@@ -98,6 +104,14 @@ export class Api {
   ): Promise<T> {
     if (!this.auth.loggedIn) {
       throw new Error('Not logged in. Run apimetrics login first.');
+    }
+
+    if (!this.projectOnly && this.auth.projectOnly) {
+      // User is trying to access data outside a project with only an
+      // API key.
+      throw new Error(
+        'Cannot use an API key to authenticate against a non project endpoint. apimetrics login instead'
+      );
     }
 
     const opts = {
