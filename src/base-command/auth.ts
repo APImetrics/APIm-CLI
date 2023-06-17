@@ -36,8 +36,12 @@ export class Auth {
   /** Is the user considered to be logged in? */
   public loggedIn = false;
 
-  // Initialized by loadAuth()
-  private token!: Auth.ConfigFile;
+  private token: Auth.ConfigFile = {
+    mode: undefined,
+    token: '',
+    refresh: '',
+    expires: undefined,
+  };
 
   private tokenUrl =
     process.env.APIMETRICS_TOKEN_URL || 'https://qc-auth.apimetrics.io/oauth/token';
