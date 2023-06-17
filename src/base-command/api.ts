@@ -1,19 +1,26 @@
 import {Interfaces} from '@oclif/core';
 import {Auth} from './auth';
 import fetch, {RequestInit} from 'node-fetch';
-
+import {Config} from './config';
+import {debug} from 'debug';
 export class Api {
   private auth: Auth;
   private baseUrl = process.env.APIMETRICS_API_URL || 'https://client.apimetrics.io/api/2/';
+  private debug = debug('api');
 
   /**
    *
-   * @param config Command config
+   * @param oclifConfig Command config
    * @param projectOnly Can this command be run by a user with project
    * only access? E.g. an API key
    */
-  constructor(private readonly config: Interfaces.Config, private readonly projectOnly: boolean) {
-    this.auth = new Auth(this.config);
+  constructor(
+    private readonly oclifConfig: Interfaces.Config,
+    private readonly projectOnly: boolean,
+    private config: Config
+  ) {
+    this.debug('Using base URL %o', this.baseUrl);
+    this.auth = new Auth(this.oclifConfig);
   }
 
   /**
@@ -114,6 +121,12 @@ export class Api {
       );
     }
 
+    if (this.projectOnly && this.config.project.current === undefined) {
+      throw new Error(
+        'Current working project not set. Run `apimetrics config project set` first.'
+      );
+    }
+
     const opts = {
       ...options,
       method: method,
@@ -121,6 +134,7 @@ export class Api {
     opts.headers = {
       ...opts.headers,
       ...(await this.auth.headers()),
+      'Apimetrics-Project-Id': this.config.project.current || '', // Should never fall through to "" due to previous check
     };
     if (!plain) {
       opts.headers = {
@@ -129,7 +143,10 @@ export class Api {
       };
     }
 
-    const response = await fetch(new URL(path, this.baseUrl), opts);
+    const url = new URL(path, this.baseUrl);
+    this.debug('Calling URL %o', url.toString());
+    this.debug('Using options %O', opts);
+    const response = await fetch(url, opts);
     if (!response.ok) {
       throw new Error(`API error - HTTP ${response.status} ${response.statusText}`);
     }

@@ -1,6 +1,6 @@
 import {Command as Base, Flags, Interfaces, ux} from '@oclif/core';
-import * as fs from 'fs-extra';
 import {Api} from './api';
+import {Config} from './config';
 
 export type Flags<T> = Interfaces.InferredFlags<(typeof Command)['baseFlags'] & T>;
 export type Args<T> = Interfaces.InferredArgs<T>;
@@ -19,7 +19,7 @@ export type ConfirmOptions = {
 
 export abstract class Command<T> extends Base {
   static enableJsonFlag = true;
-  static projectOnly = false;
+  protected projectOnly = false;
 
   // define flags that can be inherited by any command that extends BaseCommand
   static baseFlags = {};
@@ -27,6 +27,7 @@ export abstract class Command<T> extends Base {
   protected flags!: Flags<T>;
   protected args!: Args<T>;
   protected api!: Api;
+  protected userConfig!: Config;
 
   public async init(): Promise<void> {
     await super.init();
@@ -38,8 +39,8 @@ export abstract class Command<T> extends Base {
     });
     this.flags = flags as Flags<T>;
     this.args = args as Args<T>;
-    this.api = new Api(this.config, Command.projectOnly);
-    await this.initConfig();
+    this.userConfig = new Config(this.config);
+    this.api = new Api(this.config, this.projectOnly, this.userConfig);
   }
 
   /**
@@ -58,16 +59,6 @@ export abstract class Command<T> extends Base {
     if (['y', 'yes'].includes(response.toLowerCase())) return true;
     if (['n', 'no'].includes(response.toLowerCase())) return false;
     return options.default;
-  }
-
-  /**
-   * Ensure that required config directories are present
-   */
-  private async initConfig(): Promise<void> {
-    if (!(await fs.exists(this.config.configDir))) {
-      this.debug(`Creating ${this.config.configDir}`);
-      await fs.mkdir(this.config.configDir);
-    }
   }
 
   private formatErrorJson(err: CustomError): string {
