@@ -35,6 +35,10 @@ export default class Login extends Command<LoginJson> {
       return {success: true, message: 'Logged in using API key'};
     }
 
+    // Get the user to set their org and project
+    await this.config.runCommand('config:org:set');
+    await this.config.runCommand('config:project:set');
+
     return {success: true, message: 'Logged in using device flow authentication'};
   }
 }
