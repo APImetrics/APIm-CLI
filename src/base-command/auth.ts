@@ -53,8 +53,10 @@ export class Auth {
     process.env.APIMETRICS_REVOKE_URL || 'https://qc-auth.apimetrics.io/oauth/revoke';
 
   private clientId = process.env.APIMETRICS_CLIENT_ID || '4fhqu4lEH5ExaRh00X1B9WJSkjTnUmuK';
+  private configDir: string;
 
   constructor(private readonly config: Interfaces.Config) {
+    this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.config.configDir;
     this.loadAuth();
   }
 
@@ -251,7 +253,7 @@ export class Auth {
    * Save the token to permanent storage
    */
   private async saveToken(): Promise<void> {
-    const filePath = path.join(this.config.configDir, 'auth.json');
+    const filePath = path.join(this.configDir, 'auth.json');
     await fs.writeJson(filePath, this.token);
   }
 
@@ -289,7 +291,7 @@ export class Auth {
    * Load the authentication settings from disk
    */
   private loadAuth(): void {
-    const filePath = path.join(this.config.configDir, 'auth.json');
+    const filePath = path.join(this.configDir, 'auth.json');
     if (fs.existsSync(filePath)) {
       // Handling for malformed contents?
       this.token = fs.readJsonSync(filePath);

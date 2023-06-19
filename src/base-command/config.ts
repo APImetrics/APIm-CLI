@@ -14,11 +14,13 @@ export class Config {
   };
 
   private debug = debug('userconfig');
+  private configDir: string;
 
   /**
    * @param oclifConfig Command config
    */
   constructor(private readonly oclifConfig: Interfaces.Config) {
+    this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.oclifConfig.configDir;
     this.initConfig();
     this.load();
   }
@@ -27,7 +29,7 @@ export class Config {
    * Save the changes in config
    */
   public async save(): Promise<void> {
-    const filePath = path.join(this.oclifConfig.configDir, 'config.json');
+    const filePath = path.join(this.configDir, 'config.json');
     const config: Config.ConfigFile = {
       project: this.project,
       organisation: this.organisation,
@@ -39,7 +41,7 @@ export class Config {
    * Load config file from disk
    */
   private load(): void {
-    const filePath = path.join(this.oclifConfig.configDir, 'config.json');
+    const filePath = path.join(this.configDir, 'config.json');
     if (fs.existsSync(filePath)) {
       // Handling for malformed contents?
       const config = fs.readJsonSync(filePath) as Config.ConfigFile;
@@ -53,9 +55,9 @@ export class Config {
    * Ensure that required config directories are present
    */
   private initConfig(): void {
-    if (!fs.existsSync(this.oclifConfig.configDir)) {
-      this.debug(`Creating ${this.oclifConfig.configDir}`);
-      fs.mkdirSync(this.oclifConfig.configDir);
+    if (!fs.existsSync(this.configDir)) {
+      this.debug(`Creating ${this.configDir}`);
+      fs.mkdirSync(this.configDir);
     }
   }
 }
