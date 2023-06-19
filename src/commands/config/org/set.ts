@@ -30,7 +30,7 @@ export default class Set extends Command<SetOrgJson> {
 
     if (flags.json) {
       throw new Error(
-        'cannot use --json with interactive mode. Specify organisation using --org-id instead.'
+        'Cannot use --json with interactive mode. Specify organisation using --org-id instead.'
       );
     }
 

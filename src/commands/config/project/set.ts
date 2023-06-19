@@ -30,7 +30,7 @@ export default class Set extends Command<SetProjectJson> {
 
     if (flags.json) {
       throw new Error(
-        'cannot use --json with interactive mode. Specify project using --project-id instead.'
+        'Cannot use --json with interactive mode. Specify project using --project-id instead.'
       );
     }
 
