@@ -40,7 +40,10 @@ export default class Set extends Command<SetOrgJson> {
     // Personal projects have an org ID of ""
     const orgs: {name: string; value: string}[] = [{name: 'Personal Projects', value: ''}];
     for (const key of Object.keys(availableOrgs.organizations)) {
-      orgs.push({name: availableOrgs[key].name, value: availableOrgs[key].id});
+      orgs.push({
+        name: availableOrgs.organizations[key].name,
+        value: availableOrgs.organizations[key].id,
+      });
     }
 
     const response = await inquirer.prompt([
