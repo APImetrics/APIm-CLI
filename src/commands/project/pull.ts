@@ -9,6 +9,7 @@ export type PullWriteFileJson = {
 
 export default class Pull extends Command<PullWriteFileJson | any> {
   static description = 'Fetch project.yaml file';
+  protected projectOnly = true;
 
   static examples = ['<%= config.bin %> <%= command.id %> --key <api key>'];
 

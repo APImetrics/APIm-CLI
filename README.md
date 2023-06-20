@@ -47,6 +47,7 @@ USAGE
 * [`apimetrics plugins:uninstall PLUGIN...`](#apimetrics-pluginsuninstall-plugin-1)
 * [`apimetrics plugins:uninstall PLUGIN...`](#apimetrics-pluginsuninstall-plugin-2)
 * [`apimetrics plugins update`](#apimetrics-plugins-update)
+* [`apimetrics project pull`](#apimetrics-project-pull)
 
 ## `apimetrics auth login`
 
@@ -69,8 +70,6 @@ ALIASES
   $ apimetrics login
 
 EXAMPLES
-  $ apimetrics auth login
-
   $ apimetrics auth login --key <api key>
 ```
 
@@ -96,7 +95,7 @@ EXAMPLES
   hello friend from oclif! (./src/commands/hello/index.ts)
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/APImetrics/cli/blob/v0.0.0/dist/commands/hello/index.ts)_
+_See code: [dist/commands/hello/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.0/dist/commands/hello/index.ts)_
 
 ## `apimetrics hello world`
 
@@ -155,8 +154,6 @@ ALIASES
   $ apimetrics login
 
 EXAMPLES
-  $ apimetrics login
-
   $ apimetrics login --key <api key>
 ```
 
@@ -391,5 +388,30 @@ FLAGS
 
 DESCRIPTION
   Update installed plugins.
+```
+
+## `apimetrics project pull`
+
+Fetch project.yaml file
+
+```
+USAGE
+  $ apimetrics project pull [--json] [-f -o <value>] [--environment] [--header] [--webhook]
+
+FLAGS
+  -f, --force         Force overwriting of existing project.yaml file.
+  -o, --out=<value>   File to write project.yaml to.
+  --[no-]environment  Include environment variable data
+  --[no-]header       Include header data
+  --[no-]webhook      Include webhook data
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Fetch project.yaml file
+
+EXAMPLES
+  $ apimetrics project pull --key <api key>
 ```
 <!-- commandsstop -->

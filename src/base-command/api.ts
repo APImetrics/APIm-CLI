@@ -1,13 +1,26 @@
 import {Interfaces} from '@oclif/core';
 import {Auth} from './auth';
 import fetch, {RequestInit} from 'node-fetch';
-
+import {Config} from './config';
+import {debug} from 'debug';
 export class Api {
   private auth: Auth;
   private baseUrl = process.env.APIMETRICS_API_URL || 'https://client.apimetrics.io/api/2/';
+  private debug = debug('api');
 
-  constructor(private readonly config: Interfaces.Config) {
-    this.auth = new Auth(this.config);
+  /**
+   *
+   * @param oclifConfig Command config
+   * @param projectOnly Can this command be run by a user with project
+   * only access? E.g. an API key
+   */
+  constructor(
+    private readonly oclifConfig: Interfaces.Config,
+    private readonly projectOnly: boolean,
+    private config: Config
+  ) {
+    this.debug('Using base URL %o', this.baseUrl);
+    this.auth = new Auth(this.oclifConfig);
   }
 
   /**
@@ -76,6 +89,13 @@ export class Api {
   }
 
   /**
+   * Log out the user
+   */
+  public async logout(): Promise<void> {
+    return this.auth.logout();
+  }
+
+  /**
    * Actually perform the request to the API
    * @param path Endpoint path
    * @param method HTTP method
@@ -93,13 +113,28 @@ export class Api {
       throw new Error('Not logged in. Run apimetrics login first.');
     }
 
+    if (!this.projectOnly && this.auth.projectOnly) {
+      // User is trying to access data outside a project with only an
+      // API key.
+      throw new Error(
+        'Cannot use an API key to authenticate against a non project endpoint. apimetrics login instead'
+      );
+    }
+
+    if (this.projectOnly && this.config.project.current === undefined) {
+      throw new Error(
+        'Current working project not set. Run `apimetrics config project set` first.'
+      );
+    }
+
     const opts = {
       ...options,
       method: method,
     };
     opts.headers = {
       ...opts.headers,
-      ...this.auth.header,
+      ...(await this.auth.headers()),
+      'Apimetrics-Project-Id': this.config.project.current || '', // Should never fall through to "" due to previous check
     };
     if (!plain) {
       opts.headers = {
@@ -108,7 +143,10 @@ export class Api {
       };
     }
 
-    const response = await fetch(new URL(path, this.baseUrl), opts);
+    const url = new URL(path, this.baseUrl);
+    this.debug('Calling URL %o', url.toString());
+    this.debug('Using options %O', opts);
+    const response = await fetch(url, opts);
     if (!response.ok) {
       throw new Error(`API error - HTTP ${response.status} ${response.statusText}`);
     }
