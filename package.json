@@ -63,6 +63,9 @@
       "auth": {
         "description": "Manage authentication options"
       },
+      "calls": {
+        "description": "Manage monitoring calls"
+      },
       "config": {
         "description": "Manage CLI configuration options"
       },
