@@ -84,7 +84,7 @@ describe('list schedules', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        org: {current: 'abc123'},
+        organisation: {current: 'abc123'},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
