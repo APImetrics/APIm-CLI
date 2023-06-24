@@ -47,7 +47,7 @@ export default class Calls extends Command<CallsList> {
           extended: true,
         },
         tags: {
-          get: (row) => row.meta.tags,
+          get: (row) => row.meta.tags.join(', '),
           extended: true,
         },
         domain: {
