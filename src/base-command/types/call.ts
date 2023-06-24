@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export type Call = {
   meta: {
     domain: string;
@@ -5,9 +6,7 @@ export type Call = {
     created: string;
     tags: string[];
     accept: string | null;
-    // eslint-disable-next-line camelcase
     last_update: string;
-    // eslint-disable-next-line camelcase
     content_type: string | null;
     owner: string;
     name: string;
@@ -19,13 +18,11 @@ export type Call = {
       value: string;
     }[];
     url: string;
-    // eslint-disable-next-line camelcase
     auth_id: string | null;
     headers: {
       key: string;
       value: string;
     }[];
-    // eslint-disable-next-line camelcase
     token_id: string | null;
     method: string;
   };

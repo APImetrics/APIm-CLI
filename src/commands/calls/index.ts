@@ -1,10 +1,9 @@
 import {ux} from '@oclif/core';
-import {Command} from '../../base-command';
-import {Call} from '../../api-responses';
+import {Command, T} from '../../base-command';
 
 export type CallsList = {
   success: boolean;
-  calls: Call[];
+  calls: T.Call[];
 };
 
 export default class Calls extends Command<CallsList> {
@@ -20,11 +19,7 @@ export default class Calls extends Command<CallsList> {
   public async run(): Promise<CallsList> {
     const {flags} = await this.parse(Calls);
     const endpoint = `calls/`;
-    const {results: calls} = await this.api.get<{meta: any; results: Call[]}>(
-      endpoint,
-      undefined,
-      false
-    );
+    const {results: calls} = await this.api.get<T.ListResponse<T.Call>>(endpoint, undefined, false);
 
     ux.table(
       calls,
