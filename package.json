@@ -75,6 +75,12 @@
       "config:org": {
         "description": "Manage organisation settings"
       },
+      "org": {
+        "description": "Manage organisation settings"
+      },
+      "org:accounts": {
+        "description": "Manage organisation users"
+      },
       "schedules": {
         "description": "Manage project schedules"
       },

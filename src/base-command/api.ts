@@ -117,7 +117,7 @@ export class Api {
       // User is trying to access data outside a project with only an
       // API key.
       throw new Error(
-        'Cannot use an API key to authenticate against a non project endpoint. apimetrics login instead'
+        'Cannot use an API key to authenticate against a non project endpoint. Run `apimetrics login` instead.'
       );
     }
 
