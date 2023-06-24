@@ -75,6 +75,9 @@
       "config:org": {
         "description": "Manage organisation settings"
       },
+      "schedules": {
+        "description": "Manage project schedules"
+      },
       "workflows": {
         "description": "Manage project workflows"
       }
