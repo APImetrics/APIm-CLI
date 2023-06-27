@@ -21,6 +21,7 @@ $ npm install -g @apimetrics/cli
 # Usage
 <!-- usage -->
 ```sh-session
+$ npm install -g cli
 $ apimetrics COMMAND
 running command...
 $ apimetrics (--version)
@@ -34,8 +35,9 @@ USAGE
 # Commands
 <!-- commands -->
 * [`apimetrics auth login`](#apimetrics-auth-login)
-* [`apimetrics hello PERSON`](#apimetrics-hello-person)
-* [`apimetrics hello world`](#apimetrics-hello-world)
+* [`apimetrics auth logout`](#apimetrics-auth-logout)
+* [`apimetrics config org set`](#apimetrics-config-org-set)
+* [`apimetrics config project set`](#apimetrics-config-project-set)
 * [`apimetrics help [COMMANDS]`](#apimetrics-help-commands)
 * [`apimetrics login`](#apimetrics-login)
 * [`apimetrics plugins`](#apimetrics-plugins)
@@ -73,44 +75,64 @@ EXAMPLES
   $ apimetrics auth login --key <api key>
 ```
 
-## `apimetrics hello PERSON`
+## `apimetrics auth logout`
 
-Say hello
+Logout
 
 ```
 USAGE
-  $ apimetrics hello PERSON -f <value>
+  $ apimetrics auth logout [--json]
 
-ARGUMENTS
-  PERSON  Person to say hello to
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Logout
+
+EXAMPLES
+  $ apimetrics auth logout
+```
+
+## `apimetrics config org set`
+
+Set the current working organisation
+
+```
+USAGE
+  $ apimetrics config org set [--json] [-i <value>]
 
 FLAGS
-  -f, --from=<value>  (required) Who is saying hello
+  -i, --org-id=<value>  ID of org to set to
+
+GLOBAL FLAGS
+  --json  Format output as json.
 
 DESCRIPTION
-  Say hello
+  Set the current working organisation
 
 EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  $ apimetrics config org set
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.0/dist/commands/hello/index.ts)_
+## `apimetrics config project set`
 
-## `apimetrics hello world`
-
-Say hello world
+Set the current working project
 
 ```
 USAGE
-  $ apimetrics hello world
+  $ apimetrics config project set [--json] [-i <value>]
+
+FLAGS
+  -i, --project-id=<value>  ID of project to switch to
+
+GLOBAL FLAGS
+  --json  Format output as json.
 
 DESCRIPTION
-  Say hello world
+  Set the current working project
 
 EXAMPLES
-  $ apimetrics hello world
-  hello world! (./src/commands/hello/world.ts)
+  $ apimetrics config project set
 ```
 
 ## `apimetrics help [COMMANDS]`
