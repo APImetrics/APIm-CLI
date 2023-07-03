@@ -10,6 +10,7 @@ export type Call = {
     content_type: string | null;
     owner: string;
     name: string;
+    project_id: string;
   };
   request: {
     body: string | null;
