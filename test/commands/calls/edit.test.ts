@@ -27,7 +27,12 @@ const callsResponse = {
     parameters: [],
     url: 'http://google.apimetrics.xyz/get',
     auth_id: null,
-    headers: [],
+    headers: [
+      {
+        key: 'Content-type',
+        value: 'application/json',
+      },
+    ],
     token_id: null,
     method: 'GET',
   },

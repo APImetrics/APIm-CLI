@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../base-command';
+import {Command, T, util} from '../../base-command';
 
 export default class Create extends Command<T.Call> {
   static description = 'Create a new API call';
@@ -31,22 +31,48 @@ export default class Create extends Command<T.Call> {
       char: 'm',
       default: 'GET',
     }),
+    accept: Flags.string({
+      description: 'MIME type for accept header. Alias for --header Accept: <MIME type>.',
+    }),
+    header: Flags.string({description: 'Header to add to call.', multiple: true}),
+    tag: Flags.string({description: 'Tag to add to call', multiple: true}),
   };
 
   public async run(): Promise<T.Call> {
     const {flags} = await this.parse(Create);
     const endpoint = `calls/`;
+
+    let headers: T.Call['request']['headers'] = [];
+
+    if (flags.header && flags.header.length > 0) {
+      for (const header of flags.header) {
+        headers.push(util.parseHeader(header));
+      }
+    }
+
+    if (flags.accept) {
+      headers = util.replaceHeader(headers, 'Accept', flags.accept);
+    }
+
+    const tags: T.Call['meta']['tags'] = [];
+
+    if (flags.tag && flags.tag.length > 0) {
+      for (const tag of flags.tag) {
+        if (!tags.includes(tag)) tags.push(tag);
+      }
+    }
+
     const call = await this.api.post<T.Call>(
       endpoint,
       {
         body: JSON.stringify({
-          meta: {name: flags.name},
-          request: {method: flags.method, url: flags.url},
+          meta: {name: flags.name, tags: tags},
+          request: {method: flags.method, url: flags.url, headers: headers},
         }),
       },
       false
     );
-    this.log(call.meta.project_id);
+    this.log(call.id);
     return call;
   }
 }

@@ -34,6 +34,18 @@ const callsResponse = {
   id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDA05v5mwoM',
 };
 
+const advancedCreateRequest = {
+  meta: {name: '=1+1', tags: ['bob', 'dave']},
+  request: {
+    method: 'GET',
+    url: 'http://google.apimetrics.xyz/get',
+    headers: [
+      {key: 'Content-type', value: ' application/json'},
+      {key: 'Accept', value: 'application/json'},
+    ],
+  },
+};
+
 describe('create calls', () => {
   const auth = test
     .do(() => {
@@ -59,4 +71,42 @@ describe('create calls', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal(callsResponse);
     });
+  auth
+    .nock('https://client.apimetrics.io', (api) =>
+      api.post('/api/2/calls/', advancedCreateRequest).reply(200, {id: '1234'})
+    )
+    .command([
+      'calls:create',
+      '--json',
+      '-n',
+      '=1+1',
+      '-u',
+      'http://google.apimetrics.xyz/get',
+      '--accept',
+      'application/json',
+      '--tag',
+      'bob',
+      '--tag',
+      'dave',
+      '--tag',
+      'dave',
+      '--header',
+      'Content-type: application/json',
+    ])
+    .it('Create call with headers and tags');
+  auth
+    .command([
+      'calls:create',
+      '--json',
+      '-n',
+      '=1+1',
+      '-u',
+      'http://google.apimetrics.xyz/get',
+      '--header',
+      'Content-type application/json',
+    ])
+    .catch((error) => {
+      expect(error.message).to.contain('Could not parse header Content-type application/json');
+    })
+    .it('Create call with invalid header');
 });
