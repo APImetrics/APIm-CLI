@@ -27,4 +27,5 @@ export type Call = {
     token_id: string | null;
     method: string;
   };
+  id: string;
 };

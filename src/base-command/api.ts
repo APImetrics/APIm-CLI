@@ -148,6 +148,7 @@ export class Api {
     this.debug('Using options %O', opts);
     const response = await fetch(url, opts);
     if (!response.ok) {
+      this.debug(await response.text());
       throw new Error(`API error - HTTP ${response.status} ${response.statusText}`);
     }
 
