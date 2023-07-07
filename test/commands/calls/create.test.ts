@@ -72,6 +72,7 @@ describe('create calls', () => {
       expect(output).to.deep.equal(callsResponse);
     });
   auth
+    .stdout()
     .nock('https://client.apimetrics.io', (api) =>
       api.post('/api/2/calls/', advancedCreateRequest).reply(200, {id: '1234'})
     )
@@ -95,6 +96,7 @@ describe('create calls', () => {
     ])
     .it('Create call with headers and tags');
   auth
+    .stderr()
     .command([
       'calls:create',
       '--json',

@@ -86,6 +86,7 @@ describe('edit calls', () => {
     .it('Non interactive mode without --call-id');
 
   auth
+    .stdout()
     .nock('https://client.apimetrics.io', (api) => {
       api.get('/api/2/calls/1234/').reply(200, callsResponse);
       api.post('/api/2/calls/1234/', updateRequest).reply(200, callsResponse);
@@ -111,9 +112,5 @@ describe('edit calls', () => {
       'Poor-header',
     ])
     .it(
-      'Update API call' /* (ctx) => {
-      const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({});
-    } */
-    );
+      'Update API call');
 });
