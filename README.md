@@ -50,9 +50,13 @@ USAGE
 # Command Topics
 
 * [`apimetrics auth`](docs/auth.md) - Manage authentication options
+* [`apimetrics calls`](docs/calls.md) - Manage monitoring calls
 * [`apimetrics config`](docs/config.md) - Manage CLI configuration options
 * [`apimetrics help`](docs/help.md) - Display help for apimetrics.
+* [`apimetrics org`](docs/org.md) - Manage organisation settings
 * [`apimetrics plugins`](docs/plugins.md) - List installed plugins.
 * [`apimetrics project`](docs/project.md) - Fetch project.yaml file
+* [`apimetrics schedules`](docs/schedules.md) - Manage project schedules
+* [`apimetrics workflows`](docs/workflows.md) - Manage project workflows
 
 <!-- commandsstop -->
