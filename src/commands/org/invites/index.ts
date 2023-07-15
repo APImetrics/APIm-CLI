@@ -46,6 +46,11 @@ export default class Invites extends Command<InviteList> {
           get: (row) => row.invited_email,
           extended: true,
         },
+        id: {
+          header: 'ID',
+          get: (row) => row.id,
+          extended: true,
+        },
       },
       {
         printLine: this.log.bind(this),
