@@ -8,6 +8,7 @@ objectives, and comply with regulations.
 <!-- toc -->
 * [Install](#install)
 * [Usage](#usage)
+* [Environment Variables](#environment-variables)
 * [Commands](#commands)
 <!-- tocstop -->
 
