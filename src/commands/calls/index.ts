@@ -53,6 +53,10 @@ export default class Calls extends Command<CallsList> {
           get: (row) => row.request.auth_id,
           extended: true,
         },
+        accept: {
+          get: (row) => row.meta.accept,
+          extended: true,
+        },
       },
       {
         printLine: this.log.bind(this),

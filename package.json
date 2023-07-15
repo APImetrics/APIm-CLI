@@ -81,6 +81,9 @@
       "org:accounts": {
         "description": "Manage organisation users"
       },
+      "org:invites": {
+        "description": "Manage organisation invites"
+      },
       "schedules": {
         "description": "Manage project schedules"
       },
