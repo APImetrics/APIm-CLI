@@ -84,6 +84,9 @@
       "org:invites": {
         "description": "Manage organisation invites"
       },
+      "org:roles": {
+        "description": "Manage organisation roles"
+      },
       "schedules": {
         "description": "Manage project schedules"
       },
