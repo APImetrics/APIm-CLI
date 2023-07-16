@@ -284,6 +284,20 @@ describe('list workflows', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
+  const noProject = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organisation: {current: 'abc123'},
+        project: {},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'key',
+      });
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
   auth
     .nock('https://client.apimetrics.io', (api) =>
       api.get('/api/2/workflows/').reply(200, workflowsResponse)
@@ -291,6 +305,86 @@ describe('list workflows', () => {
     .stdout()
     .command(['workflows', '--output=json'])
     .it('Standard columns in JSON', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal([
+        {
+          name: 'Auth APIs',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Calls APIs',
+          description: '',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Conditions List w/ schema checks',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Conditions List w/ schema checks',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Hooks APIs',
+          description: 'null',
+          stopOnFailure: 'true',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Incoming Hook Workflow',
+          description: 'null',
+          stopOnFailure: 'true',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Open Data GZIP test',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Reports APIs',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Schedules APIs',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Timestamp APIs',
+          description: 'null',
+          stopOnFailure: 'true',
+          handleCookies: 'false',
+        },
+        {
+          name: 'Workflows APIs',
+          description: 'null',
+          stopOnFailure: 'false',
+          handleCookies: 'false',
+        },
+      ]);
+    });
+
+  noProject
+    .nock(
+      'https://client.apimetrics.io',
+      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
+      (api) => api.get('/api/2/workflows/').reply(200, workflowsResponse)
+    )
+    .stdout()
+    .command(['workflows', '--output=json', '-p', 'abc123'])
+    .it('Standard columns in JSON passing project ID', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

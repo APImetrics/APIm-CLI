@@ -4,7 +4,7 @@ import * as inquirer from 'inquirer';
 
 export default class Edit extends Command<T.Call> {
   static description = 'Edit an existing API call';
-  protected projectOnly = true;
+  protected permitKeyAuth = true;
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -56,6 +56,10 @@ export default class Edit extends Command<T.Call> {
       description: 'Name of tag to remove.',
       multiple: true,
     }),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   private async getCall(): Promise<T.Call> {
@@ -85,6 +89,10 @@ export default class Edit extends Command<T.Call> {
     const {flags} = await this.parse(Edit);
     let endpoint: string;
     let call: T.Call;
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
 
     if (flags.json && !flags['call-id']) {
       throw new Error('Must specify --call-id in non-interactive mode.');

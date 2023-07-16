@@ -9,7 +9,7 @@ export type PullWriteFileJson = {
 
 export default class Pull extends Command<PullWriteFileJson | any> {
   static description = 'Fetch project.yaml file';
-  protected projectOnly = true;
+  protected permitKeyAuth = true;
 
   static examples = ['<%= config.bin %> <%= command.id %> --key <api key>'];
 
@@ -31,11 +31,19 @@ export default class Pull extends Command<PullWriteFileJson | any> {
     }),
     header: Flags.boolean({description: 'Include header data', default: true, allowNo: true}),
     webhook: Flags.boolean({description: 'Include webhook data', default: true, allowNo: true}),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   public async run(): Promise<PullWriteFileJson | any> {
     const {flags} = await this.parse(Pull);
     const endpoint = `export/?environment_values=${flags.environment}&header_values=${flags.header}&webhooks=${flags.webhook}`;
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
 
     // Write project.yaml to file flags.out?
     if (flags.out) {

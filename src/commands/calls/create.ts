@@ -3,7 +3,7 @@ import {Command, T, util} from '../../base-command';
 
 export default class Create extends Command<T.Call> {
   static description = 'Create a new API call';
-  protected projectOnly = true;
+  protected permitKeyAuth = true;
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -36,6 +36,10 @@ export default class Create extends Command<T.Call> {
     }),
     header: Flags.string({description: 'Header to add to call.', multiple: true}),
     tag: Flags.string({description: 'Tag to add to call', multiple: true}),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   public async run(): Promise<T.Call> {
@@ -60,6 +64,10 @@ export default class Create extends Command<T.Call> {
       for (const tag of flags.tag) {
         if (!tags.includes(tag)) tags.push(tag);
       }
+    }
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
     }
 
     const call = await this.api.post<T.Call>(

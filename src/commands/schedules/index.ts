@@ -1,4 +1,4 @@
-import {ux} from '@oclif/core';
+import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../base-command';
 
 export type ScheduleList = {
@@ -8,17 +8,25 @@ export type ScheduleList = {
 
 export default class Schedules extends Command<ScheduleList> {
   static description = 'List all schedules';
-  protected projectOnly = true;
+  protected permitKeyAuth = true;
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
   static flags = {
     ...ux.table.flags(),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   public async run(): Promise<ScheduleList> {
     const {flags} = await this.parse(Schedules);
     const endpoint = `schedules/`;
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
+
     const {results: schedules} = await this.api.get<T.ListResponse<T.Schedule>>(
       endpoint,
       undefined,

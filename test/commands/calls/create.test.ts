@@ -61,6 +61,20 @@ describe('create calls', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
+  const noProject = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organisation: {current: 'abc123'},
+        project: {},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'key',
+      });
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
   auth
     .nock('https://client.apimetrics.io', (api) =>
       api.post('/api/2/calls/').reply(200, callsResponse)
@@ -111,4 +125,26 @@ describe('create calls', () => {
       expect(error.message).to.contain('Could not parse header Content-type application/json');
     })
     .it('Create call with invalid header');
+
+  noProject
+    .nock(
+      'https://client.apimetrics.io',
+      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
+      (api) => api.post('/api/2/calls/').reply(200, callsResponse)
+    )
+    .stdout()
+    .command([
+      'calls:create',
+      '--json',
+      '-n',
+      '=1+1',
+      '-u',
+      'http://google.apimetrics.xyz/get',
+      '-p',
+      'abc123',
+    ])
+    .it('Create basic call passing project ID', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal(callsResponse);
+    });
 });

@@ -77,6 +77,20 @@ describe('edit calls', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
+  const noProject = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organisation: {current: 'abc123'},
+        project: {},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'key',
+      });
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
   auth
     .stderr()
     .command(['calls:edit', '--json'])
@@ -111,6 +125,39 @@ describe('edit calls', () => {
       '--remove-header',
       'Poor-header',
     ])
-    .it(
-      'Update API call');
+    .it('Update API call');
+
+  noProject
+    .stdout()
+    .nock(
+      'https://client.apimetrics.io',
+      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
+      (api) => {
+        api.get('/api/2/calls/1234/').reply(200, callsResponse);
+        api.post('/api/2/calls/1234/', updateRequest).reply(200, callsResponse);
+      }
+    )
+    .command([
+      'calls:edit',
+      '--json',
+      '--call-id',
+      '1234',
+      '--accept',
+      'application/json',
+      '--remove-tag',
+      'dave',
+      '--remove-tag',
+      'apimetrics:meta:host:Google+LLC',
+      '--add-tag',
+      'bob',
+      '--replace-header',
+      'Content-type: application/json',
+      '--add-header',
+      'Some-random-header: some random value',
+      '--remove-header',
+      'Poor-header',
+      '-p',
+      'abc123',
+    ])
+    .it('Update API call passing project ID');
 });

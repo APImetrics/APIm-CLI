@@ -133,6 +133,7 @@ describe('pull project.yaml', () => {
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
   const existingProjectYaml = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -149,6 +150,20 @@ describe('pull project.yaml', () => {
       }
 
       fs.writeFileSync('./.test/project.yaml', '');
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
+  const noProject = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organisation: {current: 'abc123'},
+        project: {},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'key',
+      });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
@@ -207,4 +222,22 @@ describe('pull project.yaml', () => {
     .stdout()
     .command(['project:pull', '--json'])
     .it('Pull project.json');
+
+  noProject
+    .nock(
+      'https://client.apimetrics.io',
+      {
+        reqheaders: {
+          Accept: 'application/yaml',
+          'Apimetrics-Project-Id': (val) => val === 'abc123',
+        },
+      },
+      (api) =>
+        api
+          .get('/api/2/export/?environment_values=true&header_values=true&webhooks=true')
+          .reply(200, yamlResponse)
+    )
+    .stdout()
+    .command(['project:pull', '-p', 'abc123'])
+    .it('Pull project.yaml passing project ID');
 });

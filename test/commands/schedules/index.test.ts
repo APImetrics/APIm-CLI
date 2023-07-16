@@ -95,6 +95,20 @@ describe('list schedules', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
+  const noProject = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organisation: {current: 'abc123'},
+        project: {},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'key',
+      });
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
   auth
     .nock('https://client.apimetrics.io', (api) =>
       api.get('/api/2/schedules/').reply(200, scheduleResponse)
@@ -102,6 +116,40 @@ describe('list schedules', () => {
     .stdout()
     .command(['schedules', '--output=json'])
     .it('Standard columns in JSON', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal([
+        {
+          name: 'AWS Only',
+          frequency: 'Every 12 hours',
+          regions: 'aws',
+        },
+        {
+          name: 'Default Schedule',
+          frequency: 'Every 5 minutes',
+          regions: 'all',
+        },
+        {
+          name: 'Expo',
+          frequency: 'Every 10 minutes',
+          regions: 'all',
+        },
+        {
+          name: 'Fibo',
+          frequency: 'Every 10 minutes',
+          regions: 'all',
+        },
+      ]);
+    });
+
+  noProject
+    .nock(
+      'https://client.apimetrics.io',
+      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
+      (api) => api.get('/api/2/schedules/').reply(200, scheduleResponse)
+    )
+    .stdout()
+    .command(['schedules', '--output=json', '-p', 'abc123'])
+    .it('Standard columns in JSON passing project ID', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

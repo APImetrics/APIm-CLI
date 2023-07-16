@@ -1,4 +1,4 @@
-import {ux} from '@oclif/core';
+import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../base-command';
 
 export type CallsList = {
@@ -8,16 +8,25 @@ export type CallsList = {
 
 export default class Calls extends Command<CallsList> {
   static description = 'List all API calls';
-  protected projectOnly = true;
+  protected permitKeyAuth = true;
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
   static flags = {
     ...ux.table.flags(),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   public async run(): Promise<CallsList> {
     const {flags} = await this.parse(Calls);
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
+
     const endpoint = `calls/`;
     const {results: calls} = await this.api.get<T.ListResponse<T.Call>>(endpoint, undefined, false);
 

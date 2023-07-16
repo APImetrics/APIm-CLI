@@ -23,6 +23,14 @@ export class Api {
     this.auth = new Auth(this.oclifConfig);
   }
 
+  get project(): string {
+    return this.config.project.current || '';
+  }
+
+  set project(value: string) {
+    this.config.project.current = value;
+  }
+
   /**
    * Make a GET request to the API
    * @param path Endpoint path to call

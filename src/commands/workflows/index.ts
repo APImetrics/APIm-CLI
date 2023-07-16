@@ -1,4 +1,4 @@
-import {ux} from '@oclif/core';
+import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../base-command';
 
 export type WorkflowsList = {
@@ -8,17 +8,25 @@ export type WorkflowsList = {
 
 export default class Workflows extends Command<WorkflowsList> {
   static description = 'List all workflows';
-  protected projectOnly = true;
+  protected permitKeyAuth = true;
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
   static flags = {
     ...ux.table.flags(),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   public async run(): Promise<WorkflowsList> {
     const {flags} = await this.parse(Workflows);
     const endpoint = `workflows/`;
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
+
     const {results: workflows} = await this.api.get<T.ListResponse<T.Workflow>>(
       endpoint,
       undefined,

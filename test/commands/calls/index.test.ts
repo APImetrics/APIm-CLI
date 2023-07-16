@@ -212,6 +212,21 @@ describe('list calls', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
+  const noProject = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organisation: {current: 'abc123'},
+        project: {},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'key',
+      });
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
+
+
   auth
     .nock('https://client.apimetrics.io', (api) =>
       api.get('/api/2/calls/').reply(200, callsResponse)
@@ -219,6 +234,50 @@ describe('list calls', () => {
     .stdout()
     .command(['calls', '--output=json'])
     .it('Standard columns in JSON', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal([
+        {
+          name: '=1+1',
+          description: 'null',
+          method: 'GET',
+          url: 'http://google.apimetrics.xyz/get',
+        },
+        {
+          name: 'API Call 1/27/2021, 5:19:08 PM',
+          description: 'null',
+          method: 'GET',
+          url: 'https://google.apimetrics.xyz/get',
+        },
+        {
+          name: 'Example HTTP POST Call',
+          description: 'Auto-generated API Call',
+          method: 'POST',
+          url: 'http://google.apimetrics.xyz/post',
+        },
+        {
+          name: "a_project1_editor's API call",
+          description: 'Auto-generated API Call',
+          method: 'POST',
+          url: 'http://google.apimetrics.xyz/post',
+        },
+        {
+          name: "a_project_1_owner's API call",
+          description: 'Auto-generated API Call',
+          method: 'POST',
+          url: 'http://google.apimetrics.xyz/post',
+        },
+      ]);
+    });
+
+  noProject
+    .nock(
+      'https://client.apimetrics.io',
+      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
+      (api) => api.get('/api/2/calls/').reply(200, callsResponse)
+    )
+    .stdout()
+    .command(['calls', '--output=json', '-p', 'abc123'])
+    .it('Standard columns in JSON passing project ID', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
