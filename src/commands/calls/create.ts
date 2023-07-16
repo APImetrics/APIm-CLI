@@ -40,6 +40,7 @@ export default class Create extends Command<T.Call> {
       description: 'ID of project to modify. Overrides apimetrics config project set.',
       char: 'p',
     }),
+    description: Flags.string({description: 'Call description'}),
   };
 
   public async run(): Promise<T.Call> {
@@ -74,7 +75,7 @@ export default class Create extends Command<T.Call> {
       endpoint,
       {
         body: JSON.stringify({
-          meta: {name: flags.name, tags: tags},
+          meta: {name: flags.name, description: flags.description, tags: tags},
           request: {method: flags.method, url: flags.url, headers: headers},
         }),
       },

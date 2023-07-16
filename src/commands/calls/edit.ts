@@ -60,6 +60,7 @@ export default class Edit extends Command<T.Call> {
       description: 'ID of project to modify. Overrides apimetrics config project set.',
       char: 'p',
     }),
+    description: Flags.string({description: 'Call description'}),
   };
 
   private async getCall(): Promise<T.Call> {
