@@ -11,7 +11,7 @@ export default class Pull extends Command<PullWriteFileJson | any> {
   static description = 'Fetch project.yaml file';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %> --key <api key>'];
+  static examples = ['<%= config.bin %> <%= command.id %>'];
 
   static flags = {
     out: Flags.file({

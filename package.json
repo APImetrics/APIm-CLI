@@ -90,6 +90,9 @@
       "projects": {
         "description": "Manage projects"
       },
+      "projects:invites": {
+        "description": "Manage project invites"
+      },
       "schedules": {
         "description": "Manage project schedules"
       },
