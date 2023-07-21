@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../../base-command';
+import {Command, T, util} from '../../../base-command';
 import * as inquirer from 'inquirer';
 
 export type InviteResponse = {
@@ -20,11 +20,13 @@ export default class Create extends Command<InviteResponse> {
   public async run(): Promise<InviteResponse> {
     const {flags} = await this.parse(Create);
 
-    if (!this.userConfig.organisation.current) {
+    if (this.userConfig.organisation.current === undefined) {
       throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organisation.current === '') {
+      throw new Error('Organisation invites not supported for personal projects.');
     }
 
-    if (!/^[\w!#$%&*+./=?^`{|}~’-]+@[\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*$/.test(flags.email)) {
+    if (!util.validateEmail(flags.email)) {
       throw new Error(`Invalid email: ${flags.email}`);
     }
 

@@ -58,3 +58,12 @@ export function deleteHeader(
 ): T.Call['request']['headers'] {
   return headers.filter((header) => header.key.toLowerCase() !== key.toLowerCase());
 }
+
+/**
+ * Best guess email validation based on REGEX
+ * @param email Email to test
+ * @returns Is the provided string a valid email?
+ */
+export function validateEmail(email: string): boolean {
+  return /^[\w!#$%&*+./=?^`{|}~’-]+@[\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*$/.test(email);
+}
