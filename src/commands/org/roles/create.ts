@@ -19,8 +19,10 @@ export default class Create extends Command<RoleResponse> {
   public async run(): Promise<RoleResponse> {
     const {flags} = await this.parse(Create);
 
-    if (!this.userConfig.organisation.current) {
+    if (this.userConfig.organisation.current === undefined) {
       throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organisation.current === '') {
+      throw new Error('Organisation roles not supported for personal projects');
     }
 
     flags.name = flags.name.toUpperCase().replace(/ /gm, '_');

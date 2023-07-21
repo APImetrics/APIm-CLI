@@ -18,8 +18,10 @@ export default class Roles extends Command<RoleList> {
   public async run(): Promise<RoleList> {
     const {flags} = await this.parse(Roles);
 
-    if (!this.userConfig.organisation.current) {
+    if (this.userConfig.organisation.current === undefined) {
       throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organisation.current === '') {
+      throw new Error('Organisation roles not supported for personal projects.');
     }
 
     const endpoint = `organizations/${this.userConfig.organisation.current}/roles/`;

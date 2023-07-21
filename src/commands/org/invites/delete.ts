@@ -6,7 +6,7 @@ export type DeleteResponse = {
   success: boolean;
 };
 
-export default class Create extends Command<DeleteResponse> {
+export default class Delete extends Command<DeleteResponse> {
   static description = 'Delete an invite to the organisation';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
@@ -16,10 +16,14 @@ export default class Create extends Command<DeleteResponse> {
   };
 
   public async run(): Promise<DeleteResponse> {
-    const {flags} = await this.parse(Create);
+    const {flags} = await this.parse(Delete);
 
-    if (!this.userConfig.organisation.current) {
+    if (this.userConfig.organisation.current === undefined) {
       throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organisation.current === '') {
+      throw new Error(
+        'Organisation invites not supported for personal projects'
+      );
     }
 
     let inviteId: string;

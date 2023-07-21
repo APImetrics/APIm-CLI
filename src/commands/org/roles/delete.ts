@@ -18,8 +18,10 @@ export default class Delete extends Command<DeleteResponse> {
   public async run(): Promise<DeleteResponse> {
     const {flags} = await this.parse(Delete);
 
-    if (!this.userConfig.organisation.current) {
+    if (this.userConfig.organisation.current === undefined) {
       throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organisation.current === '') {
+      throw new Error('Organisation roles not supported for personal projects.');
     }
 
     let role: string;
