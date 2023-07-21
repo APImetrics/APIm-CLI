@@ -1,17 +1,17 @@
-`apimetrics project`
-====================
+`apimetrics projects`
+=====================
 
-Fetch project.yaml file
+Manage projects
 
-* [`apimetrics project pull`](#apimetrics-project-pull)
+* [`apimetrics projects pull`](#apimetrics-projects-pull)
 
-## `apimetrics project pull`
+## `apimetrics projects pull`
 
 Fetch project.yaml file
 
 ```
 USAGE
-  $ apimetrics project pull [--json] [-f -o <value>] [--environment] [--header] [--webhook] [-p <value>]
+  $ apimetrics projects pull [--json] [-f -o <value>] [--environment] [--header] [--webhook] [-p <value>]
 
 FLAGS
   -f, --force               Force overwriting of existing project.yaml file.
@@ -28,5 +28,5 @@ DESCRIPTION
   Fetch project.yaml file
 
 EXAMPLES
-  $ apimetrics project pull --key <api key>
+  $ apimetrics projects pull --key <api key>
 ```

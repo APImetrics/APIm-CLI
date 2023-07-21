@@ -175,7 +175,7 @@ describe('pull project.yaml', () => {
         .reply(200, yamlResponse)
     )
     .stdout()
-    .command(['project:pull'])
+    .command(['projects:pull'])
     .it('Pull project.yaml');
 
   auth
@@ -185,7 +185,7 @@ describe('pull project.yaml', () => {
         .reply(200, yamlResponse)
     )
     .stdout()
-    .command(['project:pull', '--out', '.test/project.yaml'])
+    .command(['projects:pull', '--out', '.test/project.yaml'])
     .it('Write project.yaml to disk');
 
   existingProjectYaml
@@ -195,7 +195,7 @@ describe('pull project.yaml', () => {
         .reply(200, yamlResponse)
     )
     .stderr()
-    .command(['project:pull', '--out', '.test/project.yaml', '--json'])
+    .command(['projects:pull', '--out', '.test/project.yaml', '--json'])
     .catch((error) => {
       expect(error.message).to.contain(
         'File .test/project.yaml already exists. Use --force to overwrite it.'
@@ -210,7 +210,7 @@ describe('pull project.yaml', () => {
         .reply(200, yamlResponse)
     )
     .stdout()
-    .command(['project:pull', '--out', '.test/project.yaml', '--json', '--force'])
+    .command(['projects:pull', '--out', '.test/project.yaml', '--json', '--force'])
     .it('Write project.yaml to disk with existing file force');
 
   auth
@@ -220,7 +220,7 @@ describe('pull project.yaml', () => {
         .reply(200, jsonResponse)
     )
     .stdout()
-    .command(['project:pull', '--json'])
+    .command(['projects:pull', '--json'])
     .it('Pull project.json');
 
   noProject
@@ -238,6 +238,6 @@ describe('pull project.yaml', () => {
           .reply(200, yamlResponse)
     )
     .stdout()
-    .command(['project:pull', '-p', 'abc123'])
+    .command(['projects:pull', '-p', 'abc123'])
     .it('Pull project.yaml passing project ID');
 });

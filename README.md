@@ -55,7 +55,7 @@ USAGE
 * [`apimetrics help`](docs/help.md) - Display help for apimetrics.
 * [`apimetrics org`](docs/org.md) - Manage organisation settings
 * [`apimetrics plugins`](docs/plugins.md) - List installed plugins.
-* [`apimetrics project`](docs/project.md) - Fetch project.yaml file
+* [`apimetrics projects`](docs/projects.md) - Manage projects
 * [`apimetrics schedules`](docs/schedules.md) - Manage project schedules
 * [`apimetrics workflows`](docs/workflows.md) - Manage project workflows
 

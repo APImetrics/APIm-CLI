@@ -87,6 +87,9 @@
       "org:roles": {
         "description": "Manage organisation roles"
       },
+      "projects": {
+        "description": "Manage projects"
+      },
       "schedules": {
         "description": "Manage project schedules"
       },
