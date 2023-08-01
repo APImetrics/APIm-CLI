@@ -9,7 +9,7 @@ export default class Edit extends Command<T.Call> {
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
   static flags = {
-    'call-id': Flags.string({description: 'ID of call', char: 'i'}),
+    'call-id': Flags.string({description: 'ID of call', char: 'c'}),
     name: Flags.string({description: 'Name of API call', char: 'n'}),
     url: Flags.string({description: 'URL to call', char: 'u'}),
     method: Flags.string({
