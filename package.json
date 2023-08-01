@@ -73,22 +73,22 @@
         "description": "Manage project settings"
       },
       "config:org": {
-        "description": "Manage organisation settings"
+        "description": "Manage organization settings"
       },
       "info": {
         "description": "Information about APImetrics monitoring infrastructure"
       },
       "org": {
-        "description": "Manage organisation settings"
+        "description": "Manage organization settings"
       },
       "org:accounts": {
-        "description": "Manage organisation users"
+        "description": "Manage organization users"
       },
       "org:invites": {
-        "description": "Manage organisation invites"
+        "description": "Manage organization invites"
       },
       "org:roles": {
-        "description": "Manage organisation roles"
+        "description": "Manage organization roles"
       },
       "projects": {
         "description": "Manage projects"

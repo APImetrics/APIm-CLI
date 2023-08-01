@@ -1,7 +1,7 @@
 `apimetrics org`
 ================
 
-Manage organisation settings
+Manage organization settings
 
 * [`apimetrics org accounts`](#apimetrics-org-accounts)
 * [`apimetrics org invites`](#apimetrics-org-invites)
@@ -13,7 +13,7 @@ Manage organisation settings
 
 ## `apimetrics org accounts`
 
-List all users in organisation
+List all users in organization
 
 ```
 USAGE
@@ -35,7 +35,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  List all users in organisation
+  List all users in organization
 
 EXAMPLES
   $ apimetrics org accounts
@@ -43,7 +43,7 @@ EXAMPLES
 
 ## `apimetrics org invites`
 
-List all invites in an organisation
+List all invites in an organization
 
 ```
 USAGE
@@ -65,7 +65,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  List all invites in an organisation
+  List all invites in an organization
 
 EXAMPLES
   $ apimetrics org invites
@@ -73,7 +73,7 @@ EXAMPLES
 
 ## `apimetrics org invites create`
 
-Create an invite to the organisation
+Create an invite to the organization
 
 ```
 USAGE
@@ -87,7 +87,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Create an invite to the organisation
+  Create an invite to the organization
 
 EXAMPLES
   $ apimetrics org invites create
@@ -95,7 +95,7 @@ EXAMPLES
 
 ## `apimetrics org invites delete`
 
-Delete an invite to the organisation
+Delete an invite to the organization
 
 ```
 USAGE
@@ -108,7 +108,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Delete an invite to the organisation
+  Delete an invite to the organization
 
 EXAMPLES
   $ apimetrics org invites delete
@@ -116,7 +116,7 @@ EXAMPLES
 
 ## `apimetrics org roles`
 
-List all roles in an organisation
+List all roles in an organization
 
 ```
 USAGE
@@ -138,7 +138,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  List all roles in an organisation
+  List all roles in an organization
 
 EXAMPLES
   $ apimetrics org roles
@@ -146,7 +146,7 @@ EXAMPLES
 
 ## `apimetrics org roles create`
 
-Create a role in the organisation
+Create a role in the organization
 
 ```
 USAGE
@@ -160,7 +160,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Create a role in the organisation
+  Create a role in the organization
 
 EXAMPLES
   $ apimetrics org roles create
@@ -168,7 +168,7 @@ EXAMPLES
 
 ## `apimetrics org roles delete`
 
-Delete a role in the organisation
+Delete a role in the organization
 
 ```
 USAGE
@@ -181,7 +181,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Delete a role in the organisation
+  Delete a role in the organization
 
 EXAMPLES
   $ apimetrics org roles delete

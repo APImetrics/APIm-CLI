@@ -273,7 +273,7 @@ describe('list workflows', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {current: 'abc123'},
+        organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -287,7 +287,7 @@ describe('list workflows', () => {
   const noProject = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {current: 'abc123'},
+        organization: {current: 'abc123'},
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {

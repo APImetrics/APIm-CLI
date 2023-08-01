@@ -22,7 +22,7 @@ describe('set current working org', () => {
     .command(['config:org:set', '--json'])
     .catch((error) => {
       expect(error.message).to.contain(
-        'Cannot use --json with interactive mode. Specify organisation using --org-id instead.'
+        'Cannot use --json with interactive mode. Specify organization using --org-id instead.'
       );
     })
     .it('Set org with --json');

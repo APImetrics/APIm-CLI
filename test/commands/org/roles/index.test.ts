@@ -61,7 +61,7 @@ describe('list roles', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {current: 'abc123'},
+        organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -75,7 +75,7 @@ describe('list roles', () => {
   const keyAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {current: 'abc123'},
+        organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -89,7 +89,7 @@ describe('list roles', () => {
   const noOrg = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {},
+        organization: {},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -162,8 +162,8 @@ describe('list roles', () => {
     .command(['org:roles'])
     .catch((error) => {
       expect(error.message).to.contain(
-        'Current organisation not set. Run `apimetrics config org set` first.'
+        'Current organization not set. Run `apimetrics config org set` first.'
       );
     })
-    .it('No organisation set');
+    .it('No organization set');
 });

@@ -7,7 +7,7 @@ export type RoleResponse = {
 };
 
 export default class Create extends Command<RoleResponse> {
-  static description = 'Create a role in the organisation';
+  static description = 'Create a role in the organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -19,15 +19,15 @@ export default class Create extends Command<RoleResponse> {
   public async run(): Promise<RoleResponse> {
     const {flags} = await this.parse(Create);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
-      throw new Error('Organisation roles not supported for personal projects');
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
+      throw new Error('organization roles not supported for personal projects');
     }
 
     flags.name = flags.name.toUpperCase().replace(/ /gm, '_');
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/roles/`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
     const data = {
       id: flags.name,
       description: flags.description,

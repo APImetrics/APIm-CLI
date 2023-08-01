@@ -8,7 +8,7 @@ export type InviteResponse = {
 };
 
 export default class Create extends Command<InviteResponse> {
-  static description = 'Create an invite to the organisation';
+  static description = 'Create an invite to the organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -20,17 +20,17 @@ export default class Create extends Command<InviteResponse> {
   public async run(): Promise<InviteResponse> {
     const {flags} = await this.parse(Create);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
-      throw new Error('Organisation invites not supported for personal projects.');
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
+      throw new Error('organization invites not supported for personal projects.');
     }
 
     if (!util.validateEmail(flags.email)) {
       throw new Error(`Invalid email: ${flags.email}`);
     }
 
-    let endpoint = `organizations/${this.userConfig.organisation.current}/roles/`;
+    let endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
     const rawRoles = await this.api.get<T.ListResponse<T.Role>>(endpoint);
     const roles: string[] = [];
     for (const role of rawRoles.results) {
@@ -58,7 +58,7 @@ export default class Create extends Command<InviteResponse> {
       selectedRoles = response.role;
     }
 
-    endpoint = `organizations/${this.userConfig.organisation.current}/invites/`;
+    endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
     const data = {
       email: flags.email,
       roles: selectedRoles,

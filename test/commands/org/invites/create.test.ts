@@ -66,7 +66,7 @@ describe('create invite', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {current: 'abc123'},
+        organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -80,7 +80,7 @@ describe('create invite', () => {
   const keyAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {current: 'abc123'},
+        organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -94,7 +94,7 @@ describe('create invite', () => {
   const noOrg = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
-        organisation: {},
+        organization: {},
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
@@ -153,8 +153,8 @@ describe('create invite', () => {
     .command(['org:invites:create', '--email', 'test@example.com', '--role', 'ADMIN'])
     .catch((error) => {
       expect(error.message).to.contain(
-        'Current organisation not set. Run `apimetrics config org set` first.'
+        'Current organization not set. Run `apimetrics config org set` first.'
       );
     })
-    .it('No organisation set');
+    .it('No organization set');
 });

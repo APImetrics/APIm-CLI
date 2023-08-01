@@ -53,7 +53,7 @@ USAGE
 * [`apimetrics calls`](docs/calls.md) - Manage monitoring calls
 * [`apimetrics config`](docs/config.md) - Manage CLI configuration options
 * [`apimetrics help`](docs/help.md) - Display help for apimetrics.
-* [`apimetrics org`](docs/org.md) - Manage organisation settings
+* [`apimetrics org`](docs/org.md) - Manage organization settings
 * [`apimetrics plugins`](docs/plugins.md) - List installed plugins.
 * [`apimetrics projects`](docs/projects.md) - Manage projects
 * [`apimetrics schedules`](docs/schedules.md) - Manage project schedules

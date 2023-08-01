@@ -8,7 +8,7 @@ export type CreateJSON = {
 };
 
 export default class Create extends Command<CreateJSON> {
-  static description = 'Create a new project';
+  static description = 'Create a new schedule';
   private warnings: string[] = [];
 
   static examples = ['<%= config.bin %> <%= command.id %>'];

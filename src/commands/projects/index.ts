@@ -18,15 +18,15 @@ export default class Projects extends Command<ProjectList> {
   public async run(): Promise<ProjectList> {
     const {flags} = await this.parse(Projects);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
       throw new Error(
         'Listing personal projects not currently supported. Please use web interface instead.'
       );
     }
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/projects/`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/projects/`;
     const {results: projects} = await this.api.get<T.ListResponse<T.Project>>(
       endpoint,
       undefined,

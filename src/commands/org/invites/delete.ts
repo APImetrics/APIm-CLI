@@ -7,7 +7,7 @@ export type DeleteResponse = {
 };
 
 export default class Delete extends Command<DeleteResponse> {
-  static description = 'Delete an invite to the organisation';
+  static description = 'Delete an invite to the organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -18,12 +18,10 @@ export default class Delete extends Command<DeleteResponse> {
   public async run(): Promise<DeleteResponse> {
     const {flags} = await this.parse(Delete);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
-      throw new Error(
-        'Organisation invites not supported for personal projects'
-      );
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
+      throw new Error('organization invites not supported for personal projects');
     }
 
     let inviteId: string;
@@ -32,7 +30,7 @@ export default class Delete extends Command<DeleteResponse> {
     } else if (flags.json) {
       throw new Error('No invite selected for deletion.');
     } else {
-      const endpoint = `organizations/${this.userConfig.organisation.current}/invites/`;
+      const endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
       const rawInvites = await this.api.get<T.ListResponse<T.Invite>>(endpoint);
       const invites: {name: string; value: string}[] = [];
       for (const invite of rawInvites.results) {
@@ -55,7 +53,7 @@ export default class Delete extends Command<DeleteResponse> {
       inviteId = response.invite;
     }
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/invites/${inviteId}/`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/invites/${inviteId}/`;
     await this.api.delete(endpoint);
     return {success: true};
   }

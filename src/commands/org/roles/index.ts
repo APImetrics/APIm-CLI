@@ -7,7 +7,7 @@ export type RoleList = {
 };
 
 export default class Roles extends Command<RoleList> {
-  static description = 'List all roles in an organisation';
+  static description = 'List all roles in an organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -18,13 +18,13 @@ export default class Roles extends Command<RoleList> {
   public async run(): Promise<RoleList> {
     const {flags} = await this.parse(Roles);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
-      throw new Error('Organisation roles not supported for personal projects.');
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
+      throw new Error('organization roles not supported for personal projects.');
     }
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/roles/`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
     const {results: roles} = await this.api.get<T.ListResponse<T.Role>>(endpoint, undefined, false);
 
     ux.table(

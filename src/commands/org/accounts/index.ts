@@ -7,7 +7,7 @@ export type AccountList = {
 };
 
 export default class Accounts extends Command<AccountList> {
-  static description = 'List all users in organisation';
+  static description = 'List all users in organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -19,13 +19,13 @@ export default class Accounts extends Command<AccountList> {
     const {flags} = await this.parse(Accounts);
 
     let currentOrg: string;
-    if (this.userConfig.organisation.current) {
-      currentOrg = this.userConfig.organisation.current;
+    if (this.userConfig.organization.current) {
+      currentOrg = this.userConfig.organization.current;
     } else {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     }
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/accounts`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/accounts`;
     const {results: accounts} = await this.api.get<T.ListResponse<T.OrgAccount>>(
       endpoint,
       undefined,

@@ -7,7 +7,7 @@ export type InviteList = {
 };
 
 export default class Invites extends Command<InviteList> {
-  static description = 'List all invites in an organisation';
+  static description = 'List all invites in an organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -18,13 +18,13 @@ export default class Invites extends Command<InviteList> {
   public async run(): Promise<InviteList> {
     const {flags} = await this.parse(Invites);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
-      throw new Error('Organisation invites not supported for personal projects.');
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
+      throw new Error('organization invites not supported for personal projects.');
     }
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/invites/`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
     const {results: invites} = await this.api.get<T.ListResponse<T.Invite>>(
       endpoint,
       undefined,

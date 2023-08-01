@@ -8,7 +8,7 @@ Manage CLI configuration options
 
 ## `apimetrics config org set`
 
-Set the current working organisation
+Set the current working organization
 
 ```
 USAGE
@@ -21,7 +21,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Set the current working organisation
+  Set the current working organization
 
 EXAMPLES
   $ apimetrics config org set

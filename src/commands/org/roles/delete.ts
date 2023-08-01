@@ -7,7 +7,7 @@ export type DeleteResponse = {
 };
 
 export default class Delete extends Command<DeleteResponse> {
-  static description = 'Delete a role in the organisation';
+  static description = 'Delete a role in the organization';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -18,10 +18,10 @@ export default class Delete extends Command<DeleteResponse> {
   public async run(): Promise<DeleteResponse> {
     const {flags} = await this.parse(Delete);
 
-    if (this.userConfig.organisation.current === undefined) {
-      throw new Error('Current organisation not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organisation.current === '') {
-      throw new Error('Organisation roles not supported for personal projects.');
+    if (this.userConfig.organization.current === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (this.userConfig.organization.current === '') {
+      throw new Error('organization roles not supported for personal projects.');
     }
 
     let role: string;
@@ -30,7 +30,7 @@ export default class Delete extends Command<DeleteResponse> {
     } else if (flags.json) {
       throw new Error('No role selected for deletion.');
     } else {
-      const endpoint = `organizations/${this.userConfig.organisation.current}/roles/`;
+      const endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
       const rawRoles = await this.api.get<T.ListResponse<T.Role>>(endpoint);
       const roles: string[] = [];
       for (const role of rawRoles.results) {
@@ -48,7 +48,7 @@ export default class Delete extends Command<DeleteResponse> {
       role = response.role;
     }
 
-    const endpoint = `organizations/${this.userConfig.organisation.current}/roles/${role}/`;
+    const endpoint = `organizations/${this.userConfig.organization.current}/roles/${role}/`;
     await this.api.delete(endpoint);
     return {success: true};
   }
