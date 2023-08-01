@@ -75,6 +75,9 @@
       "config:org": {
         "description": "Manage organisation settings"
       },
+      "info": {
+        "description": "Information about APImetrics monitoring infrastructure"
+      },
       "org": {
         "description": "Manage organisation settings"
       },
