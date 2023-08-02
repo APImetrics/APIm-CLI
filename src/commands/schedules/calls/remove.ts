@@ -6,7 +6,7 @@ export type Schedule = {
   schedule: T.Schedule;
 };
 
-export default class Delete extends Command<Schedule> {
+export default class Remove extends Command<Schedule> {
   static description = 'Remove call from schedule';
   protected permitKeyAuth = true;
 
@@ -32,7 +32,7 @@ export default class Delete extends Command<Schedule> {
   };
 
   public async run(): Promise<Schedule> {
-    const {flags} = await this.parse(Delete);
+    const {flags} = await this.parse(Remove);
     const endpoint = `schedules/${flags['schedule-id']}/call/${flags['call-id']}`;
     if (flags['project-id']) {
       this.api.project = flags['project-id'];
