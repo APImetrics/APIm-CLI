@@ -90,6 +90,11 @@ export default class Accounts extends Command<AccountList> {
           get: (row) => row.logins_count,
           extended: true,
         },
+        id: {
+          header: 'ID',
+          get: (row) => row.user_id,
+          extended: true,
+        },
       },
       {
         printLine: this.log.bind(this),
