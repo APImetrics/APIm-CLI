@@ -31,9 +31,9 @@ export default class Delete extends Command<DeleteResponse> {
       throw new Error('No invite selected for deletion.');
     } else {
       const endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
-      const rawInvites = await this.api.get<T.ListResponse<T.Invite>>(endpoint);
+      const rawInvites = await this.api.list<T.Invite>(endpoint);
       const invites: {name: string; value: string}[] = [];
-      for (const invite of rawInvites.results) {
+      for (const invite of rawInvites) {
         invites.push({
           name: `${invite.email} (${invite.roles.join(', ') || 'None'}) from ${
             invite.invited_email

@@ -25,7 +25,7 @@ export default class Roles extends Command<RoleList> {
     }
 
     const endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
-    const {results: roles} = await this.api.get<T.ListResponse<T.Role>>(endpoint, undefined, false);
+    const roles = await this.api.list<T.Role>(endpoint);
 
     ux.table(
       roles,

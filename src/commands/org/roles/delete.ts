@@ -31,9 +31,9 @@ export default class Delete extends Command<DeleteResponse> {
       throw new Error('No role selected for deletion.');
     } else {
       const endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
-      const rawRoles = await this.api.get<T.ListResponse<T.Role>>(endpoint);
+      const rawRoles = await this.api.list<T.Role>(endpoint);
       const roles: string[] = [];
-      for (const role of rawRoles.results) {
+      for (const role of rawRoles) {
         roles.push(role.id);
       }
 

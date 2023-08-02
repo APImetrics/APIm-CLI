@@ -28,7 +28,7 @@ export default class Calls extends Command<CallsList> {
     }
 
     const endpoint = `calls/`;
-    const {results: calls} = await this.api.get<T.ListResponse<T.Call>>(endpoint, undefined, false);
+    const calls = await this.api.list<T.Call>(endpoint);
 
     ux.table(
       calls,

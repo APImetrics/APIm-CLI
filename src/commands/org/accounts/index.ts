@@ -26,11 +26,7 @@ export default class Accounts extends Command<AccountList> {
     }
 
     const endpoint = `organizations/${this.userConfig.organization.current}/accounts`;
-    const {results: accounts} = await this.api.get<T.ListResponse<T.OrgAccount>>(
-      endpoint,
-      undefined,
-      false
-    );
+    const accounts = await this.api.list<T.OrgAccount>(endpoint);
 
     ux.table(
       accounts,

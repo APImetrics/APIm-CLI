@@ -31,9 +31,9 @@ export default class Create extends Command<InviteResponse> {
     }
 
     let endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
-    const rawRoles = await this.api.get<T.ListResponse<T.Role>>(endpoint);
+    const rawRoles = await this.api.list<T.Role>(endpoint);
     const roles: string[] = [];
-    for (const role of rawRoles.results) {
+    for (const role of rawRoles) {
       roles.push(role.id);
     }
 

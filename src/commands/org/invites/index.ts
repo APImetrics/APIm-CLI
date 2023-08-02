@@ -25,11 +25,7 @@ export default class Invites extends Command<InviteList> {
     }
 
     const endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
-    const {results: invites} = await this.api.get<T.ListResponse<T.Invite>>(
-      endpoint,
-      undefined,
-      false
-    );
+    const invites = await this.api.list<T.Invite>(endpoint);
 
     ux.table(
       invites,

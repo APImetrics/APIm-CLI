@@ -27,11 +27,7 @@ export default class Projects extends Command<ProjectList> {
     }
 
     const endpoint = `organizations/${this.userConfig.organization.current}/projects/`;
-    const {results: projects} = await this.api.get<T.ListResponse<T.Project>>(
-      endpoint,
-      undefined,
-      false
-    );
+    const projects = await this.api.list<T.Project>(endpoint);
 
     ux.table(
       projects,

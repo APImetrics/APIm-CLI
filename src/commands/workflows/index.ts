@@ -27,11 +27,7 @@ export default class Workflows extends Command<WorkflowsList> {
       this.api.project = flags['project-id'];
     }
 
-    const {results: workflows} = await this.api.get<T.ListResponse<T.Workflow>>(
-      endpoint,
-      undefined,
-      false
-    );
+    const workflows = await this.api.list<T.Workflow>(endpoint);
 
     ux.table(
       workflows,

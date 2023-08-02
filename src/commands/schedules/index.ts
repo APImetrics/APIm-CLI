@@ -27,11 +27,7 @@ export default class Schedules extends Command<ScheduleList> {
       this.api.project = flags['project-id'];
     }
 
-    const {results: schedules} = await this.api.get<T.ListResponse<T.Schedule>>(
-      endpoint,
-      undefined,
-      false
-    );
+    const schedules = await this.api.list<T.Schedule>(endpoint);
 
     ux.table(
       schedules,

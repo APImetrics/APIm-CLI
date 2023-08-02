@@ -93,10 +93,10 @@ export default class Create extends Command<CreateJSON> {
     this.log(project.id);
 
     if (flags.owner || flags.editor || flags.analyst || flags.viewer) {
-      const {results: roles} = await this.api.get<T.ListResponse<T.Role>>(
+      const roles = await this.api.list<T.Role>(
         `organizations/${this.userConfig.organization.current}/roles/`
       );
-      const {results: accounts} = await this.api.get<T.ListResponse<T.OrgAccount>>(
+      const accounts = await this.api.list<T.OrgAccount>(
         `organizations/${this.userConfig.organization.current}/accounts/`
       );
 

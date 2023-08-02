@@ -31,11 +31,7 @@ export default class Invites extends Command<InviteList> {
     const projectId = flags['project-id'] ? flags['project-id'] : this.userConfig.project.current;
 
     const endpoint = `projects/${projectId}/invites/`;
-    const {results: invites} = await this.api.get<T.ListResponse<T.Invite>>(
-      endpoint,
-      undefined,
-      false
-    );
+    const invites = await this.api.list<T.Invite>(endpoint);
 
     ux.table(
       invites,

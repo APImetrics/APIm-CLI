@@ -64,9 +64,9 @@ export default class Edit extends Command<T.Call> {
   };
 
   private async getCall(): Promise<T.Call> {
-    const callData = await this.api.get<T.ListResponse<T.Call>>('calls/');
+    const callData = await this.api.list<T.Call>('calls/');
     const calls: {name: string; value: string}[] = [];
-    for (const call of callData.results) {
+    for (const call of callData) {
       calls.push({
         name: `${call.meta.name} (${call.id})`,
         value: call.id,
@@ -81,7 +81,7 @@ export default class Edit extends Command<T.Call> {
         choices: calls,
       },
     ]);
-    const selectedCall = callData.results.find((call) => call.id === response.call);
+    const selectedCall = callData.find((call) => call.id === response.call);
     if (selectedCall) return selectedCall;
     throw new Error('Selected call does not exist');
   }
