@@ -27,14 +27,17 @@ export class Api {
    * @param oclifConfig Command config
    * @param projectOnly Can this command be run by a user with project
    * only access? E.g. an API key
+   * @param config Running user config
+   * @param jsonMode Is the CLI running in JSON (non interactive) mode?
    */
   constructor(
     private readonly oclifConfig: Interfaces.Config,
     private readonly projectOnly: boolean,
-    private config: Config
+    private config: Config,
+    jsonMode: boolean
   ) {
     this.debug('Using base URL %o', this.baseUrl);
-    this.auth = new Auth(this.oclifConfig);
+    this.auth = new Auth(this.oclifConfig, jsonMode);
   }
 
   get project(): string {

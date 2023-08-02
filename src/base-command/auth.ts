@@ -55,7 +55,7 @@ export class Auth {
   private clientId = process.env.APIMETRICS_CLIENT_ID || '4fhqu4lEH5ExaRh00X1B9WJSkjTnUmuK';
   private configDir: string;
 
-  constructor(private readonly config: Interfaces.Config) {
+  constructor(private readonly config: Interfaces.Config, private jsonMode: boolean) {
     this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.config.configDir;
     this.loadAuth();
   }
@@ -77,9 +77,6 @@ export class Auth {
       case Auth.AuthType.Device:
         await this.deviceFlow();
     }
-
-    await this.saveToken();
-    this.loggedIn = true;
   }
 
   /**
@@ -146,6 +143,8 @@ export class Auth {
       if (key.length === 32) {
         this.token.token = key;
         this.token.mode = Auth.AuthType.Key;
+        await this.saveToken();
+        this.loggedIn = true;
       } else {
         throw new Error(`API key is malformed. Expected 32 characters, got ${key.length}`);
       }
@@ -210,6 +209,7 @@ export class Auth {
     this.token.expires = now;
     this.token.mode = Auth.AuthType.Device;
     await this.saveToken();
+    this.loggedIn = true;
     ux.action.stop(chalk.green('Logged in'));
   }
 
@@ -272,9 +272,18 @@ export class Auth {
     };
     const response = await fetch(this.tokenUrl, options);
     if (!response.ok) {
-      throw new Error(
-        `Failed to refresh access token - API error - HTTP ${response.status} ${response.statusText}`
+      if (this.jsonMode) {
+        throw new Error(
+          `Failed to refresh access token - API error - HTTP ${response.status} ${response.statusText}. Please login again.`
+        );
+      }
+
+      ux.warn(
+        `Failed to refresh access token - API error - HTTP ${response.status} ${response.statusText}. Please login again.`
       );
+      this.loggedIn = false;
+      await this.deviceFlow();
+      return;
     }
 
     const token = await response.json();

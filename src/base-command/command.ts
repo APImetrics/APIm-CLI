@@ -40,7 +40,7 @@ export abstract class Command<T> extends Base {
     this.flags = flags as Flags<T>;
     this.args = args as Args<T>;
     this.userConfig = new Config(this.config);
-    this.api = new Api(this.config, this.permitKeyAuth, this.userConfig);
+    this.api = new Api(this.config, this.permitKeyAuth, this.userConfig, this.jsonEnabled());
   }
 
   /**
