@@ -43,16 +43,14 @@ export class Auth {
     expires: undefined,
   };
 
-  private tokenUrl =
-    process.env.APIMETRICS_TOKEN_URL || 'https://qc-auth.apimetrics.io/oauth/token';
-
+  private tokenUrl = process.env.APIMETRICS_TOKEN_URL || 'https://auth.apimetrics.io/oauth/token';
   private codeUrl =
-    process.env.APIMETRICS_CODE_URL || 'https://qc-auth.apimetrics.io/oauth/device/code';
+    process.env.APIMETRICS_CODE_URL || 'https://auth.apimetrics.io/oauth/device/code';
 
   private revokeUrl =
-    process.env.APIMETRICS_REVOKE_URL || 'https://qc-auth.apimetrics.io/oauth/revoke';
+    process.env.APIMETRICS_REVOKE_URL || 'https://auth.apimetrics.io/oauth/revoke';
 
-  private clientId = process.env.APIMETRICS_CLIENT_ID || '4fhqu4lEH5ExaRh00X1B9WJSkjTnUmuK';
+  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
   private configDir: string;
 
   constructor(private readonly config: Interfaces.Config, private jsonMode: boolean) {
