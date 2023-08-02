@@ -7,6 +7,19 @@ import {OrgAccount} from './orgaccount';
 import {Project} from './project';
 import {Role} from './role';
 import {Schedule} from './schedule';
+import {UserProjects} from './userprojects';
 import {Workflow} from './workflow';
 
-export {ApiError, Call, Info, Invite, ListResponse, OrgAccount, Project, Role, Schedule, Workflow};
+export {
+  ApiError,
+  Call,
+  Info,
+  Invite,
+  ListResponse,
+  OrgAccount,
+  Project,
+  Role,
+  Schedule,
+  UserProjects,
+  Workflow,
+};

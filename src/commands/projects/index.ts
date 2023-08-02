@@ -3,11 +3,11 @@ import {Command, T} from '../../base-command';
 
 export type ProjectList = {
   success: boolean;
-  projects: T.Project[];
+  projects: T.UserProjects['projects'];
 };
 
 export default class Projects extends Command<ProjectList> {
-  static description = 'List all projects';
+  static description = 'List all projects in an organisation that the current user has access to.';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
@@ -31,24 +31,26 @@ export default class Projects extends Command<ProjectList> {
       );
     }
 
-    const endpoint = `organizations/${orgId}/projects/`;
-    const projects = await this.api.list<T.Project>(endpoint);
+    const endpoint = `account/projects`;
+    const rawProjects = await this.api.get<T.UserProjects>(endpoint);
+
+    const projects = rawProjects.projects.filter((val) => val.project.org_id === orgId);
 
     ux.table(
       projects,
       {
         name: {
-          get: (row) => row.name,
+          get: (row) => row.project.name,
         },
         tags: {
-          get: (row) => row.tags.join(', ') || 'None',
+          get: (row) => row.project.tags.join(', ') || 'None',
         },
         created: {
           get: (row) => row.created,
         },
         systemTags: {
           header: 'System Tags',
-          get: (row) => row.system_tags.join(', ') || 'None',
+          get: (row) => row.project.system_tags.join(', ') || 'None',
           extended: true,
         },
         id: {
