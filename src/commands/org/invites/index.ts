@@ -1,4 +1,4 @@
-import {ux} from '@oclif/core';
+import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../../base-command';
 
 export type InviteList = {
@@ -13,18 +13,23 @@ export default class Invites extends Command<InviteList> {
 
   static flags = {
     ...ux.table.flags(),
+    'org-id': Flags.string({
+      description: 'ID of organization to read. Overrides apimetrics config org set.',
+      char: 'o',
+    }),
   };
 
   public async run(): Promise<InviteList> {
     const {flags} = await this.parse(Invites);
 
-    if (this.userConfig.organization.current === undefined) {
+    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organization.current === '') {
-      throw new Error('organization invites not supported for personal projects.');
+    } else if (orgId === '') {
+      throw new Error('Organization invites not supported for personal projects.');
     }
 
-    const endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
+    const endpoint = `organizations/${orgId}/invites/`;
     const invites = await this.api.list<T.Invite>(endpoint);
 
     ux.table(

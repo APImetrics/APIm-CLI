@@ -1,4 +1,4 @@
-import {ux} from '@oclif/core';
+import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../base-command';
 
 export type ProjectList = {
@@ -13,20 +13,25 @@ export default class Projects extends Command<ProjectList> {
 
   static flags = {
     ...ux.table.flags(),
+    'org-id': Flags.string({
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      char: 'o',
+    }),
   };
 
   public async run(): Promise<ProjectList> {
     const {flags} = await this.parse(Projects);
 
-    if (this.userConfig.organization.current === undefined) {
+    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organization.current === '') {
+    } else if (orgId === '') {
       throw new Error(
-        'Listing personal projects not currently supported. Please use web interface instead.'
+        'Personal projects not currently supported. Please use web interface instead.'
       );
     }
 
-    const endpoint = `organizations/${this.userConfig.organization.current}/projects/`;
+    const endpoint = `organizations/${orgId}/projects/`;
     const projects = await this.api.list<T.Project>(endpoint);
 
     ux.table(

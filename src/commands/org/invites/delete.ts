@@ -13,15 +13,20 @@ export default class Delete extends Command<DeleteResponse> {
 
   static flags = {
     'invite-id': Flags.string({description: 'Invite to delete'}),
+    'org-id': Flags.string({
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      char: 'o',
+    }),
   };
 
   public async run(): Promise<DeleteResponse> {
     const {flags} = await this.parse(Delete);
 
-    if (this.userConfig.organization.current === undefined) {
+    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organization.current === '') {
-      throw new Error('organization invites not supported for personal projects');
+    } else if (orgId === '') {
+      throw new Error('Organization invites not supported for personal projects.');
     }
 
     let inviteId: string;
@@ -30,7 +35,7 @@ export default class Delete extends Command<DeleteResponse> {
     } else if (flags.json) {
       throw new Error('No invite selected for deletion.');
     } else {
-      const endpoint = `organizations/${this.userConfig.organization.current}/invites/`;
+      const endpoint = `organizations/${orgId}/invites/`;
       const rawInvites = await this.api.list<T.Invite>(endpoint);
       const invites: {name: string; value: string}[] = [];
       for (const invite of rawInvites) {
@@ -53,7 +58,7 @@ export default class Delete extends Command<DeleteResponse> {
       inviteId = response.invite;
     }
 
-    const endpoint = `organizations/${this.userConfig.organization.current}/invites/${inviteId}/`;
+    const endpoint = `organizations/${orgId}/invites/${inviteId}/`;
     await this.api.delete(endpoint);
     return {success: true};
   }

@@ -31,6 +31,10 @@ export default class Create extends Command<CreateJSON> {
       description: 'Name of role or email of user to give viewer access',
       multiple: true,
     }),
+    'org-id': Flags.string({
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      char: 'o',
+    }),
   };
 
   /**
@@ -78,27 +82,24 @@ export default class Create extends Command<CreateJSON> {
   public async run(): Promise<CreateJSON> {
     const {flags} = await this.parse(Create);
 
-    if (this.userConfig.organization.current === undefined) {
+    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organization.current === '') {
+    } else if (orgId === '') {
       throw new Error(
-        'Creating personal projects not currently supported. Please use web interface instead.'
+        'Personal projects not currently supported. Please use web interface instead.'
       );
     }
 
-    const endpoint = `organizations/${this.userConfig.organization.current}/projects/`;
+    const endpoint = `organizations/${orgId}/projects/`;
     const project = await this.api.post<T.Project>(endpoint, {
       body: JSON.stringify({name: flags.name}),
     });
     this.log(project.id);
 
     if (flags.owner || flags.editor || flags.analyst || flags.viewer) {
-      const roles = await this.api.list<T.Role>(
-        `organizations/${this.userConfig.organization.current}/roles/`
-      );
-      const accounts = await this.api.list<T.OrgAccount>(
-        `organizations/${this.userConfig.organization.current}/accounts/`
-      );
+      const roles = await this.api.list<T.Role>(`organizations/${orgId}/roles/`);
+      const accounts = await this.api.list<T.OrgAccount>(`organizations/${orgId}/accounts/`);
 
       const accessToAdd: {
         // eslint-disable-next-line camelcase

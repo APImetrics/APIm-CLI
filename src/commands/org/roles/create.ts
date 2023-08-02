@@ -14,20 +14,25 @@ export default class Create extends Command<RoleResponse> {
   static flags = {
     name: Flags.string({description: 'Name of role', required: true, char: 'n'}),
     description: Flags.string({description: 'Role description', required: true, char: 'd'}),
+    'org-id': Flags.string({
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      char: 'o',
+    }),
   };
 
   public async run(): Promise<RoleResponse> {
     const {flags} = await this.parse(Create);
 
-    if (this.userConfig.organization.current === undefined) {
+    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
-    } else if (this.userConfig.organization.current === '') {
-      throw new Error('organization roles not supported for personal projects');
+    } else if (orgId === '') {
+      throw new Error('Organization roles not supported for personal projects.');
     }
 
     flags.name = flags.name.toUpperCase().replace(/ /gm, '_');
 
-    const endpoint = `organizations/${this.userConfig.organization.current}/roles/`;
+    const endpoint = `organizations/${orgId}/roles/`;
     const data = {
       id: flags.name,
       description: flags.description,
