@@ -31,14 +31,7 @@ export default class Accounts extends Command<AccountList> {
       );
     }
 
-    let currentOrg: string;
-    if (this.userConfig.organization.current) {
-      currentOrg = this.userConfig.organization.current;
-    } else {
-      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
-    }
-
-    const endpoint = `organizations/${this.userConfig.organization.current}/accounts`;
+    const endpoint = `organizations/${orgId}/accounts`;
     const accounts = await this.api.list<T.OrgAccount>(endpoint);
 
     ux.table(
@@ -57,15 +50,15 @@ export default class Accounts extends Command<AccountList> {
             if (row.app_metadata) {
               if (
                 row.app_metadata.org_roles &&
-                (row.app_metadata.org_roles as Record<string, string[]>)[currentOrg]
+                (row.app_metadata.org_roles as Record<string, string[]>)[orgId]
               ) {
-                return (row.app_metadata.org_roles as Record<string, string[]>)[currentOrg].join(
+                return (row.app_metadata.org_roles as Record<string, string[]>)[orgId].join(
                   ', '
                 );
               }
 
-              if (row.app_metadata[currentOrg]) {
-                return (row.app_metadata[currentOrg] as string[]).join(', ');
+              if (row.app_metadata[orgId]) {
+                return (row.app_metadata[orgId] as string[]).join(', ');
               }
             }
 

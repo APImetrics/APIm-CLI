@@ -1,3 +1,4 @@
+import {Access} from './access';
 import {ApiError} from './apierror';
 import {Call} from './call';
 import {Info} from './info';
@@ -11,6 +12,7 @@ import {UserProjects} from './userprojects';
 import {Workflow} from './workflow';
 
 export {
+  Access,
   ApiError,
   Call,
   Info,

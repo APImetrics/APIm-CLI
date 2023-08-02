@@ -93,6 +93,9 @@
       "projects": {
         "description": "Manage projects"
       },
+      "projects:accounts": {
+        "description": "Manage project users"
+      },
       "projects:invites": {
         "description": "Manage project invites"
       },
