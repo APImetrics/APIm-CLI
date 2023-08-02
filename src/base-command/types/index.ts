@@ -1,3 +1,4 @@
+import {ApiError} from './apierror';
 import {Call} from './call';
 import {Info} from './info';
 import {Invite} from './invite';
@@ -8,4 +9,4 @@ import {Role} from './role';
 import {Schedule} from './schedule';
 import {Workflow} from './workflow';
 
-export {Call, Info, Invite, ListResponse, OrgAccount, Project, Role, Schedule, Workflow};
+export {ApiError, Call, Info, Invite, ListResponse, OrgAccount, Project, Role, Schedule, Workflow};

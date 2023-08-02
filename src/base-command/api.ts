@@ -3,7 +3,7 @@ import {Auth} from './auth';
 import fetch, {RequestInit} from 'node-fetch';
 import {Config} from './config';
 import {debug} from 'debug';
-import {ListResponse} from './types';
+import {ApiError, ListResponse} from './types';
 
 type RequestOptions = {
   /** Path to call */
@@ -208,8 +208,11 @@ export class Api {
 
     const response = await fetch(url, opts);
     if (!response.ok) {
-      this.debug(await response.text());
-      throw new Error(`API error - HTTP ${response.status} ${response.statusText}`);
+      const data = (await response.json()) as ApiError;
+      this.debug(data);
+      throw new Error(
+        `API error - HTTP ${response.status} ${response.statusText} - ${data.error_msg}`
+      );
     }
 
     if (options.plain) {
