@@ -6,6 +6,8 @@ Manage monitoring calls
 * [`apimetrics calls`](#apimetrics-calls)
 * [`apimetrics calls create`](#apimetrics-calls-create)
 * [`apimetrics calls edit`](#apimetrics-calls-edit)
+* [`apimetrics calls schedules add`](#apimetrics-calls-schedules-add)
+* [`apimetrics calls schedules delete`](#apimetrics-calls-schedules-delete)
 
 ## `apimetrics calls`
 
@@ -77,13 +79,13 @@ Edit an existing API call
 
 ```
 USAGE
-  $ apimetrics calls edit [--json] [-i <value>] [-n <value>] [-u <value>] [-m
+  $ apimetrics calls edit [--json] [-c <value>] [-n <value>] [-u <value>] [-m
     get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS] [--accept <value>] [--add-header
     <value>] [--replace-header <value>] [--remove-header <value>] [--add-tag <value>] [--remove-tag <value>] [-p
     <value>] [--description <value>]
 
 FLAGS
-  -i, --call-id=<value>        ID of call
+  -c, --call-id=<value>        ID of call
   -m, --method=<option>        HTTP method to use
                                <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
   -n, --name=<value>           Name of API call
@@ -106,4 +108,56 @@ DESCRIPTION
 
 EXAMPLES
   $ apimetrics calls edit
+```
+
+## `apimetrics calls schedules add`
+
+Add call to schedule
+
+```
+USAGE
+  $ apimetrics calls schedules add -s <value> -c <value> [--json] [-p <value>]
+
+FLAGS
+  -c, --call-id=<value>      (required) ID of call to add.
+  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Add call to schedule
+
+ALIASES
+  $ apimetrics calls schedules add
+
+EXAMPLES
+  $ apimetrics calls schedules add
+```
+
+## `apimetrics calls schedules delete`
+
+Remove call from schedule
+
+```
+USAGE
+  $ apimetrics calls schedules delete -s <value> -c <value> [--json] [-p <value>]
+
+FLAGS
+  -c, --call-id=<value>      (required) ID of call to remove.
+  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Remove call from schedule
+
+ALIASES
+  $ apimetrics calls schedules delete
+
+EXAMPLES
+  $ apimetrics calls schedules delete
 ```

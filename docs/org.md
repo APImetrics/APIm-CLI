@@ -4,6 +4,7 @@
 Manage organization settings
 
 * [`apimetrics org accounts`](#apimetrics-org-accounts)
+* [`apimetrics org accounts edit`](#apimetrics-org-accounts-edit)
 * [`apimetrics org invites`](#apimetrics-org-invites)
 * [`apimetrics org invites create`](#apimetrics-org-invites-create)
 * [`apimetrics org invites delete`](#apimetrics-org-invites-delete)
@@ -18,18 +19,19 @@ List all users in organization
 ```
 USAGE
   $ apimetrics org accounts [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
+    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-o <value>]
 
 FLAGS
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format
-                     <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
+  -o, --org-id=<value>  ID of organization to read. Overrides apimetrics config org set.
+  -x, --extended        show extra columns
+  --columns=<value>     only show provided columns (comma-separated)
+  --csv                 output is csv format [alias: --output=csv]
+  --filter=<value>      filter property by partial string matching, ex: name=foo
+  --no-header           hide table header from output
+  --no-truncate         do not truncate output to fit screen
+  --output=<option>     output in a more machine friendly format
+                        <options: csv|json|yaml>
+  --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -41,6 +43,30 @@ EXAMPLES
   $ apimetrics org accounts
 ```
 
+## `apimetrics org accounts edit`
+
+Edit an account
+
+```
+USAGE
+  $ apimetrics org accounts edit [--json] [-u <value>] [--add-role <value>] [--remove-role <value>] [-o <value>]
+
+FLAGS
+  -o, --org-id=<value>      ID of organization to modify. Overrides apimetrics config org set.
+  -u, --user-id=<value>     ID of user
+  --add-role=<value>...     Add a role to the account.
+  --remove-role=<value>...  Name of role to remove.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Edit an account
+
+EXAMPLES
+  $ apimetrics org accounts edit
+```
+
 ## `apimetrics org invites`
 
 List all invites in an organization
@@ -48,18 +74,19 @@ List all invites in an organization
 ```
 USAGE
   $ apimetrics org invites [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
+    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-o <value>]
 
 FLAGS
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format
-                     <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
+  -o, --org-id=<value>  ID of organization to read. Overrides apimetrics config org set.
+  -x, --extended        show extra columns
+  --columns=<value>     only show provided columns (comma-separated)
+  --csv                 output is csv format [alias: --output=csv]
+  --filter=<value>      filter property by partial string matching, ex: name=foo
+  --no-header           hide table header from output
+  --no-truncate         do not truncate output to fit screen
+  --output=<option>     output in a more machine friendly format
+                        <options: csv|json|yaml>
+  --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -77,11 +104,12 @@ Create an invite to the organization
 
 ```
 USAGE
-  $ apimetrics org invites create --email <value> [--json] [--role <value>]
+  $ apimetrics org invites create --email <value> [--json] [--role <value>] [-o <value>]
 
 FLAGS
-  --email=<value>    (required) Email to send invite to
-  --role=<value>...  Users role
+  -o, --org-id=<value>  ID of organization to modify. Overrides apimetrics config org set.
+  --email=<value>       (required) Email to send invite to
+  --role=<value>...     Users role
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -99,10 +127,11 @@ Delete an invite to the organization
 
 ```
 USAGE
-  $ apimetrics org invites delete [--json] [--invite-id <value>]
+  $ apimetrics org invites delete [--json] [--invite-id <value>] [-o <value>]
 
 FLAGS
-  --invite-id=<value>  Invite to delete
+  -o, --org-id=<value>  ID of organization to modify. Overrides apimetrics config org set.
+  --invite-id=<value>   Invite to delete
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -121,18 +150,19 @@ List all roles in an organization
 ```
 USAGE
   $ apimetrics org roles [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
+    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-o <value>]
 
 FLAGS
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format
-                     <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
+  -o, --org-id=<value>  ID of organization to read. Overrides apimetrics config org set.
+  -x, --extended        show extra columns
+  --columns=<value>     only show provided columns (comma-separated)
+  --csv                 output is csv format [alias: --output=csv]
+  --filter=<value>      filter property by partial string matching, ex: name=foo
+  --no-header           hide table header from output
+  --no-truncate         do not truncate output to fit screen
+  --output=<option>     output in a more machine friendly format
+                        <options: csv|json|yaml>
+  --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -150,11 +180,12 @@ Create a role in the organization
 
 ```
 USAGE
-  $ apimetrics org roles create -n <value> -d <value> [--json]
+  $ apimetrics org roles create -n <value> -d <value> [--json] [-o <value>]
 
 FLAGS
   -d, --description=<value>  (required) Role description
   -n, --name=<value>         (required) Name of role
+  -o, --org-id=<value>       ID of organization to modify. Overrides apimetrics config org set.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -172,10 +203,11 @@ Delete a role in the organization
 
 ```
 USAGE
-  $ apimetrics org roles delete [--json] [-r <value>]
+  $ apimetrics org roles delete [--json] [-r <value>] [-o <value>]
 
 FLAGS
-  -r, --role=<value>  Role to delete
+  -o, --org-id=<value>  ID of organization to modify. Overrides apimetrics config org set.
+  -r, --role=<value>    Role to delete
 
 GLOBAL FLAGS
   --json  Format output as json.
