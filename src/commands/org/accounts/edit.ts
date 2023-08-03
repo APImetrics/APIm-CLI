@@ -7,7 +7,7 @@ export default class Edit extends Command<{success: boolean}> {
   static examples = ['<%= config.bin %> <%= command.id %>'];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of call', char: 'u'}),
+    'user-id': Flags.string({description: 'ID of user', char: 'u'}),
     'add-role': Flags.string({
       description: 'Add a role to the account.',
       multiple: true,
