@@ -1,10 +1,19 @@
 import {Flags} from '@oclif/core';
-import {Command, T, util} from '../../base-command';
+import {Command, T} from '../../base-command';
 
 export type CreateJSON = {
   success: boolean;
   project: T.Project;
   warnings?: string[];
+};
+
+type AccessRequestBody = {
+  // eslint-disable-next-line camelcase
+  access_level: string;
+  // eslint-disable-next-line camelcase
+  account_id?: string;
+  // eslint-disable-next-line camelcase
+  role_id?: string;
 };
 
 export default class Create extends Command<CreateJSON> {
@@ -15,20 +24,36 @@ export default class Create extends Command<CreateJSON> {
 
   static flags = {
     name: Flags.string({description: 'Name of project', char: 'n', required: true}),
-    owner: Flags.string({
-      description: 'Name of role or email of user to give owner access',
+    'owner-user': Flags.string({
+      description: 'ID of user to give owner access',
       multiple: true,
     }),
-    editor: Flags.string({
-      description: 'Name of role or email of user to give editor access',
+    'owner-role': Flags.string({
+      description: 'ID of role to give owner access',
       multiple: true,
     }),
-    analyst: Flags.string({
-      description: 'Name of role or email of user to give analyst access',
+    'editor-user': Flags.string({
+      description: 'ID of user to give editor access',
       multiple: true,
     }),
-    viewer: Flags.string({
-      description: 'Name of role or email of user to give viewer access',
+    'editor-role': Flags.string({
+      description: 'ID of role to give editor access',
+      multiple: true,
+    }),
+    'analyst-user': Flags.string({
+      description: 'ID of user to give analyst access',
+      multiple: true,
+    }),
+    'analyst-role': Flags.string({
+      description: 'ID of role to give analyst access',
+      multiple: true,
+    }),
+    'viewer-user': Flags.string({
+      description: 'ID of user to give viewer access',
+      multiple: true,
+    }),
+    'viewer-role': Flags.string({
+      description: 'ID of role to give viewer access',
       multiple: true,
     }),
     'org-id': Flags.string({
@@ -38,45 +63,45 @@ export default class Create extends Command<CreateJSON> {
   };
 
   /**
-   * Checks if role or account exists on an organization. If it does,
-   * return formatted request body, else raise a warning
-   * @param accounts Accounts to check against
-   * @param roles Roles to check against
-   * @param accessLevel Access level for role / account
-   * @param roleOrAccount Name of role or email of account
-   * @returns Formatted request body
+   * Generate the request bodies for user accounts
+   * @param level Access level for account
+   * @param accounts Array of accounts to add
+   * @returns Formatted request bodies
    */
-  private formatAccessRequestBody(
-    accounts: T.OrgAccount[],
-    roles: T.Role[],
-    accessLevel: string,
-    roleOrAccount: string
-    // eslint-disable-next-line camelcase
-  ): {access_level: string; account_id?: string; email?: string; role_id?: string} | undefined {
-    if (util.validateEmail(roleOrAccount)) {
-      const i = accounts.findIndex((val) => val.email === roleOrAccount);
-      if (i > -1) {
-        return {
-          // eslint-disable-next-line camelcase
-          access_level: accessLevel,
-          // eslint-disable-next-line camelcase
-          account_id: accounts[i].id,
-          email: roleOrAccount,
-        };
+  private parseUserIDs(level: string, users?: string[]): AccessRequestBody[] {
+    const toAdd: AccessRequestBody[] = [];
+    if (users) {
+      for (const id of users) {
+        // eslint-disable-next-line camelcase
+        toAdd.push({access_level: level, account_id: id});
       }
     }
 
-    if (roles.some((val) => val.id === roleOrAccount)) {
-      return {
-        // eslint-disable-next-line camelcase
-        access_level: accessLevel,
-        // eslint-disable-next-line camelcase
-        role_id: roleOrAccount,
-      };
+    return toAdd;
+  }
+
+  /**
+   * Generate the request bodies for roles
+   * @param level Access level for roles
+   * @param validRoles Roles that exist in this organization
+   * @param roles Roles to add to project
+   * @returns Request bodies
+   */
+  private parseRoleIDs(level: string, validRoles: T.Role[], roles?: string[]): AccessRequestBody[] {
+    const toAdd: AccessRequestBody[] = [];
+    if (roles) {
+      for (const role of roles) {
+        if (validRoles.some((valid) => valid.id === role)) {
+          // eslint-disable-next-line camelcase
+          toAdd.push({access_level: level, role_id: role});
+        } else {
+          this.warn(`Unrecognised role ${role}. Skipping`);
+          this.warnings.push(`Unrecognised role ${role}. Skipping`);
+        }
+      }
     }
 
-    this.warn(`Unrecognised role or account ${roleOrAccount}. Skipping`);
-    this.warnings.push(`Unrecognised role or account ${roleOrAccount}. Skipping`);
+    return toAdd;
   }
 
   public async run(): Promise<CreateJSON> {
@@ -97,73 +122,32 @@ export default class Create extends Command<CreateJSON> {
     });
     this.log(project.id);
 
-    if (flags.owner || flags.editor || flags.analyst || flags.viewer) {
-      const roles = await this.api.list<T.Role>(`organizations/${orgId}/roles/`);
-      const accounts = await this.api.list<T.OrgAccount>(`organizations/${orgId}/accounts/`);
+    const roles = await this.api.list<T.Role>(`organizations/${orgId}/roles/`);
+    const accessToAdd = [
+      ...this.parseUserIDs('OWNER', flags['owner-user']),
+      ...this.parseUserIDs('EDITOR', flags['editor-user']),
+      ...this.parseUserIDs('ANALYST', flags['analyst-user']),
+      ...this.parseUserIDs('VIEWER', flags['viewer-user']),
+      ...this.parseRoleIDs('OWNER', roles, flags['owner-role']),
+      ...this.parseRoleIDs('EDITOR', roles, flags['editor-role']),
+      ...this.parseRoleIDs('ANALYST', roles, flags['analyst-role']),
+      ...this.parseRoleIDs('VIEWER', roles, flags['viewer-role']),
+    ];
 
-      const accessToAdd: {
-        // eslint-disable-next-line camelcase
-        access_level: string;
-        // eslint-disable-next-line camelcase
-        account_id?: string;
-        email?: string;
-        // eslint-disable-next-line camelcase
-        role_id?: string;
-      }[] = [];
-
-      if (flags.owner) {
-        for (const owner of flags.owner) {
-          const access = this.formatAccessRequestBody(accounts, roles, 'OWNER', owner);
-          if (access) {
-            accessToAdd.push(access);
-          }
-        }
+    const responses = [];
+    for (const access of accessToAdd) {
+      if (access.role_id) {
+        responses.push(
+          this.api.post(`projects/${project.id}/roles/`, {body: JSON.stringify(access)})
+        );
+      } else {
+        responses.push(
+          this.api.post(`projects/${project.id}/access/`, {body: JSON.stringify(access)})
+        );
       }
-
-      if (flags.editor) {
-        for (const editor of flags.editor) {
-          const access = this.formatAccessRequestBody(accounts, roles, 'EDITOR', editor);
-          if (access) {
-            accessToAdd.push(access);
-          }
-        }
-      }
-
-      if (flags.analyst) {
-        for (const analyst of flags.analyst) {
-          const access = this.formatAccessRequestBody(accounts, roles, 'ANALYST', analyst);
-          if (access) {
-            accessToAdd.push(access);
-          }
-        }
-      }
-
-      if (flags.viewer) {
-        for (const viewer of flags.viewer) {
-          const access = this.formatAccessRequestBody(accounts, roles, 'VIEWER', viewer);
-          if (access) {
-            accessToAdd.push(access);
-          }
-        }
-      }
-
-      const responses = [];
-      for (const access of accessToAdd) {
-        if (access.role_id) {
-          responses.push(
-            this.api.post(`projects/${project.id}/roles/`, {body: JSON.stringify(access)})
-          );
-        } else {
-          responses.push(
-            this.api.post(`projects/${project.id}/access/`, {body: JSON.stringify(access)})
-          );
-        }
-      }
-
-      await Promise.all(responses); // Wait for all requests to finish
-      return {success: this.warnings.length === 0, project: project, warnings: this.warnings};
     }
 
-    return {success: true, project: project};
+    await Promise.all(responses); // Wait for all requests to finish
+    return {success: this.warnings.length === 0, project: project, warnings: this.warnings};
   }
 }
