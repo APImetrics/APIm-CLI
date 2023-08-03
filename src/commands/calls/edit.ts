@@ -61,6 +61,7 @@ export default class Edit extends Command<T.Call> {
       char: 'p',
     }),
     description: Flags.string({description: 'Call description'}),
+    body: Flags.string({description: 'Request body.'}),
   };
 
   private async getCall(): Promise<T.Call> {
@@ -153,6 +154,7 @@ export default class Edit extends Command<T.Call> {
             method: flags.method || call.request.method,
             url: flags.url || call.request.url,
             headers: call.request.headers,
+            body: flags.body || call.request.body,
           },
         }),
       },

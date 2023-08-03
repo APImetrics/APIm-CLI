@@ -41,6 +41,7 @@ export default class Create extends Command<T.Call> {
       char: 'p',
     }),
     description: Flags.string({description: 'Call description'}),
+    body: Flags.string({description: 'Request body.'}),
   };
 
   public async run(): Promise<T.Call> {
@@ -76,7 +77,7 @@ export default class Create extends Command<T.Call> {
       {
         body: JSON.stringify({
           meta: {name: flags.name, description: flags.description, tags: tags},
-          request: {method: flags.method, url: flags.url, headers: headers},
+          request: {method: flags.method, url: flags.url, headers: headers, body: flags.body},
         }),
       },
       false
