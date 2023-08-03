@@ -5,6 +5,7 @@ Manage organization settings
 
 * [`apimetrics org accounts`](#apimetrics-org-accounts)
 * [`apimetrics org accounts edit`](#apimetrics-org-accounts-edit)
+* [`apimetrics org accounts remove`](#apimetrics-org-accounts-remove)
 * [`apimetrics org invites`](#apimetrics-org-invites)
 * [`apimetrics org invites create`](#apimetrics-org-invites-create)
 * [`apimetrics org invites delete`](#apimetrics-org-invites-delete)
@@ -65,6 +66,28 @@ DESCRIPTION
 
 EXAMPLES
   $ apimetrics org accounts edit
+```
+
+## `apimetrics org accounts remove`
+
+Remove an account
+
+```
+USAGE
+  $ apimetrics org accounts remove -u <value> [--json] [-o <value>]
+
+FLAGS
+  -o, --org-id=<value>   ID of organization to modify. Overrides apimetrics config org set.
+  -u, --user-id=<value>  (required) ID of user
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Remove an account
+
+EXAMPLES
+  $ apimetrics org accounts remove
 ```
 
 ## `apimetrics org invites`

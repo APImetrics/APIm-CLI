@@ -115,16 +115,21 @@ Create a new project
 
 ```
 USAGE
-  $ apimetrics projects create -n <value> [--json] [--owner <value>] [--editor <value>] [--analyst <value>] [--viewer
-    <value>] [-o <value>]
+  $ apimetrics projects create -n <value> [--json] [--owner-user <value>] [--owner-role <value>] [--editor-user
+    <value>] [--editor-role <value>] [--analyst-user <value>] [--analyst-role <value>] [--viewer-user <value>]
+    [--viewer-role <value>] [-o <value>]
 
 FLAGS
-  -n, --name=<value>    (required) Name of project
-  -o, --org-id=<value>  ID of organization to modify. Overrides apimetrics config org set.
-  --analyst=<value>...  Name of role or email of user to give analyst access
-  --editor=<value>...   Name of role or email of user to give editor access
-  --owner=<value>...    Name of role or email of user to give owner access
-  --viewer=<value>...   Name of role or email of user to give viewer access
+  -n, --name=<value>         (required) Name of project
+  -o, --org-id=<value>       ID of organization to modify. Overrides apimetrics config org set.
+  --analyst-role=<value>...  ID of role to give analyst access
+  --analyst-user=<value>...  ID of user to give analyst access
+  --editor-role=<value>...   ID of role to give editor access
+  --editor-user=<value>...   ID of user to give editor access
+  --owner-role=<value>...    ID of role to give owner access
+  --owner-user=<value>...    ID of user to give owner access
+  --viewer-role=<value>...   ID of role to give viewer access
+  --viewer-user=<value>...   ID of user to give viewer access
 
 GLOBAL FLAGS
   --json  Format output as json.

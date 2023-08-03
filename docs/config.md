@@ -33,10 +33,10 @@ Set the current working project
 
 ```
 USAGE
-  $ apimetrics config project set [--json] [-i <value>]
+  $ apimetrics config project set [--json] [-p <value>]
 
 FLAGS
-  -i, --project-id=<value>  ID of project to switch to
+  -p, --project-id=<value>  ID of project to switch to
 
 GLOBAL FLAGS
   --json  Format output as json.
