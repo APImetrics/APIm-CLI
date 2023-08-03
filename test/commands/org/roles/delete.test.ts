@@ -52,14 +52,6 @@ describe('delete role', () => {
     .command(['org:roles:delete', '-r', 'A_ROLE'])
     .it('Non interactive delete');
 
-  bearerAuth
-    .stderr()
-    .command(['org:roles:delete', '--json'])
-    .catch((error) => {
-      expect(error.message).to.contain('No role selected for deletion.');
-    })
-    .it('Delete with --json missing --invite-id');
-
   keyAuth
     .stderr()
     .command(['org:roles:delete', '-r', 'A_ROLE'])

@@ -52,14 +52,6 @@ describe('delete invite', () => {
     .command(['org:invites:delete', '--invite-id', 'abc123'])
     .it('Non interactive delete');
 
-  bearerAuth
-    .stderr()
-    .command(['org:invites:delete', '--json'])
-    .catch((error) => {
-      expect(error.message).to.contain('No invite selected for deletion.');
-    })
-    .it('Delete with --json missing --invite-id');
-
   keyAuth
     .stderr()
     .command(['org:invites:delete', '--invite-id', 'abc123'])

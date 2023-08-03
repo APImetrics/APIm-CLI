@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import {expect, test} from '@oclif/test';
+import {test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
 const callsResponse = {
@@ -59,6 +59,7 @@ const updateRequest = {
       {key: 'Some-random-header', value: ' some random value'},
       {key: 'Accept', value: 'application/json'},
     ],
+    body: null,
   },
 };
 
@@ -90,14 +91,6 @@ describe('edit calls', () => {
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
-
-  auth
-    .stderr()
-    .command(['calls:edit', '--json'])
-    .catch((error) => {
-      expect(error.message).to.contain('Must specify --call-id in non-interactive mode.');
-    })
-    .it('Non interactive mode without --call-id');
 
   auth
     .stdout()

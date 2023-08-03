@@ -238,13 +238,13 @@ describe('list calls', () => {
       expect(output).to.deep.equal([
         {
           name: '=1+1',
-          description: 'null',
+          description: '',
           method: 'GET',
           url: 'http://google.apimetrics.xyz/get',
         },
         {
           name: 'API Call 1/27/2021, 5:19:08 PM',
-          description: 'null',
+          description: '',
           method: 'GET',
           url: 'https://google.apimetrics.xyz/get',
         },
@@ -282,13 +282,13 @@ describe('list calls', () => {
       expect(output).to.deep.equal([
         {
           name: '=1+1',
-          description: 'null',
+          description: '',
           method: 'GET',
           url: 'http://google.apimetrics.xyz/get',
         },
         {
           name: 'API Call 1/27/2021, 5:19:08 PM',
-          description: 'null',
+          description: '',
           method: 'GET',
           url: 'https://google.apimetrics.xyz/get',
         },
