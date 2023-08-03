@@ -23,7 +23,6 @@ export class Api {
   private debug = debug('api');
 
   /**
-   *
    * @param oclifConfig Command config
    * @param projectOnly Can this command be run by a user with project
    * only access? E.g. an API key
@@ -40,10 +39,12 @@ export class Api {
     this.auth = new Auth(this.oclifConfig, jsonMode);
   }
 
+  /** Current working project */
   get project(): string {
     return this.config.project.current || '';
   }
 
+  /** Current working project */
   set project(value: string) {
     this.config.project.current = value;
   }

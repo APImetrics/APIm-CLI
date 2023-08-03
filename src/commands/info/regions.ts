@@ -7,9 +7,18 @@ export type RegionList = {
 };
 
 export default class Regions extends Command<RegionList> {
-  static description = 'List all available regions';
+  static description = 'List all available regions.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Name            ID
+─────────────── ───
+IBM Cloud       sft
+Europe          eu
+Microsoft Azure azr
+North America   na
+`,
+  ];
 
   static flags = {
     ...ux.table.flags(),

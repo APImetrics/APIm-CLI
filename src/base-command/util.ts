@@ -15,7 +15,7 @@ export function parseHeader(header: string): {key: string; value: string} {
     };
   }
 
-  throw new Error(`Could not parse header ${header}`);
+  throw new Error(`Could not parse header ${header}.`);
 }
 
 /**

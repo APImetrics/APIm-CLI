@@ -17,43 +17,48 @@ type AccessRequestBody = {
 };
 
 export default class Create extends Command<CreateJSON> {
-  static description = 'Create a new project';
+  static description = 'Create a new project.';
   private warnings: string[] = [];
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %> --name "My Project"
+ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtdTd3QkM`,
+    `<%= config.bin %> <%= command.id %> --name "My Project" --owner-role ADMIN --viewer-user "auth0|abcdefghijklmnopqrstuvwx"
+ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM`,
+  ];
 
   static flags = {
-    name: Flags.string({description: 'Name of project', char: 'n', required: true}),
+    name: Flags.string({description: 'Name of project.', char: 'n', required: true}),
     'owner-user': Flags.string({
-      description: 'ID of user to give owner access',
+      description: 'ID of user to give owner access.',
       multiple: true,
     }),
     'owner-role': Flags.string({
-      description: 'ID of role to give owner access',
+      description: 'ID of role to give owner access.',
       multiple: true,
     }),
     'editor-user': Flags.string({
-      description: 'ID of user to give editor access',
+      description: 'ID of user to give editor access.',
       multiple: true,
     }),
     'editor-role': Flags.string({
-      description: 'ID of role to give editor access',
+      description: 'ID of role to give editor access.',
       multiple: true,
     }),
     'analyst-user': Flags.string({
-      description: 'ID of user to give analyst access',
+      description: 'ID of user to give analyst access.',
       multiple: true,
     }),
     'analyst-role': Flags.string({
-      description: 'ID of role to give analyst access',
+      description: 'ID of role to give analyst access.',
       multiple: true,
     }),
     'viewer-user': Flags.string({
-      description: 'ID of user to give viewer access',
+      description: 'ID of user to give viewer access.',
       multiple: true,
     }),
     'viewer-role': Flags.string({
-      description: 'ID of role to give viewer access',
+      description: 'ID of role to give viewer access.',
       multiple: true,
     }),
     'org-id': Flags.string({
@@ -95,8 +100,8 @@ export default class Create extends Command<CreateJSON> {
           // eslint-disable-next-line camelcase
           toAdd.push({access_level: level, role_id: role});
         } else {
-          this.warn(`Unrecognised role ${role}. Skipping`);
-          this.warnings.push(`Unrecognised role ${role}. Skipping`);
+          this.warn(`Unrecognised role ${role}. Skipping.`);
+          this.warnings.push(`Unrecognised role ${role}. Skipping.`);
         }
       }
     }
@@ -116,8 +121,7 @@ export default class Create extends Command<CreateJSON> {
       );
     }
 
-    const endpoint = `organizations/${orgId}/projects/`;
-    const project = await this.api.post<T.Project>(endpoint, {
+    const project = await this.api.post<T.Project>(`organizations/${orgId}/projects/`, {
       body: JSON.stringify({name: flags.name}),
     });
     this.log(project.id);

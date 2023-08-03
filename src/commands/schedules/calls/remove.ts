@@ -10,7 +10,9 @@ export default class Remove extends Command<Schedule> {
   static description = 'Remove call from schedule';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    '<%= config.bin %> <%= command.id %> --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM',
+  ];
 
   static aliases = ['calls:schedules:delete'];
 

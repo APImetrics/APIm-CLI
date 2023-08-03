@@ -61,49 +61,49 @@
     "topicSeparator": " ",
     "topics": {
       "auth": {
-        "description": "Manage authentication options"
+        "description": "Manage authentication options."
       },
       "calls": {
-        "description": "Manage monitoring calls"
+        "description": "Manage monitoring calls."
       },
       "config": {
-        "description": "Manage CLI configuration options"
+        "description": "Manage CLI configuration options."
       },
       "config:project": {
-        "description": "Manage project settings"
+        "description": "Manage project settings."
       },
       "config:org": {
-        "description": "Manage organization settings"
+        "description": "Manage organization settings."
       },
       "info": {
-        "description": "Information about APImetrics monitoring infrastructure"
+        "description": "Information about APImetrics monitoring infrastructure."
       },
       "org": {
-        "description": "Manage organization settings"
+        "description": "Manage organization settings."
       },
       "org:accounts": {
-        "description": "Manage organization users"
+        "description": "Manage organization users."
       },
       "org:invites": {
-        "description": "Manage organization invites"
+        "description": "Manage organization invites."
       },
       "org:roles": {
-        "description": "Manage organization roles"
+        "description": "Manage organization roles."
       },
       "projects": {
-        "description": "Manage projects"
+        "description": "Manage projects."
       },
       "projects:accounts": {
-        "description": "Manage project users"
+        "description": "Manage project users."
       },
       "projects:invites": {
-        "description": "Manage project invites"
+        "description": "Manage project invites."
       },
       "schedules": {
-        "description": "Manage project schedules"
+        "description": "Manage project schedules."
       },
       "workflows": {
-        "description": "Manage project workflows"
+        "description": "Manage project workflows."
       }
     }
   },

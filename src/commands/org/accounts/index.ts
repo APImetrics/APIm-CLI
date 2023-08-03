@@ -7,9 +7,20 @@ export type AccountList = {
 };
 
 export default class Accounts extends Command<AccountList> {
-  static description = 'List all users in organization';
+  static description = 'List all users in organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Name              Email             Roles                    Last login
+───────────────── ───────────────── ──────────────────────── ────────────────────────
+alice@example.com alice@example.com DEFAULT                  2023-08-02T21:15:48.072Z
+Bob               bob@example.com   DEFAULT, ADMIN, DEV_TEAM 2023-08-01T23:41:07.733Z `,
+    `<%= config.bin %> <%= command.id %>
+Name              ID
+───────────────── ──────────────────────────────
+alice@example.com auth0|abcdefghijklmnopqrstuvwx
+Bob               auth0|zyxwvutsrqponmlkjihgfedc`,
+  ];
 
   static flags = {
     ...ux.table.flags(),
@@ -52,9 +63,7 @@ export default class Accounts extends Command<AccountList> {
                 row.app_metadata.org_roles &&
                 (row.app_metadata.org_roles as Record<string, string[]>)[orgId]
               ) {
-                return (row.app_metadata.org_roles as Record<string, string[]>)[orgId].join(
-                  ', '
-                );
+                return (row.app_metadata.org_roles as Record<string, string[]>)[orgId].join(', ');
               }
 
               if (row.app_metadata[orgId]) {
@@ -70,7 +79,7 @@ export default class Accounts extends Command<AccountList> {
           },
         },
         lastLogin: {
-          header: 'Last login',
+          header: 'Last Login',
           get: (row) => row.last_login,
         },
         lastLoginIP: {

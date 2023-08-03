@@ -2,10 +2,10 @@ import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean; warnings?: string[]}> {
-  static description = 'Edit role access on a project';
+  static description = 'Edit role access on the project.';
   private warnings: string[] = [];
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = ['<%= config.bin %> <%= command.id %> --add-owner ADMIN --remove-editor DEBUG'];
 
   static flags = {
     'add-owner': Flags.string({
@@ -29,7 +29,7 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
       multiple: true,
     }),
     'remove-analyst': Flags.string({
-      description: 'ID of role to remove as an analyst',
+      description: 'ID of role to remove as an analyst.',
       multiple: true,
     }),
     'add-viewer': Flags.string({
@@ -116,53 +116,36 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
       this.api.project = flags['project-id'];
     }
 
-    if (
-      flags['add-owner'] ||
-      flags['remove-owner'] ||
-      flags['add-editor'] ||
-      flags['remove-editor'] ||
-      flags['add-analyst'] ||
-      flags['remove-analyst'] ||
-      flags['add-viewer'] ||
-      flags['remove-viewer']
-    ) {
-      const {org_id: orgId} = await this.api.get<T.Project>(`projects/${this.api.project}`);
-      const roles = await this.api.list<T.Role>(`organizations/${orgId}/roles/`);
+    const {org_id: orgId} = await this.api.get<T.Project>(`projects/${this.api.project}`);
+    const roles = await this.api.list<T.Role>(`organizations/${orgId}/roles/`);
 
-      const accessToAdd: {
-        // eslint-disable-next-line camelcase
-        access_level: string;
-        // eslint-disable-next-line camelcase
-        role_id: string;
-      }[] = [
-        ...this.formatAccessRequests(roles, 'OWNER', flags['add-owner']),
-        ...this.formatAccessRequests(roles, 'EDITOR', flags['add-editor']),
-        ...this.formatAccessRequests(roles, 'ANALYST', flags['add-analyst']),
-        ...this.formatAccessRequests(roles, 'VIEWER', flags['add-viewer']),
-      ];
+    const accessToAdd = [
+      ...this.formatAccessRequests(roles, 'OWNER', flags['add-owner']),
+      ...this.formatAccessRequests(roles, 'EDITOR', flags['add-editor']),
+      ...this.formatAccessRequests(roles, 'ANALYST', flags['add-analyst']),
+      ...this.formatAccessRequests(roles, 'VIEWER', flags['add-viewer']),
+    ];
 
-      const existingAccess = await this.api.list<T.Access>(`projects/${this.api.project}/roles/`);
-      const accessToRemove: string[] = [
-        ...this.getAccessIDs(existingAccess, 'OWNER', flags['remove-owner']),
-        ...this.getAccessIDs(existingAccess, 'EDITOR', flags['remove-editor']),
-        ...this.getAccessIDs(existingAccess, 'ANALYST', flags['remove-analyst']),
-        ...this.getAccessIDs(existingAccess, 'VIEWER', flags['remove-viewer']),
-      ];
+    const existingAccess = await this.api.list<T.Access>(`projects/${this.api.project}/roles/`);
+    const accessToRemove: string[] = [
+      ...this.getAccessIDs(existingAccess, 'OWNER', flags['remove-owner']),
+      ...this.getAccessIDs(existingAccess, 'EDITOR', flags['remove-editor']),
+      ...this.getAccessIDs(existingAccess, 'ANALYST', flags['remove-analyst']),
+      ...this.getAccessIDs(existingAccess, 'VIEWER', flags['remove-viewer']),
+    ];
 
-      const responses = [];
-      for (const access of accessToAdd) {
-        responses.push(
-          this.api.post(`projects/${this.api.project}/roles/`, {body: JSON.stringify(access)})
-        );
-      }
-
-      for (const access of accessToRemove) {
-        responses.push(this.api.delete(`projects/${this.api.project}/roles/${access}/`));
-      }
-
-      await Promise.all(responses); // Wait for all requests to finish
+    const responses = [];
+    for (const access of accessToAdd) {
+      responses.push(
+        this.api.post(`projects/${this.api.project}/roles/`, {body: JSON.stringify(access)})
+      );
     }
 
+    for (const access of accessToRemove) {
+      responses.push(this.api.delete(`projects/${this.api.project}/roles/${access}/`));
+    }
+
+    await Promise.all(responses); // Wait for all requests to finish
     return {success: this.warnings.length === 0, warnings: this.warnings};
   }
 }

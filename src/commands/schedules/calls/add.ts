@@ -7,10 +7,12 @@ export type Schedule = {
 };
 
 export default class Add extends Command<Schedule> {
-  static description = 'Add call to schedule';
+  static description = 'Add call to schedule.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    '<%= config.bin %> <%= command.id %> --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM',
+  ];
 
   static aliases = ['calls:schedules:add'];
 
@@ -33,12 +35,14 @@ export default class Add extends Command<Schedule> {
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Add);
-    const endpoint = `schedules/${flags['schedule-id']}/call/${flags['call-id']}`;
     if (flags['project-id']) {
       this.api.project = flags['project-id'];
     }
 
-    const schedule = await this.api.post<T.Schedule>(endpoint, {});
+    const schedule = await this.api.post<T.Schedule>(
+      `schedules/${flags['schedule-id']}/call/${flags['call-id']}`,
+      {} // No body for this POST request
+    );
     return {success: true, schedule: schedule};
   }
 }

@@ -7,15 +7,22 @@ export type ScheduleList = {
 };
 
 export default class Schedules extends Command<ScheduleList> {
-  static description = 'List all schedules';
+  static description = 'List schedules.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Name          Frequency        Regions
+───────────── ──────────────── ───────
+High freq     Every 10 seconds all
+Schedule 2    Every 5 minutes  all, oc
+`,
+  ];
 
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
       char: 'p',
     }),
   };
@@ -42,7 +49,11 @@ export default class Schedules extends Command<ScheduleList> {
               return `Every ${intervalMins / 60} hours`;
             }
 
-            return `Every ${intervalMins} minutes`;
+            if (intervalMins >= 1) {
+              return `Every ${intervalMins} minutes`;
+            }
+
+            return `Every ${intervalMins * 60} seconds`;
           },
         },
         regions: {

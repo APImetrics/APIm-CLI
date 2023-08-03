@@ -7,13 +7,16 @@ export type RoleResponse = {
 };
 
 export default class Create extends Command<RoleResponse> {
-  static description = 'Create a role in the organization';
+  static description = 'Create a role in the organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %> --name TEAM_A --description "Development team A"
+TEAM_A`,
+  ];
 
   static flags = {
-    name: Flags.string({description: 'Name of role', required: true, char: 'n'}),
-    description: Flags.string({description: 'Role description', required: true, char: 'd'}),
+    name: Flags.string({description: 'Name of role.', required: true, char: 'n'}),
+    description: Flags.string({description: 'Role description.', required: true, char: 'd'}),
     'org-id': Flags.string({
       description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',

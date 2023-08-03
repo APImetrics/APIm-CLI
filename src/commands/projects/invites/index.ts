@@ -7,9 +7,14 @@ export type InviteList = {
 };
 
 export default class Invites extends Command<InviteList> {
-  static description = 'List all invites in a project';
+  static description = 'List invites in the project.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Email             Access Level Created
+───────────────── ──────────── ───────────────────────────
+alice@example.com VIEWER       2023-08-03T22:28:02.141461Z `,
+  ];
 
   static flags = {
     ...ux.table.flags(),
@@ -21,6 +26,9 @@ export default class Invites extends Command<InviteList> {
 
   public async run(): Promise<InviteList> {
     const {flags} = await this.parse(Invites);
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
 
     if (!this.userConfig.project.current && !flags['project-id']) {
       throw new Error(
@@ -28,10 +36,7 @@ export default class Invites extends Command<InviteList> {
       );
     }
 
-    const projectId = flags['project-id'] ? flags['project-id'] : this.userConfig.project.current;
-
-    const endpoint = `projects/${projectId}/invites/`;
-    const invites = await this.api.list<T.Invite>(endpoint);
+    const invites = await this.api.list<T.Invite>(`projects/${this.api.project}/invites/`);
 
     ux.table(
       invites,
@@ -40,6 +45,7 @@ export default class Invites extends Command<InviteList> {
           get: (row) => row.email,
         },
         accessLevel: {
+          header: 'Access Level',
           get: (row) => row.access_level,
         },
         created: {

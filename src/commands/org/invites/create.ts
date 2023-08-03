@@ -1,6 +1,5 @@
 import {Flags} from '@oclif/core';
 import {Command, T, util} from '../../../base-command';
-import * as inquirer from 'inquirer';
 
 export type InviteResponse = {
   success: boolean;
@@ -8,13 +7,16 @@ export type InviteResponse = {
 };
 
 export default class Create extends Command<InviteResponse> {
-  static description = 'Create an invite to the organization';
+  static description = 'Create an invite to the organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %> --email bob@example.com --role ADMIN --role DEV_TEAM
+ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM`,
+  ];
 
   static flags = {
-    email: Flags.string({description: 'Email to send invite to', required: true}),
-    role: Flags.string({description: 'Users role', multiple: true}),
+    email: Flags.string({description: 'Email to send invite to.', required: true}),
+    role: Flags.string({description: 'Users role.', multiple: true, required: true}),
     'org-id': Flags.string({
       description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
@@ -32,7 +34,7 @@ export default class Create extends Command<InviteResponse> {
     }
 
     if (!util.validateEmail(flags.email)) {
-      throw new Error(`Invalid email: ${flags.email}`);
+      throw new Error(`Invalid email: ${flags.email}.`);
     }
 
     let endpoint = `organizations/${orgId}/roles/`;
@@ -42,31 +44,16 @@ export default class Create extends Command<InviteResponse> {
       roles.push(role.id);
     }
 
-    let selectedRoles: string[] = [];
-    if (flags.role) {
-      for (const role of flags.role) {
-        if (!roles.includes(role)) {
-          throw new Error(`Unrecognized role ${role}`);
-        }
+    for (const role of flags.role) {
+      if (!roles.includes(role)) {
+        throw new Error(`Unrecognized role ${role}.`);
       }
-
-      selectedRoles = flags.role;
-    } else if (!flags.json) {
-      const response = await inquirer.prompt([
-        {
-          name: 'role',
-          message: 'Select user roles',
-          type: 'checkbox',
-          choices: roles,
-        },
-      ]);
-      selectedRoles = response.role;
     }
 
     endpoint = `organizations/${orgId}/invites/`;
     const data = {
       email: flags.email,
-      roles: selectedRoles,
+      roles: flags.role,
     };
     const invite = await this.api.post<T.Invite>(endpoint, {body: JSON.stringify(data)}, false);
     this.log(invite.id);

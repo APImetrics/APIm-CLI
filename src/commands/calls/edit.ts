@@ -1,19 +1,25 @@
 import {Flags} from '@oclif/core';
 import {Command, T, util} from '../../base-command';
-import * as inquirer from 'inquirer';
 
-export default class Edit extends Command<T.Call> {
-  static description = 'Edit an existing API call';
+export type UpdatedCall = {
+  success: boolean;
+  call: T.Call;
+};
+
+export default class Edit extends Command<UpdatedCall> {
+  static description = 'Edit an existing API call.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    '<%= config.bin %> <%= command.id %> --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM --url https://example.com/v2/apples',
+  ];
 
   static flags = {
-    'call-id': Flags.string({description: 'ID of call', char: 'c'}),
-    name: Flags.string({description: 'Name of API call', char: 'n'}),
-    url: Flags.string({description: 'URL to call', char: 'u'}),
+    'call-id': Flags.string({description: 'ID of call.', char: 'c', required: true}),
+    name: Flags.string({description: 'Name of API call.', char: 'n'}),
+    url: Flags.string({description: 'URL to call.', char: 'u'}),
     method: Flags.string({
-      description: 'HTTP method to use',
+      description: 'HTTP method to use.',
       options: [
         'get',
         'GET',
@@ -60,53 +66,19 @@ export default class Edit extends Command<T.Call> {
       description: 'ID of project to modify. Overrides apimetrics config project set.',
       char: 'p',
     }),
-    description: Flags.string({description: 'Call description'}),
+    description: Flags.string({description: 'Call description.'}),
     body: Flags.string({description: 'Request body.'}),
   };
 
-  private async getCall(): Promise<T.Call> {
-    const callData = await this.api.list<T.Call>('calls/');
-    const calls: {name: string; value: string}[] = [];
-    for (const call of callData) {
-      calls.push({
-        name: `${call.meta.name} (${call.id})`,
-        value: call.id,
-      });
-    }
-
-    const response = await inquirer.prompt([
-      {
-        name: 'call',
-        message: 'Select call',
-        type: 'list',
-        choices: calls,
-      },
-    ]);
-    const selectedCall = callData.find((call) => call.id === response.call);
-    if (selectedCall) return selectedCall;
-    throw new Error('Selected call does not exist');
-  }
-
-  public async run(): Promise<T.Call> {
+  public async run(): Promise<UpdatedCall> {
     const {flags} = await this.parse(Edit);
-    let endpoint: string;
-    let call: T.Call;
 
     if (flags['project-id']) {
       this.api.project = flags['project-id'];
     }
 
-    if (flags.json && !flags['call-id']) {
-      throw new Error('Must specify --call-id in non-interactive mode.');
-    }
-
-    if (flags['call-id']) {
-      endpoint = `calls/${flags['call-id']}/`;
-      call = await this.api.get<T.Call>(endpoint);
-    } else {
-      call = await this.getCall();
-      endpoint = `calls/${call.id}/`;
-    }
+    const endpoint = `calls/${flags['call-id']}/`;
+    const call = await this.api.get<T.Call>(endpoint);
 
     if (flags['remove-header'] && flags['remove-header'].length > 0) {
       for (const header of flags['remove-header']) {
@@ -160,6 +132,6 @@ export default class Edit extends Command<T.Call> {
       },
       false
     );
-    return updatedCall;
+    return {success: true, call: updatedCall};
   }
 }

@@ -7,9 +7,16 @@ export type LocationList = {
 };
 
 export default class Locations extends Command<LocationList> {
-  static description = 'List all available agent locations';
+  static description = 'List all available agent locations.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Name                   IP
+────────────────────── ──────────────
+public_awsuswest       54.191.239.225
+public_azureasiase     13.67.53.204
+public_googleuscentral 35.226.77.27`,
+  ];
 
   static flags = {
     ...ux.table.flags(),

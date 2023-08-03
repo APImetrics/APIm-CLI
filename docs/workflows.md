@@ -1,13 +1,13 @@
 `apimetrics workflows`
 ======================
 
-Manage project workflows
+Manage project workflows.
 
 * [`apimetrics workflows`](#apimetrics-workflows)
 
 ## `apimetrics workflows`
 
-List all workflows
+List workflows.
 
 ```
 USAGE
@@ -30,10 +30,13 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  List all workflows
+  List workflows.
 
 EXAMPLES
   $ apimetrics workflows
+  Name      Description Stop on failure Handle cookies
+  ───────── ─────────── ─────────────── ──────────────
+  Buy Fruit             false           false
 ```
 
 _See code: [dist/commands/workflows/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.0/dist/commands/workflows/index.ts)_

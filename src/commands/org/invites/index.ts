@@ -7,9 +7,15 @@ export type InviteList = {
 };
 
 export default class Invites extends Command<InviteList> {
-  static description = 'List all invites in an organization';
+  static description = 'List invites in an organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Email             Roles    Created
+───────────────── ──────── ───────────────────────────
+bob@example.com   ADMIN    2023-07-15T18:32:41.626327Z
+alice@example.com DEV_TEAM 2023-07-15T18:34:27.044198Z`,
+  ];
 
   static flags = {
     ...ux.table.flags(),

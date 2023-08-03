@@ -7,9 +7,16 @@ export type AccountList = {
 };
 
 export default class Accounts extends Command<AccountList> {
-  static description = 'List all users with access to a project';
+  static description = 'List users with access to the project.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Email             Access Level
+───────────────── ────────────
+bob@example.com   VIEWER
+alice@example.com OWNER
+`,
+  ];
 
   static flags = {
     ...ux.table.flags(),
@@ -21,13 +28,11 @@ export default class Accounts extends Command<AccountList> {
 
   public async run(): Promise<AccountList> {
     const {flags} = await this.parse(Accounts);
-
     if (flags['project-id']) {
       this.api.project = flags['project-id'];
     }
 
-    const endpoint = `projects/${this.api.project}/access/`;
-    const accounts = await this.api.list<T.Access>(endpoint);
+    const accounts = await this.api.list<T.Access>(`projects/${this.api.project}/access/`);
 
     ux.table(
       accounts,

@@ -1,15 +1,24 @@
 import {Flags, ux} from '@oclif/core';
 import {Command, T} from '../../../base-command';
 
-export type AccountList = {
+export type RoleList = {
   success: boolean;
   roles: T.Access[];
 };
 
-export default class Roles extends Command<AccountList> {
-  static description = 'List all roles with access to a project';
+export default class Roles extends Command<RoleList> {
+  static description = 'List all roles with access to the project.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Role      Access Level
+───────── ────────────
+DEBUGGING EDITOR
+DEBUGGING ANALYST
+DEFAULT   EDITOR
+DEV_TEAM  EDITOR
+ADMIN     VIEWER  `,
+  ];
 
   static flags = {
     ...ux.table.flags(),
@@ -19,7 +28,7 @@ export default class Roles extends Command<AccountList> {
     }),
   };
 
-  public async run(): Promise<AccountList> {
+  public async run(): Promise<RoleList> {
     const {flags} = await this.parse(Roles);
 
     if (flags['project-id']) {

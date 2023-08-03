@@ -1,30 +1,30 @@
 `apimetrics config`
 ===================
 
-Manage CLI configuration options
+Manage CLI configuration options.
 
 * [`apimetrics config org set`](#apimetrics-config-org-set)
 * [`apimetrics config project set`](#apimetrics-config-project-set)
 
 ## `apimetrics config org set`
 
-Set the current working organization
+Set the current working organization.
 
 ```
 USAGE
-  $ apimetrics config org set [--json] [-i <value>]
+  $ apimetrics config org set [--json] [-o <value>]
 
 FLAGS
-  -i, --org-id=<value>  ID of org to set to
+  -o, --org-id=<value>  ID of org to set to.
 
 GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Set the current working organization
+  Set the current working organization.
 
 EXAMPLES
-  $ apimetrics config org set
+  $ apimetrics config org set  --org-id abccorp
 ```
 
 ## `apimetrics config project set`

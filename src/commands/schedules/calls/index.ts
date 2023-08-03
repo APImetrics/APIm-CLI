@@ -7,10 +7,15 @@ export type CallList = {
 };
 
 export default class Calls extends Command<CallList> {
-  static description = 'List all calls on a schedule';
+  static description = 'List calls on the schedule.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %> --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA
+Name   Description Method URL
+────── ─────────── ────── ──────────────────────────
+Apples             GET    https://example.com/apples`,
+  ];
 
   static flags = {
     ...ux.table.flags(),
@@ -19,7 +24,7 @@ export default class Calls extends Command<CallList> {
       char: 'p',
     }),
     'schedule-id': Flags.string({
-      description: 'ID of schedule to read',
+      description: 'ID of schedule to read.',
       char: 's',
       required: true,
     }),
@@ -27,12 +32,11 @@ export default class Calls extends Command<CallList> {
 
   public async run(): Promise<CallList> {
     const {flags} = await this.parse(Calls);
-    const endpoint = `schedules/${flags['schedule-id']}/`;
     if (flags['project-id']) {
       this.api.project = flags['project-id'];
     }
 
-    const schedule = await this.api.get<T.Schedule>(endpoint);
+    const schedule = await this.api.get<T.Schedule>(`schedules/${flags['schedule-id']}/`);
     const results = [];
     for (const target of schedule.schedule.target_ids) {
       results.push(this.api.get<T.Call>(`calls/${target}/`));

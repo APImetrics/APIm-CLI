@@ -8,14 +8,14 @@ export type SetOrgJson = {
 };
 
 export default class Set extends Command<SetOrgJson> {
-  static description = 'Set the current working organization';
+  static description = 'Set the current working organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = ['<%= config.bin %> <%= command.id %>  --org-id abccorp'];
 
   static flags = {
     'org-id': Flags.string({
-      description: 'ID of org to set to',
-      char: 'i',
+      description: 'ID of org to set to.',
+      char: 'o',
     }),
   };
 
@@ -25,7 +25,7 @@ export default class Set extends Command<SetOrgJson> {
       this.userConfig.organization.current = flags['org-id'];
       await this.userConfig.save();
 
-      return {success: true, message: 'Set current organization'};
+      return {success: true, message: 'Set current organization.'};
     }
 
     if (flags.json) {
@@ -60,6 +60,6 @@ export default class Set extends Command<SetOrgJson> {
     this.userConfig.project.current = undefined;
     this.userConfig.save();
 
-    return {success: true, message: 'Set current organization'};
+    return {success: true, message: 'Set current organization.'};
   }
 }

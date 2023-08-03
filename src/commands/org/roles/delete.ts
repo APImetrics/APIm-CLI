@@ -1,25 +1,20 @@
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../../base-command';
-import * as inquirer from 'inquirer';
+import {Command} from '../../../base-command';
 
-export type DeleteResponse = {
-  success: boolean;
-};
+export default class Delete extends Command<{success: boolean}> {
+  static description = 'Delete a role from the organization.';
 
-export default class Delete extends Command<DeleteResponse> {
-  static description = 'Delete a role in the organization';
-
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = ['<%= config.bin %> <%= command.id %> --role TEAM_A'];
 
   static flags = {
-    role: Flags.string({description: 'Role to delete', char: 'r'}),
+    role: Flags.string({description: 'ID of role to delete.', char: 'r', required: true}),
     'org-id': Flags.string({
       description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
     }),
   };
 
-  public async run(): Promise<DeleteResponse> {
+  public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Delete);
 
     const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
@@ -29,31 +24,7 @@ export default class Delete extends Command<DeleteResponse> {
       throw new Error('Organization roles not supported for personal projects.');
     }
 
-    let role: string;
-    if (flags.role) {
-      role = flags.role;
-    } else if (flags.json) {
-      throw new Error('No role selected for deletion.');
-    } else {
-      const endpoint = `organizations/${orgId}/roles/`;
-      const rawRoles = await this.api.list<T.Role>(endpoint);
-      const roles: string[] = [];
-      for (const role of rawRoles) {
-        roles.push(role.id);
-      }
-
-      const response = await inquirer.prompt([
-        {
-          name: 'role',
-          message: 'Select role to delete',
-          type: 'list',
-          choices: roles,
-        },
-      ]);
-      role = response.role;
-    }
-
-    const endpoint = `organizations/${orgId}/roles/${role}/`;
+    const endpoint = `organizations/${orgId}/roles/${flags.role}/`;
     await this.api.delete(endpoint);
     return {success: true};
   }

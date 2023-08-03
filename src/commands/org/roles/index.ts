@@ -7,9 +7,15 @@ export type RoleList = {
 };
 
 export default class Roles extends Command<RoleList> {
-  static description = 'List all roles in an organization';
+  static description = 'List roles in the organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Role   Description                     Created
+────── ─────────────────────────────── ───────────────────────────
+ADMIN  Organization Administrator Role 2021-02-25T01:53:42.656838Z
+TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
+  ];
 
   static flags = {
     ...ux.table.flags(),

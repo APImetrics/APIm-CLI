@@ -7,15 +7,24 @@ export type CallsList = {
 };
 
 export default class Calls extends Command<CallsList> {
-  static description = 'List all API calls';
+  static description = 'List API calls in project.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Name   Description Method  URL
+────── ─────────── ─────── ─────────────────────────────
+Apples null        GET     https://example.com/v1/apples`,
+    `<%= config.bin %> <%= command.id %> --columns name,id
+Name   ID
+────── ────────────────────────────────────────────────────────
+Apples ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM `,
+  ];
 
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
       char: 'p',
     }),
   };
@@ -37,7 +46,7 @@ export default class Calls extends Command<CallsList> {
           get: (row) => row.meta.name,
         },
         description: {
-          get: (row) => row.meta.description,
+          get: (row) => row.meta.description || '',
         },
         method: {
           get: (row) => row.request.method,

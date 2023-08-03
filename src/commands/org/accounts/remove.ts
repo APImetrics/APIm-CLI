@@ -2,12 +2,14 @@ import {Flags} from '@oclif/core';
 import {Command} from '../../../base-command';
 
 export default class Remove extends Command<{success: boolean}> {
-  static description = 'Remove an account';
+  static description = 'Remove an account from the organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    '<%= config.bin %> <%= command.id %> --user-id "auth0|abcdefghijklmnopqrstuvwx"',
+  ];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of user', char: 'u', required: true}),
+    'user-id': Flags.string({description: 'ID of user to remove.', char: 'u', required: true}),
     'org-id': Flags.string({
       description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
@@ -27,9 +29,6 @@ export default class Remove extends Command<{success: boolean}> {
     }
 
     await this.api.delete(`organizations/${orgId}/accounts/${flags['user-id']}/`);
-
-    return {
-      success: true,
-    };
+    return {success: true};
   }
 }

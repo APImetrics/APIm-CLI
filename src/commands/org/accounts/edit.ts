@@ -2,9 +2,9 @@ import {Flags} from '@oclif/core';
 import {Command, T} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean}> {
-  static description = 'Edit an account';
+  static description = 'Edit an account.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [`<%= config.bin %> <%= command.id %> --add-role ADMIN --remove-role DEV_TEAM`];
 
   static flags = {
     'user-id': Flags.string({description: 'ID of user', char: 'u'}),
@@ -59,7 +59,6 @@ export default class Edit extends Command<{success: boolean}> {
     }
 
     const results = [];
-
     if (flags['add-role'] && flags['add-role'].length > 0) {
       for (const role of flags['add-role']) {
         results.push(
@@ -77,9 +76,6 @@ export default class Edit extends Command<{success: boolean}> {
     }
 
     await Promise.all(results);
-
-    return {
-      success: true,
-    };
+    return {success: true};
   }
 }

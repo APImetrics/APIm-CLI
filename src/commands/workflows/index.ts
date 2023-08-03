@@ -7,10 +7,16 @@ export type WorkflowsList = {
 };
 
 export default class Workflows extends Command<WorkflowsList> {
-  static description = 'List all workflows';
+  static description = 'List workflows.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+Name      Description Stop on failure Handle cookies
+───────── ─────────── ─────────────── ──────────────
+Buy Fruit             false           false
+`,
+  ];
 
   static flags = {
     ...ux.table.flags(),
@@ -22,12 +28,11 @@ export default class Workflows extends Command<WorkflowsList> {
 
   public async run(): Promise<WorkflowsList> {
     const {flags} = await this.parse(Workflows);
-    const endpoint = `workflows/`;
     if (flags['project-id']) {
       this.api.project = flags['project-id'];
     }
 
-    const workflows = await this.api.list<T.Workflow>(endpoint);
+    const workflows = await this.api.list<T.Workflow>('workflows/');
 
     ux.table(
       workflows,
@@ -36,7 +41,7 @@ export default class Workflows extends Command<WorkflowsList> {
           get: (row) => row.meta.name,
         },
         description: {
-          get: (row) => row.meta.description,
+          get: (row) => row.meta.description || '',
         },
         stopOnFailure: {
           header: 'Stop on failure',

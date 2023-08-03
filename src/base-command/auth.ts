@@ -53,6 +53,10 @@ export class Auth {
   private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
   private configDir: string;
 
+  /**
+   * @param config User config file
+   * @param jsonMode Is the CLI operating in --json mode?
+   */
   constructor(private readonly config: Interfaces.Config, private jsonMode: boolean) {
     this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.config.configDir;
     this.loadAuth();

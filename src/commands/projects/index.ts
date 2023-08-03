@@ -9,7 +9,12 @@ export type ProjectList = {
 export default class Projects extends Command<ProjectList> {
   static description = 'List all projects in an organisation that the current user has access to.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %>
+ Name       Tags Created
+ ────────── ──── ───────────────────────────
+ My Project None 2023-07-21T14:11:07.321416Z `,
+  ];
 
   static flags = {
     ...ux.table.flags(),

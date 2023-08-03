@@ -1,7 +1,7 @@
 `apimetrics auth`
 =================
 
-Manage authentication options
+Manage authentication options.
 
 * [`apimetrics auth login`](#apimetrics-auth-login)
 * [`apimetrics auth logout`](#apimetrics-auth-logout)
