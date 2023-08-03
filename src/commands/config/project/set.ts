@@ -15,7 +15,7 @@ export default class Set extends Command<SetProjectJson> {
   static flags = {
     'project-id': Flags.string({
       description: 'ID of project to switch to',
-      char: 'i',
+      char: 'p',
     }),
   };
 
