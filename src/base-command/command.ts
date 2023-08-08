@@ -79,6 +79,11 @@ export abstract class Command<T> extends Base {
       console.error(this.formatErrorJson(err));
       err.skipOclifErrorHandling = true; // Prevent extra logs to stderr by run
       throw err;
+    }
+
+    if (this.config.debug) {
+      // This will include the correct stack trace
+      this.error(err);
     } else {
       this.error(err.message);
     }
