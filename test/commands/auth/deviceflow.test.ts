@@ -27,7 +27,7 @@ describe('device flow authentication', () => {
     })
     .it('Device flow with --json', (ctx) => {
       const output = JSON.parse(ctx.stderr);
-      expect(output).to.deep.equal({
+      expect(output).to.deep.contain({
         success: false,
         message: 'Cannot use --json with device flow authentication. Use --key instead.',
       });

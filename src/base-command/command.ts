@@ -10,6 +10,7 @@ export type CustomError = Interfaces.CommandError & {skipOclifErrorHandling?: bo
 export type ErrorJson = {
   success: boolean;
   message: string;
+  stack?: string;
 };
 
 export type ConfirmOptions = {
@@ -62,11 +63,12 @@ export abstract class Command<T> extends Base {
   }
 
   private formatErrorJson(err: CustomError): string {
+    const res: ErrorJson = {success: false, message: err.message, stack: undefined};
     if (this.config.debug && err.stack) {
-      return err.stack;
+      res.stack = err.stack;
     }
 
-    return JSON.stringify({success: false, message: err.message}, undefined, 2);
+    return JSON.stringify(res, undefined, 2);
   }
 
   /**

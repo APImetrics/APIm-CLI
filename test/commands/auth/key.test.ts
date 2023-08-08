@@ -41,7 +41,7 @@ describe('api key authentication', () => {
     })
     .it('API key login with key too short --json', (ctx) => {
       const output = JSON.parse(ctx.stderr);
-      expect(output).to.deep.equal({
+      expect(output).to.deep.contain({
         success: false,
         message: 'API key is malformed. Expected 32 characters, got 31',
       });

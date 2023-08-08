@@ -27,7 +27,7 @@ describe('set current working project', () => {
     })
     .it('Set project with --json', (ctx) => {
       const output = JSON.parse(ctx.stderr);
-      expect(output).to.deep.equal({
+      expect(output).to.deep.contain({
         success: false,
         message:
           'Cannot use --json with interactive mode. Specify project using --project-id instead.',
