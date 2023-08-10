@@ -115,7 +115,7 @@ const jsonResponse = {
   version: '2',
 };
 
-describe('pull project.yaml', () => {
+describe('projects pull', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {

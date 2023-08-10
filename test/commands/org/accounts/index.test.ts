@@ -46,7 +46,7 @@ const accountResponse = {
   ],
 };
 
-describe('list accounts', () => {
+describe('org accounts', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -95,7 +95,7 @@ describe('list accounts', () => {
     )
     .stdout()
     .command(['org:accounts', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List all organisation accounts with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
@@ -133,7 +133,7 @@ describe('list accounts', () => {
         'Cannot use an API key to authenticate against a non project endpoint. Run `apimetrics login` instead.'
       );
     })
-    .it('API key for non project endpoint');
+    .it('Use API key authentication for an endpoint not supporting API keys');
 
   noOrg
     .stderr()

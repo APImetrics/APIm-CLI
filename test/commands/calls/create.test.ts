@@ -46,7 +46,7 @@ const advancedCreateRequest = {
   },
 };
 
-describe('create calls', () => {
+describe('calls create', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -81,7 +81,7 @@ describe('create calls', () => {
     )
     .stdout()
     .command(['calls:create', '--json', '-n', '=1+1', '-u', 'http://google.apimetrics.xyz/get'])
-    .it('Create basic call', (ctx) => {
+    .it('Create call with minimum options (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal(callsResponse);
     });

@@ -1,7 +1,7 @@
 import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
-describe('delete role', () => {
+describe('org roles delete', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {

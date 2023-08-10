@@ -97,7 +97,7 @@ const locationsResponse = {
   ],
 };
 
-describe('list locations', () => {
+describe('info locations', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -118,7 +118,7 @@ describe('list locations', () => {
     )
     .stdout()
     .command(['info:locations', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List all locations with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

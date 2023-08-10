@@ -80,7 +80,7 @@ const scheduleResponse = {
   ],
 };
 
-describe('list schedules', () => {
+describe('schedules', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -115,7 +115,7 @@ describe('list schedules', () => {
     )
     .stdout()
     .command(['schedules', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List all schedules with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
@@ -149,7 +149,7 @@ describe('list schedules', () => {
     )
     .stdout()
     .command(['schedules', '--output=json', '-p', 'abc123'])
-    .it('Standard columns in JSON passing project ID', (ctx) => {
+    .it('Pass --project-id argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

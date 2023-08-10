@@ -62,7 +62,7 @@ const inviteRequest = {
   roles: ['ADMIN'],
 };
 
-describe('create invite', () => {
+describe('org invites create', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {

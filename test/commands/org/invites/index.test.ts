@@ -47,7 +47,7 @@ const accountResponse = {
   ],
 };
 
-describe('list invites', () => {
+describe('org invites', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {

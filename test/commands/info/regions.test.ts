@@ -67,7 +67,7 @@ const regionsResponse = {
   ],
 };
 
-describe('list regions', () => {
+describe('info regions', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -88,7 +88,7 @@ describe('list regions', () => {
     )
     .stdout()
     .command(['info:regions', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List all regions with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

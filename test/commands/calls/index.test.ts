@@ -197,7 +197,7 @@ const callsResponse = {
   ],
 };
 
-describe('list calls', () => {
+describe('calls', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -226,14 +226,13 @@ describe('list calls', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
-
   auth
     .nock('https://client.apimetrics.io', (api) =>
       api.get('/api/2/calls/').reply(200, callsResponse)
     )
     .stdout()
     .command(['calls', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List calls with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
@@ -277,7 +276,7 @@ describe('list calls', () => {
     )
     .stdout()
     .command(['calls', '--output=json', '-p', 'abc123'])
-    .it('Standard columns in JSON passing project ID', (ctx) => {
+    .it('Pass --project-id argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

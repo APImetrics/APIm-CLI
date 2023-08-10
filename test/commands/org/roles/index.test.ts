@@ -57,7 +57,7 @@ const rolesResponse = {
   ],
 };
 
-describe('list roles', () => {
+describe('org roles', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -106,7 +106,7 @@ describe('list roles', () => {
     )
     .stdout()
     .command(['org:roles', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List all roles with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

@@ -269,7 +269,7 @@ const workflowsResponse = {
   ],
 };
 
-describe('list workflows', () => {
+describe('workflows', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -304,7 +304,7 @@ describe('list workflows', () => {
     )
     .stdout()
     .command(['workflows', '--output=json'])
-    .it('Standard columns in JSON', (ctx) => {
+    .it('List all workflows with --output=json argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
@@ -384,7 +384,7 @@ describe('list workflows', () => {
     )
     .stdout()
     .command(['workflows', '--output=json', '-p', 'abc123'])
-    .it('Standard columns in JSON passing project ID', (ctx) => {
+    .it('Pass --project-id argument', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {

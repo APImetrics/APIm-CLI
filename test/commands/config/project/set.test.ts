@@ -2,7 +2,7 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-describe('set current working project', () => {
+describe('config project set', () => {
   const conf = test
     .do(() => {
       fs.readdir('./.test', (err, files) => {
@@ -25,7 +25,7 @@ describe('set current working project', () => {
         'Cannot use --json with interactive mode. Specify project using --project-id instead.'
       );
     })
-    .it('Set project with --json', (ctx) => {
+    .it('Set project passing --json flag without --project-id', (ctx) => {
       const output = JSON.parse(ctx.stderr);
       expect(output).to.deep.contain({
         success: false,
@@ -36,7 +36,7 @@ describe('set current working project', () => {
   conf
     .stdout()
     .command(['config:project:set', '--project-id', 'abcdefg'])
-    .it('Set project directly', (ctx) => {
+    .it('Set project passing --project-id', (ctx) => {
       expect(ctx.stdout).to.equal('');
     });
   conf
@@ -45,5 +45,5 @@ describe('set current working project', () => {
     .catch((error) => {
       expect(error.message).to.contain('Please select an organization first');
     })
-    .it('Interactive mode without org set');
+    .it('Interactive mode without setting the current working organization first');
 });

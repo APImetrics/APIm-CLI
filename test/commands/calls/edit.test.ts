@@ -63,7 +63,7 @@ const updateRequest = {
   },
 };
 
-describe('edit calls', () => {
+describe('calls edit', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -118,7 +118,7 @@ describe('edit calls', () => {
       '--remove-header',
       'Poor-header',
     ])
-    .it('Update API call');
+    .it('Add and remove tags and headers');
 
   noProject
     .stdout()
@@ -152,5 +152,5 @@ describe('edit calls', () => {
       '-p',
       'abc123',
     ])
-    .it('Update API call passing project ID');
+    .it('Add and remove tags and headers passing --project-id argument');
 });

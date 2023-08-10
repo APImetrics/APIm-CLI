@@ -6,7 +6,7 @@ const roleRequest = {
   description: 'A nice shiny new role',
 };
 
-describe('create role', () => {
+describe('org roles create', () => {
   const bearerAuth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
