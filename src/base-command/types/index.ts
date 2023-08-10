@@ -9,6 +9,7 @@ import {Project} from './project';
 import {Role} from './role';
 import {Schedule} from './schedule';
 import {UserProjects} from './userprojects';
+import {Webhook} from './webhook';
 import {Workflow} from './workflow';
 
 export {
@@ -23,5 +24,6 @@ export {
   Role,
   Schedule,
   UserProjects,
+  Webhook,
   Workflow,
 };
