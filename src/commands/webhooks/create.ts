@@ -1,9 +1,12 @@
+// Lots of the request properties are not in camel case so to prevent
+// hundreds of singular exceptions, just cover whole file
+/* eslint-disable camelcase */
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../base-command';
+import {Command, T, util} from '../../base-command';
 
 export type CreateJSON = {
   success: boolean;
-  webhook?: T.Webhook;
+  webhook: T.Webhook;
 };
 
 export default class Create extends Command<CreateJSON> {
@@ -203,6 +206,20 @@ Result: {{ result_url }}
     'flow-token': Flags.string({
       description: 'The token for the flow to post to. Used by [flowdock: required].',
     }),
+    alert: Flags.string({
+      description: 'Fire webhook on these result types.',
+      required: true,
+      multiple: true,
+      options: ['PASS', 'SLOW', 'WARNING', 'FAIL'],
+    }),
+    'include-tags': Flags.string({
+      description: 'Include calls with this tag.',
+      multiple: true,
+    }),
+    'exclude-tags': Flags.string({
+      description: 'Exclude calls with this tag.',
+      multiple: true,
+    }),
     'project-id': Flags.string({
       description: 'ID of project to read. Overrides apimetrics config project set.',
       char: 'p',
@@ -216,6 +233,349 @@ Result: {{ result_url }}
       this.api.project = flags['project-id'];
     }
 
-    return {success: true};
+    // API wants a string but we want number for easier validation
+    const failsInRow = flags['fails-in-a-row'].toString();
+
+    let request: T.Webhook;
+    const requestMeta: T.Webhook['meta'] = {
+      name: flags.name,
+      include_tags: flags['include-tags'] || [],
+      exclude_tags: flags['exclude-tags'] || [],
+    };
+    switch (flags.type) {
+      case 'email':
+        if (!util.validateEmail(flags['email-address']!)) {
+          throw new Error(`${flags['email-address']} is not a valid email.`);
+        }
+
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'email',
+            parameters: {
+              email_address: flags['email-address'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'email_text':
+        if (!util.validateEmail(flags['email-address']!)) {
+          throw new Error(`${flags['email-address']} is not a valid email.`);
+        }
+
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'email_text',
+            parameters: {
+              email_address: flags['email-address'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'email_template':
+        if (!util.validateEmail(flags['email-address']!)) {
+          throw new Error(`${flags['email-address']} is not a valid email.`);
+        }
+
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'email_template',
+            parameters: {
+              email_address: flags['email-address'],
+              subject_template: flags['subject-template'],
+              text_template: flags['text-template'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'generic':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'generic',
+            parameters: {
+              url: flags.url!.toString(),
+              username: flags.username,
+              password: flags.password,
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'apimetrics_api':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'apimetrics_api',
+            parameters: {
+              call_id: flags['call-id'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'apimetrics_workflow':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'apimetrics_workflow',
+            parameters: {
+              workflow_id: flags['workflow-id'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'apimetrics_token':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'apimetrics_token',
+            parameters: {
+              token_id: flags['token-id'],
+            },
+          },
+        };
+        break;
+      case 'slack':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'slack',
+            parameters: {
+              url: flags.url!.toString(),
+              channel: flags.channel,
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'pager_duty':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'pager_duty',
+            parameters: {
+              intergration_key: flags['integration-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'pager_duty_v2':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'pager_duty_v2',
+            parameters: {
+              intergration_key: flags['integration-key'],
+              severity: flags.severity as 'critical' | 'error' | 'warning' | 'info',
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'big_panda':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'big_panda',
+            parameters: {
+              user_key: flags['user-key'],
+              app_key: flags['app-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'victorops':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'victorops',
+            parameters: {
+              api_key: flags['api-key'],
+              routing_key: flags['routing-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'hipchat':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'hipchat',
+            parameters: {
+              url: flags.url!.toString(),
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'msteams':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'msteams',
+            parameters: {
+              url: flags.url!.toString(),
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'newrelic':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'newrelic',
+            parameters: {
+              app_key: flags['app-key'],
+              api_key: flags['api-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'darkspark':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'darkspark',
+            parameters: {},
+          },
+        };
+        break;
+      case 'datadog':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'datadog',
+            parameters: {
+              api_key: flags['api-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'datadogevent':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'datadogevent',
+            parameters: {
+              api_key: flags['api-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'statuspage':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'statuspage',
+            parameters: {
+              page_id: flags['page-id'],
+              api_key: flags['api-key'],
+              component_id: flags['component-id'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'flowdock':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'flowdock',
+            parameters: {
+              flow_token: flags['flow-token'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'opsgenie':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'opsgenie',
+            parameters: {
+              api_key: flags['api-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      case 'opsgenieeu':
+        request = {
+          meta: requestMeta,
+          webhook: {
+            enabled: true,
+            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            type: 'opsgenieeu',
+            parameters: {
+              api_key: flags['api-key'],
+              fails_in_a_row: failsInRow,
+            },
+          },
+        };
+        break;
+      default:
+        throw new Error('Unknown webhook type');
+    }
+
+    const webhook = await this.api.put<T.Webhook>('webhooks/', {body: JSON.stringify(request)});
+    this.log(webhook.id);
+    return {success: true, webhook: webhook};
   }
 }

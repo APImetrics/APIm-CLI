@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
 export type Webhook = {
-  meta?: {
+  meta: {
     name: string;
-    created: string;
+    created?: string;
     include_tags: string[];
     exclude_tags: string[];
-    tags: string;
+    tags?: string;
     call_id?: string;
-    last_update: string;
-    project_webhook: boolean;
-    owner: string;
-    project_id: string;
+    last_update?: string;
+    project_webhook?: boolean;
+    owner?: string;
+    project_id?: string;
   };
   webhook: {
     enabled: boolean;
@@ -39,7 +39,7 @@ export type Webhook = {
       | 'statuspage'
       | 'victorops';
     parameters: {
-      fails_in_a_row: number;
+      fails_in_a_row?: string;
       email_address?: string;
       subject_template?: string;
       text_template?: string;
@@ -61,4 +61,5 @@ export type Webhook = {
       flow_token?: string;
     };
   };
+  id?: string;
 };
