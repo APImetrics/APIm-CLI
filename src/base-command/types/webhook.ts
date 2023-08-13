@@ -5,7 +5,7 @@ export type Webhook = {
     created?: string;
     include_tags: string[];
     exclude_tags: string[];
-    tags?: string;
+    tags?: string[];
     call_id?: string;
     last_update?: string;
     project_webhook?: boolean;
