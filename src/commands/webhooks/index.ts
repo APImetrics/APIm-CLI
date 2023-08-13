@@ -11,10 +11,12 @@ export default class Webhooks extends Command<WebhookList> {
 
   static examples = [
     `<%= config.bin %> <%= command.id %>
-Email             Access Level
-───────────────── ────────────
-bob@example.com   VIEWER
-alice@example.com OWNER
+Name         Type      Enabled Include Tags Exclude Tags
+──────────── ───────── ─────── ──────────── ────────────
+Email        email     true    None         None
+DataDoggg    datadog   false   None         None
+Slack        slack     true    None         None
+GEn          generic   false   None         None
 `,
   ];
 
