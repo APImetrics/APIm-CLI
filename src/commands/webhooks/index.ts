@@ -7,7 +7,7 @@ export type WebhookList = {
 };
 
 export default class Webhooks extends Command<WebhookList> {
-  static description = 'List users with access to the project.';
+  static description = 'List webhooks on a project.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %>
