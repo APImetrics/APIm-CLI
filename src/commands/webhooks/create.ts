@@ -379,7 +379,7 @@ Result: {{ result_url }}
             alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
             type: 'pager_duty',
             parameters: {
-              intergration_key: flags['integration-key'],
+              integration_key: flags['integration-key'],
               fails_in_a_row: failsInRow,
             },
           },
@@ -393,7 +393,7 @@ Result: {{ result_url }}
             alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
             type: 'pager_duty_v2',
             parameters: {
-              intergration_key: flags['integration-key'],
+              integration_key: flags['integration-key'],
               severity: flags.severity as 'critical' | 'error' | 'warning' | 'info',
               fails_in_a_row: failsInRow,
             },

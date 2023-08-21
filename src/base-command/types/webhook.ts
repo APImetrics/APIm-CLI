@@ -50,7 +50,7 @@ export type Webhook = {
       workflow_id?: string;
       token_id?: string;
       channel?: string;
-      intergration_key?: string;
+      integration_key?: string;
       severity?: 'critical' | 'error' | 'warning' | 'info';
       user_key?: string;
       app_key?: string;
