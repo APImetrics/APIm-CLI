@@ -2,6 +2,7 @@ import {Flags} from '@oclif/core';
 import {Command} from '../../base-command';
 export default class Delete extends Command<{success: boolean}> {
   static description = 'Delete an invite to the project.';
+  protected permitKeyAuth = true;
 
   static examples = [
     '<%= config.bin %> <%= command.id %> --webhook-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA',

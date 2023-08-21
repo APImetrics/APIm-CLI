@@ -11,6 +11,7 @@ export type EditJSON = {
 
 export default class Edit extends Command<EditJSON> {
   static description = 'Edit a webhook.';
+  protected permitKeyAuth = true;
 
   static examples = [`<%= config.bin %> <%= command.id %>`];
 

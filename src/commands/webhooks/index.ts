@@ -8,6 +8,7 @@ export type WebhookList = {
 
 export default class Webhooks extends Command<WebhookList> {
   static description = 'List webhooks on a project.';
+  protected permitKeyAuth = true;
 
   static examples = [
     `<%= config.bin %> <%= command.id %>
