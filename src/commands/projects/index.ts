@@ -60,7 +60,7 @@ export default class Projects extends Command<ProjectList> {
         },
         id: {
           header: 'ID',
-          get: (row) => row.id,
+          get: (row) => row.project.id,
           extended: true,
         },
       },
