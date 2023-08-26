@@ -96,11 +96,17 @@
       "projects:accounts": {
         "description": "Manage project users."
       },
+      "projects:roles": {
+        "description": "Manage project roles."
+      },
       "projects:invites": {
         "description": "Manage project invites."
       },
       "schedules": {
         "description": "Manage project schedules."
+      },
+      "webhooks": {
+        "description": "Manage project webhooks and alerts."
       },
       "workflows": {
         "description": "Manage project workflows."
