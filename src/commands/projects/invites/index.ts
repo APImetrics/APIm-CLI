@@ -30,12 +30,6 @@ alice@example.com VIEWER       2023-08-03T22:28:02.141461Z `,
       this.api.project = flags['project-id'];
     }
 
-    if (!this.userConfig.project.current && !flags['project-id']) {
-      throw new Error(
-        'Current working project not set. Run `apimetrics config project set` first.'
-      );
-    }
-
     const invites = await this.api.list<T.Invite>(`projects/${this.api.project}/invites/`);
 
     ux.table(

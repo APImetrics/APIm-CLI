@@ -37,12 +37,6 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       throw new Error(`Invalid email: ${flags.email}.`);
     }
 
-    if (!this.userConfig.project.current && !flags['project-id']) {
-      throw new Error(
-        'Current working project not set. Run `apimetrics config project set` first.'
-      );
-    }
-
     const invite = await this.api.post<T.Invite>(
       `projects/${this.api.project}/invites/`,
       {

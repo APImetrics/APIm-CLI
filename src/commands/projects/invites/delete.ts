@@ -18,12 +18,6 @@ export default class Delete extends Command<{success: boolean}> {
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Delete);
 
-    if (!this.userConfig.project.current && !flags['project-id']) {
-      throw new Error(
-        'Current working project not set. Run `apimetrics config project set` first.'
-      );
-    }
-
     const projectId = flags['project-id'] ? flags['project-id'] : this.userConfig.project.current;
     await this.api.delete(`projects/${projectId}/invites/${flags['invite-id']}/`);
     return {success: true};
