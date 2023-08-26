@@ -196,6 +196,7 @@ export class Api {
       opts.headers = {
         ...opts.headers,
         Accept: 'application/json',
+        'User-Agent': this.oclifConfig.userAgent,
       };
     }
 
