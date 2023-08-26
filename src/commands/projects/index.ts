@@ -51,7 +51,7 @@ export default class Projects extends Command<ProjectList> {
           get: (row) => row.project.tags.join(', ') || 'None',
         },
         created: {
-          get: (row) => row.created,
+          get: (row) => row.project.created,
         },
         systemTags: {
           header: 'System Tags',
