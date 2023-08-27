@@ -24,14 +24,14 @@ export class Api {
 
   /**
    * @param oclifConfig Command config
-   * @param projectOnly Can this command be run by a user with project
+   * @param projectScope Can this command be run by a user with project
    * only access? E.g. an API key
    * @param config Running user config
    * @param jsonMode Is the CLI running in JSON (non interactive) mode?
    */
   constructor(
     private readonly oclifConfig: Interfaces.Config,
-    private readonly projectOnly: boolean,
+    private readonly projectScope: boolean,
     private config: Config,
     jsonMode: boolean
   ) {
@@ -169,7 +169,7 @@ export class Api {
       throw new Error('Not logged in. Run apimetrics login first.');
     }
 
-    if (!this.projectOnly && this.auth.projectOnly) {
+    if (!this.projectScope && this.auth.projectOnly) {
       // User is trying to access data outside a project with only an
       // API key.
       throw new Error(
@@ -177,7 +177,7 @@ export class Api {
       );
     }
 
-    if (this.projectOnly && this.config.project.current === undefined) {
+    if (this.projectScope && this.config.project.current === undefined) {
       throw new Error(
         'Current working project not set. Run `apimetrics config project set` first.'
       );
