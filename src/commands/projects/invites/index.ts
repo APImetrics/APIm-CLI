@@ -8,6 +8,7 @@ export type InviteList = {
 
 export default class Invites extends Command<InviteList> {
   static description = 'List invites in the project.';
+  protected permitKeyAuth = true;
 
   static examples = [
     `<%= config.bin %> <%= command.id %>

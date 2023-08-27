@@ -8,6 +8,7 @@ export type InviteResponse = {
 
 export default class Create extends Command<InviteResponse> {
   static description = 'Create an invite to the project.';
+  protected permitKeyAuth = true;
 
   static examples = [
     `<%= config.bin %> <%= command.id %> --email alice@example.com --access-level editor
