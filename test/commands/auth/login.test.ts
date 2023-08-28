@@ -17,6 +17,14 @@ describe('auth login', () => {
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'});
 
+  // The first test is always really slow because all TS files need to
+  // be transpiled first. To get more meaningful times for other tests,
+  // run this placeholder first.
+  auth
+    .stdout()
+    .command('help')
+    .it('Not a real test case. Transpile typescript files, expect to be slow');
+
   auth
     .stdout()
     .command(['login', '--key', 'lQjGo9CKKyD0gX7xQJMHY4Z104XmXoGs'])
