@@ -35,11 +35,10 @@ ADMIN     VIEWER  `,
       this.api.project = flags['project-id'];
     }
 
-    const endpoint = `projects/${this.api.project}/roles/`;
-    const accounts = await this.api.list<T.Access>(endpoint);
+    const roles = await this.api.list<T.Access>(`projects/${this.api.project}/roles/`);
 
     ux.table(
-      accounts,
+      roles,
       {
         role: {
           get: (row) => row.role_id,
@@ -54,6 +53,6 @@ ADMIN     VIEWER  `,
         ...flags,
       }
     );
-    return {success: true, roles: accounts};
+    return {success: true, roles: roles};
   }
 }
