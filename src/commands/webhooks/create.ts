@@ -243,7 +243,7 @@ Result: {{ result_url }}
       include_tags: flags['include-tags'] || [],
       exclude_tags: flags['exclude-tags'] || [],
     };
-    switch (flags.type) {
+    switch (flags.type as T.Webhook['webhook']['type']) {
       case 'email':
         if (!util.validateEmail(flags['email-address']!)) {
           throw new Error(`${flags['email-address']} is not a valid email.`);
@@ -571,8 +571,6 @@ Result: {{ result_url }}
           },
         };
         break;
-      default:
-        throw new Error('Unknown webhook type');
     }
 
     const webhook = await this.api.put<T.Webhook>('webhooks/', {body: JSON.stringify(request)});
