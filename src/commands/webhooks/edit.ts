@@ -135,6 +135,10 @@ Result: {{ result_url }}
       description: 'Disable this webhook if not already disabled.',
       exclusive: ['enable'],
     }),
+    'project-id': Flags.string({
+      description: 'ID of project to read. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   /**
@@ -153,7 +157,7 @@ Result: {{ result_url }}
       }
     }
 
-    current.filter((item) => !remove.includes(item));
+    current = current.filter((item) => !remove.includes(item));
 
     return current;
   }
@@ -188,6 +192,12 @@ Result: {{ result_url }}
 
     const enabled = flags.disable ? false : flags.enable || webhook.webhook.enabled;
 
+    const alerts = this.addRemoveStrings(
+      webhook.webhook.alerts,
+      flags['add-alert'] || [],
+      flags['remove-alert'] || []
+    ) as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[];
+
     switch (webhook.webhook.type) {
       case 'email':
         if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
@@ -198,7 +208,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'email',
             parameters: {
               email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
@@ -216,7 +226,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'email_text',
             parameters: {
               email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
@@ -234,7 +244,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'email_template',
             parameters: {
               email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
@@ -251,7 +261,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'generic',
             parameters: {
               url: flags.url!.toString() || webhook.webhook.parameters.url,
@@ -267,7 +277,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'apimetrics_api',
             parameters: {
               call_id: flags['call-id'] || webhook.webhook.parameters.call_id,
@@ -281,7 +291,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'apimetrics_workflow',
             parameters: {
               workflow_id: flags['workflow-id'] || webhook.webhook.parameters.workflow_id,
@@ -295,7 +305,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'apimetrics_token',
             parameters: {
               token_id: flags['token-id'] || webhook.webhook.parameters.token_id,
@@ -308,7 +318,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'slack',
             parameters: {
               url: flags.url!.toString() || webhook.webhook.parameters.url,
@@ -323,7 +333,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'pager_duty',
             parameters: {
               integration_key:
@@ -338,7 +348,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'pager_duty_v2',
             parameters: {
               integration_key:
@@ -356,7 +366,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'big_panda',
             parameters: {
               user_key: flags['user-key'] || webhook.webhook.parameters.user_key,
@@ -371,7 +381,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'victorops',
             parameters: {
               api_key: flags['api-key'] || webhook.webhook.parameters.app_key,
@@ -386,7 +396,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'hipchat',
             parameters: {
               url: flags.url!.toString() || webhook.webhook.parameters.url,
@@ -400,7 +410,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'msteams',
             parameters: {
               url: flags.url!.toString() || webhook.webhook.parameters.url,
@@ -414,7 +424,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'newrelic',
             parameters: {
               app_key: flags['app-key'] || webhook.webhook.parameters.app_key,
@@ -429,7 +439,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'darkspark',
             parameters: {},
           },
@@ -440,7 +450,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'datadog',
             parameters: {
               api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
@@ -454,7 +464,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'datadogevent',
             parameters: {
               api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
@@ -468,7 +478,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'statuspage',
             parameters: {
               page_id: flags['page-id'] || webhook.webhook.parameters.page_id,
@@ -484,7 +494,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'flowdock',
             parameters: {
               flow_token: flags['flow-token'] || webhook.webhook.parameters.flow_token,
@@ -498,7 +508,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'opsgenie',
             parameters: {
               api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
@@ -512,7 +522,7 @@ Result: {{ result_url }}
           meta: requestMeta,
           webhook: {
             enabled: enabled,
-            alerts: flags.alert as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[],
+            alerts: alerts,
             type: 'opsgenieeu',
             parameters: {
               api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
