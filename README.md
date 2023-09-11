@@ -58,6 +58,7 @@ USAGE
 * [`apimetrics plugins`](docs/plugins.md) - List installed plugins.
 * [`apimetrics projects`](docs/projects.md) - Manage projects.
 * [`apimetrics schedules`](docs/schedules.md) - Manage project schedules.
+* [`apimetrics webhooks`](docs/webhooks.md) - Manage project webhooks and alerts.
 * [`apimetrics workflows`](docs/workflows.md) - Manage project workflows.
 
 <!-- commandsstop -->
