@@ -43,7 +43,7 @@ EXAMPLES
   Schedule 2    Every 5 minutes  all, oc
 ```
 
-_See code: [dist/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.1/dist/commands/schedules/index.ts)_
+_See code: [dist/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/dist/commands/schedules/index.ts)_
 
 ## `apimetrics schedules calls`
 
