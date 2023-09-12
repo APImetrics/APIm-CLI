@@ -9,6 +9,7 @@
 /yarn.lock
 node_modules
 oclif.manifest.json
+.test
 
 # Logs
 logs

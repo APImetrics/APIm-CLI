@@ -8,10 +8,13 @@ export type PullWriteFileJson = {
 };
 
 export default class Pull extends Command<PullWriteFileJson | any> {
-  static description = 'Fetch project.yaml file';
-  protected projectOnly = true;
+  static description = 'Fetch project.yaml file.';
+  protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %> --key <api key>'];
+  static examples = [
+    `<%= config.bin %> <%= command.id %> --out myproject.yaml
+Wrote project.yaml to myproject.yaml.`,
+  ];
 
   static flags = {
     out: Flags.file({
@@ -25,17 +28,25 @@ export default class Pull extends Command<PullWriteFileJson | any> {
       dependsOn: ['out'],
     }),
     environment: Flags.boolean({
-      description: 'Include environment variable data',
+      description: 'Include environment variable data.',
       default: true,
       allowNo: true,
     }),
-    header: Flags.boolean({description: 'Include header data', default: true, allowNo: true}),
-    webhook: Flags.boolean({description: 'Include webhook data', default: true, allowNo: true}),
+    header: Flags.boolean({description: 'Include header data.', default: true, allowNo: true}),
+    webhook: Flags.boolean({description: 'Include webhook data.', default: true, allowNo: true}),
+    'project-id': Flags.string({
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      char: 'p',
+    }),
   };
 
   public async run(): Promise<PullWriteFileJson | any> {
     const {flags} = await this.parse(Pull);
     const endpoint = `export/?environment_values=${flags.environment}&header_values=${flags.header}&webhooks=${flags.webhook}`;
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
 
     // Write project.yaml to file flags.out?
     if (flags.out) {
@@ -54,16 +65,16 @@ export default class Pull extends Command<PullWriteFileJson | any> {
           default: false,
         });
         if (!overwrite) {
-          this.log('Exited without overwriting file');
-          return {success: false, message: 'Exited without overwriting file'};
+          this.log('Exited without overwriting file.');
+          return {success: false, message: 'Exited without overwriting file.'};
         }
       } else if (fileExists && !flags.force) {
         throw new Error(`File ${flags.out} already exists. Use --force to overwrite it.`);
       }
 
       fs.writeFile(flags.out, project);
-      this.log(`Wrote project.yaml to ${flags.out}`);
-      return {success: true, message: `Wrote project.yaml to ${flags.out}`};
+      this.log(`Wrote project.yaml to ${flags.out}.`);
+      return {success: true, message: `Wrote project.yaml to ${flags.out}.`};
     }
 
     // Avoid multiple API calls when using --json. Just fetch json from

@@ -2,7 +2,7 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-describe('api key authentication', () => {
+describe('auth login', () => {
   const auth = test
     .do(() => {
       fs.readdir('./.test', (err, files) => {
@@ -17,6 +17,14 @@ describe('api key authentication', () => {
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'});
 
+  // The first test is always really slow because all TS files need to
+  // be transpiled first. To get more meaningful times for other tests,
+  // run this placeholder first.
+  auth
+    .stdout()
+    .command('help')
+    .it('Not a real test case. Transpile typescript files, expect to be slow');
+
   auth
     .stdout()
     .command(['login', '--key', 'lQjGo9CKKyD0gX7xQJMHY4Z104XmXoGs'])
@@ -26,7 +34,7 @@ describe('api key authentication', () => {
   auth
     .stdout()
     .command(['login', '--key', 'lQjGo9CKKyD0gX7xQJMHY4Z104XmXoGs', '--json'])
-    .it('API key login --json', (ctx) => {
+    .it('API key login (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
         success: true,
@@ -39,9 +47,9 @@ describe('api key authentication', () => {
     .catch((error) => {
       expect(error.message).to.contain('API key is malformed. Expected 32 characters, got 31');
     })
-    .it('API key login with key too short --json', (ctx) => {
+    .it('API key login with --key of length 31 (want 32) (--json)', (ctx) => {
       const output = JSON.parse(ctx.stderr);
-      expect(output).to.deep.equal({
+      expect(output).to.deep.contain({
         success: false,
         message: 'API key is malformed. Expected 32 characters, got 31',
       });
@@ -52,12 +60,27 @@ describe('api key authentication', () => {
     .catch((error) => {
       expect(error.message).to.contain('API key is malformed. Expected 32 characters, got 33');
     })
-    .it('API key login with key too long');
+    .it('API key login with --key of length 33 (want 32)');
   auth
     .stderr()
     .command(['login', '--key'])
     .catch((error) => {
       expect(error.message).to.contain('Flag --key expects a value');
     })
-    .it('API key login no key');
+    .it('API key login passing empty --key argument');
+  auth
+    .stderr()
+    .command(['login', '--json'])
+    .catch((error) => {
+      expect(error.message).to.contain(
+        'Cannot use --json with device flow authentication. Use --key instead.'
+      );
+    })
+    .it('Device flow authentication passing --json flag', (ctx) => {
+      const output = JSON.parse(ctx.stderr);
+      expect(output).to.deep.contain({
+        success: false,
+        message: 'Cannot use --json with device flow authentication. Use --key instead.',
+      });
+    });
 });

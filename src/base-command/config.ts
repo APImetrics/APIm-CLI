@@ -9,7 +9,7 @@ export class Config {
     current: undefined,
   };
 
-  public organisation: Config.Organisation = {
+  public organization: Config.organization = {
     current: undefined,
   };
 
@@ -32,7 +32,7 @@ export class Config {
     const filePath = path.join(this.configDir, 'config.json');
     const config: Config.ConfigFile = {
       project: this.project,
-      organisation: this.organisation,
+      organization: this.organization,
     };
     await fs.writeJson(filePath, config);
   }
@@ -47,7 +47,7 @@ export class Config {
       const config = fs.readJsonSync(filePath) as Config.ConfigFile;
       this.debug('Loaded config %O', config);
       this.project = config.project;
-      this.organisation = config.organisation;
+      this.organization = config.organization;
     }
   }
 
@@ -67,12 +67,12 @@ export namespace Config {
     current: string | undefined;
   }
 
-  export interface Organisation {
+  export interface organization {
     current: string | undefined;
   }
 
   export interface ConfigFile {
     project: Project;
-    organisation: Organisation;
+    organization: organization;
   }
 }

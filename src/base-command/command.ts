@@ -10,6 +10,7 @@ export type CustomError = Interfaces.CommandError & {skipOclifErrorHandling?: bo
 export type ErrorJson = {
   success: boolean;
   message: string;
+  stack?: string;
 };
 
 export type ConfirmOptions = {
@@ -19,7 +20,7 @@ export type ConfirmOptions = {
 
 export abstract class Command<T> extends Base {
   static enableJsonFlag = true;
-  protected projectOnly = false;
+  protected permitKeyAuth = false;
 
   // define flags that can be inherited by any command that extends BaseCommand
   static baseFlags = {};
@@ -40,7 +41,7 @@ export abstract class Command<T> extends Base {
     this.flags = flags as Flags<T>;
     this.args = args as Args<T>;
     this.userConfig = new Config(this.config);
-    this.api = new Api(this.config, this.projectOnly, this.userConfig);
+    this.api = new Api(this.config, this.permitKeyAuth, this.userConfig, this.jsonEnabled());
   }
 
   /**
@@ -62,11 +63,12 @@ export abstract class Command<T> extends Base {
   }
 
   private formatErrorJson(err: CustomError): string {
+    const res: ErrorJson = {success: false, message: err.message, stack: undefined};
     if (this.config.debug && err.stack) {
-      return err.stack;
+      res.stack = err.stack;
     }
 
-    return JSON.stringify({success: false, message: err.message}, undefined, 2);
+    return JSON.stringify(res, undefined, 2);
   }
 
   /**
@@ -79,6 +81,11 @@ export abstract class Command<T> extends Base {
       console.error(this.formatErrorJson(err));
       err.skipOclifErrorHandling = true; // Prevent extra logs to stderr by run
       throw err;
+    }
+
+    if (this.config.debug) {
+      // This will include the correct stack trace
+      this.error(err);
     } else {
       this.error(err.message);
     }

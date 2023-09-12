@@ -2,7 +2,7 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-describe('set current working org', () => {
+describe('config org set', () => {
   const conf = test
     .do(() => {
       fs.readdir('./.test', (err, files) => {
@@ -22,14 +22,14 @@ describe('set current working org', () => {
     .command(['config:org:set', '--json'])
     .catch((error) => {
       expect(error.message).to.contain(
-        'Cannot use --json with interactive mode. Specify organisation using --org-id instead.'
+        'Cannot use --json with interactive mode. Specify organization using --org-id instead.'
       );
     })
-    .it('Set org with --json');
+    .it('Use --json argument without passing --org-id');
   conf
     .stdout()
     .command(['config:org:set', '--org-id', 'abcdefg'])
-    .it('Set project directly', (ctx) => {
+    .it('Set org passing --org-id argument', (ctx) => {
       expect(ctx.stdout).to.equal('');
     });
 });

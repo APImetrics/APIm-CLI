@@ -2,7 +2,7 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-describe('device flow authentication', () => {
+describe('auth logout', () => {
   const auth = test
     .do(() => {
       fs.readdir('./.test', (err, files) => {
@@ -16,22 +16,6 @@ describe('device flow authentication', () => {
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'});
-
-  auth
-    .stderr()
-    .command(['login', '--json'])
-    .catch((error) => {
-      expect(error.message).to.contain(
-        'Cannot use --json with device flow authentication. Use --key instead.'
-      );
-    })
-    .it('Device flow with --json', (ctx) => {
-      const output = JSON.parse(ctx.stderr);
-      expect(output).to.deep.equal({
-        success: false,
-        message: 'Cannot use --json with device flow authentication. Use --key instead.',
-      });
-    });
   auth
     .stdout()
     .command(['auth:logout'])

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable node/shebang */
 
 const oclif = require('@oclif/core')
 
@@ -7,6 +8,7 @@ const project = path.join(__dirname, '..', 'tsconfig.json')
 
 // In dev mode -> use ts-node and dev plugins
 process.env.NODE_ENV = 'development'
+process.env.APIMETRICS_DEBUG = 1
 
 require('ts-node').register({project})
 

@@ -8,29 +8,29 @@ export type SetOrgJson = {
 };
 
 export default class Set extends Command<SetOrgJson> {
-  static description = 'Set the current working organisation';
+  static description = 'Set the current working organization.';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  static examples = ['<%= config.bin %> <%= command.id %>  --org-id abccorp'];
 
   static flags = {
     'org-id': Flags.string({
-      description: 'ID of org to set to',
-      char: 'i',
+      description: 'ID of org to set to.',
+      char: 'o',
     }),
   };
 
   public async run(): Promise<SetOrgJson> {
     const {flags} = await this.parse(Set);
     if (flags['org-id']) {
-      this.userConfig.organisation.current = flags['org-id'];
+      this.userConfig.organization.current = flags['org-id'];
       await this.userConfig.save();
 
-      return {success: true, message: 'Set current organisation'};
+      return {success: true, message: 'Set current organization.'};
     }
 
     if (flags.json) {
       throw new Error(
-        'Cannot use --json with interactive mode. Specify organisation using --org-id instead.'
+        'Cannot use --json with interactive mode. Specify organization using --org-id instead.'
       );
     }
 
@@ -48,18 +48,18 @@ export default class Set extends Command<SetOrgJson> {
 
     const response = await inquirer.prompt([
       {
-        name: 'organisation',
-        message: 'Select an organisation',
+        name: 'organization',
+        message: 'Select an organization',
         type: 'list',
         choices: orgs,
       },
     ]);
 
-    this.userConfig.organisation.current = response.organisation;
+    this.userConfig.organization.current = response.organization;
     // Make sure we clear the current project when we switch orgs
     this.userConfig.project.current = undefined;
     this.userConfig.save();
 
-    return {success: true, message: 'Set current organisation'};
+    return {success: true, message: 'Set current organization.'};
   }
 }

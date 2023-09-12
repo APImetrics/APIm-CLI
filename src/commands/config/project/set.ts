@@ -15,7 +15,7 @@ export default class Set extends Command<SetProjectJson> {
   static flags = {
     'project-id': Flags.string({
       description: 'ID of project to switch to',
-      char: 'i',
+      char: 'p',
     }),
   };
 
@@ -34,14 +34,14 @@ export default class Set extends Command<SetProjectJson> {
       );
     }
 
-    if (this.userConfig.organisation.current === undefined) {
+    if (this.userConfig.organization.current === undefined) {
       throw new Error('Please select an organization first');
     }
 
     const availableProjects = await this.api.get<any>('account/projects');
     const projects: {name: string; value: string}[] = [];
     for (const key of Object.keys(availableProjects.projects)) {
-      if (availableProjects.projects[key].project.org_id === this.userConfig.organisation.current) {
+      if (availableProjects.projects[key].project.org_id === this.userConfig.organization.current) {
         projects.push({
           name: `${availableProjects.projects[key].project.name} (${availableProjects.projects[key].project.id})`,
           value: availableProjects.projects[key].project.id,

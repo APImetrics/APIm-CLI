@@ -61,16 +61,55 @@
     "topicSeparator": " ",
     "topics": {
       "auth": {
-        "description": "Manage authentication options"
+        "description": "Manage authentication options."
+      },
+      "calls": {
+        "description": "Manage monitoring calls."
       },
       "config": {
-        "description": "Manage CLI configuration options"
+        "description": "Manage CLI configuration options."
       },
       "config:project": {
-        "description": "Manage project settings"
+        "description": "Manage project settings."
       },
       "config:org": {
-        "description": "Manage organisation settings"
+        "description": "Manage organization settings."
+      },
+      "info": {
+        "description": "Information about APImetrics monitoring infrastructure."
+      },
+      "org": {
+        "description": "Manage organization settings."
+      },
+      "org:accounts": {
+        "description": "Manage organization users."
+      },
+      "org:invites": {
+        "description": "Manage organization invites."
+      },
+      "org:roles": {
+        "description": "Manage organization roles."
+      },
+      "projects": {
+        "description": "Manage projects."
+      },
+      "projects:accounts": {
+        "description": "Manage project users."
+      },
+      "projects:roles": {
+        "description": "Manage project roles."
+      },
+      "projects:invites": {
+        "description": "Manage project invites."
+      },
+      "schedules": {
+        "description": "Manage project schedules."
+      },
+      "webhooks": {
+        "description": "Manage project webhooks and alerts."
+      },
+      "workflows": {
+        "description": "Manage project workflows."
       }
     }
   },
@@ -79,7 +118,7 @@
     "lint": "eslint . --ext .ts --config .eslintrc",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
-    "prepack": "npm run build && oclif manifest && oclif readme",
+    "prepack": "npm run build && oclif manifest && oclif readme --multi",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "coverage": "nyc npm run test",
     "version": "oclif readme && git add README.md"
