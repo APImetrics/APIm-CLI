@@ -48,7 +48,7 @@ EXAMPLES
    My Project None 2023-07-21T14:11:07.321416Z
 ```
 
-_See code: [dist/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.0/dist/commands/projects/index.ts)_
+_See code: [dist/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.1/dist/commands/projects/index.ts)_
 
 ## `apimetrics projects accounts`
 
