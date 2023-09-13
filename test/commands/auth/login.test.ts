@@ -5,6 +5,10 @@ import * as path from 'node:path';
 describe('auth login', () => {
   const auth = test
     .do(() => {
+      if (!fs.existsSync('./.test')) {
+        fs.mkdirSync('./.test');
+      }
+
       fs.readdir('./.test', (err, files) => {
         if (err) throw err;
 
