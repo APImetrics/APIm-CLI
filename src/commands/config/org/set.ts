@@ -58,7 +58,7 @@ export default class Set extends Command<SetOrgJson> {
     this.userConfig.organization.current = response.organization;
     // Make sure we clear the current project when we switch orgs
     this.userConfig.project.current = undefined;
-    this.userConfig.save();
+    await this.userConfig.save();
 
     return {success: true, message: 'Set current organization.'};
   }

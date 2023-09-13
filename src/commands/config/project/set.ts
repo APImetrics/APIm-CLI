@@ -59,7 +59,7 @@ export default class Set extends Command<SetProjectJson> {
     ]);
 
     this.userConfig.project.current = response.project;
-    this.userConfig.save();
+    await this.userConfig.save();
 
     return {success: true, message: 'Set current project'};
   }
