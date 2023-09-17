@@ -122,6 +122,7 @@
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
     "prepack": "npm run build && oclif manifest && oclif readme --multi",
+    "tarballs": "oclif pack tarballs",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "coverage": "nyc npm run test",
     "version": "oclif readme --multi && git add README.md docs/*"
