@@ -1,6 +1,6 @@
 {
   "name": "@apimetrics/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI to interact with APImetrics, the unbiased SaaS Platform ensuring API products perform as agreed, are secure, meet business objectives, and comply with regulations.",
   "author": "APImetrics",
   "bin": {

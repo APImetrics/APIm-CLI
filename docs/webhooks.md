@@ -45,7 +45,7 @@ EXAMPLES
   GEn          generic   false   None         None
 ```
 
-_See code: [dist/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/dist/commands/webhooks/index.ts)_
+_See code: [dist/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.3/dist/commands/webhooks/index.ts)_
 
 ## `apimetrics webhooks create`
 
