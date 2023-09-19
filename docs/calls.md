@@ -48,7 +48,7 @@ EXAMPLES
   Apples ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-_See code: [dist/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/dist/commands/calls/index.ts)_
+_See code: [dist/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.3/dist/commands/calls/index.ts)_
 
 ## `apimetrics calls create`
 
