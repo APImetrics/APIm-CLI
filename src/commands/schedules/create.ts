@@ -10,7 +10,11 @@ export default class Create extends Command<Schedule> {
   static description = 'Create schedule.';
   protected permitKeyAuth = true;
 
-  static examples = [`<%= config.bin %> <%= command.id %>`];
+  static examples = [
+    `
+<%= config.bin %> <%= command.id %> --name "My Schedule" --interval 5m
+ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA`,
+  ];
 
   static flags = {
     interval: Flags.string({
