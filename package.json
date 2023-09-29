@@ -33,7 +33,7 @@
   "devDependencies": {
     "@oclif/test": "^2.5.1",
     "@types/chai": "^4",
-    "@types/debug": "^4.1.8",
+    "@types/debug": "^4.1.9",
     "@types/fs-extra": "^11.0.2",
     "@types/inquirer": "^8.2.6",
     "@types/mocha": "^9.0.0",
