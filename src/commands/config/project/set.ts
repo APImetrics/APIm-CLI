@@ -49,6 +49,14 @@ export default class Set extends Command<SetProjectJson> {
       }
     }
 
+    if (projects.length === 0) {
+      this.warn('No projects accessible in organization. Please create a project first.');
+      return {
+        success: false,
+        message: 'No projects accessible in organization. Please create a project first.',
+      };
+    }
+
     const response = await inquirer.prompt([
       {
         name: 'project',

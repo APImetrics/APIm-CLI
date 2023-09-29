@@ -1,6 +1,10 @@
 import {expect, test} from '@oclif/test';
-import * as fs from 'node:fs';
+import * as fs from 'fs-extra';
 import * as path from 'node:path';
+
+const accountProjects = {
+  projects: [],
+};
 
 describe('config project set', () => {
   const conf = test
@@ -16,6 +20,20 @@ describe('config project set', () => {
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'});
+
+  const bearerAuth = test
+    .do(() => {
+      fs.writeJsonSync('./.test/config.json', {
+        organization: {current: 'abc123'},
+        project: {current: 'abc123'},
+      });
+      fs.writeJsonSync('./.test/auth.json', {
+        token: 'abc123',
+        mode: 'bearer',
+      });
+    })
+    .env({APIMETRICS_CONFIG_DIR: './.test'})
+    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
   conf
     .stderr()
@@ -46,4 +64,16 @@ describe('config project set', () => {
       expect(error.message).to.contain('Please select an organization first');
     })
     .it('Interactive mode without setting the current working organization first');
+
+  bearerAuth
+    .nock('https://client.apimetrics.io', (api) =>
+      api.get('/api/2/account/projects').reply(200, accountProjects)
+    )
+    .stderr()
+    .command(['config:project:set'])
+    .it('Set project with no projects in org', (ctx) => {
+      expect(ctx.stderr).to.deep.contain(
+        'No projects accessible in organization. Please create a project first.'
+      );
+    });
 });
