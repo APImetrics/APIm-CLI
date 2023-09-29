@@ -76,6 +76,8 @@ export abstract class Command<T> extends Base {
    * Includes JSON output when --json passed
    */
   protected async catch(err: CustomError): Promise<any> {
+    // %O Allows us to see the whole object
+    this.debug('%O', err);
     if (this.jsonEnabled()) {
       // Won't have highlighting but for an error this is fine
       console.error(this.formatErrorJson(err));
