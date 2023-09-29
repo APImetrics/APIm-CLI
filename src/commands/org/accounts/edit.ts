@@ -4,10 +4,12 @@ import {Command, T} from '../../../base-command';
 export default class Edit extends Command<{success: boolean}> {
   static description = 'Edit an account.';
 
-  static examples = [`<%= config.bin %> <%= command.id %> --add-role ADMIN --remove-role DEV_TEAM`];
+  static examples = [
+    `<%= config.bin %> <%= command.id %> -u auth0|abc123 --add-role ADMIN --remove-role DEV_TEAM`,
+  ];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of user', char: 'u'}),
+    'user-id': Flags.string({description: 'ID of user', char: 'u', required: true}),
     'add-role': Flags.string({
       description: 'Add a role to the account.',
       multiple: true,
