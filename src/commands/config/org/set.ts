@@ -22,6 +22,21 @@ export default class Set extends Command<SetOrgJson> {
   public async run(): Promise<SetOrgJson> {
     const {flags} = await this.parse(Set);
     if (flags['org-id']) {
+      try {
+        await this.api.get(`project/organization/${flags['org-id']}/`);
+      } catch (error) {
+        // Log original error to debug
+        this.debug('GET project/organization/%s/ resulted in error: %O', flags['org-id'], error);
+        if (
+          error instanceof Error &&
+          error.message === 'Not logged in. Run apimetrics login first.'
+        ) {
+          throw error;
+        }
+
+        throw new Error(`Invalid organization ID (${flags['org-id']}).`);
+      }
+
       this.userConfig.organization.current = flags['org-id'];
       await this.userConfig.save();
 
