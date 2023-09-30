@@ -22,6 +22,22 @@ export default class Set extends Command<SetProjectJson> {
   public async run(): Promise<SetProjectJson> {
     const {flags} = await this.parse(Set);
     if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+      try {
+        await this.api.get(`project/`);
+      } catch (error) {
+        // Log original error to debug
+        this.debug('GET project/ resulted in error: %O', error);
+        if (
+          error instanceof Error &&
+          error.message === 'Not logged in. Run apimetrics login first.'
+        ) {
+          throw error;
+        }
+
+        throw new Error(`Invalid project ID (${flags['project-id']}).`);
+      }
+
       this.userConfig.project.current = flags['project-id'];
       await this.userConfig.save();
 
