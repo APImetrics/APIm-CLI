@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
@@ -14,6 +15,54 @@ const roles = {
       id: 'A_THIRD_ROLE',
     },
   ],
+};
+
+const appMetadataOrgRoles = {
+  name: 'Bob',
+  email: 'bob@example.com',
+  last_login: '2021-09-01T05:23:20.337Z',
+  last_ip: '123.123.123.123',
+  logins_count: 2,
+  app_metadata: {
+    org_roles: {
+      abc123: ['DEFAULT', 'DAVE', 'ANOTHER_ROLE'],
+    },
+  },
+};
+const appMetadata = {
+  name: 'Dave',
+  email: 'dave@example.com',
+  last_login: '2021-09-01T05:23:20.337Z',
+  last_ip: '123.123.123.123',
+  logins_count: 2,
+  app_metadata: {
+    abc123: ['DEFAULT', 'DAVE', 'ANOTHER_ROLE'],
+  },
+};
+const permissions = {
+  name: 'Alice',
+  email: 'alice@example.com',
+  last_login: '2021-09-01T05:23:20.337Z',
+  last_ip: '123.123.123.123',
+  logins_count: 2,
+  permissions: ['DEFAULT', 'DAVE', 'ANOTHER_ROLE'],
+};
+
+const emptyAppMetadata = {
+  name: 'Fred',
+  email: 'fred@example.com',
+  last_login: '2021-09-01T05:23:20.337Z',
+  last_ip: '123.123.123.123',
+  logins_count: 2,
+  app_metadata: {},
+};
+
+const noRoles = {
+  name: 'Fred',
+  email: 'fred@example.com',
+  last_login: '2021-09-01T05:23:20.337Z',
+  last_ip: '123.123.123.123',
+  logins_count: 2,
 };
 
 describe('org accounts edit', () => {
@@ -59,7 +108,11 @@ describe('org accounts edit', () => {
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
-      api.get('/api/2/organizations/abc123/roles/').reply(200, roles);
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, appMetadata);
 
       // These calls are async
       api.post('/api/2/organizations/abc123/accounts/qwerty/role/A_ROLE/').reply(200, {});
@@ -73,7 +126,57 @@ describe('org accounts edit', () => {
       '--user-id=qwerty',
       '--json',
     ])
-    .it('Add and remove roles from a user (--json)', (ctx) => {
+    .it('Add and remove roles from a user with role in app_metadata (--json)', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal({success: true});
+    });
+
+  bearerAuth
+    .nock('https://client.apimetrics.io', (api) => {
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, appMetadataOrgRoles);
+
+      // These calls are async
+      api.post('/api/2/organizations/abc123/accounts/qwerty/role/A_ROLE/').reply(200, {});
+      api.delete('/api/2/organizations/abc123/accounts/qwerty/role/ANOTHER_ROLE/').reply(200, {});
+    })
+    .stdout()
+    .command([
+      'org:accounts:edit',
+      '--add-role=A_ROLE',
+      '--remove-role=ANOTHER_ROLE',
+      '--user-id=qwerty',
+      '--json',
+    ])
+    .it('Add and remove roles from a user with role in app_metadata.org_roles (--json)', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal({success: true});
+    });
+
+  bearerAuth
+    .nock('https://client.apimetrics.io', (api) => {
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, permissions);
+
+      // These calls are async
+      api.post('/api/2/organizations/abc123/accounts/qwerty/role/A_ROLE/').reply(200, {});
+      api.delete('/api/2/organizations/abc123/accounts/qwerty/role/ANOTHER_ROLE/').reply(200, {});
+    })
+    .stdout()
+    .command([
+      'org:accounts:edit',
+      '--add-role=A_ROLE',
+      '--remove-role=ANOTHER_ROLE',
+      '--user-id=qwerty',
+      '--json',
+    ])
+    .it('Add and remove roles from a user with role in permissions (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({success: true});
     });
@@ -92,7 +195,11 @@ describe('org accounts edit', () => {
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
-      api.get('/api/2/organizations/abc123/roles/').reply(200, roles);
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, appMetadataOrgRoles);
       api.delete('/api/2/organizations/abc123/accounts/qwerty/role/ANOTHER_ROLE/').reply(200, {});
     })
     .stdout()
@@ -104,7 +211,11 @@ describe('org accounts edit', () => {
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
-      api.get('/api/2/organizations/def/roles/').reply(200, roles);
+      api
+        .get('/api/2/organizations/def/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/def/accounts/qwerty')
+        .reply(200, permissions);
 
       // These calls are async
       api.post('/api/2/organizations/def/accounts/qwerty/role/A_ROLE/').reply(200, {});
@@ -126,7 +237,11 @@ describe('org accounts edit', () => {
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
-      api.get('/api/2/organizations/abc123/roles/').reply(200, roles);
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, noRoles);
     })
     .stderr()
     .command([
@@ -138,11 +253,35 @@ describe('org accounts edit', () => {
     .catch((error) => {
       expect(error.message).to.contain('Unrecognized role AN_INVALID_ROLE');
     })
-    .it('Add invalid role');
+    .it('Add invalid role no role data');
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
-      api.get('/api/2/organizations/abc123/roles/').reply(200, roles);
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, emptyAppMetadata);
+    })
+    .stderr()
+    .command([
+      'org:accounts:edit',
+      '--add-role=AN_INVALID_ROLE',
+      '--remove-role=ANOTHER_ROLE',
+      '--user-id=qwerty',
+    ])
+    .catch((error) => {
+      expect(error.message).to.contain('Unrecognized role AN_INVALID_ROLE');
+    })
+    .it('Add invalid role empty app metadata');
+
+  bearerAuth
+    .nock('https://client.apimetrics.io', (api) => {
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/qwerty')
+        .reply(200, appMetadataOrgRoles);
     })
     .stderr()
     .command([
@@ -152,7 +291,7 @@ describe('org accounts edit', () => {
       '--user-id=qwerty',
     ])
     .catch((error) => {
-      expect(error.message).to.contain('Unrecognized role AN_INVALID_ROLE');
+      expect(error.message).to.contain('AN_INVALID_ROLE not found on user qwerty.');
     })
     .it('Remove invalid role');
 
