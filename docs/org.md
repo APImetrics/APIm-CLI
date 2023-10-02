@@ -62,11 +62,11 @@ Edit an account.
 
 ```
 USAGE
-  $ apimetrics org accounts edit [--json] [-u <value>] [--add-role <value>] [--remove-role <value>] [-o <value>]
+  $ apimetrics org accounts edit -u <value> [--json] [--add-role <value>] [--remove-role <value>] [-o <value>]
 
 FLAGS
   -o, --org-id=<value>      ID of organization to modify. Overrides apimetrics config org set.
-  -u, --user-id=<value>     ID of user
+  -u, --user-id=<value>     (required) ID of user
   --add-role=<value>...     Add a role to the account.
   --remove-role=<value>...  Name of role to remove.
 
@@ -77,7 +77,7 @@ DESCRIPTION
   Edit an account.
 
 EXAMPLES
-  $ apimetrics org accounts edit --add-role ADMIN --remove-role DEV_TEAM
+  $ apimetrics org accounts edit -u auth0|abc123 --add-role ADMIN --remove-role DEV_TEAM
 ```
 
 _See code: [src/commands/org/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/org/accounts/edit.ts)_

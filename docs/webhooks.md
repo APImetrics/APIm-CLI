@@ -175,7 +175,7 @@ _See code: [src/commands/webhooks/create.ts](https://github.com/APImetrics/APIm-
 
 ## `apimetrics webhooks delete`
 
-Delete an invite to the project.
+Delete a webhook.
 
 ```
 USAGE
@@ -189,7 +189,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Delete an invite to the project.
+  Delete a webhook.
 
 EXAMPLES
   $ apimetrics webhooks delete --webhook-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
