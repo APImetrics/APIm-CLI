@@ -39,4 +39,4 @@ EXAMPLES
   Buy Fruit             false           false
 ```
 
-_See code: [dist/commands/workflows/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.3/dist/commands/workflows/index.ts)_
+_See code: [src/commands/workflows/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/workflows/index.ts)_
