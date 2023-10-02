@@ -96,6 +96,8 @@ EXAMPLES
   $ apimetrics plugins:inspect myplugin
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/inspect.ts)_
+
 ## `apimetrics plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
@@ -134,6 +136,8 @@ EXAMPLES
   $ apimetrics plugins:install someuser/someplugin
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/install.ts)_
+
 ## `apimetrics plugins:link PLUGIN`
 
 Links a plugin into the CLI for development.
@@ -161,28 +165,7 @@ EXAMPLES
   $ apimetrics plugins:link myplugin
 ```
 
-## `apimetrics plugins:uninstall PLUGIN...`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ apimetrics plugins:uninstall PLUGIN...
-
-ARGUMENTS
-  PLUGIN  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ apimetrics plugins unlink
-  $ apimetrics plugins remove
-```
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/link.ts)_
 
 ## `apimetrics plugins:uninstall PLUGIN...`
 
@@ -206,6 +189,31 @@ ALIASES
   $ apimetrics plugins unlink
   $ apimetrics plugins remove
 ```
+
+## `apimetrics plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ apimetrics plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ apimetrics plugins unlink
+  $ apimetrics plugins remove
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/uninstall.ts)_
 
 ## `apimetrics plugins:uninstall PLUGIN...`
 
@@ -245,3 +253,5 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/update.ts)_

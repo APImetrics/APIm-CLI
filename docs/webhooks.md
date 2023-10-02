@@ -45,7 +45,7 @@ EXAMPLES
   GEn          generic   false   None         None
 ```
 
-_See code: [dist/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.3/dist/commands/webhooks/index.ts)_
+_See code: [src/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/webhooks/index.ts)_
 
 ## `apimetrics webhooks create`
 
@@ -171,6 +171,8 @@ EXAMPLES
   $ apimetrics webhooks create
 ```
 
+_See code: [src/commands/webhooks/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/webhooks/create.ts)_
+
 ## `apimetrics webhooks delete`
 
 Delete an invite to the project.
@@ -192,6 +194,8 @@ DESCRIPTION
 EXAMPLES
   $ apimetrics webhooks delete --webhook-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
+
+_See code: [src/commands/webhooks/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/webhooks/delete.ts)_
 
 ## `apimetrics webhooks edit`
 
@@ -325,3 +329,5 @@ DESCRIPTION
 EXAMPLES
   $ apimetrics webhooks edit
 ```
+
+_See code: [src/commands/webhooks/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/webhooks/edit.ts)_

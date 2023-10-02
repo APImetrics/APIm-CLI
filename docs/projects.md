@@ -48,7 +48,7 @@ EXAMPLES
    My Project None 2023-07-21T14:11:07.321416Z
 ```
 
-_See code: [dist/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.3/dist/commands/projects/index.ts)_
+_See code: [src/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/index.ts)_
 
 ## `apimetrics projects accounts`
 
@@ -85,6 +85,8 @@ EXAMPLES
   alice@example.com OWNER
 ```
 
+_See code: [src/commands/projects/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/accounts/index.ts)_
+
 ## `apimetrics projects accounts edit`
 
 Edit account access for the project.
@@ -115,6 +117,8 @@ DESCRIPTION
 EXAMPLES
   $ apimetrics projects accounts edit --add-owner auth0|abcdefghijklmnopqrstuvwx --remove-viewer auth0|zyxwvutsrqponmlkjihgfedc
 ```
+
+_See code: [src/commands/projects/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/accounts/edit.ts)_
 
 ## `apimetrics projects create`
 
@@ -152,6 +156,8 @@ EXAMPLES
   ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM
 ```
 
+_See code: [src/commands/projects/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/create.ts)_
+
 ## `apimetrics projects invites`
 
 List invites in the project.
@@ -186,6 +192,8 @@ EXAMPLES
   alice@example.com VIEWER       2023-08-03T22:28:02.141461Z
 ```
 
+_See code: [src/commands/projects/invites/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/invites/index.ts)_
+
 ## `apimetrics projects invites create`
 
 Create an invite to the project.
@@ -211,6 +219,8 @@ EXAMPLES
   ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
+_See code: [src/commands/projects/invites/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/invites/create.ts)_
+
 ## `apimetrics projects invites delete`
 
 Delete an invite to the project.
@@ -232,6 +242,8 @@ DESCRIPTION
 EXAMPLES
   $ apimetrics projects invites delete --invite-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
+
+_See code: [src/commands/projects/invites/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/invites/delete.ts)_
 
 ## `apimetrics projects pull`
 
@@ -259,6 +271,8 @@ EXAMPLES
   $ apimetrics projects pull --out myproject.yaml
   Wrote project.yaml to myproject.yaml.
 ```
+
+_See code: [src/commands/projects/pull.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/pull.ts)_
 
 ## `apimetrics projects roles`
 
@@ -298,6 +312,8 @@ EXAMPLES
   ADMIN     VIEWER
 ```
 
+_See code: [src/commands/projects/roles/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/roles/index.ts)_
+
 ## `apimetrics projects roles edit`
 
 Edit role access on the project.
@@ -328,3 +344,5 @@ DESCRIPTION
 EXAMPLES
   $ apimetrics projects roles edit --add-owner ADMIN --remove-editor DEBUG
 ```
+
+_See code: [src/commands/projects/roles/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/projects/roles/edit.ts)_
