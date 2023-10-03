@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
+import {Command, errors} from '../../../base-command';
 import * as inquirer from 'inquirer';
 
 export type SetOrgJson = {
@@ -27,14 +27,11 @@ export default class Set extends Command<SetOrgJson> {
       } catch (error) {
         // Log original error to debug
         this.debug('GET project/organization/%s/ resulted in error: %O', flags['org-id'], error);
-        if (
-          error instanceof Error &&
-          error.message === 'Not logged in. Run apimetrics login first.'
-        ) {
-          throw error;
+        if (error instanceof errors.ApiError && (error.status === 401 || error.status === 403)) {
+          throw new Error(`Invalid organization ID (${flags['org-id']}).`);
         }
 
-        throw new Error(`Invalid organization ID (${flags['org-id']}).`);
+        throw error;
       }
 
       this.userConfig.organization.current = flags['org-id'];

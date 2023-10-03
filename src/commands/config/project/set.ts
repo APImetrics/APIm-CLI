@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
+import {Command, errors} from '../../../base-command';
 import * as inquirer from 'inquirer';
 
 export type SetProjectJson = {
@@ -28,14 +28,11 @@ export default class Set extends Command<SetProjectJson> {
       } catch (error) {
         // Log original error to debug
         this.debug('GET project/ resulted in error: %O', error);
-        if (
-          error instanceof Error &&
-          error.message === 'Not logged in. Run apimetrics login first.'
-        ) {
-          throw error;
+        if (error instanceof errors.ApiError && (error.status === 401 || error.status === 403)) {
+          throw new Error(`Invalid project ID (${flags['project-id']}).`);
         }
 
-        throw new Error(`Invalid project ID (${flags['project-id']}).`);
+        throw error;
       }
 
       this.userConfig.project.current = flags['project-id'];
