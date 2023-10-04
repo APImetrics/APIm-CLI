@@ -41,7 +41,7 @@ EXAMPLES
   public_googleuscentral 35.226.77.27
 ```
 
-_See code: [src/commands/info/locations.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/info/locations.ts)_
+_See code: [src/commands/info/locations.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/locations.ts)_
 
 ## `apimetrics info regions`
 
@@ -79,4 +79,4 @@ EXAMPLES
   North America   na
 ```
 
-_See code: [src/commands/info/regions.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.0/src/commands/info/regions.ts)_
+_See code: [src/commands/info/regions.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/regions.ts)_

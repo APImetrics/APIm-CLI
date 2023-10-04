@@ -26,7 +26,7 @@ $ npm install -g @apimetrics/cli
 $ apimetrics COMMAND
 running command...
 $ apimetrics (--version)
-@apimetrics/cli/0.1.0 darwin-arm64 node-v16.20.2
+@apimetrics/cli/0.1.1 darwin-arm64 node-v16.20.2
 $ apimetrics --help [COMMAND]
 USAGE
   $ apimetrics COMMAND
