@@ -37,7 +37,7 @@
     "@types/fs-extra": "^11.0.2",
     "@types/inquirer": "^8.2.6",
     "@types/mocha": "^9.1.1",
-    "@types/node": "^16.18.57",
+    "@types/node": "^16.18.58",
     "@types/node-fetch": "^2.6.6",
     "chai": "^4.3.10",
     "eslint": "^7.32.0",
