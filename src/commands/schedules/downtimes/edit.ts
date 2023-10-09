@@ -64,8 +64,10 @@ export default class Create extends Command<Downtime> {
 
     let start: Date;
     if (flags.start) {
+      start = new Date(flags.start);
       try {
-        start = new Date(flags.start);
+        // This will throw a range error if the date created above is invalid
+        start.toISOString();
       } catch (error) {
         if (error instanceof RangeError) {
           throw new Error(
@@ -81,8 +83,10 @@ export default class Create extends Command<Downtime> {
 
     let end: Date;
     if (flags.end) {
+      end = new Date(flags.end);
       try {
-        end = new Date(flags.end);
+        // This will throw a range error if the date created above is invalid
+        end.toISOString();
       } catch (error) {
         if (error instanceof RangeError) {
           throw new Error(
