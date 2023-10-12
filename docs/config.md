@@ -27,6 +27,8 @@ EXAMPLES
   $ apimetrics config org set  --org-id abccorp
 ```
 
+_See code: [src/commands/config/org/set.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/config/org/set.ts)_
+
 ## `apimetrics config project set`
 
 Set the current working project
@@ -47,3 +49,5 @@ DESCRIPTION
 EXAMPLES
   $ apimetrics config project set
 ```
+
+_See code: [src/commands/config/project/set.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/config/project/set.ts)_

@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
+import {Command, errors} from '../../../base-command';
 import * as inquirer from 'inquirer';
 
 export type SetProjectJson = {
@@ -22,6 +22,19 @@ export default class Set extends Command<SetProjectJson> {
   public async run(): Promise<SetProjectJson> {
     const {flags} = await this.parse(Set);
     if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+      try {
+        await this.api.get(`project/`);
+      } catch (error) {
+        // Log original error to debug
+        this.debug('GET project/ resulted in error: %O', error);
+        if (error instanceof errors.ApiError && (error.status === 401 || error.status === 403)) {
+          throw new Error(`Invalid project ID (${flags['project-id']}).`);
+        }
+
+        throw error;
+      }
+
       this.userConfig.project.current = flags['project-id'];
       await this.userConfig.save();
 
@@ -47,6 +60,14 @@ export default class Set extends Command<SetProjectJson> {
           value: availableProjects.projects[key].project.id,
         });
       }
+    }
+
+    if (projects.length === 0) {
+      this.warn('No projects accessible in organization. Please create a project first.');
+      return {
+        success: false,
+        message: 'No projects accessible in organization. Please create a project first.',
+      };
     }
 
     const response = await inquirer.prompt([

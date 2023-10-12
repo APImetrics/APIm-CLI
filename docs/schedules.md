@@ -50,7 +50,8 @@ EXAMPLES
   Schedule 2    Every 5 minutes  all, oc
 ```
 
-_See code: [src/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/src/commands/schedules/index.ts)_
+
+_See code: [src/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/schedules/index.ts)_
 
 ## `apimetrics schedules calls`
 
@@ -87,7 +88,8 @@ EXAMPLES
   Apples             GET    https://example.com/apples
 ```
 
-_See code: [src/commands/schedules/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/src/commands/schedules/calls/index.ts)_
+
+_See code: [src/commands/schedules/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/schedules/calls/index.ts)_
 
 ## `apimetrics schedules calls add`
 
@@ -115,7 +117,8 @@ EXAMPLES
   $ apimetrics schedules calls add --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-_See code: [src/commands/schedules/calls/add.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/src/commands/schedules/calls/add.ts)_
+
+_See code: [src/commands/schedules/calls/add.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/schedules/calls/add.ts)_
 
 ## `apimetrics schedules calls remove`
 
@@ -143,7 +146,7 @@ EXAMPLES
   $ apimetrics schedules calls remove --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM
 ```
 
-_See code: [src/commands/schedules/calls/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.0.2/src/commands/schedules/calls/remove.ts)_
+_See code: [src/commands/schedules/calls/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/schedules/calls/remove.ts)_
 
 ## `apimetrics schedules create`
 

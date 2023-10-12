@@ -41,6 +41,8 @@ EXAMPLES
   public_googleuscentral 35.226.77.27
 ```
 
+_See code: [src/commands/info/locations.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/locations.ts)_
+
 ## `apimetrics info regions`
 
 List all available regions.
@@ -76,3 +78,5 @@ EXAMPLES
   Microsoft Azure azr
   North America   na
 ```
+
+_See code: [src/commands/info/regions.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/regions.ts)_

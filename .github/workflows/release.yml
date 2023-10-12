@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm test
+
+  create-release:
+   needs: test
+   runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: https://registry.npmjs.org/
+    - name: Install dependancies
+      run: npm ci
+    - name: Pack tarballs
+      run: npm run tarballs
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        # Releases should be manually validated before being published
+        draft: true
+        files: dist/*.tar.*
+        generate_release_notes: true
