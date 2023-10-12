@@ -159,7 +159,7 @@ describe('schedules downtimes', () => {
     )
     .stdout()
     .command(['schedules:downtimes', '--output=json', '-p=abc123'])
-    .it('List all downtimes with --output=json argument', (ctx) => {
+    .it('List all downtimes with --output=json argument passing project ID', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
