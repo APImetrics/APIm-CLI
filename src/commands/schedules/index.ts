@@ -59,6 +59,9 @@ Schedule 2    Every 5 minutes  all, oc
         regions: {
           get: (row) => row.schedule.regions.join(', '),
         },
+        locations: {
+          get: (row) => row.schedule.locations.join(', '),
+        },
         id: {
           header: 'ID',
           extended: true,

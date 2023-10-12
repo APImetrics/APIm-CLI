@@ -71,8 +71,8 @@ const scheduleResponse = {
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4JmAuYMJDA',
       schedule: {
         regions: ['all'],
-        frequency: 600,
-        locations: [],
+        frequency: 30,
+        locations: ['aws_europe_1', 'google_america_2'],
         target_ids: [],
         backoff_method: 'fibo',
       },
@@ -122,21 +122,25 @@ describe('schedules', () => {
           name: 'AWS Only',
           frequency: 'Every 12 hours',
           regions: 'aws',
+          locations: '',
         },
         {
           name: 'Default Schedule',
           frequency: 'Every 5 minutes',
           regions: 'all',
+          locations: '',
         },
         {
           name: 'Expo',
           frequency: 'Every 10 minutes',
           regions: 'all',
+          locations: '',
         },
         {
           name: 'Fibo',
-          frequency: 'Every 10 minutes',
+          frequency: 'Every 30 seconds',
           regions: 'all',
+          locations: 'aws_europe_1, google_america_2',
         },
       ]);
     });
@@ -156,21 +160,25 @@ describe('schedules', () => {
           name: 'AWS Only',
           frequency: 'Every 12 hours',
           regions: 'aws',
+          locations: '',
         },
         {
           name: 'Default Schedule',
           frequency: 'Every 5 minutes',
           regions: 'all',
+          locations: '',
         },
         {
           name: 'Expo',
           frequency: 'Every 10 minutes',
           regions: 'all',
+          locations: '',
         },
         {
           name: 'Fibo',
-          frequency: 'Every 10 minutes',
+          frequency: 'Every 30 seconds',
           regions: 'all',
+          locations: 'aws_europe_1, google_america_2',
         },
       ]);
     });
