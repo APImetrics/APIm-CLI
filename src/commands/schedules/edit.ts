@@ -149,7 +149,7 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
           break;
         case 'constant':
           addTags.push('apimetrics:backoff:constant');
-          removeTags.push('apimetrics:backoff:fibo', 'apimetrics:backoff:constant');
+          removeTags.push('apimetrics:backoff:fibo', 'apimetrics:backoff:expo');
           break;
       }
     } else {
