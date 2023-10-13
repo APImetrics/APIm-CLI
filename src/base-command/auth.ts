@@ -3,6 +3,8 @@ import * as path from 'node:path';
 import * as fs from 'fs-extra';
 import fetch from 'node-fetch';
 import chalk from 'chalk';
+import {T, errors} from '.';
+import {debug} from 'debug';
 
 interface DeviceCodeRes {
   // eslint-disable-next-line camelcase
@@ -50,8 +52,12 @@ export class Auth {
   private revokeUrl =
     process.env.APIMETRICS_REVOKE_URL || 'https://auth.apimetrics.io/oauth/revoke';
 
+  private userinfoUrl =
+    process.env.APIMETRICS_USERINFO_URL || 'https://auth.apimetrics.io/userinfo';
+
   private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
   private configDir: string;
+  private debug = debug('api');
 
   /**
    * @param config User config file
@@ -131,6 +137,42 @@ export class Auth {
    */
   public get projectOnly(): boolean {
     return this.token.mode === Auth.AuthType.Key;
+  }
+
+  /**
+   * Make call to OIDC userinfo endpoint
+   * @returns User information
+   */
+  public async userinfo(): Promise<T.UserInfo> {
+    if (this.token.mode === Auth.AuthType.Key) {
+      throw new Error('Cannot use API key to access user info.');
+    }
+
+    const opts = {
+      headers: {
+        ...(await this.headers()),
+        Accept: 'application/json',
+      },
+      method: 'get',
+    };
+
+    const url = new URL(this.userinfoUrl);
+
+    this.debug('Calling URL %o', url.toString());
+    this.debug('Using options %O', opts);
+
+    const response = await fetch(url, opts);
+    if (!response.ok) {
+      // Error responses are in plain text
+      const data = await response.text();
+      this.debug(data);
+      throw new errors.ApiError({
+        message: `API error - HTTP ${response.status} ${response.statusText} - ${data}`,
+        status: response.status,
+      });
+    }
+
+    return response.json() as Promise<T.UserInfo>;
   }
 
   /**

@@ -3,7 +3,7 @@ import {Auth} from './auth';
 import fetch, {RequestInit} from 'node-fetch';
 import {Config} from './config';
 import {debug} from 'debug';
-import {ApiError as TApiError, ListResponse} from './types';
+import {ApiError as TApiError, ListResponse, UserInfo} from './types';
 import {ApiError} from './errors';
 
 type RequestOptions = {
@@ -155,6 +155,14 @@ export class Api {
    */
   public async logout(): Promise<void> {
     return this.auth.logout();
+  }
+
+  /**
+   * Make call to OIDC userinfo endpoint
+   * @returns User information
+   */
+  public async userinfo(): Promise<UserInfo> {
+    return this.auth.userinfo();
   }
 
   /**

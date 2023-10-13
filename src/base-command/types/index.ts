@@ -8,6 +8,7 @@ import {OrgAccount} from './orgaccount';
 import {Project} from './project';
 import {Role} from './role';
 import {Schedule} from './schedule';
+import {UserInfo} from './userinfo';
 import {UserProjects} from './userprojects';
 import {Webhook} from './webhook';
 import {Workflow} from './workflow';
@@ -23,6 +24,7 @@ export {
   Project,
   Role,
   Schedule,
+  UserInfo,
   UserProjects,
   Webhook,
   Workflow,
