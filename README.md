@@ -14,10 +14,72 @@ objectives, and comply with regulations.
 
 # Install
 
-## With npm
+## Requirements
+
+### Networking
+
+The CLI will require an internet connection that allows access to the
+following domains in order to function properly. If you are adding
+firewall rules to allow this, we highly suggest that your firewall is
+configured to refresh the IP addresses for the domains on a regular
+basis as they may change without prior notice.
+
+| Domain               | Ports   |
+|----------------------|---------|
+| client.apimetrics.io | 80, 443 |
+| auth.apimetrics.io   | 80, 443 |
+
+### Supported OS and architectures
+
+Both x64 and ARM architectures are supported with the following
+operating systems:
+
+| OS         | Supported          |
+|------------|--------------------|
+| Windows 11 | :white_check_mark: |
+| Windows 10 | :white_check_mark: |
+| Windows 7  | :x:                |
+| Linux      | :white_check_mark: |
+| macOS      | :white_check_mark: |
+### Supported Node.js Versions
+
+We support all current and LTS versions of Node.js. When a version moves
+to end of life, we will drop support. If you are currently using a
+version of Node.js that is currently end of life, we suggest you upgrade
+to a newer version. More information about currently supported Node.js
+versions is published by the [Node.js Release Working
+Group](https://github.com/nodejs/Release).
+
+| Version | Supported          |
+|---------|--------------------|
+| 20.x    | :white_check_mark: |
+| 18.x    | :white_check_mark: |
+| 16.x    | :x:                |
+
+## Methods
+### With npm
+
+The CLI is built with Node.js and can be installed using `npm`. In order
+to use this method, you must have `node` and `npm` installed on your
+system already.
+
 ```sh-session
 $ npm install -g @apimetrics/cli
 ```
+
+### Using Tarballs
+
+These are standalone distributions containing their own Node.js binary
+and the CLI. They do not require any other software to already be
+installed on your system.
+
+The tarballs are available in both `gz` and `xz` formats. `xz` is much
+smaller so ideal for slow connections, however `gz` has wider support
+from decompression software. If you are unsure, use `gz`.
+
+Once you have downloaded the tarball for your system, you should then
+extract to a location such as `/usr/local/bin/apimetrics` and ensure
+that this location is on your `PATH`.
 
 # Usage
 <!-- usage -->
@@ -26,7 +88,7 @@ $ npm install -g @apimetrics/cli
 $ apimetrics COMMAND
 running command...
 $ apimetrics (--version)
-@apimetrics/cli/0.1.1 darwin-arm64 node-v16.20.2
+@apimetrics/cli/0.1.1 darwin-arm64 node-v18.12.1
 $ apimetrics --help [COMMAND]
 USAGE
   $ apimetrics COMMAND
