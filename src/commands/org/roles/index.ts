@@ -18,7 +18,7 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
   ];
 
   static flags = {
-    ...ux.table.flags(),
+    ...ux.table.flags({except: ['extended']}),
     'org-id': Flags.string({
       description: 'ID of organization to read. Overrides apimetrics config org set.',
       char: 'o',

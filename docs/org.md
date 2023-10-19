@@ -199,12 +199,11 @@ List roles in the organization.
 
 ```
 USAGE
-  $ apimetrics org roles [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
+  $ apimetrics org roles [--json] [--columns <value> | ] [--sort <value>] [--filter <value>] [--output
     csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-o <value>]
 
 FLAGS
   -o, --org-id=<value>  ID of organization to read. Overrides apimetrics config org set.
-  -x, --extended        show extra columns
   --columns=<value>     only show provided columns (comma-separated)
   --csv                 output is csv format [alias: --output=csv]
   --filter=<value>      filter property by partial string matching, ex: name=foo
