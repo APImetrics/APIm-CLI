@@ -5,6 +5,7 @@ Information about APImetrics monitoring infrastructure.
 
 * [`apimetrics info locations`](#apimetrics-info-locations)
 * [`apimetrics info regions`](#apimetrics-info-regions)
+* [`apimetrics info whoami`](#apimetrics-info-whoami)
 
 ## `apimetrics info locations`
 
@@ -80,3 +81,29 @@ EXAMPLES
 ```
 
 _See code: [src/commands/info/regions.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/regions.ts)_
+
+## `apimetrics info whoami`
+
+Show details about the currently logged in user.
+
+```
+USAGE
+  $ apimetrics info whoami [--json]
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Show details about the currently logged in user.
+
+EXAMPLES
+  $ apimetrics info whoami
+  ID:                   auth0|109e70845ef23eb4099c209p
+  Name:                 Bob
+  Email:                bob@example.com
+  MFA enabled:          false
+  Current Organization: companya
+  Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM
+```
+
+_See code: [src/commands/info/whoami.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/whoami.ts)_
