@@ -52,6 +52,7 @@ Group](https://github.com/nodejs/Release).
 
 | Version | Supported          |
 |---------|--------------------|
+| 21.x    | :white_check_mark: |
 | 20.x    | :white_check_mark: |
 | 18.x    | :white_check_mark: |
 | 16.x    | :x:                |
