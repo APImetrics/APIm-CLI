@@ -2,7 +2,8 @@
   "rules": {
     "valid-jsdoc": "off",
     "no-useless-constructor": "off",
-    "complexity": "off"
+    "complexity": "off",
+    "unicorn/prefer-type-error": "off"
   },
   "extends": ["oclif", "oclif-typescript", "prettier"]
 }

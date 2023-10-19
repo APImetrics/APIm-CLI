@@ -1,6 +1,7 @@
 import {Access} from './access';
 import {ApiError} from './apierror';
 import {Call} from './call';
+import {Downtime} from './downtime';
 import {Info} from './info';
 import {Invite} from './invite';
 import {ListResponse} from './listresponse';
@@ -17,6 +18,7 @@ export {
   Access,
   ApiError,
   Call,
+  Downtime,
   Info,
   Invite,
   ListResponse,

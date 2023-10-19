@@ -108,6 +108,9 @@
       "schedules": {
         "description": "Manage project schedules."
       },
+      "schedules:calls": {
+        "description": "Manage calls that run on a specific schedule."
+      },
       "webhooks": {
         "description": "Manage project webhooks and alerts."
       },

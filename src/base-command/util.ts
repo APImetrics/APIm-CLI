@@ -67,3 +67,24 @@ export function deleteHeader(
 export function validateEmail(email: string): boolean {
   return /^[\w!#$%&*+./=?^`{|}~’-]+@[\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*$/.test(email);
 }
+
+/**
+ * Add and remove strings from current list
+ * In cases where a string appears in both the add and remove list, it
+ * will not be added and if already present will be removed.
+ * @param current Current list
+ * @param add Strings to add
+ * @param remove Strings to remove
+ * @returns Updated list
+ */
+export function addRemoveStrings(current: string[], add: string[], remove: string[]): string[] {
+  for (const item of add) {
+    if (!current.includes(item)) {
+      current.push(item);
+    }
+  }
+
+  current = current.filter((item) => !remove.includes(item));
+
+  return current;
+}
