@@ -104,6 +104,7 @@ USAGE
 | `APIMETRICS_TOKEN_URL`      | :x:      | URL to use when requesting an access token for OAuth based login. Defaults to `https://auth.apimetrics.io/oauth/token`.                                         |
 | `APIMETRICS_CODE_URL`       | :x:      | URL to use when requesting an authorization code for OAuth based login. Defaults to `https://auth.apimetrics.io/oauth/device/code`.                             |
 | `APIMETRICS_REVOKE_URL`     | :x:      | URL to use when revoking refresh tokens. Defaults to `https://auth.apimetrics.io/oauth/revoke`.                                                                 |
+| `APIMETRICS_USERINFO_URL`   | :x:      | URL to use when fetching user info. Defaults to `https://auth.apimetrics.io/userinfo`.                                                                          |
 | `APIMETRICS_CLIENT_ID`      | :x:      | Client ID to use for OAuth based login.                                                                                                                         |
 | `APIMETRICS_CONFIG_DIR`     | :x:      | Directory to store configuration for the CLI. Defaults to `~/.config/apimetrics` on UNIX and `%LOCALAPPDATA%\apimetrics` on Windows.                            |
 | ~~`XDG_CONFIG_HOME`~~       | :x:      | Directory to store configuration for the CLI. Not recommended for use. Use `APIMETRICS_CONFIG_DIR` instead. `APIMETRICS_CONFIG_DIR` takes priority if also set. |

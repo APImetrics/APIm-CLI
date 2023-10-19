@@ -45,6 +45,7 @@ Name:                 Bob
 Email:                bob@example.com
 MFA enabled:          false
 Current Organization: companya
-Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`);
+Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM
+`);
     });
 });
