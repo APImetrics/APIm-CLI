@@ -4,6 +4,7 @@
 Information about APImetrics monitoring infrastructure.
 
 * [`apimetrics info locations`](#apimetrics-info-locations)
+* [`apimetrics info orgs`](#apimetrics-info-orgs)
 * [`apimetrics info regions`](#apimetrics-info-regions)
 * [`apimetrics info whoami`](#apimetrics-info-whoami)
 
@@ -43,6 +44,42 @@ EXAMPLES
 ```
 
 _See code: [src/commands/info/locations.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/locations.ts)_
+
+## `apimetrics info orgs`
+
+List organizations the current user is a member of.
+
+```
+USAGE
+  $ apimetrics info orgs [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
+    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
+
+FLAGS
+  -x, --extended     show extra columns
+  --columns=<value>  only show provided columns (comma-separated)
+  --csv              output is csv format [alias: --output=csv]
+  --filter=<value>   filter property by partial string matching, ex: name=foo
+  --no-header        hide table header from output
+  --no-truncate      do not truncate output to fit screen
+  --output=<option>  output in a more machine friendly format
+                     <options: csv|json|yaml>
+  --sort=<value>     property to sort by (prepend '-' for descending)
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List organizations the current user is a member of.
+
+EXAMPLES
+  $ apimetrics info orgs
+  Name                         ID        Subscription Level
+  ──────────────────────────── ──────── ──────────────────
+  Org with Enterprise contract companya CONTRACT
+  An Org                       companyb PLAN
+```
+
+_See code: [src/commands/info/orgs.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.1.1/src/commands/info/orgs.ts)_
 
 ## `apimetrics info regions`
 
