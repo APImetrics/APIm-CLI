@@ -99,6 +99,15 @@ export default class Edit extends Command<UpdatedCall> {
       }
     }
 
+    // #105 If we don't pass a content type we default to
+    // application/json. Prevents issues with web UI displaying body
+    if (
+      flags.body &&
+      !call.request.headers.some((val) => val.key.toLowerCase() === 'content-type')
+    ) {
+      call.request.headers.push({key: 'Content-Type', value: 'application/json'});
+    }
+
     if (flags.accept) {
       call.request.headers = util.replaceHeader(call.request.headers, 'Accept', flags.accept);
     }

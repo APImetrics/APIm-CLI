@@ -59,6 +59,12 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM`,
       }
     }
 
+    // #105 If we don't pass a content type we default to
+    // application/json. Prevents issues with web UI displaying body
+    if (flags.body && !headers.some((val) => val.key.toLowerCase() === 'content-type')) {
+      headers.push({key: 'Content-Type', value: 'application/json'});
+    }
+
     if (flags.accept) {
       headers = util.replaceHeader(headers, 'Accept', flags.accept);
     }

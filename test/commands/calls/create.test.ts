@@ -109,6 +109,77 @@ describe('calls create', () => {
       'Content-type: application/json',
     ])
     .it('Create call with headers and tags');
+
+  auth
+    .stdout()
+    .nock('https://client.apimetrics.io', (api) =>
+      api
+        .post('/api/2/calls/', {
+          meta: {name: 'call', tags: []},
+          request: {
+            method: 'POST',
+            url: 'http://google.apimetrics.xyz/get',
+            headers: [
+              {key: 'Content-Type', value: 'text/plain'},
+              {key: 'Accept', value: 'application/json'},
+            ],
+            body: 'abc123456',
+          },
+        })
+        .reply(200, {id: '1234'})
+    )
+    .command([
+      'calls:create',
+      '--json',
+      '-n',
+      'call',
+      '--method',
+      'POST',
+      '-u',
+      'http://google.apimetrics.xyz/get',
+      '--accept',
+      'application/json',
+      '--header',
+      'Content-Type:text/plain',
+      '--body',
+      'abc123456',
+    ])
+    .it('Send body setting content type');
+
+  auth
+    .stdout()
+    .nock('https://client.apimetrics.io', (api) =>
+      api
+        .post('/api/2/calls/', {
+          meta: {name: 'call', tags: []},
+          request: {
+            method: 'POST',
+            url: 'http://google.apimetrics.xyz/get',
+            headers: [
+              {key: 'Content-Type', value: 'application/json'},
+              {key: 'Accept', value: 'application/json'},
+            ],
+            body: 'abc123456',
+          },
+        })
+        .reply(200, {id: '1234'})
+    )
+    .command([
+      'calls:create',
+      '--json',
+      '-n',
+      'call',
+      '--method',
+      'POST',
+      '-u',
+      'http://google.apimetrics.xyz/get',
+      '--accept',
+      'application/json',
+      '--body',
+      'abc123456',
+    ])
+    .it('Send body default content type');
+
   auth
     .stderr()
     .command([
