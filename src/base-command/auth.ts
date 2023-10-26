@@ -144,6 +144,10 @@ export class Auth {
    * @returns User information
    */
   public async userinfo(): Promise<T.UserInfo> {
+    if (!this.loggedIn) {
+      throw new Error('Not logged in. Run apimetrics login first.');
+    }
+
     if (this.token.mode === Auth.AuthType.Key) {
       throw new Error('Cannot use API key to access user info.');
     }
