@@ -5,7 +5,6 @@ import HTTP from 'http-call';
 import {Config} from './config';
 import {debug} from 'debug';
 import {ListResponse, UserInfo} from './types';
-// import {ApiError} from './errors';
 
 type RequestOptions = {
   /** Path to call */
