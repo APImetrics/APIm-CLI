@@ -119,7 +119,7 @@ export default class Create extends Command<Downtime> {
     const updatedDowntime = await this.api.post<T.Downtime>(
       `schedules/downtime/${flags['downtime-id']}/`,
       {
-        body: JSON.stringify({downtime: body}),
+        body: {downtime: body},
       }
     );
     return {success: true, downtime: updatedDowntime};

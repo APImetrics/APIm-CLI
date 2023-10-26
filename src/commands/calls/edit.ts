@@ -113,25 +113,21 @@ export default class Edit extends Command<UpdatedCall> {
       }
     }
 
-    const updatedCall = await this.api.post<T.Call>(
-      endpoint,
-      {
-        body: JSON.stringify({
-          meta: {
-            name: flags.name || call.meta.name,
-            description: flags.description || call.meta.description,
-            tags: call.meta.tags,
-          },
-          request: {
-            method: flags.method || call.request.method,
-            url: flags.url || call.request.url,
-            headers: call.request.headers,
-            body: flags.body || call.request.body,
-          },
-        }),
+    const updatedCall = await this.api.post<T.Call>(endpoint, {
+      body: {
+        meta: {
+          name: flags.name || call.meta.name,
+          description: flags.description || call.meta.description,
+          tags: call.meta.tags,
+        },
+        request: {
+          method: flags.method || call.request.method,
+          url: flags.url || call.request.url,
+          headers: call.request.headers,
+          body: flags.body || call.request.body,
+        },
       },
-      false
-    );
+    });
     return {success: true, call: updatedCall};
   }
 }

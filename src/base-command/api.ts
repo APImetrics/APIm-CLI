@@ -1,22 +1,25 @@
 import {Interfaces} from '@oclif/core';
 import {Auth} from './auth';
-import fetch, {RequestInit} from 'node-fetch';
+import {OutgoingHttpHeaders} from 'node:http';
+import HTTP from 'http-call';
 import {Config} from './config';
 import {debug} from 'debug';
-import {ApiError as TApiError, ListResponse, UserInfo} from './types';
-import {ApiError} from './errors';
+import {ListResponse, UserInfo} from './types';
+// import {ApiError} from './errors';
 
 type RequestOptions = {
   /** Path to call */
   path: string;
   /** HTTP method to send request with */
   method: 'get' | 'post' | 'put' | 'patch' | 'delete';
-  /** Standard fetch() options */
-  options: RequestInit;
   /** Should the response be treated as plain text? */
   plain?: boolean;
   /** Cursor for further pages */
   cursor?: string;
+  /** Headers to pass */
+  headers?: OutgoingHttpHeaders;
+  /** Request body */
+  body?: any;
 };
 export class Api {
   private auth: Auth;
@@ -38,6 +41,7 @@ export class Api {
   ) {
     this.debug('Using base URL %o', this.baseUrl);
     this.auth = new Auth(this.oclifConfig, jsonMode);
+    HTTP.defaults.headers = {'user-agent': this.oclifConfig.userAgent};
   }
 
   /** Current working project */
@@ -55,23 +59,21 @@ export class Api {
    * If the endpoint supports pagination, only the first page will be
    * returned. Use @method list instead to get subsequent pages
    * @param path Endpoint path to call
-   * @param options Standard fetch() options
-   * @param plain Should a plain text (true) or JSON (false) response be returned?
+   * @param options Additional configuration
    * @returns API response
    */
-  public async get<T>(path: string, options?: RequestInit, plain = false): Promise<T> {
-    options = options || {};
-    return this.request({path: path, method: 'get', options: options, plain: plain});
+  public async get<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({path: path, method: 'get', ...options});
   }
 
   /**
    * Return list response from desired endpoint
    * Handles pagination of results as required
    * @param path Endpoint path to call
-   * @param options Standard fetch() options
+   * @param options Additional configuration
    * @returns API response
    */
-  public async list<T>(path: string, options?: RequestInit): Promise<T[]> {
+  public async list<T>(path: string, options?: Partial<RequestOptions>): Promise<T[]> {
     let results: T[] = [];
 
     let cursor = '';
@@ -84,7 +86,8 @@ export class Api {
       const data = await this.request<ListResponse<T>>({
         path: path,
         method: 'get',
-        options: options,
+        ...options,
+        plain: false, // If this isn't false, bad things will happen!
         cursor: cursor,
       });
 
@@ -100,46 +103,42 @@ export class Api {
   /**
    * Make a POST request to the API
    * @param path Endpoint path to call
-   * @param options Standard fetch() options
-   * @param plain Should a plain text (true) or JSON (false) response be returned?
+   * @param options Additional configuration
    * @returns API response
    */
-  public async post<T>(path: string, options: RequestInit, plain = false): Promise<T> {
-    return this.request({path: path, method: 'post', options: options, plain: plain});
+  public async post<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({path: path, method: 'post', ...options});
   }
 
   /**
    * Make a PUT request to the API
    * @param path Endpoint path to call
-   * @param options Standard fetch() options
-   * @param plain Should a plain text (true) or JSON (false) response be returned?
+   * @param options Additional configuration
    * @returns API response
    */
-  public async put<T>(path: string, options: RequestInit, plain = false): Promise<T> {
-    return this.request({path: path, method: 'put', options: options, plain: plain});
+  public async put<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({path: path, method: 'put', ...options});
   }
 
   /**
    * Make a PATCH request to the API
    * @param path Endpoint path to call
-   * @param options Standard fetch() options
-   * @param plain Should a plain text (true) or JSON (false) response be returned?
+   * @param options Additional configuration
    * @returns API response
    */
-  public async patch<T>(path: string, options: RequestInit, plain = false): Promise<T> {
-    return this.request({path: path, method: 'patch', options: options, plain: plain});
+  public async patch<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({path: path, method: 'patch', ...options});
   }
 
   /**
    * Make a DELETE request to the API
    * @param path Endpoint path to call
-   * @param options Standard fetch() options
-   * @param plain Should a plain text (true) or JSON (false) response be returned?
+   * @param options Partial
    * @returns API response
    */
-  public async delete<T>(path: string, options?: RequestInit, plain = false): Promise<T> {
+  public async delete<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
     options = options || {};
-    return this.request({path: path, method: 'delete', options: options, plain: plain});
+    return this.request({path: path, method: 'delete', ...options});
   }
 
   /**
@@ -192,21 +191,14 @@ export class Api {
       );
     }
 
-    const opts = {
-      ...options.options,
-      method: options.method,
-    };
-    opts.headers = {
-      ...opts.headers,
+    const headers: OutgoingHttpHeaders = {
+      ...options.headers,
       ...(await this.auth.headers()),
       'Apimetrics-Project-Id': this.config.project.current || '', // Should never fall through to "" due to previous check
     };
+
     if (!options.plain) {
-      opts.headers = {
-        ...opts.headers,
-        Accept: 'application/json',
-        'User-Agent': this.oclifConfig.userAgent,
-      };
+      headers.accept = 'application/json';
     }
 
     const url = new URL(options.path, this.baseUrl);
@@ -215,22 +207,12 @@ export class Api {
     }
 
     this.debug('Calling URL %o', url.toString());
-    this.debug('Using options %O', opts);
+    const response = await HTTP.request<T>(url.toString(), {
+      headers: headers,
+      method: options.method,
+      body: options.body,
+    });
 
-    const response = await fetch(url, opts);
-    if (!response.ok) {
-      const data = (await response.json()) as TApiError;
-      this.debug(data);
-      throw new ApiError({
-        message: `API error - HTTP ${response.status} ${response.statusText} - ${data.error_msg}`,
-        status: response.status,
-      });
-    }
-
-    if (options.plain) {
-      return response.text() as Promise<T>;
-    }
-
-    return response.json() as Promise<T>;
+    return response.body;
   }
 }

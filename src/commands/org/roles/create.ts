@@ -40,7 +40,7 @@ TEAM_A`,
       id: flags.name,
       description: flags.description,
     };
-    const role = await this.api.post<T.Role>(endpoint, {body: JSON.stringify(data)}, false);
+    const role = await this.api.post<T.Role>(endpoint, {body: data});
     this.log(role.id);
     return {success: true, role: role};
   }

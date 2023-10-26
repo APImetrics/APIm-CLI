@@ -1,6 +1,7 @@
 import {Flags} from '@oclif/core';
-import {Command, errors} from '../../../base-command';
+import {Command} from '../../../base-command';
 import * as inquirer from 'inquirer';
+import {HTTPError} from 'http-call';
 
 export type SetProjectJson = {
   success: boolean;
@@ -28,7 +29,7 @@ export default class Set extends Command<SetProjectJson> {
       } catch (error) {
         // Log original error to debug
         this.debug('GET project/ resulted in error: %O', error);
-        if (error instanceof errors.ApiError && (error.status === 401 || error.status === 403)) {
+        if (error instanceof HTTPError && (error.statusCode === 401 || error.statusCode === 403)) {
           throw new Error(`Invalid project ID (${flags['project-id']}).`);
         }
 

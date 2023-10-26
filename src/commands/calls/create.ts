@@ -75,10 +75,10 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM`,
     }
 
     const call = await this.api.post<T.Call>('calls/', {
-      body: JSON.stringify({
+      body: {
         meta: {name: flags.name, description: flags.description, tags: tags},
         request: {method: flags.method, url: flags.url, headers: headers, body: flags.body},
-      }),
+      },
     });
     this.log(call.id);
     return call;

@@ -136,9 +136,7 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
 
     const responses = [];
     for (const access of accessToAdd) {
-      responses.push(
-        this.api.post(`projects/${this.api.project}/roles/`, {body: JSON.stringify(access)})
-      );
+      responses.push(this.api.post(`projects/${this.api.project}/roles/`, {body: access}));
     }
 
     for (const access of accessToRemove) {

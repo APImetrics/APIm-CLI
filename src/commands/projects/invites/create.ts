@@ -38,17 +38,13 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       throw new Error(`Invalid email: ${flags.email}.`);
     }
 
-    const invite = await this.api.post<T.Invite>(
-      `projects/${this.api.project}/invites/`,
-      {
-        body: JSON.stringify({
-          email: flags.email,
-          // eslint-disable-next-line camelcase
-          access_level: flags['access-level'].toUpperCase(),
-        }),
+    const invite = await this.api.post<T.Invite>(`projects/${this.api.project}/invites/`, {
+      body: {
+        email: flags.email,
+        // eslint-disable-next-line camelcase
+        access_level: flags['access-level'].toUpperCase(),
       },
-      false
-    );
+    });
     this.log(invite.id);
     return {success: true, invite: invite};
   }

@@ -122,7 +122,7 @@ ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM`,
     }
 
     const project = await this.api.post<T.Project>(`organizations/${orgId}/projects/`, {
-      body: JSON.stringify({name: flags.name}),
+      body: {name: flags.name},
     });
     this.log(project.id);
 
@@ -141,13 +141,9 @@ ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM`,
     const responses = [];
     for (const access of accessToAdd) {
       if (access.role_id) {
-        responses.push(
-          this.api.post(`projects/${project.id}/roles/`, {body: JSON.stringify(access)})
-        );
+        responses.push(this.api.post(`projects/${project.id}/roles/`, {body: access}));
       } else {
-        responses.push(
-          this.api.post(`projects/${project.id}/access/`, {body: JSON.stringify(access)})
-        );
+        responses.push(this.api.post(`projects/${project.id}/access/`, {body: access}));
       }
     }
 
