@@ -534,7 +534,7 @@ Result: {{ result_url }}
     }
 
     const updatedWebhook = await this.api.post<T.Webhook>(`webhooks/${flags['webhook-id']}`, {
-      body: JSON.stringify(request),
+      body: request,
     });
     return {success: true, webhook: updatedWebhook};
   }

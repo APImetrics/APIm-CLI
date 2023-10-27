@@ -573,7 +573,7 @@ Result: {{ result_url }}
         break;
     }
 
-    const webhook = await this.api.put<T.Webhook>('webhooks/', {body: JSON.stringify(request)});
+    const webhook = await this.api.put<T.Webhook>('webhooks/', {body: request});
     this.log(webhook.id);
     return {success: true, webhook: webhook};
   }

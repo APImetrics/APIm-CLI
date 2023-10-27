@@ -55,7 +55,7 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM`,
       email: flags.email,
       roles: flags.role,
     };
-    const invite = await this.api.post<T.Invite>(endpoint, {body: JSON.stringify(data)}, false);
+    const invite = await this.api.post<T.Invite>(endpoint, {body: data});
     this.log(invite.id);
     return {success: true, invite: invite};
   }

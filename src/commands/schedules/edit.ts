@@ -293,7 +293,7 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
     schedule.meta.created = undefined;
 
     schedule = await this.api.post<T.Schedule>(`schedules/${flags['schedule-id']}/`, {
-      body: JSON.stringify(schedule),
+      body: schedule,
     });
     return {success: true, schedule: schedule};
   }

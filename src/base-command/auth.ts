@@ -1,9 +1,9 @@
 import {Interfaces, ux} from '@oclif/core';
 import * as path from 'node:path';
 import * as fs from 'fs-extra';
-import fetch from 'node-fetch';
 import chalk from 'chalk';
-import {T, errors} from '.';
+import HTTP, {HTTPError} from 'http-call';
+import {T} from '.';
 import {debug} from 'debug';
 
 interface DeviceCodeRes {
@@ -65,6 +65,7 @@ export class Auth {
    */
   constructor(private readonly config: Interfaces.Config, private jsonMode: boolean) {
     this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.config.configDir;
+    HTTP.defaults.headers = {'user-agent': config.userAgent};
     this.loadAuth();
   }
 
@@ -93,18 +94,13 @@ export class Auth {
    */
   public async logout(): Promise<void> {
     if (this.token.mode === Auth.AuthType.Device) {
-      const options = {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: `{"client_id": "${this.clientId}", "token": "${this.token.refresh}"}`,
-      };
-      const response = await fetch(this.revokeUrl, options);
-      if (!response.ok) {
-        ux.warn(
-          `Failed to revoke refresh token. Got HTTP ${response.status} ${response.statusText}`
-        );
+      try {
+        await HTTP.post(this.revokeUrl, {
+          // eslint-disable-next-line camelcase
+          body: {client_id: this.clientId, token: this.token.refresh},
+        });
+      } catch (error) {
+        ux.warn(`Failed to revoke refresh token. ${error}`);
       }
     }
 
@@ -152,31 +148,10 @@ export class Auth {
       throw new Error('Cannot use API key to access user info.');
     }
 
-    const opts = {
-      headers: {
-        ...(await this.headers()),
-        Accept: 'application/json',
-      },
-      method: 'get',
-    };
-
+    // Normalise URL first
     const url = new URL(this.userinfoUrl);
-
-    this.debug('Calling URL %o', url.toString());
-    this.debug('Using options %O', opts);
-
-    const response = await fetch(url, opts);
-    if (!response.ok) {
-      // Error responses are in plain text
-      const data = await response.text();
-      this.debug(data);
-      throw new errors.ApiError({
-        message: `API error - HTTP ${response.status} ${response.statusText} - ${data}`,
-        status: response.status,
-      });
-    }
-
-    return response.json() as Promise<T.UserInfo>;
+    const {body} = await HTTP.get<T.UserInfo>(url.toString(), {headers: await this.headers()});
+    return body;
   }
 
   /**
@@ -209,19 +184,11 @@ export class Auth {
       throw new Error('User already logged in. Run apimetrics auth logout first');
     }
 
-    const options = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+    const url = new URL(this.codeUrl);
+    const {body: code} = await HTTP.post<DeviceCodeRes>(url.toString(), {
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
       body: `client_id=${this.clientId}&scope=openid%20profile%20email%20offline_access&audience=https%3A%2F%2Fclient.apimetrics.io`,
-    };
-    const response = await fetch(this.codeUrl, options);
-    if (!response.ok) {
-      throw new Error(`API error - HTTP ${response.status} ${response.statusText}`);
-    }
-
-    const code = (await response.json()) as DeviceCodeRes;
+    });
 
     ux.info(`Opening browser to ${code.verification_uri_complete}`);
     // ESM doesn't want to work with mocha so we have this instead
@@ -264,37 +231,43 @@ export class Auth {
   /**
    * Poll the authorization server for an access code, backing off as necessary
    * @param code Code object retrieved from auth server previously
-   * @param retry Retry interval
+   * @param retry Retry interval in ms
    * @returns Requested token object
    */
   private async pollToken(code: DeviceCodeRes, retry?: number): Promise<TokenRes> {
-    await sleep(retry || code.interval);
-    const options = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=${encodeURIComponent(
-        code.device_code
-      )}&client_id=${this.clientId}`,
-    };
-    const response = await fetch(this.tokenUrl, options);
-    if (!response.ok) {
-      const data = await response.json();
-      switch (data.error) {
-        case 'authorization_pending':
-          return this.pollToken(code);
-        case 'slow_down':
-          return this.pollToken(code, code.interval * 2);
-        case 'expired_token':
-        case 'invalid_grant':
-          throw new Error('Login timed out');
-        default:
-          throw new Error('Failed to login');
+    const retryms = retry || code.interval * 1000;
+    await sleep(retryms);
+
+    const url = new URL(this.tokenUrl);
+    let response: TokenRes;
+    try {
+      response = (
+        await HTTP.post<TokenRes>(url.toString(), {
+          headers: {'content-type': 'application/x-www-form-urlencoded'},
+          body: `grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=${encodeURIComponent(
+            code.device_code
+          )}&client_id=${this.clientId}`,
+        })
+      ).body;
+    } catch (error) {
+      if (error instanceof HTTPError) {
+        switch (error.body.error) {
+          case 'authorization_pending':
+            return this.pollToken(code, retryms);
+          case 'slow_down':
+            return this.pollToken(code, retryms * 2);
+          case 'expired_token':
+          case 'invalid_grant':
+            throw new Error('Login timed out');
+          default:
+            throw new Error('Failed to login');
+        }
       }
+
+      throw error;
     }
 
-    return response.json();
+    return response;
   }
 
   /**
@@ -309,32 +282,29 @@ export class Auth {
    * Attempt to refresh the access token
    */
   private async refreshToken(): Promise<void> {
-    const options = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `grant_type=refresh_token&client_id=${this.clientId}&refresh_token=${encodeURIComponent(
-        this.token.refresh
-      )}`,
-    };
-    const response = await fetch(this.tokenUrl, options);
-    if (!response.ok) {
-      if (this.jsonMode) {
-        throw new Error(
-          `Failed to refresh access token - API error - HTTP ${response.status} ${response.statusText}. Please login again.`
-        );
-      }
+    const url = new URL(this.tokenUrl);
+    let token: TokenRes;
+    try {
+      token = (
+        await HTTP.post<TokenRes>(url.toString(), {
+          headers: {'content-type': 'application/x-www-form-urlencoded'},
+          body: `grant_type=refresh_token&client_id=${
+            this.clientId
+          }&refresh_token=${encodeURIComponent(this.token.refresh)}`,
+        })
+      ).body;
+    } catch (error) {
+      this.debug('%O', error);
 
-      ux.warn(
-        `Failed to refresh access token - API error - HTTP ${response.status} ${response.statusText}. Please login again.`
-      );
+      // Invalidate stored authentication details so user can run login
+      // straight away.
+      this.token.token = '';
+      this.token.refresh = '';
       this.loggedIn = false;
-      await this.deviceFlow();
-      return;
+      await this.saveToken();
+      throw new Error(`Failed to refresh access token. Please login again. ${error}`);
     }
 
-    const token = await response.json();
     this.token.token = token.access_token;
     this.token.refresh = token.refresh_token;
     const now = new Date();

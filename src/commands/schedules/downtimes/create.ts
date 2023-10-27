@@ -103,7 +103,7 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
 
     const downtime = await this.api.post<T.Downtime>(
       `schedules/${flags['schedule-id']}/downtime/`,
-      {body: JSON.stringify({downtime: body})}
+      {body: {downtime: body}}
     );
     this.log(downtime.id);
     return {success: true, downtime: downtime};

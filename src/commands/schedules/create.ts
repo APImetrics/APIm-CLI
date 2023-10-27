@@ -185,7 +185,7 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       }
     }
 
-    const schedule = await this.api.post<T.Schedule>('schedules/', {body: JSON.stringify(body)});
+    const schedule = await this.api.post<T.Schedule>('schedules/', {body: body});
     this.log(schedule.id);
     return {success: true, schedule: schedule};
   }

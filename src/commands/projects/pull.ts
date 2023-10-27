@@ -50,11 +50,10 @@ Wrote project.yaml to myproject.yaml.`,
 
     // Write project.yaml to file flags.out?
     if (flags.out) {
-      const project = await this.api.get<string>(
-        endpoint,
-        {headers: {Accept: 'application/yaml'}},
-        true
-      );
+      const project = await this.api.get<string>(endpoint, {
+        headers: {Accept: 'application/yaml'},
+        plain: true,
+      });
       const fileExists = await fs.exists(flags.out);
 
       // We need to handle --json separately to prevent prompt showing up
@@ -80,9 +79,11 @@ Wrote project.yaml to myproject.yaml.`,
     // Avoid multiple API calls when using --json. Just fetch json from
     // API, instead of YAML.
     if (this.jsonEnabled()) {
-      return this.api.get<any>(endpoint, undefined, false);
+      return this.api.get<any>(endpoint);
     }
 
-    this.log(await this.api.get<string>(endpoint, {headers: {Accept: 'application/yaml'}}, true));
+    this.log(
+      await this.api.get<string>(endpoint, {headers: {Accept: 'application/yaml'}, plain: true})
+    );
   }
 }
