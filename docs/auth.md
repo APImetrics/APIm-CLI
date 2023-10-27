@@ -30,7 +30,7 @@ EXAMPLES
   $ apimetrics auth login --key <api key>
 ```
 
-_See code: [src/commands/auth/login.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/auth/login.ts)_
+_See code: [src/commands/auth/login.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/auth/login.ts)_
 
 ## `apimetrics auth logout`
 
@@ -50,4 +50,4 @@ EXAMPLES
   $ apimetrics auth logout
 ```
 
-_See code: [src/commands/auth/logout.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/auth/logout.ts)_
+_See code: [src/commands/auth/logout.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/auth/logout.ts)_

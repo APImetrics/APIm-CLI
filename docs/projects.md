@@ -48,7 +48,7 @@ EXAMPLES
    My Project None 2023-07-21T14:11:07.321416Z
 ```
 
-_See code: [src/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/index.ts)_
+_See code: [src/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/index.ts)_
 
 ## `apimetrics projects accounts`
 
@@ -85,7 +85,7 @@ EXAMPLES
   alice@example.com OWNER
 ```
 
-_See code: [src/commands/projects/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/accounts/index.ts)_
+_See code: [src/commands/projects/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/accounts/index.ts)_
 
 ## `apimetrics projects accounts edit`
 
@@ -118,7 +118,7 @@ EXAMPLES
   $ apimetrics projects accounts edit --add-owner auth0|abcdefghijklmnopqrstuvwx --remove-viewer auth0|zyxwvutsrqponmlkjihgfedc
 ```
 
-_See code: [src/commands/projects/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/accounts/edit.ts)_
+_See code: [src/commands/projects/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/accounts/edit.ts)_
 
 ## `apimetrics projects create`
 
@@ -156,7 +156,7 @@ EXAMPLES
   ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM
 ```
 
-_See code: [src/commands/projects/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/create.ts)_
+_See code: [src/commands/projects/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/create.ts)_
 
 ## `apimetrics projects invites`
 
@@ -192,7 +192,7 @@ EXAMPLES
   alice@example.com VIEWER       2023-08-03T22:28:02.141461Z
 ```
 
-_See code: [src/commands/projects/invites/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/invites/index.ts)_
+_See code: [src/commands/projects/invites/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/invites/index.ts)_
 
 ## `apimetrics projects invites create`
 
@@ -219,7 +219,7 @@ EXAMPLES
   ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/projects/invites/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/invites/create.ts)_
+_See code: [src/commands/projects/invites/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/invites/create.ts)_
 
 ## `apimetrics projects invites delete`
 
@@ -243,7 +243,7 @@ EXAMPLES
   $ apimetrics projects invites delete --invite-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/projects/invites/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/invites/delete.ts)_
+_See code: [src/commands/projects/invites/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/invites/delete.ts)_
 
 ## `apimetrics projects pull`
 
@@ -272,7 +272,7 @@ EXAMPLES
   Wrote project.yaml to myproject.yaml.
 ```
 
-_See code: [src/commands/projects/pull.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/pull.ts)_
+_See code: [src/commands/projects/pull.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/pull.ts)_
 
 ## `apimetrics projects roles`
 
@@ -312,7 +312,7 @@ EXAMPLES
   ADMIN     VIEWER
 ```
 
-_See code: [src/commands/projects/roles/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/roles/index.ts)_
+_See code: [src/commands/projects/roles/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/roles/index.ts)_
 
 ## `apimetrics projects roles edit`
 
@@ -345,4 +345,4 @@ EXAMPLES
   $ apimetrics projects roles edit --add-owner ADMIN --remove-editor DEBUG
 ```
 
-_See code: [src/commands/projects/roles/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/projects/roles/edit.ts)_
+_See code: [src/commands/projects/roles/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/roles/edit.ts)_

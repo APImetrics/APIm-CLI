@@ -48,7 +48,7 @@ EXAMPLES
   Apples ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-_See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/calls/index.ts)_
+_See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/index.ts)_
 
 ## `apimetrics calls create`
 
@@ -86,7 +86,7 @@ EXAMPLES
   ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM
 ```
 
-_See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/calls/create.ts)_
+_See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/create.ts)_
 
 ## `apimetrics calls edit`
 
@@ -126,7 +126,7 @@ EXAMPLES
   $ apimetrics calls edit --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM --url https://example.com/v2/apples
 ```
 
-_See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.0/src/commands/calls/edit.ts)_
+_See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/edit.ts)_
 
 ## `apimetrics calls schedules add`
 
