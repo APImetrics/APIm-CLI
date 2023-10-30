@@ -35,7 +35,7 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
     const userinfo = await this.api.userinfo();
     let projectName: string | undefined;
 
-    if (this.userConfig.project.current !== '') {
+    if (this.userConfig.project.current) {
       projectName = (await this.api.get<T.Project>(`projects/${this.api.project}`)).name;
     }
 
