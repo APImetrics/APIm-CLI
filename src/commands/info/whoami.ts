@@ -1,4 +1,4 @@
-import {Command} from '../../base-command';
+import {Command, T} from '../../base-command';
 
 export type WhoamiResponse = {
   success: boolean;
@@ -10,7 +10,10 @@ export type WhoamiResponse = {
     // eslint-disable-next-line camelcase
     current_org: string;
     // eslint-disable-next-line camelcase
-    current_project: string;
+    current_project: {
+      name: string;
+      id: string;
+    };
   };
 };
 
@@ -24,11 +27,18 @@ Name:                 Bob
 Email:                bob@example.com
 MFA enabled:          false
 Current Organization: companya
-Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
+Current Project Name: My Project
+Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
   ];
 
   public async run(): Promise<WhoamiResponse> {
     const userinfo = await this.api.userinfo();
+    let projectName: string | undefined;
+
+    if (this.userConfig.project.current) {
+      projectName = (await this.api.get<T.Project>(`projects/${this.api.project}`)).name;
+    }
+
     const data: Record<string, {title: string; value: any}> = {
       id: {
         title: 'ID',
@@ -50,8 +60,12 @@ Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
         title: 'Current Organization',
         value: this.userConfig.organization.current || '',
       },
-      currentProject: {
-        title: 'Current Project',
+      currentProjectName: {
+        title: 'Current Project Name',
+        value: projectName || '',
+      },
+      currentProjectID: {
+        title: 'Current Project ID',
         value: this.userConfig.project.current || '',
       },
     };
@@ -73,7 +87,10 @@ Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
         // eslint-disable-next-line camelcase
         current_org: data.currentOrg.value,
         // eslint-disable-next-line camelcase
-        current_project: data.currentProject.value,
+        current_project: {
+          name: data.currentProjectName.value,
+          id: data.currentProjectID.value,
+        },
       },
     };
   }
