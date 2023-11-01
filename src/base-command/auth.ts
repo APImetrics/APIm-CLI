@@ -94,13 +94,17 @@ export class Auth {
    */
   public async logout(): Promise<void> {
     if (this.token.mode === Auth.AuthType.Device) {
-      try {
-        await HTTP.post(this.revokeUrl, {
-          // eslint-disable-next-line camelcase
-          body: {client_id: this.clientId, token: this.token.refresh},
-        });
-      } catch (error) {
-        ux.warn(`Failed to revoke refresh token. ${error}`);
+      if (this.token.refresh) {
+        try {
+          await HTTP.post(this.revokeUrl, {
+            // eslint-disable-next-line camelcase
+            body: {client_id: this.clientId, token: this.token.refresh},
+          });
+        } catch (error) {
+          ux.warn(`Failed to revoke refresh token. ${error}`);
+        }
+      } else {
+        ux.warn('Did not attempt to revoke refresh token as token was undefined.');
       }
     }
 
