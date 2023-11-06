@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
+import {Command, T, util} from '../../../base-command';
 
 export default class Remove extends Command<{success: boolean}> {
   static description = 'Remove an account from the organization.';
@@ -9,7 +9,11 @@ export default class Remove extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of user to remove.', char: 'u', required: true}),
+    'user-id': Flags.string({
+      description: 'ID or email of user to remove.',
+      char: 'u',
+      required: true,
+    }),
     'org-id': Flags.string({
       description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
@@ -28,7 +32,15 @@ export default class Remove extends Command<{success: boolean}> {
       );
     }
 
-    await this.api.delete(`organizations/${orgId}/accounts/${flags['user-id']}/`);
+    let userId: string;
+    if (util.validateEmail(flags['user-id'])) {
+      const orgAccounts = await this.api.list<T.OrgAccount>(`organizations/${orgId}/accounts/`);
+      userId = util.getUserIdFromOrg(orgAccounts, flags['user-id']);
+    } else {
+      userId = flags['user-id'];
+    }
+
+    await this.api.delete(`organizations/${orgId}/accounts/${userId}/`);
     return {success: true};
   }
 }

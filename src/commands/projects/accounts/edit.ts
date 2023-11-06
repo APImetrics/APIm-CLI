@@ -1,5 +1,5 @@
 import {Flags, ux} from '@oclif/core';
-import {Command, T} from '../../../base-command';
+import {Command, T, util} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean; warnings?: string[]}> {
   static description = 'Edit account access for the project.';
@@ -11,40 +11,46 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
 
   static flags = {
     'add-owner': Flags.string({
-      description: 'ID of user to add as an owner.',
+      description: 'ID or email of user to add as an owner.',
       multiple: true,
     }),
     'remove-owner': Flags.string({
-      description: 'ID of user to remove as an owner',
+      description: 'ID or email of user to remove as an owner',
       multiple: true,
     }),
     'add-editor': Flags.string({
-      description: 'ID of user to add as an editor.',
+      description: 'ID or email of user to add as an editor.',
       multiple: true,
     }),
     'remove-editor': Flags.string({
-      description: 'ID of user to remove as an editor',
+      description: 'ID or email of user to remove as an editor',
       multiple: true,
     }),
     'add-analyst': Flags.string({
-      description: 'ID of user to add as an analyst.',
+      description: 'ID or email of user to add as an analyst.',
       multiple: true,
     }),
     'remove-analyst': Flags.string({
-      description: 'ID of user to remove as an analyst',
+      description: 'ID or email of user to remove as an analyst',
       multiple: true,
     }),
     'add-viewer': Flags.string({
-      description: 'ID of user to add as a viewer.',
+      description: 'ID or email of user to add as a viewer.',
       multiple: true,
     }),
     'remove-viewer': Flags.string({
-      description: 'ID of user to remove as an viewer',
+      description: 'ID or email of user to remove as an viewer',
       multiple: true,
     }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set. This must be in the specified organization.',
       char: 'p',
+    }),
+    'org-id': Flags.string({
+      description:
+        'ID of organization to read. Overrides apimetrics config org set. This must match the organization the project is part of.',
+      char: 'o',
     }),
   };
 
@@ -106,19 +112,33 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
       this.api.project = flags['project-id'];
     }
 
+    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    if (orgId === undefined) {
+      throw new Error('Current organization not set. Run `apimetrics config org set` first.');
+    } else if (orgId === '') {
+      throw new Error(
+        'Personal projects not currently supported. Please use web interface instead.'
+      );
+    }
+
+    const orgAccounts = await this.api.list<T.OrgAccount>(`organizations/${orgId}/accounts/`);
+    const toId = (value: string) => {
+      return util.validateEmail(value) ? util.getUserIdFromOrg(orgAccounts, value) : value;
+    };
+
     const accessToAdd = [
-      ...this.parseAddAccess('OWNER', flags['add-owner']),
-      ...this.parseAddAccess('EDITOR', flags['add-editor']),
-      ...this.parseAddAccess('ANALYST', flags['add-analyst']),
-      ...this.parseAddAccess('VIEWER', flags['add-viewer']),
+      ...this.parseAddAccess('OWNER', flags['add-owner']?.map(toId)),
+      ...this.parseAddAccess('EDITOR', flags['add-editor']?.map(toId)),
+      ...this.parseAddAccess('ANALYST', flags['add-analyst']?.map(toId)),
+      ...this.parseAddAccess('VIEWER', flags['add-viewer']?.map(toId)),
     ];
 
     const existingAccess = await this.api.list<T.Access>(`projects/${this.api.project}/access/`);
     const accessToRemove: string[] = [
-      ...this.getAccessIds(existingAccess, 'OWNER', flags['remove-owner']),
-      ...this.getAccessIds(existingAccess, 'EDITOR', flags['remove-editor']),
-      ...this.getAccessIds(existingAccess, 'ANALYST', flags['remove-analyst']),
-      ...this.getAccessIds(existingAccess, 'VIEWER', flags['remove-viewer']),
+      ...this.getAccessIds(existingAccess, 'OWNER', flags['remove-owner']?.map(toId)),
+      ...this.getAccessIds(existingAccess, 'EDITOR', flags['remove-editor']?.map(toId)),
+      ...this.getAccessIds(existingAccess, 'ANALYST', flags['remove-analyst']?.map(toId)),
+      ...this.getAccessIds(existingAccess, 'VIEWER', flags['remove-viewer']?.map(toId)),
     ];
 
     const responses = [];
