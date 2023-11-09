@@ -141,40 +141,6 @@ describe('project accounts edit', () => {
       expect(output).to.deep.equal({success: true, warnings: []});
     });
 
-  bearerAuth
-    .nock('https://client.apimetrics.io', (api) => {
-      api
-        .get('/api/2/organizations/def/accounts/')
-        .reply(200, orgAccounts)
-        .get('/api/2/projects/abc123/access/')
-        .reply(200, projectAccess);
-      api
-        .post('/api/2/projects/abc123/access/', {access_level: 'OWNER', account_id: 'abc123'})
-        .reply(200, {});
-      api
-        .post('/api/2/projects/abc123/access/', {access_level: 'EDITOR', account_id: 'abc123'})
-        .reply(200, {});
-      api
-        .post('/api/2/projects/abc123/access/', {access_level: 'ANALYST', account_id: 'abc123'})
-        .reply(200, {});
-      api
-        .post('/api/2/projects/abc123/access/', {access_level: 'VIEWER', account_id: 'abc123'})
-        .reply(200, {});
-    })
-    .stdout()
-    .command([
-      'projects:accounts:edit',
-      '--add-owner=abc123',
-      '--add-editor=abc123',
-      '--add-analyst=abc123',
-      '--add-viewer=abc123',
-      '-o=def',
-      '--json',
-    ])
-    .it('Specify organisation ID', (ctx) => {
-      const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, warnings: []});
-    });
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
@@ -319,7 +285,9 @@ describe('project accounts edit', () => {
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
       api
-        .get('/api/2/organizations/abc123/accounts/')
+        .get('/api/2/project/')
+        .reply(200, {org_id: 'def'})
+        .get('/api/2/organizations/def/accounts/')
         .reply(200, orgAccounts)
         .get('/api/2/projects/qwerty/access/')
         .reply(200, projectAccess);
@@ -427,5 +395,5 @@ describe('project accounts edit', () => {
         'No users with the email qwerty@example.com exist. Please use their ID instead.'
       );
     })
-    .it('Multiple users with the same email');
+    .it('No user with email');
 });

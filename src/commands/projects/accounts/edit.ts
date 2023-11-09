@@ -47,11 +47,6 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
         'ID of project to read. Overrides apimetrics config project set. This must be in the specified organization.',
       char: 'p',
     }),
-    'org-id': Flags.string({
-      description:
-        'ID of organization to read. Overrides apimetrics config org set. This must match the organization the project is part of.',
-      char: 'o',
-    }),
   };
 
   /**
@@ -108,17 +103,21 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
   public async run(): Promise<{success: boolean; warnings?: string[]}> {
     const {flags} = await this.parse(Edit);
 
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
+    const orgId =
+      flags['project-id'] && flags['project-id'] !== this.api.project
+        ? (await this.api.get<T.Project>('project/')).org_id
+        : this.userConfig.organization.current;
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {
       throw new Error(
         'Personal projects not currently supported. Please use web interface instead.'
       );
+    }
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
     }
 
     const orgAccounts = await this.api.list<T.OrgAccount>(`organizations/${orgId}/accounts/`);
