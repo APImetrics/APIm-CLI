@@ -116,6 +116,8 @@ To start using the APImetrics CLI, you must log into your account. If you don't 
 
 You will be redirected to a page in your browser with a code. Check this code is the same as the code displayed in your APImetrics CLI. If they are, click confirm. If you have multi-factor authentication enabled for APImetrics, you will be asked to input your one-time code. After this, you will be logged in and be able to return to your CLI.
 
+![Screenshot of the code to confirm device for CLI usage](/docs/images/home/cli-image.png)
+
 Now that you are logged in, the CLI will ask you to select one of the Organizations you are part of to work on. Once this is selected, it will ask you to select the Project you want to work on. Now you are ready to start with your CLI.
 
 # Command Topics
