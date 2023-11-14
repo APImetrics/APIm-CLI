@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../../base-command';
+import {Command, T, util} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean}> {
   static description = 'Edit an account.';
@@ -9,7 +9,7 @@ export default class Edit extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of user', char: 'u', required: true}),
+    'user-id': Flags.string({description: 'ID or email of user', char: 'u', required: true}),
     'add-role': Flags.string({
       description: 'Add a role to the account.',
       multiple: true,
@@ -42,12 +42,20 @@ export default class Edit extends Command<{success: boolean}> {
       roles.push(role.id);
     }
 
+    let userId: string;
+    if (util.validateEmail(flags['user-id'])) {
+      const orgAccounts = await this.api.list<T.OrgAccount>(`organizations/${orgId}/accounts/`);
+      userId = util.getUserIdFromOrg(orgAccounts, flags['user-id']);
+    } else {
+      userId = flags['user-id'];
+    }
+
     // Have to use roles currently attached to account. See #80
     const accountRoles: string[] = [];
     // Only need to call API if the user tries to remove any roles
     if (flags['remove-role'] && flags['remove-role'].length > 0) {
       const rawAccountRoles = await this.api.get<T.OrgAccount>(
-        `organizations/${orgId}/accounts/${flags['user-id']}`
+        `organizations/${orgId}/accounts/${userId}`
       );
 
       // The location of permissions is not consistent, hence we need
@@ -87,7 +95,7 @@ export default class Edit extends Command<{success: boolean}> {
     if (flags['remove-role'] && flags['remove-role'].length > 0) {
       for (const role of flags['remove-role']) {
         if (!accountRoles.includes(role)) {
-          throw new Error(`${role} not found on user ${flags['user-id']}.`);
+          throw new Error(`${role} not found on user ${userId}.`);
         }
       }
     }
@@ -95,17 +103,13 @@ export default class Edit extends Command<{success: boolean}> {
     const results = [];
     if (flags['add-role'] && flags['add-role'].length > 0) {
       for (const role of flags['add-role']) {
-        results.push(
-          this.api.post(`organizations/${orgId}/accounts/${flags['user-id']}/role/${role}/`, {})
-        );
+        results.push(this.api.post(`organizations/${orgId}/accounts/${userId}/role/${role}/`, {}));
       }
     }
 
     if (flags['remove-role'] && flags['remove-role'].length > 0) {
       for (const role of flags['remove-role']) {
-        results.push(
-          this.api.delete(`organizations/${orgId}/accounts/${flags['user-id']}/role/${role}/`)
-        );
+        results.push(this.api.delete(`organizations/${orgId}/accounts/${userId}/role/${role}/`));
       }
     }
 

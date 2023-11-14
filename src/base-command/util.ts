@@ -88,3 +88,24 @@ export function addRemoveStrings(current: string[], add: string[], remove: strin
 
   return current;
 }
+
+/**
+ * Fetch the ID of a user within this organisation by their email address.
+ * @param org List of organisation accounts
+ * @param email Email to fetch ID for
+ * @returns User ID
+ * @throws There are multiple users with this email
+ * @throws No user with this email exists
+ */
+export function getUserIdFromOrg(org: T.OrgAccount[], email: string): string {
+  const accounts = org.filter((account) => account.email === email)
+  if (accounts.length > 1) {
+    throw new Error(`There are multiple users with the email ${email}. Please use their ID instead.`)
+  }
+
+  if (accounts.length === 0) {
+    throw new Error(`No users with the email ${email} exist. Please use their ID instead.`)
+  }
+
+  return accounts[0].id
+}
