@@ -100,18 +100,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       multiple: true,
     }),
     'schedule-id': Flags.string({description: 'Schedule to delete.', required: true}),
-    'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Create);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     let schedule = await this.api.get<T.Schedule>(`schedules/${flags['schedule-id']}/`);
 

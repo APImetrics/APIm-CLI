@@ -17,10 +17,6 @@ export default class Remove extends Command<Schedule> {
   static aliases = ['calls:schedules:delete'];
 
   static flags = {
-    'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
     'schedule-id': Flags.string({
       description: 'ID of schedule to modify.',
       char: 's',
@@ -35,12 +31,10 @@ export default class Remove extends Command<Schedule> {
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Remove);
-    const endpoint = `schedules/${flags['schedule-id']}/call/${flags['call-id']}`;
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
-
-    const schedule = await this.api.delete<T.Schedule>(endpoint, {});
+    const schedule = await this.api.delete<T.Schedule>(
+      `schedules/${flags['schedule-id']}/call/${flags['call-id']}`,
+      {}
+    );
     return {success: true, schedule: schedule};
   }
 }

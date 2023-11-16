@@ -17,10 +17,6 @@ export default class Add extends Command<Schedule> {
   static aliases = ['calls:schedules:add'];
 
   static flags = {
-    'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
     'schedule-id': Flags.string({
       description: 'ID of schedule to modify.',
       char: 's',
@@ -35,9 +31,6 @@ export default class Add extends Command<Schedule> {
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Add);
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     const schedule = await this.api.post<T.Schedule>(
       `schedules/${flags['schedule-id']}/call/${flags['call-id']}`,
