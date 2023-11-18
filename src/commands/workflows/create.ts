@@ -53,7 +53,7 @@ export default class Create extends Command<WorkflowResponse> {
       default: true,
       allowNo: true,
     }),
-    tag: Flags.string({description: 'Tag to add to call.', multiple: true}),
+    tag: Flags.string({description: 'Tag to add to workflow.', multiple: true}),
     call: Flags.string({
       description: 'ID of call to add to workflow.',
       multiple: true,
