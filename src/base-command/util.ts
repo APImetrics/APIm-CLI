@@ -109,3 +109,13 @@ export function getUserIdFromOrg(org: T.OrgAccount[], email: string): string {
 
   return accounts[0].id
 }
+
+/**
+ * Split a string at the last occurrence of a given character
+ * @param s String to split
+ * @param search Character to split at
+ */
+export function splitAtLastOccurrence(s: string, search: string): string[] {
+  const i = s.lastIndexOf(search)
+  return [s.slice(0,i), s.slice(i+1)]
+}
