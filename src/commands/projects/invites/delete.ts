@@ -10,17 +10,12 @@ export default class Delete extends Command<{success: boolean}> {
 
   static flags = {
     'invite-id': Flags.string({description: 'Invite to delete.', required: true}),
-    'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Delete);
 
-    const projectId = flags['project-id'] ? flags['project-id'] : this.userConfig.project.current;
-    await this.api.delete(`projects/${projectId}/invites/${flags['invite-id']}/`);
+    await this.api.delete(`projects/${this.api.project}/invites/${flags['invite-id']}/`);
     return {success: true};
   }
 }

@@ -31,18 +31,10 @@ export default class Create extends Command<Downtime> {
       description: 'Repeat this downtime at the set interval.',
       options: ['daily', 'weekly', 'off'],
     }),
-    'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<Downtime> {
     const {flags} = await this.parse(Create);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     const {schedule: downtime} = await this.api.get<T.Downtime>(
       `schedules/downtime/${flags['downtime-id']}/`
