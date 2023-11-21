@@ -7,6 +7,7 @@ Manage projects.
 * [`apimetrics projects accounts`](#apimetrics-projects-accounts)
 * [`apimetrics projects accounts edit`](#apimetrics-projects-accounts-edit)
 * [`apimetrics projects create`](#apimetrics-projects-create)
+* [`apimetrics projects delete`](#apimetrics-projects-delete)
 * [`apimetrics projects invites`](#apimetrics-projects-invites)
 * [`apimetrics projects invites create`](#apimetrics-projects-invites-create)
 * [`apimetrics projects invites delete`](#apimetrics-projects-invites-delete)
@@ -98,15 +99,16 @@ USAGE
     <value>] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>     ID of project to read. Overrides apimetrics config project set.
-  --add-analyst=<value>...     ID of user to add as an analyst.
-  --add-editor=<value>...      ID of user to add as an editor.
-  --add-owner=<value>...       ID of user to add as an owner.
-  --add-viewer=<value>...      ID of user to add as a viewer.
-  --remove-analyst=<value>...  ID of user to remove as an analyst
-  --remove-editor=<value>...   ID of user to remove as an editor
-  --remove-owner=<value>...    ID of user to remove as an owner
-  --remove-viewer=<value>...   ID of user to remove as an viewer
+  -p, --project-id=<value>     ID of project to read. Overrides apimetrics config project set. This must be in the
+                               specified organization.
+  --add-analyst=<value>...     ID or email of user to add as an analyst.
+  --add-editor=<value>...      ID or email of user to add as an editor.
+  --add-owner=<value>...       ID or email of user to add as an owner.
+  --add-viewer=<value>...      ID or email of user to add as a viewer.
+  --remove-analyst=<value>...  ID or email of user to remove as an analyst
+  --remove-editor=<value>...   ID or email of user to remove as an editor
+  --remove-owner=<value>...    ID or email of user to remove as an owner
+  --remove-viewer=<value>...   ID or email of user to remove as an viewer
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -157,6 +159,32 @@ EXAMPLES
 ```
 
 _See code: [src/commands/projects/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/projects/create.ts)_
+
+## `apimetrics projects delete`
+
+Delete the currently selected project or specify another to delete.
+
+```
+USAGE
+  $ apimetrics projects delete [--json] [-p <value>] [-o <value>]
+
+FLAGS
+  -o, --org-id=<value>      ID of organization to modify. Overrides apimetrics config org set.
+  -p, --project-id=<value>  ID of project to delete. Overrides apimetrics config project set.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete the currently selected project or specify another to delete.
+
+EXAMPLES
+  $ apimetrics projects delete
+
+  $ apimetrics projects delete --project-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
+```
+
+_See code: [src/commands/projects/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/projects/delete.ts)_
 
 ## `apimetrics projects invites`
 
@@ -227,11 +255,10 @@ Delete an invite to the project.
 
 ```
 USAGE
-  $ apimetrics projects invites delete --invite-id <value> [--json] [-p <value>]
+  $ apimetrics projects invites delete --invite-id <value> [--json]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
-  --invite-id=<value>       (required) Invite to delete.
+  --invite-id=<value>  (required) Invite to delete.
 
 GLOBAL FLAGS
   --json  Format output as json.

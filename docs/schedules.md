@@ -95,11 +95,10 @@ Add call to schedule.
 
 ```
 USAGE
-  $ apimetrics schedules calls add -s <value> -c <value> [--json] [-p <value>]
+  $ apimetrics schedules calls add -s <value> -c <value> [--json]
 
 FLAGS
   -c, --call-id=<value>      (required) ID of call to add.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
   -s, --schedule-id=<value>  (required) ID of schedule to modify.
 
 GLOBAL FLAGS
@@ -123,11 +122,10 @@ Remove call from schedule
 
 ```
 USAGE
-  $ apimetrics schedules calls remove -s <value> -c <value> [--json] [-p <value>]
+  $ apimetrics schedules calls remove -s <value> -c <value> [--json]
 
 FLAGS
   -c, --call-id=<value>      (required) ID of call to remove.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
   -s, --schedule-id=<value>  (required) ID of schedule to modify.
 
 GLOBAL FLAGS
@@ -192,11 +190,10 @@ Delete a schedule.
 
 ```
 USAGE
-  $ apimetrics schedules delete --schedule-id <value> [--json] [-p <value>]
+  $ apimetrics schedules delete --schedule-id <value> [--json]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
-  --schedule-id=<value>     (required) Schedule to delete.
+  --schedule-id=<value>  (required) Schedule to delete.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -253,16 +250,15 @@ Create downtime.
 
 ```
 USAGE
-  $ apimetrics schedules downtimes create --start <value> --end <value> --schedule-id <value> [--json] [--repeat daily|weekly]
-    [-p <value>]
+  $ apimetrics schedules downtimes create --start <value> --end <value> --schedule-id <value> [--json] [--repeat
+  daily|weekly]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  --end=<value>             (required) Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
-  --repeat=<option>         Repeat this downtime at the set interval.
-                            <options: daily|weekly>
-  --schedule-id=<value>     (required) ID of schedule to add downtime to.
-  --start=<value>           (required) Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --end=<value>          (required) Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --repeat=<option>      Repeat this downtime at the set interval.
+                         <options: daily|weekly>
+  --schedule-id=<value>  (required) ID of schedule to add downtime to.
+  --start=<value>        (required) Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -308,15 +304,14 @@ Edit downtime.
 ```
 USAGE
   $ apimetrics schedules downtimes edit --downtime-id <value> [--json] [--start <value>] [--end <value>] [--repeat
-    daily|weekly|off] [-p <value>]
+    daily|weekly|off]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  --downtime-id=<value>     (required) ID of downtime to edit.
-  --end=<value>             Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
-  --repeat=<option>         Repeat this downtime at the set interval.
-                            <options: daily|weekly|off>
-  --start=<value>           Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --downtime-id=<value>  (required) ID of downtime to edit.
+  --end=<value>          Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --repeat=<option>      Repeat this downtime at the set interval.
+                         <options: daily|weekly|off>
+  --start=<value>        Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -340,10 +335,9 @@ USAGE
     1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h] [--name <value>] [--retry-method
     fibonacci|exponential|constant] [--retry] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
     [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--postman] [--no-postman]
-    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>] [-p <value>]
+    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>]
 
 FLAGS
-  -p, --project-id=<value>      ID of project to read. Overrides apimetrics config project set.
   --add-location=<value>...     Add location to run calls from.
   --add-region=<value>...       Add region to run calls from.
   --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.

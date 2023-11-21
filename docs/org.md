@@ -66,7 +66,7 @@ USAGE
 
 FLAGS
   -o, --org-id=<value>      ID of organization to modify. Overrides apimetrics config org set.
-  -u, --user-id=<value>     (required) ID of user
+  -u, --user-id=<value>     (required) ID or email of user
   --add-role=<value>...     Add a role to the account.
   --remove-role=<value>...  Name of role to remove.
 
@@ -92,7 +92,7 @@ USAGE
 
 FLAGS
   -o, --org-id=<value>   ID of organization to modify. Overrides apimetrics config org set.
-  -u, --user-id=<value>  (required) ID of user to remove.
+  -u, --user-id=<value>  (required) ID or email of user to remove.
 
 GLOBAL FLAGS
   --json  Format output as json.

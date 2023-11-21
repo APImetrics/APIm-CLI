@@ -140,7 +140,8 @@ EXAMPLES
   Email:                bob@example.com
   MFA enabled:          false
   Current Organization: companya
-  Current Project:      ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM
+  Current Project Name: My Project
+  Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM
 ```
 
 _See code: [src/commands/info/whoami.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/info/whoami.ts)_

@@ -4,6 +4,9 @@
 Manage project workflows.
 
 * [`apimetrics workflows`](#apimetrics-workflows)
+* [`apimetrics workflows create`](#apimetrics-workflows-create)
+* [`apimetrics workflows delete`](#apimetrics-workflows-delete)
+* [`apimetrics workflows edit`](#apimetrics-workflows-edit)
 
 ## `apimetrics workflows`
 
@@ -40,3 +43,123 @@ EXAMPLES
 ```
 
 _See code: [src/commands/workflows/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/workflows/index.ts)_
+
+## `apimetrics workflows create`
+
+Create a new workflow.
+
+```
+USAGE
+  $ apimetrics workflows create --name <value> [--json] [--description <value>] [--retry-method
+    fibonacci|exponential|constant|never] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
+    [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--location <value>]
+    [--show-as-action] [--parallel] [--tag <value>] [--call <value>] [--stop-on-failure] [--handle-cookies] [-p <value>]
+
+FLAGS
+  -p, --project-id=<value>      ID of project to modify. Overrides apimetrics config project set.
+  --call=<value>...             ID of call to add to workflow.
+  --description=<value>         Description for this workflow.
+  --[no-]handle-cookies         Should cookies be handled?
+  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
+  --location=<value>            Only run calls from this location.
+  --max-retries=<value>         Maximum number of retries to attempt.
+  --name=<value>                (required) Name for workflow.
+  --[no-]parallel               Should parallel execution be allowed?
+  --retry-base=<value>          Base for exponential retry.
+  --retry-factor=<value>        Factor for exponential retry.
+  --retry-interval=<value>      Wait X seconds between each retry.
+  --retry-method=<option>       Algorithm for retries.
+                                <options: fibonacci|exponential|constant|never>
+  --show-as-action              Show on project home page as action.
+  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
+  --[no-]stop-on-failure        Should the workflow stop execution on a failed call?
+  --tag=<value>...              Tag to add to workflow.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create a new workflow.
+
+EXAMPLES
+  $ apimetrics workflows create --name="My Workflow"
+```
+
+_See code: [src/commands/workflows/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/workflows/create.ts)_
+
+## `apimetrics workflows delete`
+
+Delete a workflow.
+
+```
+USAGE
+  $ apimetrics workflows delete --workflow-id <value> [--json]
+
+FLAGS
+  --workflow-id=<value>  (required) Workflow to delete.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a workflow.
+
+EXAMPLES
+  $ apimetrics workflows delete --workflow-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
+```
+
+_See code: [src/commands/workflows/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/workflows/delete.ts)_
+
+## `apimetrics workflows edit`
+
+Edit a workflow.
+
+```
+USAGE
+  $ apimetrics workflows edit --workflow-id <value> [--json] [--name <value>] [--description <value>] [--retry]
+    [--retry-method fibonacci|exponential|constant|never] [--retry-base <value>] [--retry-factor <value>]
+    [--retry-interval <value>] [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>]
+    [--location <value>] [--no-location] [--show-as-action] [--no-show-as-action] [--parallel] [--no-parallel]
+    [--add-tag <value>] [--remove-tag <value>] [--add-call <value>] [--remove-call <value>] [--stop-on-failure]
+    [--no-stop-on-failure] [--handle-cookies] [--no-handle-cookies]
+
+FLAGS
+  --add-call=<value>...         ID and index of call to add in a comma seperated format. To add to end, use index -1.
+                                E.g --add-call=abc123,0 to add call abc123 to start.
+  --add-tag=<value>...          Tag to add to workflow.
+  --description=<value>         Description for this workflow.
+  --handle-cookies              Handle cookies
+  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
+  --location=<value>            Only run calls from this location.
+  --max-retries=<value>         Maximum number of retries to attempt.
+  --name=<value>                Name for workflow.
+  --no-handle-cookies           Don't handle cookies
+  --no-location                 Do not limit calls to a single location.
+  --no-parallel                 Disable parallel execution.
+  --no-show-as-action           Don't show on project home page as action.
+  --no-stop-on-failure          Don't stop on a failed call.
+  --parallel                    Allow parallel execution.
+  --remove-call=<value>...      Index of call to remove.
+  --remove-tag=<value>...       Tag to remove from workflow.
+  --[no-]retry                  Should retry be enabled?
+  --retry-base=<value>          Base for exponential retry.
+  --retry-factor=<value>        Factor for exponential retry.
+  --retry-interval=<value>      Wait X seconds between each retry.
+  --retry-method=<option>       Algorithm for retries.
+                                <options: fibonacci|exponential|constant|never>
+  --show-as-action              Show on project home page as action.
+  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
+  --stop-on-failure             Stop on a failed call
+  --workflow-id=<value>         (required) Workflow to edit.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Edit a workflow.
+
+EXAMPLES
+  $ apimetrics workflows edit --workflow-id=ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
+```
+
+_See code: [src/commands/workflows/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/workflows/edit.ts)_
