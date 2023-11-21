@@ -2,7 +2,7 @@ import {Flags} from '@oclif/core';
 import {Command} from '../../base-command';
 
 export default class Delete extends Command<{success: boolean}> {
-  static description = 'Delete a schedule.';
+  static description = 'Delete a workflow.';
   protected permitKeyAuth = true;
 
   static examples = [

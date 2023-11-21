@@ -6,11 +6,13 @@ export type WorkflowResponse = {
   workflow: T.Workflow;
 };
 
-export default class Create extends Command<WorkflowResponse> {
-  static description = 'Create a new workflow.';
+export default class Edit extends Command<WorkflowResponse> {
+  static description = 'Edit a workflow.';
   protected permitKeyAuth = true;
 
-  static examples = ['<%= config.bin %> <%= command.id %> --name="My Workflow"'];
+  static examples = [
+    '<%= config.bin %> <%= command.id %> --workflow-id=ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA',
+  ];
 
   static flags = {
     'workflow-id': Flags.string({
@@ -82,7 +84,7 @@ export default class Create extends Command<WorkflowResponse> {
   };
 
   public async run(): Promise<WorkflowResponse> {
-    const {flags} = await this.parse(Create);
+    const {flags} = await this.parse(Edit);
 
     let workflow = await this.api.get<T.Workflow>(`workflows/${flags['workflow-id']}/`);
 
