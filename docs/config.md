@@ -27,7 +27,7 @@ EXAMPLES
   $ apimetrics config org set  --org-id abccorp
 ```
 
-_See code: [src/commands/config/org/set.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/config/org/set.ts)_
+_See code: [src/commands/config/org/set.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/config/org/set.ts)_
 
 ## `apimetrics config project set`
 
@@ -50,4 +50,4 @@ EXAMPLES
   $ apimetrics config project set
 ```
 
-_See code: [src/commands/config/project/set.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/config/project/set.ts)_
+_See code: [src/commands/config/project/set.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/config/project/set.ts)_

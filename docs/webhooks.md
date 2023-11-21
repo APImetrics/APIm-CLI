@@ -45,7 +45,7 @@ EXAMPLES
   GEn          generic   false   None         None
 ```
 
-_See code: [src/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/webhooks/index.ts)_
+_See code: [src/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/webhooks/index.ts)_
 
 ## `apimetrics webhooks create`
 
@@ -171,7 +171,7 @@ EXAMPLES
   $ apimetrics webhooks create
 ```
 
-_See code: [src/commands/webhooks/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/webhooks/create.ts)_
+_See code: [src/commands/webhooks/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/webhooks/create.ts)_
 
 ## `apimetrics webhooks delete`
 
@@ -195,7 +195,7 @@ EXAMPLES
   $ apimetrics webhooks delete --webhook-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/webhooks/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/webhooks/delete.ts)_
+_See code: [src/commands/webhooks/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/webhooks/delete.ts)_
 
 ## `apimetrics webhooks edit`
 
@@ -330,4 +330,4 @@ EXAMPLES
   $ apimetrics webhooks edit
 ```
 
-_See code: [src/commands/webhooks/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/webhooks/edit.ts)_
+_See code: [src/commands/webhooks/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/webhooks/edit.ts)_

@@ -48,7 +48,7 @@ EXAMPLES
   Apples ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-_See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/index.ts)_
+_See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/calls/index.ts)_
 
 ## `apimetrics calls create`
 
@@ -86,7 +86,7 @@ EXAMPLES
   ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM
 ```
 
-_See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/create.ts)_
+_See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/calls/create.ts)_
 
 ## `apimetrics calls edit`
 
@@ -96,15 +96,14 @@ Edit an existing API call.
 USAGE
   $ apimetrics calls edit -c <value> [--json] [-n <value>] [-u <value>] [-m
     get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS] [--accept <value>] [--add-header
-    <value>] [--replace-header <value>] [--remove-header <value>] [--add-tag <value>] [--remove-tag <value>] [-p
-    <value>] [--description <value>] [--body <value>]
+    <value>] [--replace-header <value>] [--remove-header <value>] [--add-tag <value>] [--remove-tag <value>]
+    [--description <value>] [--body <value>]
 
 FLAGS
   -c, --call-id=<value>        (required) ID of call.
   -m, --method=<option>        HTTP method to use.
                                <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
   -n, --name=<value>           Name of API call.
-  -p, --project-id=<value>     ID of project to modify. Overrides apimetrics config project set.
   -u, --url=<value>            URL to call.
   --accept=<value>             MIME type for accept header. Alias for --replace-header Accept: <MIME type>.
   --add-header=<value>...      Add header to the call. Specify in the form <key>: <value>.
@@ -126,7 +125,7 @@ EXAMPLES
   $ apimetrics calls edit --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM --url https://example.com/v2/apples
 ```
 
-_See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/edit.ts)_
+_See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/calls/edit.ts)_
 
 ## `apimetrics calls schedules add`
 
@@ -134,11 +133,10 @@ Add call to schedule.
 
 ```
 USAGE
-  $ apimetrics calls schedules add -s <value> -c <value> [--json] [-p <value>]
+  $ apimetrics calls schedules add -s <value> -c <value> [--json]
 
 FLAGS
   -c, --call-id=<value>      (required) ID of call to add.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
   -s, --schedule-id=<value>  (required) ID of schedule to modify.
 
 GLOBAL FLAGS
@@ -160,11 +158,10 @@ Remove call from schedule
 
 ```
 USAGE
-  $ apimetrics calls schedules delete -s <value> -c <value> [--json] [-p <value>]
+  $ apimetrics calls schedules delete -s <value> -c <value> [--json]
 
 FLAGS
   -c, --call-id=<value>      (required) ID of call to remove.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
   -s, --schedule-id=<value>  (required) ID of schedule to modify.
 
 GLOBAL FLAGS

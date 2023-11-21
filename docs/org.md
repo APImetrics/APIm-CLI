@@ -54,7 +54,7 @@ EXAMPLES
   Bob               auth0|zyxwvutsrqponmlkjihgfedc
 ```
 
-_See code: [src/commands/org/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/accounts/index.ts)_
+_See code: [src/commands/org/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/accounts/index.ts)_
 
 ## `apimetrics org accounts edit`
 
@@ -66,7 +66,7 @@ USAGE
 
 FLAGS
   -o, --org-id=<value>      ID of organization to modify. Overrides apimetrics config org set.
-  -u, --user-id=<value>     (required) ID of user
+  -u, --user-id=<value>     (required) ID or email of user
   --add-role=<value>...     Add a role to the account.
   --remove-role=<value>...  Name of role to remove.
 
@@ -80,7 +80,7 @@ EXAMPLES
   $ apimetrics org accounts edit -u auth0|abc123 --add-role ADMIN --remove-role DEV_TEAM
 ```
 
-_See code: [src/commands/org/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/accounts/edit.ts)_
+_See code: [src/commands/org/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/accounts/edit.ts)_
 
 ## `apimetrics org accounts remove`
 
@@ -92,7 +92,7 @@ USAGE
 
 FLAGS
   -o, --org-id=<value>   ID of organization to modify. Overrides apimetrics config org set.
-  -u, --user-id=<value>  (required) ID of user to remove.
+  -u, --user-id=<value>  (required) ID or email of user to remove.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -104,7 +104,7 @@ EXAMPLES
   $ apimetrics org accounts remove --user-id "auth0|abcdefghijklmnopqrstuvwx"
 ```
 
-_See code: [src/commands/org/accounts/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/accounts/remove.ts)_
+_See code: [src/commands/org/accounts/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/accounts/remove.ts)_
 
 ## `apimetrics org invites`
 
@@ -141,7 +141,7 @@ EXAMPLES
   alice@example.com DEV_TEAM 2023-07-15T18:34:27.044198Z
 ```
 
-_See code: [src/commands/org/invites/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/invites/index.ts)_
+_See code: [src/commands/org/invites/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/invites/index.ts)_
 
 ## `apimetrics org invites create`
 
@@ -167,7 +167,7 @@ EXAMPLES
   ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM
 ```
 
-_See code: [src/commands/org/invites/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/invites/create.ts)_
+_See code: [src/commands/org/invites/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/invites/create.ts)_
 
 ## `apimetrics org invites delete`
 
@@ -191,7 +191,7 @@ EXAMPLES
   $ apimetrics org invites delete --invite-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM
 ```
 
-_See code: [src/commands/org/invites/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/invites/delete.ts)_
+_See code: [src/commands/org/invites/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/invites/delete.ts)_
 
 ## `apimetrics org roles`
 
@@ -227,7 +227,7 @@ EXAMPLES
   TEAM_A Development team A              2023-07-16T21:53:30.522729Z
 ```
 
-_See code: [src/commands/org/roles/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/roles/index.ts)_
+_See code: [src/commands/org/roles/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/roles/index.ts)_
 
 ## `apimetrics org roles create`
 
@@ -253,7 +253,7 @@ EXAMPLES
   TEAM_A
 ```
 
-_See code: [src/commands/org/roles/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/roles/create.ts)_
+_See code: [src/commands/org/roles/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/roles/create.ts)_
 
 ## `apimetrics org roles delete`
 
@@ -277,4 +277,4 @@ EXAMPLES
   $ apimetrics org roles delete --role TEAM_A
 ```
 
-_See code: [src/commands/org/roles/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/org/roles/delete.ts)_
+_See code: [src/commands/org/roles/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/org/roles/delete.ts)_
