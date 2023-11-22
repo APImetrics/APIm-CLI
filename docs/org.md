@@ -266,7 +266,7 @@ _See code: [src/commands/org/roles/create.ts](https://github.com/APImetrics/APIm
 
 ### `apimetrics org roles delete`
 
-Delete a role within the Organization. The Role ID will be the Name of the Role. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
+Delete a role within the Organization. **Role IDs** will be the Name of the Role. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
