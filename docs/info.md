@@ -18,15 +18,15 @@ USAGE
     csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
 
 FLAGS
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format
+  -x, --extended     show extra columns.
+  --columns=<value>  only show provided columns (comma-separated).
+  --csv              output is csv format [alias: --output=csv].
+  --filter=<value>   filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header        hide table header from output.
+  --no-truncate      do not truncate output to fit screen.
+  --output=<option>  output in a more machine friendly format.
                      <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
+  --sort=<value>     property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -47,7 +47,7 @@ _See code: [src/commands/info/locations.ts](https://github.com/APImetrics/APIm-C
 
 ## `apimetrics info orgs`
 
-List organizations the current user is a member of.
+List all Organizations the current user is a member of.
 
 ```
 USAGE
@@ -55,15 +55,15 @@ USAGE
     csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
 
 FLAGS
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format
+  -x, --extended     show extra columns.
+  --columns=<value>  only show provided columns (comma-separated).
+  --csv              output is csv format [alias: --output=csv].
+  --filter=<value>   filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header        hide table header from output.
+  --no-truncate      do not truncate output to fit screen.
+  --output=<option>  output in a more machine friendly format.
                      <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
+  --sort=<value>     property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -121,7 +121,7 @@ _See code: [src/commands/info/regions.ts](https://github.com/APImetrics/APIm-CLI
 
 ## `apimetrics info whoami`
 
-Show details about the currently logged in user.
+Show details about the currently logged-in user.
 
 ```
 USAGE
