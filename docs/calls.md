@@ -15,7 +15,7 @@ Manage monitoring calls, which can be separated into two sections:
 
 ### `apimetrics calls`
 
-List all API calls in the Project.
+List all API calls in the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -56,7 +56,7 @@ _See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/
 
 ### `apimetrics calls create`
 
-Create a new API call in the Project.
+Create a new API call in the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -94,7 +94,7 @@ _See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI
 
 ### `apimetrics calls edit`
 
-Edit an existing API call. Call IDs can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`.
+Edit an existing API call. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -136,7 +136,7 @@ _See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/b
 
 ### `apimetrics calls schedules add`
 
-Add an API call to a Schedule. Call IDs can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. Schedules IDs can be found by using the command `apimetrics schedules -x --no-truncate`.
+Add an API call to a Schedule. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`. 
 
 ```
 USAGE
@@ -162,7 +162,7 @@ EXAMPLES
 
 ### `apimetrics calls schedules delete`
 
-Remove an API call from a Schedule. Call IDs can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. Schedules IDs can be found by using the command `apimetrics schedules -x --no-truncate`.
+Remove an API call from a Schedule. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
