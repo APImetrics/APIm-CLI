@@ -3,18 +3,18 @@
 
 Manage projects, which can be separated into four sections:
 
-* Config
+* [Config](#config)
   * [`apimetrics projects`](#apimetrics-projects)
   * [`apimetrics projects create`](#apimetrics-projects-create)
   * [`apimetrics projects pull`](#apimetrics-projects-pull)
-* Accounts
+* [Accounts](#accounts)
   * [`apimetrics projects accounts`](#apimetrics-projects-accounts)
   * [`apimetrics projects accounts edit`](#apimetrics-projects-accounts-edit)
-* Invites
+* [Invites](#invites)
   * [`apimetrics projects invites`](#apimetrics-projects-invites)
   * [`apimetrics projects invites create`](#apimetrics-projects-invites-create)
   * [`apimetrics projects invites delete`](#apimetrics-projects-invites-delete)
-* Roles
+* [Roles](#roles)
   * [`apimetrics projects roles`](#apimetrics-projects-roles)
   * [`apimetrics projects roles edit`](#apimetrics-projects-roles-edit)
 
@@ -22,7 +22,7 @@ Manage projects, which can be separated into four sections:
 
 ### `apimetrics projects`
 
-List all projects in an Organisation that the current user has access to.
+List all projects in an Organisation that the current user has access to. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -58,7 +58,7 @@ _See code: [src/commands/projects/index.ts](https://github.com/APImetrics/APIm-C
 
 ### `apimetrics projects create`
 
-Create a new project in the Organisation.
+Create a new project in the Organisation. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings). **Role IDs** will be the Name of the Role.
 
 ```
 USAGE
