@@ -7,7 +7,7 @@ Manage project workflows.
 
 ## `apimetrics workflows`
 
-List workflows.
+List all workflows in the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -16,15 +16,15 @@ USAGE
 
 FLAGS
   -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
-  -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+  -x, --extended            show extra columns.
+  --columns=<value>         only show provided columns (comma-separated).
+  --csv                     output is csv format [alias: --output=csv].
+  --filter=<value>          filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header               hide table header from output.
+  --no-truncate             do not truncate output to fit screen.
+  --output=<option>         output in a more machine friendly format.
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+  --sort=<value>            property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
