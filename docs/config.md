@@ -8,7 +8,7 @@ Manage CLI configuration options.
 
 ## `apimetrics config org set`
 
-Change the Organisation the CLI is working in. Organisation IDs can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings) or you can scroll through your options by using the command `apimetrics config org set`.
+Change the Organisation the CLI is working in. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings) or you can scroll through your options by using the command `apimetrics config org set`.
 
 ```
 USAGE
@@ -31,7 +31,7 @@ _See code: [src/commands/config/org/set.ts](https://github.com/APImetrics/APIm-C
 
 ## `apimetrics config project set`
 
-Change the Project the CLI is working in. Project IDs can be found in the Project Settings under the Admin section or you can scroll through your options by using the command `apimetrics config project set`.
+Change the Project the CLI is working in. **Project IDs** can be found in the Project Settings under the Admin section or you can scroll through your options by using the command `apimetrics config project set`.
 
 ```
 USAGE
