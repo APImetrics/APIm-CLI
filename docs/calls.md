@@ -1,17 +1,21 @@
 `apimetrics calls`
 ==================
 
-Manage monitoring calls.
+Manage monitoring calls, which can be separated into two sections:
 
-* [`apimetrics calls`](#apimetrics-calls)
-* [`apimetrics calls create`](#apimetrics-calls-create)
-* [`apimetrics calls edit`](#apimetrics-calls-edit)
-* [`apimetrics calls schedules add`](#apimetrics-calls-schedules-add)
-* [`apimetrics calls schedules delete`](#apimetrics-calls-schedules-delete)
+* API Calls
+  * [`apimetrics calls`](#apimetrics-calls)
+  * [`apimetrics calls create`](#apimetrics-calls-create)
+  * [`apimetrics calls edit`](#apimetrics-calls-edit)\
+* Schedules
+  * [`apimetrics calls schedules add`](#apimetrics-calls-schedules-add)
+  * [`apimetrics calls schedules delete`](#apimetrics-calls-schedules-delete)
 
-## `apimetrics calls`
+## API Calls
 
-List API calls in project.
+### `apimetrics calls`
+
+List all API calls in the Project.
 
 ```
 USAGE
@@ -20,15 +24,15 @@ USAGE
 
 FLAGS
   -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+  -x, --extended            show extra columns.
+  --columns=<value>         only show provided columns (comma-separated).
+  --csv                     output is csv format [alias: --output=csv].
+  --filter=<value>          filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header               hide table header from output.
+  --no-truncate             do not truncate output to fit screen.
+  --output=<option>         output in a more machine friendly format.
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+  --sort=<value>            property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -50,9 +54,9 @@ EXAMPLES
 
 _See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/index.ts)_
 
-## `apimetrics calls create`
+### `apimetrics calls create`
 
-Create a new API call.
+Create a new API call in the Project.
 
 ```
 USAGE
@@ -88,9 +92,9 @@ EXAMPLES
 
 _See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/create.ts)_
 
-## `apimetrics calls edit`
+### `apimetrics calls edit`
 
-Edit an existing API call.
+Edit an existing API call. Call IDs can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`.
 
 ```
 USAGE
@@ -128,9 +132,11 @@ EXAMPLES
 
 _See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/edit.ts)_
 
-## `apimetrics calls schedules add`
+## Schedules
 
-Add call to schedule.
+### `apimetrics calls schedules add`
+
+Add an API call to a Schedule.
 
 ```
 USAGE
@@ -154,7 +160,7 @@ EXAMPLES
   $ apimetrics calls schedules add --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-## `apimetrics calls schedules delete`
+### `apimetrics calls schedules delete`
 
 Remove call from schedule
 
