@@ -1,22 +1,28 @@
 `apimetrics projects`
 =====================
 
-Manage projects.
+Manage projects, which can be separated into four sections:
 
-* [`apimetrics projects`](#apimetrics-projects)
-* [`apimetrics projects accounts`](#apimetrics-projects-accounts)
-* [`apimetrics projects accounts edit`](#apimetrics-projects-accounts-edit)
-* [`apimetrics projects create`](#apimetrics-projects-create)
-* [`apimetrics projects invites`](#apimetrics-projects-invites)
-* [`apimetrics projects invites create`](#apimetrics-projects-invites-create)
-* [`apimetrics projects invites delete`](#apimetrics-projects-invites-delete)
-* [`apimetrics projects pull`](#apimetrics-projects-pull)
-* [`apimetrics projects roles`](#apimetrics-projects-roles)
-* [`apimetrics projects roles edit`](#apimetrics-projects-roles-edit)
+* Config
+  * [`apimetrics projects`](#apimetrics-projects)
+  * [`apimetrics projects create`](#apimetrics-projects-create)
+  * [`apimetrics projects pull`](#apimetrics-projects-pull)
+* Accounts
+  * [`apimetrics projects accounts`](#apimetrics-projects-accounts)
+  * [`apimetrics projects accounts edit`](#apimetrics-projects-accounts-edit)
+* Invites
+  * [`apimetrics projects invites`](#apimetrics-projects-invites)
+  * [`apimetrics projects invites create`](#apimetrics-projects-invites-create)
+  * [`apimetrics projects invites delete`](#apimetrics-projects-invites-delete)
+* Roles
+  * [`apimetrics projects roles`](#apimetrics-projects-roles)
+  * [`apimetrics projects roles edit`](#apimetrics-projects-roles-edit)
 
-## `apimetrics projects`
+## Config
 
-List all projects in an organisation that the current user has access to.
+### `apimetrics projects`
+
+List all projects in an Organisation that the current user has access to.
 
 ```
 USAGE
@@ -25,15 +31,15 @@ USAGE
 
 FLAGS
   -o, --org-id=<value>  ID of organization to modify. Overrides apimetrics config org set.
-  -x, --extended        show extra columns
-  --columns=<value>     only show provided columns (comma-separated)
-  --csv                 output is csv format [alias: --output=csv]
-  --filter=<value>      filter property by partial string matching, ex: name=foo
-  --no-header           hide table header from output
-  --no-truncate         do not truncate output to fit screen
-  --output=<option>     output in a more machine friendly format
+  -x, --extended        show extra columns.
+  --columns=<value>     only show provided columns (comma-separated).
+  --csv                 output is csv format [alias: --output=csv].
+  --filter=<value>      filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header           hide table header from output.
+  --no-truncate         do not truncate output to fit screen.
+  --output=<option>     output in a more machine friendly format.
                         <options: csv|json|yaml>
-  --sort=<value>        property to sort by (prepend '-' for descending)
+  --sort=<value>        property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -50,79 +56,9 @@ EXAMPLES
 
 _See code: [src/commands/projects/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/index.ts)_
 
-## `apimetrics projects accounts`
+### `apimetrics projects create`
 
-List users with access to the project.
-
-```
-USAGE
-  $ apimetrics projects accounts [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
-
-FLAGS
-  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
-                            <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  List users with access to the project.
-
-EXAMPLES
-  $ apimetrics projects accounts
-  Email             Access Level
-  ───────────────── ────────────
-  bob@example.com   VIEWER
-  alice@example.com OWNER
-```
-
-_See code: [src/commands/projects/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/accounts/index.ts)_
-
-## `apimetrics projects accounts edit`
-
-Edit account access for the project.
-
-```
-USAGE
-  $ apimetrics projects accounts edit [--json] [--add-owner <value>] [--remove-owner <value>] [--add-editor <value>]
-    [--remove-editor <value>] [--add-analyst <value>] [--remove-analyst <value>] [--add-viewer <value>] [--remove-viewer
-    <value>] [-p <value>]
-
-FLAGS
-  -p, --project-id=<value>     ID of project to read. Overrides apimetrics config project set.
-  --add-analyst=<value>...     ID of user to add as an analyst.
-  --add-editor=<value>...      ID of user to add as an editor.
-  --add-owner=<value>...       ID of user to add as an owner.
-  --add-viewer=<value>...      ID of user to add as a viewer.
-  --remove-analyst=<value>...  ID of user to remove as an analyst
-  --remove-editor=<value>...   ID of user to remove as an editor
-  --remove-owner=<value>...    ID of user to remove as an owner
-  --remove-viewer=<value>...   ID of user to remove as an viewer
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Edit account access for the project.
-
-EXAMPLES
-  $ apimetrics projects accounts edit --add-owner auth0|abcdefghijklmnopqrstuvwx --remove-viewer auth0|zyxwvutsrqponmlkjihgfedc
-```
-
-_See code: [src/commands/projects/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/accounts/edit.ts)_
-
-## `apimetrics projects create`
-
-Create a new project.
+Create a new project in the Organisation.
 
 ```
 USAGE
@@ -158,7 +94,110 @@ EXAMPLES
 
 _See code: [src/commands/projects/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/create.ts)_
 
-## `apimetrics projects invites`
+### `apimetrics projects pull`
+
+Fetch project.yaml file for the Project.
+
+```
+USAGE
+  $ apimetrics projects pull [--json] [-f -o <value>] [--environment] [--header] [--webhook] [-p <value>]
+
+FLAGS
+  -f, --force               Force overwriting of existing project.yaml file.
+  -o, --out=<value>         File to write project.yaml to.
+  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
+  --[no-]environment        Include environment variable data.
+  --[no-]header             Include header data.
+  --[no-]webhook            Include webhook data.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Fetch project.yaml file.
+
+EXAMPLES
+  $ apimetrics projects pull --out myproject.yaml
+  Wrote project.yaml to myproject.yaml.
+```
+
+_See code: [src/commands/projects/pull.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/pull.ts)_
+
+## Accounts
+
+### `apimetrics projects accounts`
+
+List users with access to the Project.
+
+```
+USAGE
+  $ apimetrics projects accounts [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
+    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+
+FLAGS
+  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
+  -x, --extended            show extra columns
+  --columns=<value>         only show provided columns (comma-separated).
+  --csv                     output is csv format [alias: --output=csv].
+  --filter=<value>          filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header               hide table header from output.
+  --no-truncate             do not truncate output to fit screen.
+  --output=<option>         output in a more machine friendly format.
+                            <options: csv|json|yaml>
+  --sort=<value>            property to sort by (prepend '-' for descending).
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List users with access to the project.
+
+EXAMPLES
+  $ apimetrics projects accounts
+  Email             Access Level
+  ───────────────── ────────────
+  bob@example.com   VIEWER
+  alice@example.com OWNER
+```
+
+_See code: [src/commands/projects/accounts/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/accounts/index.ts)_
+
+### `apimetrics projects accounts edit`
+
+Edit account access for the Project.
+
+```
+USAGE
+  $ apimetrics projects accounts edit [--json] [--add-owner <value>] [--remove-owner <value>] [--add-editor <value>]
+    [--remove-editor <value>] [--add-analyst <value>] [--remove-analyst <value>] [--add-viewer <value>] [--remove-viewer
+    <value>] [-p <value>]
+
+FLAGS
+  -p, --project-id=<value>     ID of project to read. Overrides apimetrics config project set.
+  --add-analyst=<value>...     ID of user to add as an analyst.
+  --add-editor=<value>...      ID of user to add as an editor.
+  --add-owner=<value>...       ID of user to add as an owner.
+  --add-viewer=<value>...      ID of user to add as a viewer.
+  --remove-analyst=<value>...  ID of user to remove as an analyst
+  --remove-editor=<value>...   ID of user to remove as an editor
+  --remove-owner=<value>...    ID of user to remove as an owner
+  --remove-viewer=<value>...   ID of user to remove as an viewer
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Edit account access for the project.
+
+EXAMPLES
+  $ apimetrics projects accounts edit --add-owner auth0|abcdefghijklmnopqrstuvwx --remove-viewer auth0|zyxwvutsrqponmlkjihgfedc
+```
+
+_See code: [src/commands/projects/accounts/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/accounts/edit.ts)_
+
+## Invites
+
+### `apimetrics projects invites`
 
 List invites in the project.
 
@@ -194,7 +233,7 @@ EXAMPLES
 
 _See code: [src/commands/projects/invites/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/invites/index.ts)_
 
-## `apimetrics projects invites create`
+### `apimetrics projects invites create`
 
 Create an invite to the project.
 
@@ -221,7 +260,7 @@ EXAMPLES
 
 _See code: [src/commands/projects/invites/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/invites/create.ts)_
 
-## `apimetrics projects invites delete`
+### `apimetrics projects invites delete`
 
 Delete an invite to the project.
 
@@ -245,36 +284,9 @@ EXAMPLES
 
 _See code: [src/commands/projects/invites/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/invites/delete.ts)_
 
-## `apimetrics projects pull`
+## Roles
 
-Fetch project.yaml file.
-
-```
-USAGE
-  $ apimetrics projects pull [--json] [-f -o <value>] [--environment] [--header] [--webhook] [-p <value>]
-
-FLAGS
-  -f, --force               Force overwriting of existing project.yaml file.
-  -o, --out=<value>         File to write project.yaml to.
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
-  --[no-]environment        Include environment variable data.
-  --[no-]header             Include header data.
-  --[no-]webhook            Include webhook data.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Fetch project.yaml file.
-
-EXAMPLES
-  $ apimetrics projects pull --out myproject.yaml
-  Wrote project.yaml to myproject.yaml.
-```
-
-_See code: [src/commands/projects/pull.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/pull.ts)_
-
-## `apimetrics projects roles`
+### `apimetrics projects roles`
 
 List all roles with access to the project.
 
@@ -314,7 +326,7 @@ EXAMPLES
 
 _See code: [src/commands/projects/roles/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/projects/roles/index.ts)_
 
-## `apimetrics projects roles edit`
+### `apimetrics projects roles edit`
 
 Edit role access on the project.
 
