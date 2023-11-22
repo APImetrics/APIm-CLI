@@ -10,7 +10,7 @@ Manage project webhooks and alerts.
 
 ## `apimetrics webhooks`
 
-List webhooks on a project.
+List all webhooks in a Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -19,15 +19,15 @@ USAGE
 
 FLAGS
   -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+  -x, --extended            show extra columns.
+  --columns=<value>         only show provided columns (comma-separated).
+  --csv                     output is csv format [alias: --output=csv].
+  --filter=<value>          filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header               hide table header from output.
+  --no-truncate             do not truncate output to fit screen.
+  --output=<option>         output in a more machine friendly format.
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+  --sort=<value>            property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -49,7 +49,7 @@ _See code: [src/commands/webhooks/index.ts](https://github.com/APImetrics/APIm-C
 
 ## `apimetrics webhooks create`
 
-Create a new webhook.
+Create a new webhook for a Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Token IDs** can be found in Auth & Tokens, select the desired token to see the ID (you may need to toggle the ID column on). **Workflow IDs** can be found by using the command `apimetrics workflows -x --no-truncate`.
 
 ```
 USAGE
@@ -175,7 +175,7 @@ _See code: [src/commands/webhooks/create.ts](https://github.com/APImetrics/APIm-
 
 ## `apimetrics webhooks delete`
 
-Delete a webhook.
+Delete a webhook from the Project. **Webhook IDs** can be found by using the command `apimetrics webhooks -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -199,7 +199,7 @@ _See code: [src/commands/webhooks/delete.ts](https://github.com/APImetrics/APIm-
 
 ## `apimetrics webhooks edit`
 
-Edit a webhook.
+Edit a webhook in the Project. **Webhook IDs** can be found by using the command `apimetrics webhooks -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Token IDs** can be found in Auth & Tokens, select the desired token to see the ID (you may need to toggle the ID column on). **Workflow IDs** can be found by using the command `apimetrics workflows -x --no-truncate`.
 
 ```
 USAGE
