@@ -8,7 +8,7 @@ Manage CLI configuration options.
 
 ## `apimetrics config org set`
 
-Change the Organisation the CLI is working in. Organisation IDs can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings) or you can scroll through your options by using the command `apimetrics config org set'.
+Change the Organisation the CLI is working in. Organisation IDs can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings) or you can scroll through your options by using the command `apimetrics config org set`.
 
 ```
 USAGE
