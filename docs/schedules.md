@@ -1,23 +1,28 @@
 `apimetrics schedules`
 ======================
 
-Manage project schedules.
+Manage project schedules, which can be separated into three sections:
 
-* [`apimetrics schedules`](#apimetrics-schedules)
-* [`apimetrics schedules calls`](#apimetrics-schedules-calls)
-* [`apimetrics schedules calls add`](#apimetrics-schedules-calls-add)
-* [`apimetrics schedules calls remove`](#apimetrics-schedules-calls-remove)
-* [`apimetrics schedules create`](#apimetrics-schedules-create)
-* [`apimetrics schedules delete`](#apimetrics-schedules-delete)
-* [`apimetrics schedules downtimes`](#apimetrics-schedules-downtimes)
-* [`apimetrics schedules downtimes create`](#apimetrics-schedules-downtimes-create)
-* [`apimetrics schedules downtimes delete`](#apimetrics-schedules-downtimes-delete)
-* [`apimetrics schedules downtimes edit`](#apimetrics-schedules-downtimes-edit)
-* [`apimetrics schedules edit`](#apimetrics-schedules-edit)
+* [Config](#config)
+  * [`apimetrics schedules`](#apimetrics-schedules)
+  * [`apimetrics schedules create`](#apimetrics-schedules-create)
+  * [`apimetrics schedules delete`](#apimetrics-schedules-delete)
+  * [`apimetrics schedules edit`](#apimetrics-schedules-edit)
+* [API Calls](#api-calls)
+  * [`apimetrics schedules calls`](#apimetrics-schedules-calls)
+  * [`apimetrics schedules calls add`](#apimetrics-schedules-calls-add)
+  * [`apimetrics schedules calls remove`](#apimetrics-schedules-calls-remove)
+* [Downtime](#downtime)
+  * [`apimetrics schedules downtimes`](#apimetrics-schedules-downtimes)
+  * [`apimetrics schedules downtimes create`](#apimetrics-schedules-downtimes-create)
+  * [`apimetrics schedules downtimes delete`](#apimetrics-schedules-downtimes-delete)
+  * [`apimetrics schedules downtimes edit`](#apimetrics-schedules-downtimes-edit)
 
-## `apimetrics schedules`
+## Config
 
-List schedules.
+### `apimetrics schedules`
+
+List all Schedules in the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -26,15 +31,15 @@ USAGE
 
 FLAGS
   -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+  -x, --extended            show extra columns.
+  --columns=<value>         only show provided columns (comma-separated).
+  --csv                     output is csv format [alias: --output=csv].
+  --filter=<value>          filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header               hide table header from output.
+  --no-truncate             do not truncate output to fit screen.
+  --output=<option>         output in a more machine friendly format.
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+  --sort=<value>            property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -52,9 +57,123 @@ EXAMPLES
 
 _See code: [src/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/index.ts)_
 
-## `apimetrics schedules calls`
+### `apimetrics schedules create`
 
-List calls on the schedule.
+Create a new Schedule for the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
+
+```
+USAGE
+  $ apimetrics schedules create --interval 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h --name
+    <value> [--json] [--retry-method fibonacci|exponential|constant] [--retry-base <value>] [--retry-factor <value>]
+    [--retry-interval <value>] [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>]
+    [--postman] [--location <value>] [--region <value>] [-p <value>]
+
+FLAGS
+  -p, --project-id=<value>      ID of project to read. Overrides apimetrics config project set.
+  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
+  --interval=<option>           (required) Schedule interval.
+                                <options: 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h>
+  --location=<value>...         Location to run calls from.
+  --max-retries=<value>         Maximum number of retries to attempt.
+  --name=<value>                (required) Name of schedule.
+  --postman                     Only enable if you use the Postman Monitoring feature.
+  --region=<value>...           Region to run calls from.
+  --retry-base=<value>          Base for exponential retry.
+  --retry-factor=<value>        Factor for exponential retry.
+  --retry-interval=<value>      Wait X seconds between each retry.
+  --retry-method=<option>       Algorithm for retries.
+                                <options: fibonacci|exponential|constant>
+  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create schedule.
+
+EXAMPLES
+  $ apimetrics schedules create --name "My Schedule" --interval 5m
+  ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
+```
+
+_See code: [src/commands/schedules/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/create.ts)_
+
+### `apimetrics schedules delete`
+
+Delete a Schedule from the Project. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`. 
+
+```
+USAGE
+  $ apimetrics schedules delete --schedule-id <value> [--json] [-p <value>]
+
+FLAGS
+  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
+  --schedule-id=<value>     (required) Schedule to delete.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Delete a schedule.
+
+EXAMPLES
+  $ apimetrics schedules delete --schedule-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
+```
+
+_See code: [src/commands/schedules/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/delete.ts)_
+
+### `apimetrics schedules edit`
+
+Edit an existing schedule. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
+
+```
+USAGE
+  $ apimetrics schedules edit --schedule-id <value> [--json] [--interval
+    1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h] [--name <value>] [--retry-method
+    fibonacci|exponential|constant] [--retry] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
+    [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--postman] [--no-postman]
+    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>] [-p <value>]
+
+FLAGS
+  -p, --project-id=<value>      ID of project to read. Overrides apimetrics config project set.
+  --add-location=<value>...     Add location to run calls from.
+  --add-region=<value>...       Add region to run calls from.
+  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
+  --interval=<option>           Schedule interval.
+                                <options: 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h>
+  --max-retries=<value>         Maximum number of retries to attempt.
+  --name=<value>                Name of schedule.
+  --no-postman                  Disable the Postman Monitoring feature
+  --postman                     Only enable if you use the Postman Monitoring feature
+  --remove-location=<value>...  Remove location to run calls from.
+  --remove-region=<value>...    Remove region to run calls from.
+  --[no-]retry                  Should retry be enabled?
+  --retry-base=<value>          Base for exponential retry.
+  --retry-factor=<value>        Factor for exponential retry.
+  --retry-interval=<value>      Wait X seconds between each retry.
+  --retry-method=<option>       Algorithm for retries.
+                                <options: fibonacci|exponential|constant>
+  --schedule-id=<value>         (required) Schedule to edit.
+  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Create schedule.
+
+EXAMPLES
+  $ apimetrics schedules edit --name "My Schedule" --interval 5m
+  ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
+```
+
+_See code: [src/commands/schedules/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/edit.ts)_
+
+## API Calls
+
+### `apimetrics schedules calls`
+
+List all the API calls in the Schedule. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -64,15 +183,15 @@ USAGE
 FLAGS
   -p, --project-id=<value>   ID of project to read. Overrides apimetrics config project set.
   -s, --schedule-id=<value>  (required) ID of schedule to read.
-  -x, --extended             show extra columns
-  --columns=<value>          only show provided columns (comma-separated)
-  --csv                      output is csv format [alias: --output=csv]
-  --filter=<value>           filter property by partial string matching, ex: name=foo
-  --no-header                hide table header from output
-  --no-truncate              do not truncate output to fit screen
-  --output=<option>          output in a more machine friendly format
+  -x, --extended             show extra columns.
+  --columns=<value>          only show provided columns (comma-separated).
+  --csv                      output is csv format [alias: --output=csv].
+  --filter=<value>           filter property by partial string matching, ex: name=foo. Value is case-sensitive.
+  --no-header                hide table header from output.
+  --no-truncate              do not truncate output to fit screen.
+  --output=<option>          output in a more machine friendly format.
                              <options: csv|json|yaml>
-  --sort=<value>             property to sort by (prepend '-' for descending)
+  --sort=<value>             property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -89,9 +208,9 @@ EXAMPLES
 
 _See code: [src/commands/schedules/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/calls/index.ts)_
 
-## `apimetrics schedules calls add`
+### `apimetrics schedules calls add`
 
-Add call to schedule.
+Add call to the Schedule. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -117,9 +236,9 @@ EXAMPLES
 
 _See code: [src/commands/schedules/calls/add.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/calls/add.ts)_
 
-## `apimetrics schedules calls remove`
+### `apimetrics schedules calls remove`
 
-Remove call from schedule
+Remove an API call from the Schedule. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -145,74 +264,11 @@ EXAMPLES
 
 _See code: [src/commands/schedules/calls/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/calls/remove.ts)_
 
-## `apimetrics schedules create`
+## Downtime
 
-Create schedule.
+### `apimetrics schedules downtimes`
 
-```
-USAGE
-  $ apimetrics schedules create --interval 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h --name
-    <value> [--json] [--retry-method fibonacci|exponential|constant] [--retry-base <value>] [--retry-factor <value>]
-    [--retry-interval <value>] [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>]
-    [--postman] [--location <value>] [--region <value>] [-p <value>]
-
-FLAGS
-  -p, --project-id=<value>      ID of project to read. Overrides apimetrics config project set.
-  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
-  --interval=<option>           (required) Schedule interval.
-                                <options: 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h>
-  --location=<value>...         Location to run calls from.
-  --max-retries=<value>         Maximum number of retries to attempt.
-  --name=<value>                (required) Name of schedule.
-  --postman                     Only enable if you use the Postman Monitoring feature
-  --region=<value>...           Region to run calls from.
-  --retry-base=<value>          Base for exponential retry.
-  --retry-factor=<value>        Factor for exponential retry.
-  --retry-interval=<value>      Wait X seconds between each retry.
-  --retry-method=<option>       Algorithm for retries.
-                                <options: fibonacci|exponential|constant>
-  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Create schedule.
-
-EXAMPLES
-  $ apimetrics schedules create --name "My Schedule" --interval 5m
-  ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
-```
-
-_See code: [src/commands/schedules/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/create.ts)_
-
-## `apimetrics schedules delete`
-
-Delete a schedule.
-
-```
-USAGE
-  $ apimetrics schedules delete --schedule-id <value> [--json] [-p <value>]
-
-FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
-  --schedule-id=<value>     (required) Schedule to delete.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Delete a schedule.
-
-EXAMPLES
-  $ apimetrics schedules delete --schedule-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
-```
-
-_See code: [src/commands/schedules/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/delete.ts)_
-
-## `apimetrics schedules downtimes`
-
-List downtimes.
+List downtimes for all Schedules. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -247,9 +303,9 @@ EXAMPLES
 
 _See code: [src/commands/schedules/downtimes/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/index.ts)_
 
-## `apimetrics schedules downtimes create`
+### `apimetrics schedules downtimes create`
 
-Create downtime.
+Create downtime for a Schedule. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -277,9 +333,9 @@ EXAMPLES
 
 _See code: [src/commands/schedules/downtimes/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/create.ts)_
 
-## `apimetrics schedules downtimes delete`
+### `apimetrics schedules downtimes delete`
 
-Delete a downtime.
+Delete downtime from a Schedule. **Downtime IDs** can be found by using the command `apimetrics schedules downtimes`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -301,9 +357,9 @@ EXAMPLES
 
 _See code: [src/commands/schedules/downtimes/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/delete.ts)_
 
-## `apimetrics schedules downtimes edit`
+### `apimetrics schedules downtimes edit`
 
-Edit downtime.
+Edit downtime for a Schedule. **Downtime IDs** can be found by using the command `apimetrics schedules downtimes`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
 
 ```
 USAGE
@@ -329,50 +385,3 @@ EXAMPLES
 ```
 
 _See code: [src/commands/schedules/downtimes/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/edit.ts)_
-
-## `apimetrics schedules edit`
-
-Create schedule.
-
-```
-USAGE
-  $ apimetrics schedules edit --schedule-id <value> [--json] [--interval
-    1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h] [--name <value>] [--retry-method
-    fibonacci|exponential|constant] [--retry] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
-    [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--postman] [--no-postman]
-    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>] [-p <value>]
-
-FLAGS
-  -p, --project-id=<value>      ID of project to read. Overrides apimetrics config project set.
-  --add-location=<value>...     Add location to run calls from.
-  --add-region=<value>...       Add region to run calls from.
-  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
-  --interval=<option>           Schedule interval.
-                                <options: 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h>
-  --max-retries=<value>         Maximum number of retries to attempt.
-  --name=<value>                Name of schedule.
-  --no-postman                  Disable the Postman Monitoring feature
-  --postman                     Only enable if you use the Postman Monitoring feature
-  --remove-location=<value>...  Remove location to run calls from.
-  --remove-region=<value>...    Remove region to run calls from.
-  --[no-]retry                  Should retry be enabled?
-  --retry-base=<value>          Base for exponential retry.
-  --retry-factor=<value>        Factor for exponential retry.
-  --retry-interval=<value>      Wait X seconds between each retry.
-  --retry-method=<option>       Algorithm for retries.
-                                <options: fibonacci|exponential|constant>
-  --schedule-id=<value>         (required) Schedule to delete.
-  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  Create schedule.
-
-EXAMPLES
-  $ apimetrics schedules edit --name "My Schedule" --interval 5m
-  ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
-```
-
-_See code: [src/commands/schedules/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/edit.ts)_
