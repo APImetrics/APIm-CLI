@@ -3,11 +3,11 @@
 
 Manage monitoring calls, which can be separated into two sections:
 
-* API Calls
+* [API Calls](#api-calls)
   * [`apimetrics calls`](#apimetrics-calls)
   * [`apimetrics calls create`](#apimetrics-calls-create)
-  * [`apimetrics calls edit`](#apimetrics-calls-edit)\
-* Schedules
+  * [`apimetrics calls edit`](#apimetrics-calls-edit)
+* [Schedules](#schedules)
   * [`apimetrics calls schedules add`](#apimetrics-calls-schedules-add)
   * [`apimetrics calls schedules delete`](#apimetrics-calls-schedules-delete)
 
@@ -136,7 +136,7 @@ _See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/b
 
 ### `apimetrics calls schedules add`
 
-Add an API call to a Schedule.
+Add an API call to a Schedule. Call IDs can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. Schedules IDs can be found by using the command `apimetrics schedules -x --no-truncate`.
 
 ```
 USAGE
@@ -162,7 +162,7 @@ EXAMPLES
 
 ### `apimetrics calls schedules delete`
 
-Remove call from schedule
+Remove an API call from a Schedule. Call IDs can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. Schedules IDs can be found by using the command `apimetrics schedules -x --no-truncate`.
 
 ```
 USAGE
