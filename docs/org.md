@@ -35,8 +35,8 @@ FLAGS
   --filter=<value>      filter property by partial string matching, ex: name=foo. Value is case-sensitive.
   --no-header           hide table header from output.
   --no-truncate         do not truncate output to fit screen.
-  --output=<option>     output in a more machine friendly format
-                        <options: csv|json|yaml>.
+  --output=<option>     output in a more machine friendly format.
+                        <options: csv|json|yaml>
   --sort=<value>        property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
@@ -130,8 +130,8 @@ FLAGS
   --filter=<value>      filter property by partial string matching, ex: name=foo. Value is case-sensitive.
   --no-header           hide table header from output.
   --no-truncate         do not truncate output to fit screen.
-  --output=<option>     output in a more machine friendly format
-                        <options: csv|json|yaml>.
+  --output=<option>     output in a more machine friendly format.
+                        <options: csv|json|yaml>
   --sort=<value>        property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
@@ -218,8 +218,8 @@ FLAGS
   --filter=<value>      filter property by partial string matching, ex: name=foo. Value is case-sensitive.
   --no-header           hide table header from output.
   --no-truncate         do not truncate output to fit screen.
-  --output=<option>     output in a more machine friendly format
-                        <options: csv|json|yaml>.
+  --output=<option>     output in a more machine friendly format.
+                        <options: csv|json|yaml>
   --sort=<value>        property to sort by (prepend '-' for descending).
 
 GLOBAL FLAGS
