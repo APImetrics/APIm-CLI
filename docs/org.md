@@ -63,7 +63,7 @@ _See code: [src/commands/org/accounts/index.ts](https://github.com/APImetrics/AP
 
 ### `apimetrics org accounts edit`
 
-Edit an account within the Organization. User IDs can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts).
+Edit an account within the Organization. User IDs can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts) or by using the command `apimetrics org accounts --columns=Name,ID`.
 
 ```
 USAGE
@@ -89,7 +89,7 @@ _See code: [src/commands/org/accounts/edit.ts](https://github.com/APImetrics/API
 
 ### `apimetrics org accounts remove`
 
-Remove an account from the Organization. User IDs can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts).
+Remove an account from the Organization. User IDs can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts) or by using the command `apimetrics org accounts --columns=Name,ID`.
 
 ```
 USAGE
@@ -178,7 +178,7 @@ _See code: [src/commands/org/invites/create.ts](https://github.com/APImetrics/AP
 
 ### `apimetrics org invites delete`
 
-Delete an invite to the Organization. Invite IDs can be found in the Diff of the [Audit Logs](https://docs.apimetrics.io/docs/organizations#audit-logs) for when the Invite was created.
+Delete an invite to the Organization. Invite IDs can be found in the Diff of the [Audit Logs](https://docs.apimetrics.io/docs/organizations#audit-logs) for when the Invite was created or by using the command `apimetrics org invites -x  --no-truncate`.
 
 ```
 USAGE
