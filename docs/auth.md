@@ -8,14 +8,14 @@ Manage authentication options.
 
 ## `apimetrics auth login`
 
-Login to APImetrics
+Login to APImetrics CLI.
 
 ```
 USAGE
   $ apimetrics auth login [--json] [--key <value>]
 
 FLAGS
-  --key=<value>  API key when using API key auth
+  --key=<value>  API key when using API key auth.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -34,7 +34,7 @@ _See code: [src/commands/auth/login.ts](https://github.com/APImetrics/APIm-CLI/b
 
 ## `apimetrics auth logout`
 
-Logout
+Logout of APImetrics CLI.
 
 ```
 USAGE
