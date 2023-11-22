@@ -20,7 +20,7 @@ Manage organization settings, which can be separated into three sections:
 
 ### `apimetrics org accounts`
 
-List all users within an Organization.
+List all users within an Organization. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -63,7 +63,7 @@ _See code: [src/commands/org/accounts/index.ts](https://github.com/APImetrics/AP
 
 ### `apimetrics org accounts edit`
 
-Edit an account within the Organization. User IDs can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts) or by using the command `apimetrics org accounts --columns=Name,ID`.
+Edit an account within the Organization. **User IDs** can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts) or by using the command `apimetrics org accounts --columns=Name,ID`. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -89,7 +89,7 @@ _See code: [src/commands/org/accounts/edit.ts](https://github.com/APImetrics/API
 
 ### `apimetrics org accounts remove`
 
-Remove an account from the Organization. User IDs can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts) or by using the command `apimetrics org accounts --columns=Name,ID`.
+Remove an account from the Organization. **User IDs** can be found in the Accounts section of the [Organization Settings](https://docs.apimetrics.io/docs/organizations#accounts) or by using the command `apimetrics org accounts --columns=Name,ID`. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -115,7 +115,7 @@ _See code: [src/commands/org/accounts/remove.ts](https://github.com/APImetrics/A
 
 ### `apimetrics org invites`
 
-List all current invites to the Organization.
+List all current invites to the Organization. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -152,7 +152,7 @@ _See code: [src/commands/org/invites/index.ts](https://github.com/APImetrics/API
 
 ### `apimetrics org invites create`
 
-Create an invite to the Organization.
+Create an invite to the Organization. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -178,7 +178,7 @@ _See code: [src/commands/org/invites/create.ts](https://github.com/APImetrics/AP
 
 ### `apimetrics org invites delete`
 
-Delete an invite to the Organization. Invite IDs can be found in the Diff of the [Audit Logs](https://docs.apimetrics.io/docs/organizations#audit-logs) for when the Invite was created or by using the command `apimetrics org invites -x  --no-truncate`.
+Delete an invite to the Organization. **Invite IDs** can be found in the Diff of the [Audit Logs](https://docs.apimetrics.io/docs/organizations#audit-logs) for when the Invite was created or by using the command `apimetrics org invites -x  --no-truncate`. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -204,7 +204,7 @@ _See code: [src/commands/org/invites/delete.ts](https://github.com/APImetrics/AP
 
 ### `apimetrics org roles`
 
-List all roles within the Organization.
+List all roles within the Organization. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -240,7 +240,7 @@ _See code: [src/commands/org/roles/index.ts](https://github.com/APImetrics/APIm-
 
 ### `apimetrics org roles create`
 
-Create a new role within the Organization.
+Create a new role within the Organization. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
@@ -266,7 +266,7 @@ _See code: [src/commands/org/roles/create.ts](https://github.com/APImetrics/APIm
 
 ### `apimetrics org roles delete`
 
-Delete a role within the Organization. The Role ID will be the Name of the Role.
+Delete a role within the Organization. The Role ID will be the Name of the Role. **Organisation IDs** can be found in the [Organization Settings](https://docs.apimetrics.io/docs/organizations#organization-settings).
 
 ```
 USAGE
