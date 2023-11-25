@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, Auth} from '../../base-command';
+import {Command, Auth} from '../../base-command/index.js';
 
 export type LoginJson = {
   success: boolean;

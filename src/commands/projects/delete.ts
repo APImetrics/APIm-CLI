@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../base-command';
+import {Command, T} from '../../base-command/index.js';
 
 export default class Delete extends Command<{success: boolean}> {
   static description = 'Delete the currently selected project or specify another to delete.';

@@ -1,7 +1,8 @@
 import {Interfaces} from '@oclif/core';
 import * as path from 'node:path';
-import * as fs from 'fs-extra';
-import {debug} from 'debug';
+import fs from 'fs';
+import fse from 'fs-extra';
+import debug from 'debug';
 
 export class Config {
   /** Current project settings */
@@ -34,7 +35,7 @@ export class Config {
       project: this.project,
       organization: this.organization,
     };
-    await fs.writeJson(filePath, config);
+    await fse.writeJson(filePath, config);
   }
 
   /**
@@ -44,7 +45,7 @@ export class Config {
     const filePath = path.join(this.configDir, 'config.json');
     if (fs.existsSync(filePath)) {
       // Handling for malformed contents?
-      const config = fs.readJsonSync(filePath) as Config.ConfigFile;
+      const config = fse.readJsonSync(filePath) as Config.ConfigFile;
       this.debug('Loaded config %O', config);
       this.project = config.project;
       this.organization = config.organization;

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {test} from '@oclif/test';
-import * as fs from 'fs-extra';
+import {auth, noProject} from '../../helpers/auth';
 
 const callsResponse = {
   meta: {
@@ -64,20 +64,6 @@ const updateRequest = {
 };
 
 describe('calls edit', () => {
-  const auth = test
-    .do(() => {
-      fs.writeJsonSync('./.test/config.json', {
-        organization: {current: 'abc123'},
-        project: {current: 'abc123'},
-      });
-      fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
-        mode: 'key',
-      });
-    })
-    .env({APIMETRICS_CONFIG_DIR: './.test'})
-    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
-
   auth
     .stdout()
     .nock('https://client.apimetrics.io', (api) => {

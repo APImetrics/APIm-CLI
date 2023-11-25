@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../base-command';
+import {Command} from '../../base-command/index.js';
 export default class Delete extends Command<{success: boolean}> {
   static description = 'Delete a webhook.';
   protected permitKeyAuth = true;

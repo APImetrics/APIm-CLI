@@ -1,4 +1,4 @@
-import {Command} from '../../base-command';
+import {Command} from '../../base-command/index.js';
 
 export type LogoutJson = {
   success: boolean;

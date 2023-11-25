@@ -1,4 +1,4 @@
-import {Command, T} from '../../base-command';
+import {Command, T} from '../../base-command/index.js';
 
 export type WhoamiResponse = {
   success: boolean;
@@ -19,6 +19,7 @@ export type WhoamiResponse = {
 
 export default class Whoami extends Command<WhoamiResponse> {
   static description = 'Show details about the currently logged in user.';
+  public static enableJsonFlag = true;
 
   static examples = [
     `<%= config.bin %> <%= command.id %>

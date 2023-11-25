@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T, util} from '../../../base-command';
+import {Command, T, util} from '../../../base-command/index.js';
 
 export default class Edit extends Command<{success: boolean}> {
   static description = 'Edit an account.';

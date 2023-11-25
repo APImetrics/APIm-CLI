@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T, util} from '../../base-command';
+import {Command, T, util} from '../../base-command/index.js';
 
 export default class Create extends Command<T.Call> {
   static description = 'Create a new API call.';

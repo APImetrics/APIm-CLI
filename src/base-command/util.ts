@@ -1,4 +1,4 @@
-import * as T from './types';
+import * as T from './types/index.js';
 
 /**
  * Convert header string to usable form
@@ -98,16 +98,18 @@ export function addRemoveStrings(current: string[], add: string[], remove: strin
  * @throws No user with this email exists
  */
 export function getUserIdFromOrg(org: T.OrgAccount[], email: string): string {
-  const accounts = org.filter((account) => account.email === email)
+  const accounts = org.filter((account) => account.email === email);
   if (accounts.length > 1) {
-    throw new Error(`There are multiple users with the email ${email}. Please use their ID instead.`)
+    throw new Error(
+      `There are multiple users with the email ${email}. Please use their ID instead.`
+    );
   }
 
   if (accounts.length === 0) {
-    throw new Error(`No users with the email ${email} exist. Please use their ID instead.`)
+    throw new Error(`No users with the email ${email} exist. Please use their ID instead.`);
   }
 
-  return accounts[0].id
+  return accounts[0].id;
 }
 
 /**
@@ -116,6 +118,6 @@ export function getUserIdFromOrg(org: T.OrgAccount[], email: string): string {
  * @param search Character to split at
  */
 export function splitAtLastOccurrence(s: string, search: string): string[] {
-  const i = s.lastIndexOf(search)
-  return [s.slice(0,i), s.slice(i+1)]
+  const i = s.lastIndexOf(search);
+  return [s.slice(0, i), s.slice(i + 1)];
 }

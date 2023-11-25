@@ -1,5 +1,5 @@
 import {Flags, ux} from '@oclif/core';
-import {Command, T} from '../../base-command';
+import {Command, T} from '../../base-command/index.js';
 
 export type CallsList = {
   success: boolean;

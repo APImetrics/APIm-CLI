@@ -1,10 +1,10 @@
 import {Interfaces} from '@oclif/core';
-import {Auth} from './auth';
+import {Auth} from './auth.js';
 import {OutgoingHttpHeaders} from 'node:http';
-import HTTP from 'http-call';
-import {Config} from './config';
-import {debug} from 'debug';
-import {ListResponse, UserInfo} from './types';
+import * as http from 'http-call';
+import {Config} from './config.js';
+import debug from 'debug';
+import {ListResponse, UserInfo} from './types/index.js';
 
 type RequestOptions = {
   /** Path to call */
@@ -40,7 +40,7 @@ export class Api {
   ) {
     this.debug('Using base URL %o', this.baseUrl);
     this.auth = new Auth(this.oclifConfig, jsonMode);
-    HTTP.defaults.headers = {'user-agent': this.oclifConfig.userAgent};
+    http.HTTP.defaults.headers = {'user-agent': this.oclifConfig.userAgent};
   }
 
   /** Current working project */
@@ -206,7 +206,7 @@ export class Api {
     }
 
     this.debug('Calling URL %o', url.toString());
-    const response = await HTTP.request<T>(url.toString(), {
+    const response = await http.HTTP.request<T>(url.toString(), {
       headers: headers,
       method: options.method,
       body: options.body,

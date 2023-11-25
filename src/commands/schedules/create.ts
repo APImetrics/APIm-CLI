@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command, T} from '../../base-command';
+import {Command, T} from '../../base-command/index.js';
 
 export type Schedule = {
   success: boolean;

@@ -1,7 +1,7 @@
-import {Command} from './command';
-import {Auth} from './auth';
-import * as APITypes from './types';
-import * as util from './util';
+import {Command} from './command.js';
+import {Auth} from './auth.js';
+import * as APITypes from './types/index.js';
+import * as util from './util.js';
 export {Auth};
 export {Command};
 export {APITypes as T};

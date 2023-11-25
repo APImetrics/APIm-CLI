@@ -2,7 +2,7 @@
 // hundreds of singular exceptions, just cover whole file
 /* eslint-disable camelcase */
 import {Flags} from '@oclif/core';
-import {Command, T, util} from '../../base-command';
+import {Command, T, util} from '../../base-command/index.js';
 
 export type CreateJSON = {
   success: boolean;

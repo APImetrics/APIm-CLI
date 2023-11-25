@@ -1,18 +1,18 @@
-import {Access} from './access';
-import {ApiError} from './apierror';
-import {Call} from './call';
-import {Downtime} from './downtime';
-import {Info} from './info';
-import {Invite} from './invite';
-import {ListResponse} from './listresponse';
-import {OrgAccount} from './orgaccount';
-import {Project} from './project';
-import {Role} from './role';
-import {Schedule} from './schedule';
-import {UserInfo} from './userinfo';
-import {UserProjects} from './userprojects';
-import {Webhook} from './webhook';
-import {Workflow} from './workflow';
+import {Access} from './access.js';
+import {ApiError} from './apierror.js';
+import {Call} from './call.js';
+import {Downtime} from './downtime.js';
+import {Info} from './info.js';
+import {Invite} from './invite.js';
+import {ListResponse} from './listresponse.js';
+import {OrgAccount} from './orgaccount.js';
+import {Project} from './project.js';
+import {Role} from './role.js';
+import {Schedule} from './schedule.js';
+import {UserInfo} from './userinfo.js';
+import {UserProjects} from './userprojects.js';
+import {Webhook} from './webhook.js';
+import {Workflow} from './workflow.js';
 
 export {
   Access,

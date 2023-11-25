@@ -1,10 +1,11 @@
 import {Interfaces, ux} from '@oclif/core';
 import * as path from 'node:path';
-import * as fs from 'fs-extra';
+import fs from 'fs';
+import fse from 'fs-extra';
 import chalk from 'chalk';
-import HTTP, {HTTPError} from 'http-call';
-import {T} from '.';
-import {debug} from 'debug';
+import * as http from 'http-call';
+import {T} from './index.js';
+import debug from 'debug';
 
 interface DeviceCodeRes {
   // eslint-disable-next-line camelcase
@@ -65,7 +66,7 @@ export class Auth {
    */
   constructor(private readonly config: Interfaces.Config, private jsonMode: boolean) {
     this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.config.configDir;
-    HTTP.defaults.headers = {'user-agent': config.userAgent};
+    http.HTTP.defaults.headers = {'user-agent': config.userAgent};
     this.loadAuth();
   }
 
@@ -96,7 +97,7 @@ export class Auth {
     if (this.token.mode === Auth.AuthType.Device) {
       if (this.token.refresh) {
         try {
-          await HTTP.post(this.revokeUrl, {
+          await http.HTTP.post(this.revokeUrl, {
             // eslint-disable-next-line camelcase
             body: {client_id: this.clientId, token: this.token.refresh},
           });
@@ -154,7 +155,9 @@ export class Auth {
 
     // Normalise URL first
     const url = new URL(this.userinfoUrl);
-    const {body} = await HTTP.get<T.UserInfo>(url.toString(), {headers: await this.headers()});
+    const {body} = await http.HTTP.get<T.UserInfo>(url.toString(), {
+      headers: await this.headers(),
+    });
     return body;
   }
 
@@ -189,7 +192,7 @@ export class Auth {
     }
 
     const url = new URL(this.codeUrl);
-    const {body: code} = await HTTP.post<DeviceCodeRes>(url.toString(), {
+    const {body: code} = await http.HTTP.post<DeviceCodeRes>(url.toString(), {
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       body: `client_id=${this.clientId}&scope=openid%20profile%20email%20offline_access&audience=https%3A%2F%2Fclient.apimetrics.io`,
     });
@@ -246,7 +249,7 @@ export class Auth {
     let response: TokenRes;
     try {
       response = (
-        await HTTP.post<TokenRes>(url.toString(), {
+        await http.HTTP.post<TokenRes>(url.toString(), {
           headers: {'content-type': 'application/x-www-form-urlencoded'},
           body: `grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=${encodeURIComponent(
             code.device_code
@@ -254,7 +257,7 @@ export class Auth {
         })
       ).body;
     } catch (error) {
-      if (error instanceof HTTPError) {
+      if (error instanceof http.HTTPError) {
         switch (error.body.error) {
           case 'authorization_pending':
             return this.pollToken(code, retryms);
@@ -279,7 +282,7 @@ export class Auth {
    */
   private async saveToken(): Promise<void> {
     const filePath = path.join(this.configDir, 'auth.json');
-    await fs.writeJson(filePath, this.token);
+    await fse.writeJson(filePath, this.token);
   }
 
   /**
@@ -290,7 +293,7 @@ export class Auth {
     let token: TokenRes;
     try {
       token = (
-        await HTTP.post<TokenRes>(url.toString(), {
+        await http.HTTP.post<TokenRes>(url.toString(), {
           headers: {'content-type': 'application/x-www-form-urlencoded'},
           body: `grant_type=refresh_token&client_id=${
             this.clientId
@@ -325,7 +328,7 @@ export class Auth {
     const filePath = path.join(this.configDir, 'auth.json');
     if (fs.existsSync(filePath)) {
       // Handling for malformed contents?
-      this.token = fs.readJsonSync(filePath);
+      this.token = fse.readJsonSync(filePath);
       this.loggedIn = true;
     } else {
       this.loggedIn = false;

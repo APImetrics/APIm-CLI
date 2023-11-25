@@ -1,6 +1,6 @@
 import {Command as Base, Flags, Interfaces, ux} from '@oclif/core';
-import {Api} from './api';
-import {Config} from './config';
+import {Api} from './api.js';
+import {Config} from './config.js';
 
 export type Flags<T> = Interfaces.InferredFlags<(typeof Command)['baseFlags'] & T>;
 export type Args<T> = Interfaces.InferredArgs<T>;
@@ -19,7 +19,7 @@ export type ConfirmOptions = {
 };
 
 export abstract class Command<T> extends Base {
-  static enableJsonFlag = true;
+  public static enableJsonFlag = true;
   protected permitKeyAuth = false;
 
   // define flags that can be inherited by any command that extends BaseCommand

@@ -1,5 +1,5 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../base-command';
+import {Command} from '../../base-command/index.js';
 import * as fs from 'fs-extra';
 
 export type PullWriteFileJson = {

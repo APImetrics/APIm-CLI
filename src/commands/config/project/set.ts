@@ -1,6 +1,6 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
-import * as inquirer from 'inquirer';
+import {Command} from '../../../base-command/index.js';
+import {select} from '@inquirer/prompts';
 import {HTTPError} from 'http-call';
 
 export type SetProjectJson = {
@@ -71,16 +71,12 @@ export default class Set extends Command<SetProjectJson> {
       };
     }
 
-    const response = await inquirer.prompt([
-      {
-        name: 'project',
-        message: 'Select a project',
-        type: 'list',
-        choices: projects,
-      },
-    ]);
+    const response = await select({
+      message: 'Select a project',
+      choices: projects,
+    });
 
-    this.userConfig.project.current = response.project;
+    this.userConfig.project.current = response;
     await this.userConfig.save();
 
     return {success: true, message: 'Set current project'};

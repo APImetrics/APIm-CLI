@@ -1,5 +1,5 @@
 import {Flags, ux} from '@oclif/core';
-import {Command, T} from '../../../base-command';
+import {Command, T} from '../../../base-command/index.js';
 
 export default class Edit extends Command<{success: boolean; warnings?: string[]}> {
   static description = 'Edit role access on the project.';

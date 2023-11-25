@@ -1,15 +1,16 @@
 import {expect, test} from '@oclif/test';
-import * as fs from 'fs-extra';
+import fs from 'node:fs';
+import fse from 'fs-extra';
 import * as path from 'node:path';
 
 describe('auth logout', () => {
   const withRefreshToken = test
     .do(() => {
-      fs.writeJsonSync('./.test/config.json', {
+      fse.writeJsonSync('./.test/config.json', {
         organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
-      fs.writeJsonSync('./.test/auth.json', {
+      fse.writeJsonSync('./.test/auth.json', {
         token: 'abc123',
         refresh: 'abc123',
         mode: 'device',
@@ -22,11 +23,11 @@ describe('auth logout', () => {
 
   const noRefreshToken = test
     .do(() => {
-      fs.writeJsonSync('./.test/config.json', {
+      fse.writeJsonSync('./.test/config.json', {
         organization: {current: 'abc123'},
         project: {current: 'abc123'},
       });
-      fs.writeJsonSync('./.test/auth.json', {
+      fse.writeJsonSync('./.test/auth.json', {
         token: 'abc123',
         refresh: '',
         mode: 'device',

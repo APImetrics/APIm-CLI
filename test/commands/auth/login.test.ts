@@ -1,5 +1,5 @@
 import {expect, test} from '@oclif/test';
-import * as fs from 'node:fs';
+import fs from 'node:fs';
 import * as path from 'node:path';
 
 describe('auth login', () => {

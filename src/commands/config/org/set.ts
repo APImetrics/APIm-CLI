@@ -1,6 +1,6 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
-import * as inquirer from 'inquirer';
+import {Command} from '../../../base-command/index.js';
+import {select} from '@inquirer/prompts';
 import {HTTPError} from 'http-call';
 
 export type SetOrgJson = {
@@ -59,16 +59,12 @@ export default class Set extends Command<SetOrgJson> {
       });
     }
 
-    const response = await inquirer.prompt([
-      {
-        name: 'organization',
-        message: 'Select an organization',
-        type: 'list',
-        choices: orgs,
-      },
-    ]);
+    const response = await select({
+      message: 'Select an organization',
+      choices: orgs,
+    });
 
-    this.userConfig.organization.current = response.organization;
+    this.userConfig.organization.current = response;
     // Make sure we clear the current project when we switch orgs
     this.userConfig.project.current = undefined;
     await this.userConfig.save();

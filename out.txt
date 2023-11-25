@@ -1,0 +1,2905 @@
+
+> @apimetrics/cli@0.3.0 test
+> mocha --forbid-only "test/**/*.test.ts"
+
+
+
+  auth login
+    1) Not a real test case. Transpile typescript files, expect to be slow
+    2) API key login
+    3) API key login (--json)
+    4) API key login with --key of length 31 (want 32) (--json)
+    5) API key login with --key of length 33 (want 32)
+    6) API key login passing empty --key argument
+    7) Device flow authentication passing --json flag
+
+  auth logout
+    8) Log out
+    9) Log out and revoke refresh token
+    10) Log out with falsy refresh token
+
+  calls create
+    11) Create call with minimum options (--json)
+    12) Create call with headers and tags
+    13) Send body setting content type
+    14) Send body default content type
+    15) Create call with invalid header
+    16) Create basic call passing project ID
+
+  calls edit
+    17) Add and remove tags and headers
+    18) Add body with existing content-type flag
+    19) Add body with no content-type flag
+
+  calls
+    20) List calls with --output=json argument
+    21) Pass --project-id argument
+
+  config org set
+    22) Use --json argument without passing --org-id
+    23) Not logged in.
+    24) Set org passing --org-id argument
+    25) Invalid org id
+
+  config project set
+    26) Set project passing --json flag without --project-id
+    27) Interactive mode without setting the current working organization first
+    28) Not logged in
+    29) Set project with no projects in org
+    30) Set project passing --project-id
+    31) Invalid project id
+
+  info locations
+    32) List all locations with --output=json argument
+
+  info orgs
+    33) List all orgs with --output=json argument
+
+  info regions
+    34) List all regions with --output=json argument
+
+  info whoami
+    35) Show current user information
+    36) Show current user information
+
+  org accounts edit
+    37) Add and remove roles from a user with role in app_metadata (--json)
+    38) Add and remove roles from a user using email
+    39) Add and remove roles from a user with role in app_metadata.org_roles (--json)
+    40) Add and remove roles from a user with role in permissions (--json)
+    41) Add role to a user (--json)
+    42) Remove role from a user (--json)
+    43) Add and remove roles from a user specifying --org-id (--json)
+    44) Add invalid role no role data
+    45) Add invalid role empty app metadata
+    46) Remove invalid role
+    47) No organization set
+    48) Using personal projects
+
+  org accounts
+    49) List all organisation accounts with --output=json argument
+    50) Use API key authentication for an endpoint not supporting API keys
+    51) No organization set
+
+  org accounts remove
+    52) Remove user (--json)
+    53) Remove user using email (--json)
+    54) Remove user passing --org-id flag (--json)
+    55) Missing required --user-id flag
+    56) No organization set
+    57) Using personal projects
+
+  org invites create
+    58) Non interactive create
+    59) Invalid email
+    60) Invalid role
+    61) API key for non project endpoint
+    62) No organization set
+
+  org invites delete
+    63) Non interactive delete
+    64) API key for non project endpoint
+    65) No organization set
+
+  org invites
+    66) Standard columns in JSON
+    67) API key for non project endpoint
+    68) No organization set
+
+  org roles create
+    69) Non interactive create
+    70) API key for non project endpoint
+    71) No organization set
+
+  org roles delete
+    72) Non interactive delete
+    73) API key for non project endpoint
+    74) No organization set
+
+  org roles
+    75) List all roles with --output=json argument
+    76) API key for non project endpoint
+    77) No organization set
+
+  project accounts edit
+    78) Add user roles
+    79) Add user roles specifying by email
+    80) Remove user roles
+    81) Remove user roles by email
+    82) Remove user roles with non-existent user
+    83) Pass project ID as argument
+    84) No organisation set
+    85) Personal projects
+    86) Multiple users with the same email
+    87) No user with email
+
+  project accounts
+    88) Standard columns in JSON
+    89) Passing project ID inline
+
+  projects create
+    90) Create project basic (--json)
+    91) Create project basic passing --org-id flag (--json)
+    92) Create project with access and roles (--json)
+    93) Create project with invalid role (--json)
+    94) Missing required --name flag
+    95) No organization set
+    96) Using personal projects
+
+  projects delete
+    97) Delete current working project
+    98) Delete project
+    99) Delete project passing org ID
+    100) Delete project with role
+    101) Delete project with multiple roles
+    102) Delete project with account
+    103) Delete project with multiple accounts
+    104) No project set
+    105) No org set
+    106) Personal projects
+
+  projects
+    107) Standard columns in JSON
+    108) Standard columns in JSON passing org ID
+    109) Parse system tags
+    110) No organization set
+    111) Using personal projects
+
+  projects invites create
+    112) Create invite (--json)
+    113) Create invite passing --project-id flag (--json)
+    114) Invalid email
+    115) Check required flags
+    116) No project set
+
+  projects invites delete
+    117) Create invite (--json)
+    118) Check required flags
+
+  projects invites
+    119) Standard columns in JSON
+    120) Standard columns in JSON passing project ID
+    121) No project set
+
+  projects pull
+    122) Pull project.yaml
+    123) Write project.yaml to disk
+    124) Write project.yaml to disk with existing file error
+    125) Write project.yaml to disk with existing file force
+    126) Pull project.json
+    127) Pull project.yaml passing project ID
+
+  project roles edit
+    128) Add roles
+    129) Remove roles
+    130) Remove non-existent role
+    131) Add non-existent role
+    132) Pass project ID
+
+  project roles
+    133) Standard columns in JSON
+    134) Passing project ID inline
+
+  schedules calls add
+    135) Add call to schedule
+    136) Missing required options
+
+  schedules calls
+    137) List calls with --output=json argument
+    138) List calls with --output=json argument
+    139) Missing required options
+
+  schedules calls remove
+    140) Remove call from schedule
+    141) Missing required options
+
+  schedules create
+    142) Create minimal schedule
+    143) Create minimal schedule with 24h interval
+    144) Postman flag
+    145) Fibonacci retry
+    146) Exponential retry minimal
+    147) Exponential retry full options
+    148) Constant retry minimal
+    149) Constant retry full options
+    150) General retry options
+    151) Specify locations
+    152) Invalid location
+    153) Specify regions
+    154) Invalid region
+    155) Pass --project-id flag
+
+  schedules delete
+    156) Delete schedule
+    157) Missing required options
+
+  schedules downtimes create
+    158) Minimal downtime
+    159) Daily repeat
+    160) Weekly repeat
+    161) Missing required flags
+    162) End before start
+    163) Invalid start
+    164) Invalid end
+
+  schedules downtimes delete
+    165) Delete downtime
+    166) Missing required options
+
+  schedules downtimes edit
+    167) Edit start and end
+    168) Daily repeat
+    169) Weekly repeat
+    170) Repeat off
+    171) Missing required flags
+    172) End before start
+    173) Invalid start
+    174) Invalid end
+
+  schedules downtimes
+    175) List all downtimes with --output=json argument
+    176) List all downtimes with --output=json argument passing project ID
+
+  schedules edit
+    177) Edit interval (m)
+    178) Edit interval (h)
+    179) Edit name
+    180) Enable postman
+    181) Disable postman
+    182) Fibonacci retry
+    183) Exponential retry
+    184) Constant retry
+    185) Disable retry
+    186) Update exponential and constant retry options
+    187) Update exponential and constant retry options (set same)
+    188) Set exponential and constant retry options
+    189) Update general retry options
+    190) Update general retry options (set same)
+    191) Set general retry options
+    192) Add locations and regions
+    193) Remove locations and regions
+    194) Invalid location
+    195) Invalid region
+    196) Missing required flags
+
+  schedules
+    197) List all schedules with --output=json argument
+    198) Pass --project-id argument
+
+  webhooks create
+    199) Passing project ID
+    200) email
+    201) email missing flags
+    202) email invalid email address
+    203) email_text
+    204) email_text invalid email address
+    205) email_text missing flags
+    206) email_template
+    207) email_template missing flags
+    208) email_template invalid email address
+    209) generic
+    210) email_template missing flags
+    211) generic
+    212) generic missing flags
+    213) apimetrics_api
+    214) apimetrics_api missing flags
+    215) apimetrics_workflow
+    216) apimetrics_workflow missing flags
+    217) apimetrics_token
+    218) apimetrics_token missing flags
+    219) slack
+    220) slack missing flags
+    221) pager_duty
+    222) pager_duty missing flags
+    223) pager_duty_v2
+    224) pager_duty_v2 missing flags
+    225) big_panda
+    226) big_panda missing flags
+    227) victorops
+    228) victorops missing flags
+    229) hipchat
+    230) hipchat missing flags
+    231) msteams
+    232) msteams missing flags
+    233) newrelic
+    234) newrelic missing flags
+    235) darkspark
+    236) darkspark missing flags
+    237) datadog
+    238) datadog missing flags
+    239) datadogevent
+    240) datadogevent missing flags
+    241) statuspage
+    242) statuspage missing flags
+    243) flowdock
+    244) flowdock missing flags
+    245) opsgenie
+    246) opsgenie missing flags
+    247) opsgenieeu
+    248) opsgenieeu missing flags
+
+  webhooks delete
+    249) Delete webhook
+    250) Missing required options
+    251) Delete webhook
+
+  webhooks edit
+    252) Passing project ID
+    253) Add already existing alert
+    254) email
+    255) email invalid email address
+    256) email_text
+    257) email_text invalid email address
+    258) email_template
+    259) email_template invalid email address
+    260) generic
+    261) generic
+    262) apimetrics_api
+    263) apimetrics_workflow
+    264) apimetrics_token
+    265) slack
+    266) pager_duty
+    267) pager_duty_v2
+    268) big_panda
+    269) victorops
+    270) hipchat
+    271) msteams
+    272) newrelic
+    273) darkspark
+    274) datadog
+    275) datadogevent
+    276) statuspage
+    277) flowdock
+    278) opsgenie
+    279) opsgenieeu
+
+  webhooks
+    280) List all webhooks with --output=json argument
+    281) Check paramater and tag formatting
+    282) Pass project ID inline
+
+  workflows create
+    283) Create a minimal workflow
+    284) Create a minimal workflow passing project ID
+    285) Specify calls to add
+    286) Show as action
+    287) Disable parallel running
+    288) Run from location
+    289) Run from invalid location
+    290) Set max retries
+    291) Set ignore in stats
+    292) Set skip notifications
+    293) Fibonacci retry
+    294) Exponential retry minimal
+    295) Exponential retry full
+    296) Constant retry minimal
+    297) Constant retry full
+    298) Never retry
+
+  workflows delete
+    299) Delete workflow
+    300) Missing required options
+
+  workflows edit
+    301) Update name
+    302) Update description
+    303) Enable handle cookies
+    304) Disable handle cookies
+    305) Disable stop on failure
+    306) Enable stop on failure
+    307) Enable show as action
+    308) Disable show as action
+    309) Disable parallel workflow
+    310) Enable parallel workflow
+    311) Enable running from specific location
+    312) Switch location to run from
+    313) Switch location to run from (set same)
+    314) Run from invalid location
+    315) Disable running from specific location
+    316) Disable running from specific location (already not running from location)
+    317) Fibonacci retry
+    318) Exponential retry
+    319) Constant retry
+    320) Never retry
+    321) Disable retry
+    322) Update exponential and constant retry options
+    323) Update exponential and constant retry options (set same)
+    324) Set exponential and constant retry options
+    325) Update general retry options
+    326) Update general retry options (set same)
+    327) Set general retry options
+    328) Remove middle call
+    329) Remove first call
+    330) Remove multiple calls
+    331) Remove call from empty workflow
+    332) Remove call index out of range
+    333) Add call to end
+    334) Add call to start
+    335) Add call to middle
+    336) Add multiple calls
+    337) Add call with string index
+    338) Add call with float index
+    339) Add with index out of range
+    340) Add call to empty workflow
+    341) Replace call
+
+  workflows
+    342) List all workflows with --output=json argument
+    343) Pass --project-id argument
+
+
+  0 passing (10s)
+  343 failing
+
+  1) auth login
+       Not a real test case. Transpile typescript files, expect to be slow:
+     TypeError: The "warning" argument must be of type string or an instance of Error. Received src/commands/auth/login.ts(21,32): error TS2339: Property 'parse' does not exist on type 'Login'.
+src/commands/auth/login.ts(25,12): error TS2339: Property 'error' does not exist on type 'Login'.
+src/commands/auth/login.ts(32,16): error TS2339: Property 'api' does not exist on type 'Login'.
+src/commands/auth/login.ts(34,12): error TS2339: Property 'log' does not exist on type 'Login'.
+src/commands/auth/login.ts(39,16): error TS2339: Property 'config' does not exist on type 'Login'.
+src/commands/auth/login.ts(40,16): error TS2339: Property 'config' does not exist on type 'Login'.
+
+      at process.emitWarning (node:internal/process/warning:153:11)
+      at Plugin.warn (node_modules/@oclif/core/lib/config/plugin.js:270:17)
+      at /home/mnickson/source/APImetrics/APIm-CLI/node_modules/@oclif/core/lib/config/plugin.js:219:30
+      at async Promise.all (index 0)
+      at async Plugin._manifest (node_modules/@oclif/core/lib/config/plugin.js:206:24)
+      at async Plugin.load (node_modules/@oclif/core/lib/config/plugin.js:157:25)
+      at async PluginLoader.loadRoot (node_modules/@oclif/core/lib/config/plugin-loader.js:63:13)
+      at async Config.load (node_modules/@oclif/core/lib/config/config.js:265:27)
+      at async Function.load (node_modules/@oclif/core/lib/config/config.js:155:9)
+      at async Object.run (node_modules/@oclif/test/lib/load-config.js:13:26)
+      at async Object.run (node_modules/@oclif/test/lib/command.js:15:30)
+      at async Context.run (node_modules/fancy-test/lib/base.js:69:25)
+
+  2) auth login
+       API key login:
+     TypeError: The "warning" argument must be of type string or an instance of Error. Received src/commands/calls/create.ts(2,32): error TS2834: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Consider adding an extension to the import path.
+src/commands/calls/create.ts(53,32): error TS2339: Property 'parse' does not exist on type 'Create'.
+src/commands/calls/create.ts(64,38): error TS7006: Parameter 'val' implicitly has an 'any' type.
+src/commands/calls/create.ts(80,12): error TS2339: Property 'api' does not exist on type 'Create'.
+src/commands/calls/create.ts(83,29): error TS2339: Property 'api' does not exist on type 'Create'.
+src/commands/calls/create.ts(89,10): error TS2339: Property 'log' does not exist on type 'Create'.
+
+      at process.emitWarning (node:internal/process/warning:153:11)
+      at Plugin.warn (node_modules/@oclif/core/lib/config/plugin.js:270:17)
+      at /home/mnickson/source/APImetrics/APIm-CLI/node_modules/@oclif/core/lib/config/plugin.js:219:30
+      at async Promise.all (index 0)
+      at async Plugin._manifest (node_modules/@oclif/core/lib/config/plugin.js:206:24)
+      at async Plugin.load (node_modules/@oclif/core/lib/config/plugin.js:157:25)
+      at async PluginLoader.loadRoot (node_modules/@oclif/core/lib/config/plugin-loader.js:63:13)
+      at async Config.load (node_modules/@oclif/core/lib/config/config.js:265:27)
+      at async Function.load (node_modules/@oclif/core/lib/config/config.js:155:9)
+      at async Object.run (node_modules/@oclif/test/lib/load-config.js:13:26)
+      at async Object.run (node_modules/@oclif/test/lib/command.js:15:30)
+      at async Context.run (node_modules/fancy-test/lib/base.js:69:25)
+
+  3) auth login
+       API key login (--json):
+     TypeError: The "warning" argument must be of type string or an instance of Error. Received src/commands/auth/login.ts(21,32): error TS2339: Property 'parse' does not exist on type 'Login'.
+src/commands/auth/login.ts(25,12): error TS2339: Property 'error' does not exist on type 'Login'.
+src/commands/auth/login.ts(32,16): error TS2339: Property 'api' does not exist on type 'Login'.
+src/commands/auth/login.ts(34,12): error TS2339: Property 'log' does not exist on type 'Login'.
+src/commands/auth/login.ts(39,16): error TS2339: Property 'config' does not exist on type 'Login'.
+src/commands/auth/login.ts(40,16): error TS2339: Property 'config' does not exist on type 'Login'.
+
+      at process.emitWarning (node:internal/process/warning:153:11)
+      at Plugin.warn (node_modules/@oclif/core/lib/config/plugin.js:270:17)
+      at /home/mnickson/source/APImetrics/APIm-CLI/node_modules/@oclif/core/lib/config/plugin.js:219:30
+      at async Promise.all (index 0)
+      at async Plugin._manifest (node_modules/@oclif/core/lib/config/plugin.js:206:24)
+      at async Plugin.load (node_modules/@oclif/core/lib/config/plugin.js:157:25)
+      at async PluginLoader.loadRoot (node_modules/@oclif/core/lib/config/plugin-loader.js:63:13)
+      at async Config.load (node_modules/@oclif/core/lib/config/config.js:265:27)
+      at async Function.load (node_modules/@oclif/core/lib/config/config.js:155:9)
+      at async Object.run (node_modules/@oclif/test/lib/load-config.js:13:26)
+      at async Object.run (node_modules/@oclif/test/lib/command.js:15:30)
+      at async Context.run (node_modules/fancy-test/lib/base.js:69:25)
+
+  4) auth login
+       API key login with --key of length 31 (want 32) (--json):
+     AssertionError: expected 'The "warning" argument must be of typ…' to include 'API key is malformed. Expected 32 cha…'
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/login.test.ts:49:34
+      at Object.catch (node_modules/fancy-test/lib/catch.js:20:13)
+      at handleError (node_modules/fancy-test/lib/base.js:57:44)
+      at Context.run (node_modules/fancy-test/lib/base.js:73:32)
+
+  5) auth login
+       API key login with --key of length 33 (want 32):
+     AssertionError: expected 'The "warning" argument must be of typ…' to include 'API key is malformed. Expected 32 cha…'
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/login.test.ts:62:34
+      at Object.catch (node_modules/fancy-test/lib/catch.js:20:13)
+      at handleError (node_modules/fancy-test/lib/base.js:57:44)
+      at Context.run (node_modules/fancy-test/lib/base.js:73:32)
+
+  6) auth login
+       API key login passing empty --key argument:
+     AssertionError: expected 'The "warning" argument must be of typ…' to include 'Flag --key expects a value'
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/login.test.ts:69:34
+      at Object.catch (node_modules/fancy-test/lib/catch.js:20:13)
+      at handleError (node_modules/fancy-test/lib/base.js:57:44)
+      at Context.run (node_modules/fancy-test/lib/base.js:73:32)
+
+  7) auth login
+       Device flow authentication passing --json flag:
+     AssertionError: expected 'The "warning" argument must be of typ…' to include 'Cannot use --json with device flow au…'
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/login.test.ts:76:34
+      at Object.catch (node_modules/fancy-test/lib/catch.js:20:13)
+      at handleError (node_modules/fancy-test/lib/base.js:57:44)
+      at Context.run (node_modules/fancy-test/lib/base.js:73:32)
+
+  8) auth logout
+       Log out:
+     TypeError: fs.readdir is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/logout.test.ts:38:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  9) auth logout
+       Log out and revoke refresh token:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/logout.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  10) auth logout
+       Log out with falsy refresh token:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/auth/logout.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  11) calls create
+       Create call with minimum options (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/create.test.ts:49:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  12) calls create
+       Create call with headers and tags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/create.test.ts:49:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  13) calls create
+       Send body setting content type:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/create.test.ts:49:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  14) calls create
+       Send body default content type:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/create.test.ts:49:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  15) calls create
+       Create call with invalid header:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/create.test.ts:49:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  16) calls create
+       Create basic call passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/create.test.ts:62:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  17) calls edit
+       Add and remove tags and headers:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/edit.test.ts:66:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  18) calls edit
+       Add body with existing content-type flag:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/edit.test.ts:66:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  19) calls edit
+       Add body with no content-type flag:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/edit.test.ts:66:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  20) calls
+       List calls with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/index.test.ts:201:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  21) calls
+       Pass --project-id argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/calls/index.test.ts:214:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  22) config org set
+       Use --json argument without passing --org-id:
+     TypeError: fs.readdir is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/org/set.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  23) config org set
+       Not logged in.:
+     TypeError: fs.readdir is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/org/set.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  24) config org set
+       Set org passing --org-id argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/org/set.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  25) config org set
+       Invalid org id:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/org/set.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  26) config project set
+       Set project passing --json flag without --project-id:
+     TypeError: fs.readdir is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/project/set.test.ts:10:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  27) config project set
+       Interactive mode without setting the current working organization first:
+     TypeError: fs.readdir is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/project/set.test.ts:10:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  28) config project set
+       Not logged in:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/project/set.test.ts:37:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  29) config project set
+       Set project with no projects in org:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/project/set.test.ts:24:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  30) config project set
+       Set project passing --project-id:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/project/set.test.ts:24:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  31) config project set
+       Invalid project id:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/config/project/set.test.ts:24:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  32) info locations
+       List all locations with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/info/locations.test.ts:100:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  33) info orgs
+       List all orgs with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/info/orgs.test.ts:56:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  34) info regions
+       List all regions with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/info/regions.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  35) info whoami
+       Show current user information:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/info/whoami.test.ts:27:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  36) info whoami
+       Show current user information:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/info/whoami.test.ts:41:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  37) org accounts edit
+       Add and remove roles from a user with role in app_metadata (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  38) org accounts edit
+       Add and remove roles from a user using email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  39) org accounts edit
+       Add and remove roles from a user with role in app_metadata.org_roles (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  40) org accounts edit
+       Add and remove roles from a user with role in permissions (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  41) org accounts edit
+       Add role to a user (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  42) org accounts edit
+       Remove role from a user (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  43) org accounts edit
+       Add and remove roles from a user specifying --org-id (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  44) org accounts edit
+       Add invalid role no role data:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  45) org accounts edit
+       Add invalid role empty app metadata:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  46) org accounts edit
+       Remove invalid role:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  47) org accounts edit
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:94:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  48) org accounts edit
+       Using personal projects:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/edit.test.ts:107:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  49) org accounts
+       List all organisation accounts with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/index.test.ts:50:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  50) org accounts
+       Use API key authentication for an endpoint not supporting API keys:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/index.test.ts:63:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  51) org accounts
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/index.test.ts:76:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  52) org accounts remove
+       Remove user (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/remove.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  53) org accounts remove
+       Remove user using email (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/remove.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  54) org accounts remove
+       Remove user passing --org-id flag (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/remove.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  55) org accounts remove
+       Missing required --user-id flag:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/remove.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  56) org accounts remove
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/remove.test.ts:34:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  57) org accounts remove
+       Using personal projects:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/accounts/remove.test.ts:47:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  58) org invites create
+       Non interactive create:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/create.test.ts:64:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  59) org invites create
+       Invalid email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/create.test.ts:64:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  60) org invites create
+       Invalid role:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/create.test.ts:64:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  61) org invites create
+       API key for non project endpoint:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/create.test.ts:77:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  62) org invites create
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/create.test.ts:90:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  63) org invites delete
+       Non interactive delete:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  64) org invites delete
+       API key for non project endpoint:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/delete.test.ts:19:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  65) org invites delete
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/delete.test.ts:32:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  66) org invites
+       Standard columns in JSON:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/index.test.ts:51:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  67) org invites
+       API key for non project endpoint:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/index.test.ts:64:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  68) org invites
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/invites/index.test.ts:77:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  69) org roles create
+       Non interactive create:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/create.test.ts:10:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  70) org roles create
+       API key for non project endpoint:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/create.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  71) org roles create
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/create.test.ts:36:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  72) org roles delete
+       Non interactive delete:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  73) org roles delete
+       API key for non project endpoint:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/delete.test.ts:19:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  74) org roles delete
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/delete.test.ts:32:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  75) org roles
+       List all roles with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/index.test.ts:61:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  76) org roles
+       API key for non project endpoint:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/index.test.ts:74:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  77) org roles
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/org/roles/index.test.ts:87:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  78) project accounts edit
+       Add user roles:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  79) project accounts edit
+       Add user roles specifying by email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  80) project accounts edit
+       Remove user roles:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  81) project accounts edit
+       Remove user roles by email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  82) project accounts edit
+       Remove user roles with non-existent user:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  83) project accounts edit
+       Pass project ID as argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  84) project accounts edit
+       No organisation set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:297:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  85) project accounts edit
+       Personal projects:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:316:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  86) project accounts edit
+       Multiple users with the same email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  87) project accounts edit
+       No user with email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/edit.test.ts:95:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  88) project accounts
+       Standard columns in JSON:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/index.test.ts:80:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  89) project accounts
+       Passing project ID inline:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/accounts/index.test.ts:80:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  90) projects create
+       Create project basic (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  91) projects create
+       Create project basic passing --org-id flag (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  92) projects create
+       Create project with access and roles (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  93) projects create
+       Create project with invalid role (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  94) projects create
+       Missing required --name flag:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:21:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  95) projects create
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:34:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  96) projects create
+       Using personal projects:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/create.test.ts:47:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  97) projects delete
+       Delete current working project:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  98) projects delete
+       Delete project:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  99) projects delete
+       Delete project passing org ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  100) projects delete
+       Delete project with role:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  101) projects delete
+       Delete project with multiple roles:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  102) projects delete
+       Delete project with account:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  103) projects delete
+       Delete project with multiple accounts:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  104) projects delete
+       No project set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:19:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  105) projects delete
+       No org set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:32:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  106) projects delete
+       Personal projects:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/delete.test.ts:45:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  107) projects
+       Standard columns in JSON:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/index.test.ts:68:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  108) projects
+       Standard columns in JSON passing org ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/index.test.ts:68:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  109) projects
+       Parse system tags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/index.test.ts:68:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  110) projects
+       No organization set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/index.test.ts:81:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  111) projects
+       Using personal projects:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/index.test.ts:94:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  112) projects invites create
+       Create invite (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  113) projects invites create
+       Create invite passing --project-id flag (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  114) projects invites create
+       Invalid email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  115) projects invites create
+       Check required flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  116) projects invites create
+       No project set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/create.test.ts:20:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  117) projects invites delete
+       Create invite (--json):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  118) projects invites delete
+       Check required flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  119) projects invites
+       Standard columns in JSON:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/index.test.ts:48:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  120) projects invites
+       Standard columns in JSON passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/index.test.ts:48:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  121) projects invites
+       No project set:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/invites/index.test.ts:61:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  122) projects pull
+       Pull project.yaml:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/pull.test.ts:118:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  123) projects pull
+       Write project.yaml to disk:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/pull.test.ts:118:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  124) projects pull
+       Write project.yaml to disk with existing file error:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/pull.test.ts:134:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  125) projects pull
+       Write project.yaml to disk with existing file force:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/pull.test.ts:134:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  126) projects pull
+       Pull project.json:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/pull.test.ts:118:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  127) projects pull
+       Pull project.yaml passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/pull.test.ts:151:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  128) project roles edit
+       Add roles:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/edit.test.ts:39:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  129) project roles edit
+       Remove roles:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/edit.test.ts:39:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  130) project roles edit
+       Remove non-existent role:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/edit.test.ts:39:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  131) project roles edit
+       Add non-existent role:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/edit.test.ts:39:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  132) project roles edit
+       Pass project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/edit.test.ts:39:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  133) project roles
+       Standard columns in JSON:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/index.test.ts:60:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  134) project roles
+       Passing project ID inline:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/projects/roles/index.test.ts:60:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  135) schedules calls add
+       Add call to schedule:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/add.test.ts:9:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  136) schedules calls add
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/add.test.ts:9:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  137) schedules calls
+       List calls with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/index.test.ts:96:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  138) schedules calls
+       List calls with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/index.test.ts:109:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  139) schedules calls
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/index.test.ts:96:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  140) schedules calls remove
+       Remove call from schedule:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/remove.test.ts:9:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  141) schedules calls remove
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/calls/remove.test.ts:9:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  142) schedules create
+       Create minimal schedule:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  143) schedules create
+       Create minimal schedule with 24h interval:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  144) schedules create
+       Postman flag:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  145) schedules create
+       Fibonacci retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  146) schedules create
+       Exponential retry minimal:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  147) schedules create
+       Exponential retry full options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  148) schedules create
+       Constant retry minimal:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  149) schedules create
+       Constant retry full options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  150) schedules create
+       General retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  151) schedules create
+       Specify locations:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  152) schedules create
+       Invalid location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  153) schedules create
+       Specify regions:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  154) schedules create
+       Invalid region:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:53:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  155) schedules create
+       Pass --project-id flag:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/create.test.ts:66:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  156) schedules delete
+       Delete schedule:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  157) schedules delete
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  158) schedules downtimes create
+       Minimal downtime:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  159) schedules downtimes create
+       Daily repeat:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  160) schedules downtimes create
+       Weekly repeat:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  161) schedules downtimes create
+       Missing required flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  162) schedules downtimes create
+       End before start:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  163) schedules downtimes create
+       Invalid start:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  164) schedules downtimes create
+       Invalid end:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  165) schedules downtimes delete
+       Delete downtime:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  166) schedules downtimes delete
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  167) schedules downtimes edit
+       Edit start and end:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  168) schedules downtimes edit
+       Daily repeat:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  169) schedules downtimes edit
+       Weekly repeat:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  170) schedules downtimes edit
+       Repeat off:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  171) schedules downtimes edit
+       Missing required flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  172) schedules downtimes edit
+       End before start:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  173) schedules downtimes edit
+       Invalid start:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  174) schedules downtimes edit
+       Invalid end:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/edit.test.ts:23:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  175) schedules downtimes
+       List all downtimes with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/index.test.ts:69:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  176) schedules downtimes
+       List all downtimes with --output=json argument passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/downtimes/index.test.ts:82:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  177) schedules edit
+       Edit interval (m):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  178) schedules edit
+       Edit interval (h):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  179) schedules edit
+       Edit name:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  180) schedules edit
+       Enable postman:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  181) schedules edit
+       Disable postman:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  182) schedules edit
+       Fibonacci retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  183) schedules edit
+       Exponential retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  184) schedules edit
+       Constant retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  185) schedules edit
+       Disable retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  186) schedules edit
+       Update exponential and constant retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  187) schedules edit
+       Update exponential and constant retry options (set same):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  188) schedules edit
+       Set exponential and constant retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  189) schedules edit
+       Update general retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  190) schedules edit
+       Update general retry options (set same):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  191) schedules edit
+       Set general retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  192) schedules edit
+       Add locations and regions:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  193) schedules edit
+       Remove locations and regions:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  194) schedules edit
+       Invalid location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  195) schedules edit
+       Invalid region:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  196) schedules edit
+       Missing required flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/edit.test.ts:71:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  197) schedules
+       List all schedules with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/index.test.ts:84:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  198) schedules
+       Pass --project-id argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/schedules/index.test.ts:97:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  199) webhooks create
+       Passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:28:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  200) webhooks create
+       email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  201) webhooks create
+       email missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  202) webhooks create
+       email invalid email address:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  203) webhooks create
+       email_text:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  204) webhooks create
+       email_text invalid email address:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  205) webhooks create
+       email_text missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  206) webhooks create
+       email_template:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  207) webhooks create
+       email_template missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  208) webhooks create
+       email_template invalid email address:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  209) webhooks create
+       generic:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  210) webhooks create
+       email_template missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  211) webhooks create
+       generic:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  212) webhooks create
+       generic missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  213) webhooks create
+       apimetrics_api:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  214) webhooks create
+       apimetrics_api missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  215) webhooks create
+       apimetrics_workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  216) webhooks create
+       apimetrics_workflow missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  217) webhooks create
+       apimetrics_token:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  218) webhooks create
+       apimetrics_token missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  219) webhooks create
+       slack:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  220) webhooks create
+       slack missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  221) webhooks create
+       pager_duty:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  222) webhooks create
+       pager_duty missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  223) webhooks create
+       pager_duty_v2:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  224) webhooks create
+       pager_duty_v2 missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  225) webhooks create
+       big_panda:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  226) webhooks create
+       big_panda missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  227) webhooks create
+       victorops:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  228) webhooks create
+       victorops missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  229) webhooks create
+       hipchat:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  230) webhooks create
+       hipchat missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  231) webhooks create
+       msteams:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  232) webhooks create
+       msteams missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  233) webhooks create
+       newrelic:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  234) webhooks create
+       newrelic missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  235) webhooks create
+       darkspark:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  236) webhooks create
+       darkspark missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  237) webhooks create
+       datadog:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  238) webhooks create
+       datadog missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  239) webhooks create
+       datadogevent:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  240) webhooks create
+       datadogevent missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  241) webhooks create
+       statuspage:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  242) webhooks create
+       statuspage missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  243) webhooks create
+       flowdock:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  244) webhooks create
+       flowdock missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  245) webhooks create
+       opsgenie:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  246) webhooks create
+       opsgenie missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  247) webhooks create
+       opsgenieeu:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  248) webhooks create
+       opsgenieeu missing flags:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/create.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  249) webhooks delete
+       Delete webhook:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  250) webhooks delete
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  251) webhooks delete
+       Delete webhook:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/delete.test.ts:19:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  252) webhooks edit
+       Passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:28:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  253) webhooks edit
+       Add already existing alert:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  254) webhooks edit
+       email:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  255) webhooks edit
+       email invalid email address:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  256) webhooks edit
+       email_text:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  257) webhooks edit
+       email_text invalid email address:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  258) webhooks edit
+       email_template:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  259) webhooks edit
+       email_template invalid email address:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  260) webhooks edit
+       generic:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  261) webhooks edit
+       generic:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  262) webhooks edit
+       apimetrics_api:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  263) webhooks edit
+       apimetrics_workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  264) webhooks edit
+       apimetrics_token:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  265) webhooks edit
+       slack:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  266) webhooks edit
+       pager_duty:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  267) webhooks edit
+       pager_duty_v2:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  268) webhooks edit
+       big_panda:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  269) webhooks edit
+       victorops:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  270) webhooks edit
+       hipchat:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  271) webhooks edit
+       msteams:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  272) webhooks edit
+       newrelic:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  273) webhooks edit
+       darkspark:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  274) webhooks edit
+       datadog:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  275) webhooks edit
+       datadogevent:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  276) webhooks edit
+       statuspage:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  277) webhooks edit
+       flowdock:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  278) webhooks edit
+       opsgenie:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  279) webhooks edit
+       opsgenieeu:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/edit.test.ts:15:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  280) webhooks
+       List all webhooks with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/index.test.ts:52:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  281) webhooks
+       Check paramater and tag formatting:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/index.test.ts:52:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  282) webhooks
+       Pass project ID inline:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/webhooks/index.test.ts:65:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  283) workflows create
+       Create a minimal workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  284) workflows create
+       Create a minimal workflow passing project ID:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:20:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  285) workflows create
+       Specify calls to add:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  286) workflows create
+       Show as action:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  287) workflows create
+       Disable parallel running:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  288) workflows create
+       Run from location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  289) workflows create
+       Run from invalid location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  290) workflows create
+       Set max retries:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  291) workflows create
+       Set ignore in stats:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  292) workflows create
+       Set skip notifications:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  293) workflows create
+       Fibonacci retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  294) workflows create
+       Exponential retry minimal:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  295) workflows create
+       Exponential retry full:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  296) workflows create
+       Constant retry minimal:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  297) workflows create
+       Constant retry full:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  298) workflows create
+       Never retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/create.test.ts:7:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  299) workflows delete
+       Delete workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  300) workflows delete
+       Missing required options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/delete.test.ts:6:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  301) workflows edit
+       Update name:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  302) workflows edit
+       Update description:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  303) workflows edit
+       Enable handle cookies:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  304) workflows edit
+       Disable handle cookies:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  305) workflows edit
+       Disable stop on failure:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  306) workflows edit
+       Enable stop on failure:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  307) workflows edit
+       Enable show as action:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  308) workflows edit
+       Disable show as action:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  309) workflows edit
+       Disable parallel workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  310) workflows edit
+       Enable parallel workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  311) workflows edit
+       Enable running from specific location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  312) workflows edit
+       Switch location to run from:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  313) workflows edit
+       Switch location to run from (set same):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  314) workflows edit
+       Run from invalid location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  315) workflows edit
+       Disable running from specific location:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  316) workflows edit
+       Disable running from specific location (already not running from location):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  317) workflows edit
+       Fibonacci retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  318) workflows edit
+       Exponential retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  319) workflows edit
+       Constant retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  320) workflows edit
+       Never retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  321) workflows edit
+       Disable retry:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  322) workflows edit
+       Update exponential and constant retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  323) workflows edit
+       Update exponential and constant retry options (set same):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  324) workflows edit
+       Set exponential and constant retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  325) workflows edit
+       Update general retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  326) workflows edit
+       Update general retry options (set same):
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  327) workflows edit
+       Set general retry options:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  328) workflows edit
+       Remove middle call:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  329) workflows edit
+       Remove first call:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  330) workflows edit
+       Remove multiple calls:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  331) workflows edit
+       Remove call from empty workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  332) workflows edit
+       Remove call index out of range:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  333) workflows edit
+       Add call to end:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  334) workflows edit
+       Add call to start:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  335) workflows edit
+       Add call to middle:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  336) workflows edit
+       Add multiple calls:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  337) workflows edit
+       Add call with string index:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  338) workflows edit
+       Add call with float index:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  339) workflows edit
+       Add with index out of range:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  340) workflows edit
+       Add call to empty workflow:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  341) workflows edit
+       Replace call:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/edit.test.ts:70:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  342) workflows
+       List all workflows with --output=json argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/index.test.ts:273:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+  343) workflows
+       Pass --project-id argument:
+     TypeError: fs.writeJsonSync is not a function
+      at file:///home/mnickson/source/APImetrics/APIm-CLI/test/commands/workflows/index.test.ts:286:12
+      at Object.run (node_modules/fancy-test/lib/base.js:123:61)
+      at Context.run (node_modules/fancy-test/lib/base.js:69:36)
+
+
+
