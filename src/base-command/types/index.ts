@@ -5,6 +5,7 @@ import {Downtime} from './downtime';
 import {Info} from './info';
 import {Invite} from './invite';
 import {ListResponse} from './listresponse';
+import {OIDCWellKnown} from './oidc-well-known';
 import {OrgAccount} from './orgaccount';
 import {Project} from './project';
 import {Role} from './role';
@@ -22,6 +23,7 @@ export {
   Info,
   Invite,
   ListResponse,
+  OIDCWellKnown,
   OrgAccount,
   Project,
   Role,
