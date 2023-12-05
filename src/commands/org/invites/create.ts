@@ -1,9 +1,10 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../../base-command';
 
 export type InviteResponse = {
-  success: boolean;
   invite: T.Invite;
+  success: boolean;
 };
 
 export default class Create extends Command<InviteResponse> {
@@ -16,11 +17,11 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM`,
 
   static flags = {
     email: Flags.string({description: 'Email to send invite to.', required: true}),
-    role: Flags.string({description: 'Users role.', multiple: true, required: true}),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
     }),
+    role: Flags.string({description: 'Users role.', multiple: true, required: true}),
   };
 
   public async run(): Promise<InviteResponse> {
@@ -57,6 +58,6 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM`,
     };
     const invite = await this.api.post<T.Invite>(endpoint, {body: data});
     this.log(invite.id);
-    return {success: true, invite: invite};
+    return {invite, success: true};
   }
 }

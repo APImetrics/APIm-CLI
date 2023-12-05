@@ -1,9 +1,10 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type ProjectList = {
-  success: boolean;
   projects: T.UserProjects['projects'];
+  success: boolean;
 };
 
 export default class Projects extends Command<ProjectList> {
@@ -19,8 +20,8 @@ export default class Projects extends Command<ProjectList> {
   static flags = {
     ...ux.table.flags(),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
     }),
   };
 
@@ -44,24 +45,24 @@ export default class Projects extends Command<ProjectList> {
     ux.table(
       projects,
       {
-        name: {
-          get: (row) => row.project.name,
-        },
-        tags: {
-          get: (row) => row.project.tags.join(', ') || 'None',
-        },
         created: {
           get: (row) => row.project.created,
         },
-        systemTags: {
-          header: 'System Tags',
-          get: (row) => row.project.system_tags.join(', ') || 'None',
-          extended: true,
-        },
         id: {
-          header: 'ID',
-          get: (row) => row.project.id,
           extended: true,
+          get: (row) => row.project.id,
+          header: 'ID',
+        },
+        name: {
+          get: (row) => row.project.name,
+        },
+        systemTags: {
+          extended: true,
+          get: (row) => row.project.system_tags.join(', ') || 'None',
+          header: 'System Tags',
+        },
+        tags: {
+          get: (row) => row.project.tags.join(', ') || 'None',
         },
       },
       {
@@ -69,6 +70,6 @@ export default class Projects extends Command<ProjectList> {
         ...flags,
       }
     );
-    return {success: true, projects: projects};
+    return {projects, success: true};
   }
 }

@@ -3,7 +3,11 @@
     "valid-jsdoc": "off",
     "no-useless-constructor": "off",
     "complexity": "off",
-    "unicorn/prefer-type-error": "off"
+    "unicorn/prefer-type-error": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/namespace": "off",
+    "@typescript-eslint/no-namespace": "off"
   },
   "extends": ["oclif", "oclif-typescript", "prettier"]
 }

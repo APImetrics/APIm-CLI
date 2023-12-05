@@ -10,8 +10,8 @@ describe('projects invites create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -23,8 +23,8 @@ describe('projects invites create', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -33,7 +33,7 @@ describe('projects invites create', () => {
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
       api
-        .post('/api/2/projects/abc123/invites/', {email: 'bob@example.com', access_level: 'OWNER'})
+        .post('/api/2/projects/abc123/invites/', {access_level: 'OWNER', email: 'bob@example.com'})
         .reply(200, {id: 'cde456'});
     })
     .stdout()
@@ -46,15 +46,15 @@ describe('projects invites create', () => {
     .it('Create invite (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         invite: {id: 'cde456'},
+        success: true,
       });
     });
 
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
       api
-        .post('/api/2/projects/def/invites/', {email: 'bob@example.com', access_level: 'OWNER'})
+        .post('/api/2/projects/def/invites/', {access_level: 'OWNER', email: 'bob@example.com'})
         .reply(200, {id: 'cde456'});
     })
     .stdout()
@@ -68,8 +68,8 @@ describe('projects invites create', () => {
     .it('Create invite passing --project-id flag (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         invite: {id: 'cde456'},
+        success: true,
       });
     });
 

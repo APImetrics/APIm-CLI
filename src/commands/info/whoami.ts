@@ -3,17 +3,17 @@ import {Command, T} from '../../base-command';
 export type WhoamiResponse = {
   success: boolean;
   whoami: {
-    id: string;
-    name: string;
-    email: string;
-    mfa: boolean;
-    // eslint-disable-next-line camelcase
+     
     current_org: string;
-    // eslint-disable-next-line camelcase
+     
     current_project: {
-      name: string;
       id: string;
+      name: string;
     };
+    email: string;
+    id: string;
+    mfa: boolean;
+    name: string;
   };
 };
 
@@ -40,33 +40,33 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
     }
 
     const data: Record<string, {title: string; value: any}> = {
-      id: {
-        title: 'ID',
-        value: userinfo.sub,
-      },
-      name: {
-        title: 'Name',
-        value: userinfo.nickname,
-      },
-      email: {
-        title: 'Email',
-        value: userinfo.email,
-      },
-      mfa: {
-        title: 'MFA enabled',
-        value: userinfo['https://client.apimetrics.io/use_mfa'],
-      },
       currentOrg: {
         title: 'Current Organization',
         value: this.userConfig.organization.current || '',
+      },
+      currentProjectID: {
+        title: 'Current Project ID',
+        value: this.userConfig.project.current || '',
       },
       currentProjectName: {
         title: 'Current Project Name',
         value: projectName || '',
       },
-      currentProjectID: {
-        title: 'Current Project ID',
-        value: this.userConfig.project.current || '',
+      email: {
+        title: 'Email',
+        value: userinfo.email,
+      },
+      id: {
+        title: 'ID',
+        value: userinfo.sub,
+      },
+      mfa: {
+        title: 'MFA enabled',
+        value: userinfo['https://client.apimetrics.io/use_mfa'],
+      },
+      name: {
+        title: 'Name',
+        value: userinfo.nickname,
       },
     };
 
@@ -80,17 +80,17 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
     return {
       success: true,
       whoami: {
-        id: data.id.value,
-        name: data.name.value,
-        email: data.email.value,
-        mfa: data.mfa.value,
         // eslint-disable-next-line camelcase
         current_org: data.currentOrg.value,
         // eslint-disable-next-line camelcase
         current_project: {
-          name: data.currentProjectName.value,
           id: data.currentProjectID.value,
+          name: data.currentProjectName.value,
         },
+        email: data.email.value,
+        id: data.id.value,
+        mfa: data.mfa.value,
+        name: data.name.value,
       },
     };
   }

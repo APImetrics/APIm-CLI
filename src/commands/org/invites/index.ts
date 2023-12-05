@@ -1,9 +1,10 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type InviteList = {
-  success: boolean;
   invites: T.Invite[];
+  success: boolean;
 };
 
 export default class Invites extends Command<InviteList> {
@@ -20,8 +21,8 @@ alice@example.com DEV_TEAM 2023-07-15T18:34:27.044198Z`,
   static flags = {
     ...ux.table.flags(),
     'org-id': Flags.string({
-      description: 'ID of organization to read. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to read. Overrides apimetrics config org set.',
     }),
   };
 
@@ -41,24 +42,24 @@ alice@example.com DEV_TEAM 2023-07-15T18:34:27.044198Z`,
     ux.table(
       invites,
       {
-        email: {
-          get: (row) => row.email,
-        },
-        roles: {
-          get: (row) => row.roles.join(', ') || 'None',
-        },
         created: {
           get: (row) => row.created,
         },
-        lastLoginIP: {
-          header: 'Invited By',
-          get: (row) => row.invited_email,
-          extended: true,
+        email: {
+          get: (row) => row.email,
         },
         id: {
-          header: 'ID',
-          get: (row) => row.id,
           extended: true,
+          get: (row) => row.id,
+          header: 'ID',
+        },
+        lastLoginIP: {
+          extended: true,
+          get: (row) => row.invited_email,
+          header: 'Invited By',
+        },
+        roles: {
+          get: (row) => row.roles.join(', ') || 'None',
         },
       },
       {
@@ -66,6 +67,6 @@ alice@example.com DEV_TEAM 2023-07-15T18:34:27.044198Z`,
         ...flags,
       }
     );
-    return {success: true, invites: invites};
+    return {invites, success: true};
   }
 }

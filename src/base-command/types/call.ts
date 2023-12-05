@@ -1,31 +1,31 @@
-/* eslint-disable camelcase */
+ 
 export type Call = {
+  id: string;
   meta: {
-    domain: string;
-    description: string | null;
+    accept: null | string;
+    content_type: null | string;
     created: string;
-    tags: string[];
-    accept: string | null;
+    description: null | string;
+    domain: string;
     last_update: string;
-    content_type: string | null;
-    owner: string;
     name: string;
+    owner: string;
     project_id: string;
+    tags: string[];
   };
   request: {
-    body: string | null;
-    parameters: {
-      key: string;
-      value: string;
-    }[];
-    url: string;
-    auth_id: string | null;
+    auth_id: null | string;
+    body: null | string;
     headers: {
       key: string;
       value: string;
     }[];
-    token_id: string | null;
     method: string;
+    parameters: {
+      key: string;
+      value: string;
+    }[];
+    token_id: null | string;
+    url: string;
   };
-  id: string;
 };

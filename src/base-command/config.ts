@@ -1,20 +1,20 @@
 import {Interfaces} from '@oclif/core';
-import * as path from 'node:path';
-import * as fs from 'fs-extra';
 import {debug} from 'debug';
+import * as fs from 'fs-extra';
+import * as path from 'node:path';
 
 export class Config {
+  public organization: Config.organization = {
+    current: undefined,
+  };
+
   /** Current project settings */
   public project: Config.Project = {
     current: undefined,
   };
 
-  public organization: Config.organization = {
-    current: undefined,
-  };
-
-  private debug = debug('userconfig');
   private configDir: string;
+  private debug = debug('userconfig');
 
   /**
    * @param oclifConfig Command config
@@ -31,10 +31,20 @@ export class Config {
   public async save(): Promise<void> {
     const filePath = path.join(this.configDir, 'config.json');
     const config: Config.ConfigFile = {
-      project: this.project,
       organization: this.organization,
+      project: this.project,
     };
     await fs.writeJson(filePath, config);
+  }
+
+  /**
+   * Ensure that required config directories are present
+   */
+  private initConfig(): void {
+    if (!fs.existsSync(this.configDir)) {
+      this.debug(`Creating ${this.configDir}`);
+      fs.mkdirSync(this.configDir);
+    }
   }
 
   /**
@@ -50,16 +60,6 @@ export class Config {
       this.organization = config.organization;
     }
   }
-
-  /**
-   * Ensure that required config directories are present
-   */
-  private initConfig(): void {
-    if (!fs.existsSync(this.configDir)) {
-      this.debug(`Creating ${this.configDir}`);
-      fs.mkdirSync(this.configDir);
-    }
-  }
 }
 
 export namespace Config {
@@ -72,7 +72,7 @@ export namespace Config {
   }
 
   export interface ConfigFile {
-    project: Project;
     organization: organization;
+    project: Project;
   }
 }

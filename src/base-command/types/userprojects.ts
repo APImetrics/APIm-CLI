@@ -1,43 +1,43 @@
-/* eslint-disable camelcase */
+ 
 export type UserProjects = {
+  meta: {
+    account_id: boolean;
+    current_project_id: string;
+    new_project: boolean;
+    permissions: string[];
+    roles: Record<string, string[]>;
+    verify_needed: boolean;
+  };
   organizations: Record<
     string,
     {
-      enforce_2fa: boolean;
-      tags: string[];
-      password_expiry_days: number;
-      system_tags: string[];
       billing_admin_id?: string;
-      kms_enabled: boolean;
       created: string;
-      subscription_level: string;
-      last_update: string;
+      enforce_2fa: boolean;
       id: string;
+      kms_enabled: boolean;
+      last_update: string;
       name: string;
+      password_expiry_days: number;
+      subscription_level: string;
+      system_tags: string[];
+      tags: string[];
     }
   >;
-  meta: {
-    verify_needed: boolean;
-    account_id: boolean;
-    roles: Record<string, string[]>;
-    new_project: boolean;
-    current_project_id: string;
-    permissions: string[];
-  };
   projects: {
-    project: {
-      name: string;
-      tags: string[];
-      system_tags: string[];
-      created: string;
-      org_id: string;
-      id: string;
-      last_update: string;
-    };
     access_level: string;
     created: string;
-    last_update: string;
     id: string;
+    last_update: string;
+    project: {
+      created: string;
+      id: string;
+      last_update: string;
+      name: string;
+      org_id: string;
+      system_tags: string[];
+      tags: string[];
+    };
     role_id: string;
   }[];
 };

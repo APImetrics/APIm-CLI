@@ -1,15 +1,14 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type WebhookList = {
-  success: boolean;
   accounts: T.Webhook[];
+  success: boolean;
 };
 
 export default class Webhooks extends Command<WebhookList> {
   static description = 'List webhooks on a project.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %>
 Name         Type      Enabled Include Tags Exclude Tags
@@ -24,10 +23,12 @@ GEn          generic   false   None         None
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
       char: 'p',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<WebhookList> {
     const {flags} = await this.parse(Webhooks);
@@ -40,42 +41,42 @@ GEn          generic   false   None         None
     ux.table(
       webhooks,
       {
-        name: {
-          get: (row) => row.meta.name,
-        },
-        type: {
-          get: (row) => row.webhook.type,
-        },
         enabled: {
           get: (row) => row.webhook.enabled,
         },
-        includeTags: {
-          header: 'Include Tags',
-          get: (row) => row.meta.include_tags.join(', ') || 'None',
-        },
         excludeTags: {
-          header: 'Exclude Tags',
           get: (row) => row.meta.exclude_tags.join(', ') || 'None',
+          header: 'Exclude Tags',
         },
         id: {
-          header: 'ID',
-          get: (row) => row.id,
           extended: true,
+          get: (row) => row.id,
+          header: 'ID',
+        },
+        includeTags: {
+          get: (row) => row.meta.include_tags.join(', ') || 'None',
+          header: 'Include Tags',
+        },
+        name: {
+          get: (row) => row.meta.name,
         },
         owner: {
-          get: (row) => row.meta.owner,
           extended: true,
+          get: (row) => row.meta.owner,
         },
         parameters: {
+          extended: true,
           get: (row) =>
             Object.entries(row.webhook.parameters)
               .map(([key, value]) => `${key}: ${value}`)
               .join(', '),
-          extended: true,
         },
         tags: {
-          get: (row) => row.meta.tags?.join(', ') || 'None',
           extended: true,
+          get: (row) => row.meta.tags?.join(', ') || 'None',
+        },
+        type: {
+          get: (row) => row.webhook.type,
         },
       },
       {
@@ -83,6 +84,6 @@ GEn          generic   false   None         None
         ...flags,
       }
     );
-    return {success: true, accounts: webhooks};
+    return {accounts: webhooks, success: true};
   }
 }

@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export default class Delete extends Command<{success: boolean}> {
@@ -10,13 +11,13 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'project-id': Flags.string({
-      description: 'ID of project to delete. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+    }),
+    'project-id': Flags.string({
+      char: 'p',
+      description: 'ID of project to delete. Overrides apimetrics config project set.',
     }),
   };
 

@@ -54,64 +54,64 @@ version: '2'
 `;
 
 const jsonResponse = {
+  $schema: 'https://qc-client.apimetrics.io/api/2/import/schema.json',
   project: {
-    files: [],
+    auth: [],
     calls: [
       {
         conditions: null,
-        webhooks: [],
+        id: 'call-api-call-17-06-2023-17-29-27',
         meta: {
           description: null,
-          tags: ['apimetrics:noredirect', 'apimetrics:timeout:60'],
           name: 'API Call 17/06/2023, 17:29:27',
+          tags: ['apimetrics:noredirect', 'apimetrics:timeout:60'],
         },
         request: {
-          body: null,
-          parameters: [],
-          url: 'https://google.apimetrics.xyz/get',
           auth_id: null,
+          body: null,
           headers: [
             {
-              value: 'application/json',
               key: 'Accept',
+              value: 'application/json',
             },
           ],
-          token_id: null,
           method: 'GET',
+          parameters: [],
+          token_id: null,
+          url: 'https://google.apimetrics.xyz/get',
         },
-        id: 'call-api-call-17-06-2023-17-29-27',
+        webhooks: [],
       },
     ],
-    schedules: [
-      {
-        meta: {
-          name: 'Default Schedule',
-          tags: [],
-        },
-        id: 'schedule-default-schedule',
-        schedule: {
-          regions: ['all'],
-          frequency: 300,
-          locations: [],
-          target_ids: [],
-          backoff_method: null,
-        },
-      },
-    ],
-    auth: [],
-    reports: [],
+    conditions: null,
+    environments: {
+      global: [],
+    },
+    files: [],
     meta: {
       name: 'API Project 17/06/2023',
       tags: [],
     },
-    environments: {
-      global: [],
-    },
-    workflows: [],
+    reports: [],
+    schedules: [
+      {
+        id: 'schedule-default-schedule',
+        meta: {
+          name: 'Default Schedule',
+          tags: [],
+        },
+        schedule: {
+          backoff_method: null,
+          frequency: 300,
+          locations: [],
+          regions: ['all'],
+          target_ids: [],
+        },
+      },
+    ],
     webhooks: [],
-    conditions: null,
+    workflows: [],
   },
-  $schema: 'https://qc-client.apimetrics.io/api/2/import/schema.json',
   version: '2',
 };
 
@@ -123,8 +123,8 @@ describe('projects pull', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
 
       if (fs.existsSync('./.test/project.yaml')) {
@@ -141,8 +141,8 @@ describe('projects pull', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
 
       if (fs.existsSync('./.test/project.yaml')) {
@@ -161,8 +161,8 @@ describe('projects pull', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})

@@ -13,8 +13,8 @@ describe('schedules calls remove', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -29,8 +29,8 @@ describe('schedules calls remove', () => {
     .it('Remove call from schedule', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         schedule: {id: 'qwerty'},
+        success: true,
       });
     });
 

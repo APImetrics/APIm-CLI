@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command} from '../../../base-command';
 
 export type DeleteResponse = {
@@ -15,8 +16,8 @@ export default class Delete extends Command<DeleteResponse> {
   static flags = {
     'invite-id': Flags.string({description: 'Invite to delete.', required: true}),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
     }),
   };
 

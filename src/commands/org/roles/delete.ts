@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command} from '../../../base-command';
 
 export default class Delete extends Command<{success: boolean}> {
@@ -7,11 +8,11 @@ export default class Delete extends Command<{success: boolean}> {
   static examples = ['<%= config.bin %> <%= command.id %> --role TEAM_A'];
 
   static flags = {
-    role: Flags.string({description: 'ID of role to delete.', char: 'r', required: true}),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
     }),
+    role: Flags.string({char: 'r', description: 'ID of role to delete.', required: true}),
   };
 
   public async run(): Promise<{success: boolean}> {

@@ -1,9 +1,10 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type RoleList = {
-  success: boolean;
   roles: T.Role[];
+  success: boolean;
 };
 
 export default class Roles extends Command<RoleList> {
@@ -20,8 +21,8 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
   static flags = {
     ...ux.table.flags({except: ['extended']}),
     'org-id': Flags.string({
-      description: 'ID of organization to read. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to read. Overrides apimetrics config org set.',
     }),
   };
 
@@ -41,14 +42,14 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
     ux.table(
       roles,
       {
-        role: {
-          get: (row) => row.id,
+        created: {
+          get: (row) => row.created,
         },
         description: {
           get: (row) => row.description,
         },
-        created: {
-          get: (row) => row.created,
+        role: {
+          get: (row) => row.id,
         },
       },
       {
@@ -56,6 +57,6 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
         ...flags,
       }
     );
-    return {success: true, roles: roles};
+    return {roles, success: true};
   }
 }
