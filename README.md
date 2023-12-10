@@ -119,7 +119,6 @@ USAGE
 * [`apimetrics help`](docs/help.md) - Display help for apimetrics.
 * [`apimetrics info`](docs/info.md) - Information about APImetrics monitoring infrastructure.
 * [`apimetrics org`](docs/org.md) - Manage organization settings.
-* [`apimetrics plugins`](docs/plugins.md) - List installed plugins.
 * [`apimetrics projects`](docs/projects.md) - Manage projects.
 * [`apimetrics schedules`](docs/schedules.md) - Manage project schedules.
 * [`apimetrics webhooks`](docs/webhooks.md) - Manage project webhooks and alerts.
