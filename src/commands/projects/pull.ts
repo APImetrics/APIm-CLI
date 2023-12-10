@@ -1,46 +1,47 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../base-command';
 import * as fs from 'fs-extra';
 
+import {Command} from '../../base-command';
+
 export type PullWriteFileJson = {
-  success: boolean;
   message: string;
+  success: boolean;
 };
 
-export default class Pull extends Command<PullWriteFileJson | any> {
+export default class Pull extends Command<PullWriteFileJson | unknown> {
   static description = 'Fetch project.yaml file.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %> --out myproject.yaml
 Wrote project.yaml to myproject.yaml.`,
   ];
 
   static flags = {
-    out: Flags.file({
-      exists: false,
-      description: 'File to write project.yaml to.',
-      char: 'o',
+    environment: Flags.boolean({
+      allowNo: true,
+      default: true,
+      description: 'Include environment variable data.',
     }),
     force: Flags.boolean({
-      description: 'Force overwriting of existing project.yaml file.',
       char: 'f',
       dependsOn: ['out'],
+      description: 'Force overwriting of existing project.yaml file.',
     }),
-    environment: Flags.boolean({
-      description: 'Include environment variable data.',
-      default: true,
-      allowNo: true,
+    header: Flags.boolean({allowNo: true, default: true, description: 'Include header data.'}),
+    out: Flags.file({
+      char: 'o',
+      description: 'File to write project.yaml to.',
+      exists: false,
     }),
-    header: Flags.boolean({description: 'Include header data.', default: true, allowNo: true}),
-    webhook: Flags.boolean({description: 'Include webhook data.', default: true, allowNo: true}),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
       char: 'p',
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
     }),
+    webhook: Flags.boolean({allowNo: true, default: true, description: 'Include webhook data.'}),
   };
 
-  public async run(): Promise<PullWriteFileJson | any> {
+  protected permitKeyAuth = true;
+
+  public async run(): Promise<PullWriteFileJson | unknown> {
     const {flags} = await this.parse(Pull);
     const endpoint = `export/?environment_values=${flags.environment}&header_values=${flags.header}&webhooks=${flags.webhook}`;
 
@@ -60,12 +61,12 @@ Wrote project.yaml to myproject.yaml.`,
       // when --json passed
       if (fileExists && !flags.force && !this.jsonEnabled()) {
         const overwrite = await this.confirm({
-          message: `File ${flags.out} already exists. Do you want to overwrite it?`,
           default: false,
+          message: `File ${flags.out} already exists. Do you want to overwrite it?`,
         });
         if (!overwrite) {
           this.log('Exited without overwriting file.');
-          return {success: false, message: 'Exited without overwriting file.'};
+          return {message: 'Exited without overwriting file.', success: false};
         }
       } else if (fileExists && !flags.force) {
         throw new Error(`File ${flags.out} already exists. Use --force to overwrite it.`);
@@ -73,13 +74,13 @@ Wrote project.yaml to myproject.yaml.`,
 
       fs.writeFile(flags.out, project);
       this.log(`Wrote project.yaml to ${flags.out}.`);
-      return {success: true, message: `Wrote project.yaml to ${flags.out}.`};
+      return {message: `Wrote project.yaml to ${flags.out}.`, success: true};
     }
 
     // Avoid multiple API calls when using --json. Just fetch json from
     // API, instead of YAML.
     if (this.jsonEnabled()) {
-      return this.api.get<any>(endpoint);
+      return this.api.get<unknown>(endpoint);
     }
 
     this.log(

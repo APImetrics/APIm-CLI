@@ -1,9 +1,10 @@
 import {ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type RegionList = {
-  success: boolean;
   regions: T.Info['regions'];
+  success: boolean;
 };
 
 export default class Regions extends Command<RegionList> {
@@ -33,16 +34,16 @@ North America   na
     ux.table(
       regions,
       {
-        name: {
-          get: (row) => row.name,
-        },
         id: {
-          header: 'ID',
           get: (row) => row.id,
+          header: 'ID',
         },
         locations: {
-          get: (row) => row.locations.join(', ') || 'None',
           extended: true,
+          get: (row) => row.locations.join(', ') || 'None',
+        },
+        name: {
+          get: (row) => row.name,
         },
       },
       {
@@ -50,6 +51,6 @@ North America   na
         ...flags,
       }
     );
-    return {success: true, regions: regions};
+    return {regions, success: true};
   }
 }

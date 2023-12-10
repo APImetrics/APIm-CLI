@@ -10,8 +10,8 @@ describe('schedules downtimes create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -22,10 +22,10 @@ describe('schedules downtimes create', () => {
       api
         .post('/api/2/schedules/1/downtime/', {
           downtime: {
-            start_time: '2023-09-29T14:54:41.865Z',
             end_time: '2023-09-30T14:54:41.865Z',
-            repeated: false,
             repeat_days: 0,
+            repeated: false,
+            start_time: '2023-09-29T14:54:41.865Z',
           },
         })
         .reply(200, {id: 'abc123'})
@@ -46,10 +46,10 @@ describe('schedules downtimes create', () => {
       api
         .post('/api/2/schedules/1/downtime/', {
           downtime: {
-            start_time: '2023-09-29T14:54:41.865Z',
             end_time: '2023-09-30T14:54:41.865Z',
-            repeated: true,
             repeat_days: 1,
+            repeated: true,
+            start_time: '2023-09-29T14:54:41.865Z',
           },
         })
         .reply(200, {id: 'abc123'})
@@ -71,10 +71,10 @@ describe('schedules downtimes create', () => {
       api
         .post('/api/2/schedules/1/downtime/', {
           downtime: {
-            start_time: '2023-09-29T14:54:41.865Z',
             end_time: '2023-09-30T14:54:41.865Z',
-            repeated: true,
             repeat_days: 7,
+            repeated: true,
+            start_time: '2023-09-29T14:54:41.865Z',
           },
         })
         .reply(200, {id: 'abc123'})

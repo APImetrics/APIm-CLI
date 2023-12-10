@@ -1,20 +1,21 @@
 import {Interfaces} from '@oclif/core';
-import * as path from 'node:path';
-import * as fs from 'fs-extra';
 import {debug} from 'debug';
+import * as fse from 'fs-extra';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 export class Config {
+  public organization: Config.organization = {
+    current: undefined,
+  };
+
   /** Current project settings */
   public project: Config.Project = {
     current: undefined,
   };
 
-  public organization: Config.organization = {
-    current: undefined,
-  };
-
-  private debug = debug('userconfig');
   private configDir: string;
+  private debug = debug('userconfig');
 
   /**
    * @param oclifConfig Command config
@@ -31,24 +32,10 @@ export class Config {
   public async save(): Promise<void> {
     const filePath = path.join(this.configDir, 'config.json');
     const config: Config.ConfigFile = {
-      project: this.project,
       organization: this.organization,
+      project: this.project,
     };
-    await fs.writeJson(filePath, config);
-  }
-
-  /**
-   * Load config file from disk
-   */
-  private load(): void {
-    const filePath = path.join(this.configDir, 'config.json');
-    if (fs.existsSync(filePath)) {
-      // Handling for malformed contents?
-      const config = fs.readJsonSync(filePath) as Config.ConfigFile;
-      this.debug('Loaded config %O', config);
-      this.project = config.project;
-      this.organization = config.organization;
-    }
+    await fse.writeJson(filePath, config);
   }
 
   /**
@@ -58,6 +45,20 @@ export class Config {
     if (!fs.existsSync(this.configDir)) {
       this.debug(`Creating ${this.configDir}`);
       fs.mkdirSync(this.configDir);
+    }
+  }
+
+  /**
+   * Load config file from disk
+   */
+  private load(): void {
+    const filePath = path.join(this.configDir, 'config.json');
+    if (fs.existsSync(filePath)) {
+      // Handling for malformed contents?
+      const config = fse.readJsonSync(filePath) as Config.ConfigFile;
+      this.debug('Loaded config %O', config);
+      this.project = config.project;
+      this.organization = config.organization;
     }
   }
 }
@@ -72,7 +73,7 @@ export namespace Config {
   }
 
   export interface ConfigFile {
-    project: Project;
     organization: organization;
+    project: Project;
   }
 }

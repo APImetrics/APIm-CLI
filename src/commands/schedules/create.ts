@@ -1,15 +1,14 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type Schedule = {
-  success: boolean;
   schedule: T.Schedule;
+  success: boolean;
 };
 
 export default class Create extends Command<Schedule> {
   static description = 'Create schedule.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `
 <%= config.bin %> <%= command.id %> --name "My Schedule" --interval 5m
@@ -17,6 +16,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
   ];
 
   static flags = {
+    'ignore-in-stats': Flags.integer({
+      description: 'Number of retries to ignore in failure statistics.',
+      min: 1,
+    }),
     interval: Flags.string({
       description: 'Schedule interval.',
       options: [
@@ -42,13 +45,28 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       ],
       required: true,
     }),
+    location: Flags.string({
+      description: 'Location to run calls from.',
+      multiple: true,
+    }),
+    'max-retries': Flags.integer({
+      description: 'Maximum number of retries to attempt.',
+      min: 1,
+    }),
     name: Flags.string({
       description: 'Name of schedule.',
       required: true,
     }),
-    'retry-method': Flags.string({
-      description: 'Algorithm for retries.',
-      options: ['fibonacci', 'exponential', 'constant'],
+    postman: Flags.boolean({
+      description: 'Only enable if you use the Postman Monitoring feature',
+    }),
+    'project-id': Flags.string({
+      char: 'p',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
+    }),
+    region: Flags.string({
+      description: 'Region to run calls from.',
+      multiple: true,
     }),
     'retry-base': Flags.integer({
       description: 'Base for exponential retry.',
@@ -62,34 +80,17 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       description: 'Wait X seconds between each retry.',
       min: 1,
     }),
-    'max-retries': Flags.integer({
-      description: 'Maximum number of retries to attempt.',
-      min: 1,
+    'retry-method': Flags.string({
+      description: 'Algorithm for retries.',
+      options: ['fibonacci', 'exponential', 'constant'],
     }),
     'skip-notifications': Flags.integer({
       description: 'Number of retries to attempt before sending notifications.',
       min: 1,
     }),
-    'ignore-in-stats': Flags.integer({
-      description: 'Number of retries to ignore in failure statistics.',
-      min: 1,
-    }),
-    postman: Flags.boolean({
-      description: 'Only enable if you use the Postman Monitoring feature',
-    }),
-    location: Flags.string({
-      description: 'Location to run calls from.',
-      multiple: true,
-    }),
-    region: Flags.string({
-      description: 'Region to run calls from.',
-      multiple: true,
-    }),
-    'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Create);
@@ -110,7 +111,7 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       schedule: {
         // eslint-disable-next-line camelcase
         backoff_method: null, // Set via tags
-        frequency: frequency,
+        frequency,
         locations: [] as string[],
         regions: [] as string[],
       },
@@ -121,10 +122,12 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
     }
 
     switch (flags['retry-method']) {
-      case 'fibonacci':
+      case 'fibonacci': {
         body.meta.tags.push('apimetrics:backoff:fibo');
         break;
-      case 'exponential':
+      }
+
+      case 'exponential': {
         body.meta.tags.push('apimetrics:backoff:expo');
         if (flags['retry-base']) {
           body.meta.tags.push(`apimetrics:backoff_base:${flags['retry-base']}`);
@@ -135,13 +138,16 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
         }
 
         break;
-      case 'constant':
+      }
+
+      case 'constant': {
         body.meta.tags.push('apimetrics:backoff:constant');
         if (flags['retry-interval']) {
           body.meta.tags.push(`apimetrics:backoff_interval:${flags['retry-interval']}`);
         }
 
         break;
+      }
     }
 
     if (flags['max-retries']) {
@@ -185,8 +191,8 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       }
     }
 
-    const schedule = await this.api.post<T.Schedule>('schedules/', {body: body});
+    const schedule = await this.api.post<T.Schedule>('schedules/', {body});
     this.log(schedule.id);
-    return {success: true, schedule: schedule};
+    return {schedule, success: true};
   }
 }

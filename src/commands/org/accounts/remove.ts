@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../../base-command';
 
 export default class Remove extends Command<{success: boolean}> {
@@ -9,21 +10,21 @@ export default class Remove extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'user-id': Flags.string({
-      description: 'ID or email of user to remove.',
-      char: 'u',
-      required: true,
-    }),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+    }),
+    'user-id': Flags.string({
+      char: 'u',
+      description: 'ID or email of user to remove.',
+      required: true,
     }),
   };
 
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Remove);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {

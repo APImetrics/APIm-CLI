@@ -7,9 +7,9 @@ const webhook = {
 };
 
 const meta = {
-  name: 'A Webhook',
-  include_tags: [],
   exclude_tags: [],
+  include_tags: [],
+  name: 'A Webhook',
 };
 
 describe('webhooks edit', () => {
@@ -20,8 +20,8 @@ describe('webhooks edit', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -34,8 +34,8 @@ describe('webhooks edit', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -49,27 +49,27 @@ describe('webhooks edit', () => {
         api
           .get('/api/2/webhooks/abc123')
           .reply(200, {
-            meta: meta,
+            meta,
             webhook: {
-              enabled: true,
               alerts: ['SLOW'],
-              type: 'email',
+              enabled: true,
               parameters: {
                 email_address: 'alice@example.com',
                 fails_in_a_row: '0',
               },
+              type: 'email',
             },
           })
           .post('/api/2/webhooks/abc123', {
-            meta: meta,
+            meta,
             webhook: {
-              enabled: true,
               alerts: ['FAIL'],
-              type: 'email',
+              enabled: true,
               parameters: {
                 email_address: 'alice@example.com',
                 fails_in_a_row: '0',
               },
+              type: 'email',
             },
           })
           .reply(200, webhook);
@@ -101,27 +101,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'email',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
             },
+            type: 'email',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'email',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
             },
+            type: 'email',
           },
         })
         .reply(200, webhook);
@@ -150,27 +150,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'email',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
             },
+            type: 'email',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'email',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
             },
+            type: 'email',
           },
         })
         .reply(200, webhook);
@@ -198,15 +198,15 @@ describe('webhooks edit', () => {
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
       api.get('/api/2/webhooks/abc123').reply(200, {
-        meta: meta,
+        meta,
         webhook: {
-          enabled: true,
           alerts: ['SLOW'],
-          type: 'email',
+          enabled: true,
           parameters: {
             email_address: 'alice@example.com',
             fails_in_a_row: '0',
           },
+          type: 'email',
         },
       });
     })
@@ -229,27 +229,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'email_text',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
             },
+            type: 'email_text',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'email_text',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
             },
+            type: 'email_text',
           },
         })
         .reply(200, webhook);
@@ -277,15 +277,15 @@ describe('webhooks edit', () => {
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
       api.get('/api/2/webhooks/abc123').reply(200, {
-        meta: meta,
+        meta,
         webhook: {
-          enabled: true,
           alerts: ['SLOW'],
-          type: 'email_text',
+          enabled: true,
           parameters: {
             email_address: 'alice@example.com',
             fails_in_a_row: '0',
           },
+          type: 'email_text',
         },
       });
     })
@@ -308,31 +308,31 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'email_template',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
               subject_template: 'abc',
               text_template: 'abc',
             },
+            type: 'email_template',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'email_template',
+            enabled: true,
             parameters: {
               email_address: 'alice@example.com',
               fails_in_a_row: '0',
               subject_template: 'abc',
               text_template: 'abc',
             },
+            type: 'email_template',
           },
         })
         .reply(200, webhook);
@@ -362,17 +362,17 @@ describe('webhooks edit', () => {
   bearerAuth
     .nock('https://client.apimetrics.io', (api) => {
       api.get('/api/2/webhooks/abc123').reply(200, {
-        meta: meta,
+        meta,
         webhook: {
-          enabled: true,
           alerts: ['SLOW'],
-          type: 'email_template',
+          enabled: true,
           parameters: {
             email_address: 'alice@example.com',
             fails_in_a_row: '0',
             subject_template: 'abc',
             text_template: 'abc',
           },
+          type: 'email_template',
         },
       });
     })
@@ -395,31 +395,31 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'generic',
+            enabled: true,
             parameters: {
+              fails_in_a_row: '0',
+              password: 'passw0rd',
               url: 'https://example.com/',
               username: 'bob',
-              password: 'passw0rd',
-              fails_in_a_row: '0',
             },
+            type: 'generic',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'generic',
+            enabled: true,
             parameters: {
+              fails_in_a_row: '0',
+              password: 'passw0rd',
               url: 'https://example.com/',
               username: 'bob',
-              password: 'passw0rd',
-              fails_in_a_row: '0',
             },
+            type: 'generic',
           },
         })
         .reply(200, webhook);
@@ -451,31 +451,31 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'generic',
+            enabled: true,
             parameters: {
+              fails_in_a_row: '0',
+              password: 'passw0rd',
               url: 'https://example.com/',
               username: 'bob',
-              password: 'passw0rd',
-              fails_in_a_row: '0',
             },
+            type: 'generic',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'generic',
+            enabled: true,
             parameters: {
+              fails_in_a_row: '0',
+              password: 'passw0rd',
               url: 'https://example.com/',
               username: 'bob',
-              password: 'passw0rd',
-              fails_in_a_row: '0',
             },
+            type: 'generic',
           },
         })
         .reply(200, webhook);
@@ -507,27 +507,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'apimetrics_api',
+            enabled: true,
             parameters: {
               call_id: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'apimetrics_api',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'apimetrics_api',
+            enabled: true,
             parameters: {
               call_id: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'apimetrics_api',
           },
         })
         .reply(200, webhook);
@@ -557,27 +557,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'apimetrics_workflow',
+            enabled: true,
             parameters: {
-              workflow_id: 'abc123',
               fails_in_a_row: '0',
+              workflow_id: 'abc123',
             },
+            type: 'apimetrics_workflow',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'apimetrics_workflow',
+            enabled: true,
             parameters: {
-              workflow_id: 'abc123',
               fails_in_a_row: '0',
+              workflow_id: 'abc123',
             },
+            type: 'apimetrics_workflow',
           },
         })
         .reply(200, webhook);
@@ -607,25 +607,25 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'apimetrics_token',
+            enabled: true,
             parameters: {
               token_id: 'abc123',
             },
+            type: 'apimetrics_token',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'apimetrics_token',
+            enabled: true,
             parameters: {
               token_id: 'abc123',
             },
+            type: 'apimetrics_token',
           },
         })
         .reply(200, webhook);
@@ -655,29 +655,29 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'slack',
+            enabled: true,
             parameters: {
-              url: 'https://hooks.slack.com/services/abc123',
               channel: 'abc123',
               fails_in_a_row: '0',
+              url: 'https://hooks.slack.com/services/abc123',
             },
+            type: 'slack',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'slack',
+            enabled: true,
             parameters: {
-              url: 'https://hooks.slack.com/services/abc123',
               channel: 'abc123',
               fails_in_a_row: '0',
+              url: 'https://hooks.slack.com/services/abc123',
             },
+            type: 'slack',
           },
         })
         .reply(200, webhook);
@@ -708,27 +708,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'pager_duty',
+            enabled: true,
             parameters: {
-              integration_key: 'abc123',
               fails_in_a_row: '0',
+              integration_key: 'abc123',
             },
+            type: 'pager_duty',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'pager_duty',
+            enabled: true,
             parameters: {
-              integration_key: 'abc123',
               fails_in_a_row: '0',
+              integration_key: 'abc123',
             },
+            type: 'pager_duty',
           },
         })
         .reply(200, webhook);
@@ -758,29 +758,29 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'pager_duty_v2',
+            enabled: true,
             parameters: {
+              fails_in_a_row: '0',
               integration_key: 'abc123',
               severity: 'critical',
-              fails_in_a_row: '0',
             },
+            type: 'pager_duty_v2',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'pager_duty_v2',
+            enabled: true,
             parameters: {
+              fails_in_a_row: '0',
               integration_key: 'abc123',
               severity: 'critical',
-              fails_in_a_row: '0',
             },
+            type: 'pager_duty_v2',
           },
         })
         .reply(200, webhook);
@@ -811,29 +811,29 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'big_panda',
+            enabled: true,
             parameters: {
-              user_key: 'abc123',
               app_key: 'def456',
               fails_in_a_row: '0',
+              user_key: 'abc123',
             },
+            type: 'big_panda',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'big_panda',
+            enabled: true,
             parameters: {
-              user_key: 'abc123',
               app_key: 'def456',
               fails_in_a_row: '0',
+              user_key: 'abc123',
             },
+            type: 'big_panda',
           },
         })
         .reply(200, webhook);
@@ -864,29 +864,29 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'victorops',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
-              routing_key: 'def456',
               fails_in_a_row: '0',
+              routing_key: 'def456',
             },
+            type: 'victorops',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'victorops',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
-              routing_key: 'def456',
               fails_in_a_row: '0',
+              routing_key: 'def456',
             },
+            type: 'victorops',
           },
         })
         .reply(200, webhook);
@@ -917,27 +917,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'hipchat',
+            enabled: true,
             parameters: {
-              url: 'https://example.hipchat.com/v2/room/123/notification?auth_token=456',
               fails_in_a_row: '0',
+              url: 'https://example.hipchat.com/v2/room/123/notification?auth_token=456',
             },
+            type: 'hipchat',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'hipchat',
+            enabled: true,
             parameters: {
-              url: 'https://example.hipchat.com/v2/room/123/notification?auth_token=456',
               fails_in_a_row: '0',
+              url: 'https://example.hipchat.com/v2/room/123/notification?auth_token=456',
             },
+            type: 'hipchat',
           },
         })
         .reply(200, webhook);
@@ -967,27 +967,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'msteams',
+            enabled: true,
             parameters: {
-              url: 'https://example.com/',
               fails_in_a_row: '0',
+              url: 'https://example.com/',
             },
+            type: 'msteams',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'msteams',
+            enabled: true,
             parameters: {
-              url: 'https://example.com/',
               fails_in_a_row: '0',
+              url: 'https://example.com/',
             },
+            type: 'msteams',
           },
         })
         .reply(200, webhook);
@@ -1017,29 +1017,29 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'newrelic',
+            enabled: true,
             parameters: {
-              app_key: 'abc123',
               api_key: 'def456',
+              app_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'newrelic',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'newrelic',
+            enabled: true,
             parameters: {
-              app_key: 'abc123',
               api_key: 'def456',
+              app_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'newrelic',
           },
         })
         .reply(200, webhook);
@@ -1070,21 +1070,21 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'darkspark',
+            enabled: true,
             parameters: {},
+            type: 'darkspark',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'darkspark',
+            enabled: true,
             parameters: {},
+            type: 'darkspark',
           },
         })
         .reply(200, webhook);
@@ -1113,27 +1113,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'datadog',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'datadog',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'datadog',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'datadog',
           },
         })
         .reply(200, webhook);
@@ -1163,27 +1163,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'datadogevent',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'datadogevent',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'datadogevent',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'datadogevent',
           },
         })
         .reply(200, webhook);
@@ -1213,31 +1213,31 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'statuspage',
+            enabled: true,
             parameters: {
-              page_id: 'abc123',
               api_key: 'def456',
               component_id: 'ghi789',
               fails_in_a_row: '0',
+              page_id: 'abc123',
             },
+            type: 'statuspage',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'statuspage',
+            enabled: true,
             parameters: {
-              page_id: 'abc123',
               api_key: 'def456',
               component_id: 'ghi789',
               fails_in_a_row: '0',
+              page_id: 'abc123',
             },
+            type: 'statuspage',
           },
         })
         .reply(200, webhook);
@@ -1269,27 +1269,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'flowdock',
+            enabled: true,
             parameters: {
-              flow_token: 'abc123',
               fails_in_a_row: '0',
+              flow_token: 'abc123',
             },
+            type: 'flowdock',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'flowdock',
+            enabled: true,
             parameters: {
-              flow_token: 'abc123',
               fails_in_a_row: '0',
+              flow_token: 'abc123',
             },
+            type: 'flowdock',
           },
         })
         .reply(200, webhook);
@@ -1319,27 +1319,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'opsgenie',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'opsgenie',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'opsgenie',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'opsgenie',
           },
         })
         .reply(200, webhook);
@@ -1369,27 +1369,27 @@ describe('webhooks edit', () => {
       api
         .get('/api/2/webhooks/abc123')
         .reply(200, {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['SLOW'],
-            type: 'opsgenieeu',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'opsgenieeu',
           },
         })
         .post('/api/2/webhooks/abc123', {
-          meta: meta,
+          meta,
           webhook: {
-            enabled: true,
             alerts: ['FAIL'],
-            type: 'opsgenieeu',
+            enabled: true,
             parameters: {
               api_key: 'abc123',
               fails_in_a_row: '0',
             },
+            type: 'opsgenieeu',
           },
         })
         .reply(200, webhook);
