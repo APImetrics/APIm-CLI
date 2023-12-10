@@ -37,6 +37,7 @@ export abstract class Command<T> extends Base {
       baseFlags: (super.ctor as typeof Command).baseFlags,
       args: this.ctor.args,
       strict: this.ctor.strict,
+      enableJsonFlag: this.ctor.enableJsonFlag,
     });
     this.flags = flags as Flags<T>;
     this.args = args as Args<T>;
