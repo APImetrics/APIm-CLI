@@ -1,4 +1,3 @@
- 
 export type Downtime = {
   id: string;
   meta: {

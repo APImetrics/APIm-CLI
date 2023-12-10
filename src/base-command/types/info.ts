@@ -1,4 +1,3 @@
- 
 export type Info = {
   agent_list: {
     id: string;

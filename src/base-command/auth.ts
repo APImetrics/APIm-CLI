@@ -10,24 +10,17 @@ import {T} from '.';
 
 interface DeviceCodeRes {
   device_code: string;
-
   expires_in: number;
-
   interval: number;
-
   user_code: string;
   verification_uri: string;
-
   verification_uri_complete: string;
 }
 
 interface TokenRes {
   access_token: string;
-
   expires_in: number;
-
   refresh_token: string;
-
   token_type: string;
 }
 
@@ -37,16 +30,12 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export class Auth {
   /** Is the user considered to be logged in? */
   public loggedIn = false;
-
   private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
-
   private codeUrl =
     process.env.APIMETRICS_CODE_URL || 'https://auth.apimetrics.io/oauth/device/code';
 
   private configDir: string;
-
   private debug = debug('api');
-
   private revokeUrl =
     process.env.APIMETRICS_REVOKE_URL || 'https://auth.apimetrics.io/oauth/revoke';
 

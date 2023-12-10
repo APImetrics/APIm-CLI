@@ -1,4 +1,3 @@
- 
 export type Invite = {
   access_level: string;
   created: string;

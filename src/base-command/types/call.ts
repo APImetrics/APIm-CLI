@@ -1,4 +1,3 @@
- 
 export type Call = {
   id: string;
   meta: {

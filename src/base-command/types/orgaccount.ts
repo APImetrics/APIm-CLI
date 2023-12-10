@@ -1,4 +1,3 @@
- 
 export type OrgAccount = {
   app_metadata?: Record<string, unknown>;
   authenticationmethod?: string;

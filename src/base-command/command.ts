@@ -25,7 +25,6 @@ export abstract class Command<T> extends Base {
   static enableJsonFlag = true;
 
   protected api!: Api;
-
   protected args!: Args<T>;
   protected flags!: Flags<T>;
   protected permitKeyAuth = false;

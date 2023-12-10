@@ -1,4 +1,3 @@
- 
 export type Access = {
   access_level: string;
   account_email: string;

@@ -1,4 +1,3 @@
- 
 export type Schedule = {
   id?: string;
   meta: {

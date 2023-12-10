@@ -1,4 +1,3 @@
- 
 export type Workflow = {
   id?: string;
   meta: {

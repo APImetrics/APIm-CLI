@@ -1,4 +1,3 @@
- 
 export type UserProjects = {
   meta: {
     account_id: boolean;

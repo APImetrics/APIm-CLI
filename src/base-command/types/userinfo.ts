@@ -1,4 +1,3 @@
- 
 export type UserInfo = {
   email: string;
   email_verified: string;

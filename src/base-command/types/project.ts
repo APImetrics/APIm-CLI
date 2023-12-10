@@ -1,4 +1,3 @@
- 
 export type Project = {
   created: string;
   id: string;
