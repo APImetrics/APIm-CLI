@@ -40,33 +40,36 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: Record<string, {title: string; value: any}> = {
-      currentOrg: {
-        title: 'Current Organization',
-        value: this.userConfig.organization.current || '',
-      },
-      currentProjectID: {
-        title: 'Current Project ID',
-        value: this.userConfig.project.current || '',
-      },
-      currentProjectName: {
-        title: 'Current Project Name',
-        value: projectName || '',
-      },
-      email: {
-        title: 'Email',
-        value: userinfo.email,
-      },
       id: {
         title: 'ID',
         value: userinfo.sub,
+      },
+      name: {
+        title: 'Name',
+        value: userinfo.nickname,
+      },
+      // eslint-disable-next-line perfectionist/sort-objects
+      email: {
+        title: 'Email',
+        value: userinfo.email,
       },
       mfa: {
         title: 'MFA enabled',
         value: userinfo['https://client.apimetrics.io/use_mfa'],
       },
-      name: {
-        title: 'Name',
-        value: userinfo.nickname,
+      // eslint-disable-next-line perfectionist/sort-objects
+      currentOrg: {
+        title: 'Current Organization',
+        value: this.userConfig.organization.current || '',
+      },
+      currentProjectName: {
+        title: 'Current Project Name',
+        value: projectName || '',
+      },
+      // eslint-disable-next-line perfectionist/sort-objects
+      currentProjectID: {
+        title: 'Current Project ID',
+        value: this.userConfig.project.current || '',
       },
     };
 
