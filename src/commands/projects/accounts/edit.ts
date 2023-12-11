@@ -53,11 +53,13 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
   public async run(): Promise<{success: boolean; warnings?: string[]}> {
     const {flags} = await this.parse(Edit);
 
-    const response = await this.api.get<T.Project>('project/');
-    const orgId =
-      flags['project-id'] && flags['project-id'] !== this.api.project
-        ? response.org_id
-        : this.userConfig.organization.current;
+    let orgId: string | undefined;
+    if (flags['project-id'] && flags['project-id'] !== this.api.project) {
+      const response = await this.api.get<T.Project>('project/');
+      orgId = response.org_id;
+    } else {
+      orgId = this.userConfig.organization.current;
+    }
 
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
