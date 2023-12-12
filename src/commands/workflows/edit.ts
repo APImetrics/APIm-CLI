@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../base-command';
 
 export type WorkflowResponse = {
@@ -8,27 +9,47 @@ export type WorkflowResponse = {
 
 export default class Edit extends Command<WorkflowResponse> {
   static description = 'Edit a workflow.';
-  protected permitKeyAuth = true;
-
   static examples = [
     '<%= config.bin %> <%= command.id %> --workflow-id=ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA',
   ];
 
   static flags = {
-    'workflow-id': Flags.string({
-      description: 'Workflow to edit.',
-      required: true,
+    'add-call': Flags.string({
+      description:
+        'ID and index of call to add in a comma seperated format. To add to end, use index -1. E.g --add-call=abc123,0 to add call abc123 to start.',
+      multiple: true,
+    }),
+    'add-tag': Flags.string({description: 'Tag to add to workflow.', multiple: true}),
+    description: Flags.string({description: 'Description for this workflow.'}),
+    'handle-cookies': Flags.boolean({default: false, description: 'Handle cookies'}),
+    'ignore-in-stats': Flags.integer({
+      description: 'Number of retries to ignore in failure statistics.',
+      min: 1,
+    }),
+    location: Flags.string({description: 'Only run calls from this location.'}),
+    'max-retries': Flags.integer({
+      description: 'Maximum number of retries to attempt.',
+      min: 1,
     }),
     name: Flags.string({description: 'Name for workflow.'}),
-    description: Flags.string({description: 'Description for this workflow.'}),
-    retry: Flags.boolean({
-      description: 'Should retry be enabled?',
-      default: true,
-      allowNo: true,
+    'no-handle-cookies': Flags.boolean({default: false, description: "Don't handle cookies"}),
+    'no-location': Flags.boolean({description: 'Do not limit calls to a single location.'}),
+    'no-parallel': Flags.boolean({description: 'Disable parallel execution.'}),
+    'no-show-as-action': Flags.boolean({
+      default: false,
+      description: "Don't show on project home page as action.",
     }),
-    'retry-method': Flags.string({
-      description: 'Algorithm for retries.',
-      options: ['fibonacci', 'exponential', 'constant', 'never'],
+    'no-stop-on-failure': Flags.boolean({
+      default: false,
+      description: "Don't stop on a failed call.",
+    }),
+    parallel: Flags.boolean({description: 'Allow parallel execution.'}),
+    'remove-call': Flags.integer({description: 'Index of call to remove.', multiple: true}),
+    'remove-tag': Flags.string({description: 'Tag to remove from workflow.', multiple: true}),
+    retry: Flags.boolean({
+      allowNo: true,
+      default: true,
+      description: 'Should retry be enabled?',
     }),
     'retry-base': Flags.integer({
       description: 'Base for exponential retry.',
@@ -42,46 +63,26 @@ export default class Edit extends Command<WorkflowResponse> {
       description: 'Wait X seconds between each retry.',
       min: 1,
     }),
-    'max-retries': Flags.integer({
-      description: 'Maximum number of retries to attempt.',
-      min: 1,
+    'retry-method': Flags.string({
+      description: 'Algorithm for retries.',
+      options: ['fibonacci', 'exponential', 'constant', 'never'],
+    }),
+    'show-as-action': Flags.boolean({
+      default: false,
+      description: 'Show on project home page as action.',
     }),
     'skip-notifications': Flags.integer({
       description: 'Number of retries to attempt before sending notifications.',
       min: 1,
     }),
-    'ignore-in-stats': Flags.integer({
-      description: 'Number of retries to ignore in failure statistics.',
-      min: 1,
+    'stop-on-failure': Flags.boolean({default: false, description: 'Stop on a failed call'}),
+    'workflow-id': Flags.string({
+      description: 'Workflow to edit.',
+      required: true,
     }),
-    location: Flags.string({description: 'Only run calls from this location.'}),
-    'no-location': Flags.boolean({description: 'Do not limit calls to a single location.'}),
-    'show-as-action': Flags.boolean({
-      description: 'Show on project home page as action.',
-      default: false,
-    }),
-    'no-show-as-action': Flags.boolean({
-      description: "Don't show on project home page as action.",
-      default: false,
-    }),
-    parallel: Flags.boolean({description: 'Allow parallel execution.'}),
-    'no-parallel': Flags.boolean({description: 'Disable parallel execution.'}),
-    'add-tag': Flags.string({description: 'Tag to add to workflow.', multiple: true}),
-    'remove-tag': Flags.string({description: 'Tag to remove from workflow.', multiple: true}),
-    'add-call': Flags.string({
-      description:
-        'ID and index of call to add in a comma seperated format. To add to end, use index -1. E.g --add-call=abc123,0 to add call abc123 to start.',
-      multiple: true,
-    }),
-    'remove-call': Flags.integer({description: 'Index of call to remove.', multiple: true}),
-    'stop-on-failure': Flags.boolean({description: 'Stop on a failed call', default: false}),
-    'no-stop-on-failure': Flags.boolean({
-      description: "Don't stop on a failed call.",
-      default: false,
-    }),
-    'handle-cookies': Flags.boolean({description: 'Handle cookies', default: false}),
-    'no-handle-cookies': Flags.boolean({description: "Don't handle cookies", default: false}),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<WorkflowResponse> {
     const {flags} = await this.parse(Edit);
@@ -150,7 +151,7 @@ export default class Edit extends Command<WorkflowResponse> {
 
     if (flags.retry) {
       switch (flags['retry-method']) {
-        case 'fibonacci':
+        case 'fibonacci': {
           addTags.push('apimetrics:backoff:fibo');
           removeTags.push(
             'apimetrics:backoff:expo',
@@ -158,7 +159,9 @@ export default class Edit extends Command<WorkflowResponse> {
             'apimetrics:backoff:none'
           );
           break;
-        case 'exponential':
+        }
+
+        case 'exponential': {
           addTags.push('apimetrics:backoff:expo');
           removeTags.push(
             'apimetrics:backoff:fibo',
@@ -166,7 +169,9 @@ export default class Edit extends Command<WorkflowResponse> {
             'apimetrics:backoff:none'
           );
           break;
-        case 'constant':
+        }
+
+        case 'constant': {
           addTags.push('apimetrics:backoff:constant');
           removeTags.push(
             'apimetrics:backoff:fibo',
@@ -174,13 +179,16 @@ export default class Edit extends Command<WorkflowResponse> {
             'apimetrics:backoff:none'
           );
           break;
-        case 'never':
+        }
+
+        case 'never': {
           addTags.push('apimetrics:backoff:none');
           removeTags.push(
             'apimetrics:backoff:fibo',
             'apimetrics:backoff:expo',
             'apimetrics:backoff:constant'
           );
+        }
       }
     } else {
       removeTags.push(
@@ -342,6 +350,6 @@ export default class Edit extends Command<WorkflowResponse> {
     workflow = await this.api.post<T.Workflow>(`workflows/${flags['workflow-id']}/`, {
       body: workflow,
     });
-    return {success: true, workflow: workflow};
+    return {success: true, workflow};
   }
 }

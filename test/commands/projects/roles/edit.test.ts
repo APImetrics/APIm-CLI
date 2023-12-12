@@ -15,24 +15,24 @@ const access = {
   meta: {},
   results: [
     {
-      role_id: 'A_ROLE',
       access_level: 'OWNER',
       id: 'role1',
+      role_id: 'A_ROLE',
     },
     {
-      role_id: 'A_ROLE',
       access_level: 'EDITOR',
       id: 'role2',
+      role_id: 'A_ROLE',
     },
     {
-      role_id: 'A_ROLE',
       access_level: 'ANALYST',
       id: 'role3',
+      role_id: 'A_ROLE',
     },
     {
-      role_id: 'A_ROLE',
       access_level: 'VIEWER',
       id: 'role4',
+      role_id: 'A_ROLE',
     },
   ],
 };
@@ -45,8 +45,8 @@ describe('project roles edit', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})

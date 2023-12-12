@@ -6,72 +6,72 @@ const accessResponse = {
   meta: {},
   results: [
     {
-      project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
-        created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
-        id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
-        last_update: '2023-08-03T19:02:42.591193Z',
-      },
       access_level: 'VIEWER',
       account_email: 'bob@example.com',
+      account_id: 'auth0|mynameisbob',
       created: '2023-08-03T15:38:30.206605Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4NXQ68MIDA',
-      account_id: 'auth0|mynameisbob',
       last_update: '2023-08-03T15:38:30.206611Z',
-    },
-    {
       project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
         created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
         id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
         last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
       },
+    },
+    {
       access_level: 'VIEWER',
       account_email: 'alice@example.com',
+      account_id: 'auth0|647ljfdgdnhnfjsgzbfdjgjbsnvknsh',
       created: '2023-08-03T15:36:36.746294Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4NWnwe4JDA',
-      account_id: 'auth0|647ljfdgdnhnfjsgzbfdjgjbsnvknsh',
       last_update: '2023-08-03T15:36:36.746301Z',
-    },
-    {
       project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
         created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
         id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
         last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
       },
+    },
+    {
       access_level: 'VIEWER',
       account_email: 'dave@example.com',
+      account_id: 'auth0|647ljfdgdnhnfjsgzbfdjgjbsnvknsh',
       created: '2023-08-03T15:35:09.014425Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4LX4hb4KDA',
-      account_id: 'auth0|647ljfdgdnhnfjsgzbfdjgjbsnvknsh',
       last_update: '2023-08-03T15:35:09.014433Z',
-    },
-    {
       project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
         created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
         id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
         last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
       },
+    },
+    {
       access_level: 'VIEWER',
       account_email: 'charlotte@example.com',
+      account_id: 'auth0|abc123',
       created: '2023-08-03T15:36:49.567772Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4KX0xcgKDA',
-      account_id: 'auth0|abc123',
       last_update: '2023-08-03T15:36:49.567778Z',
+      project: {
+        created: '2015-09-23T21:16:48Z',
+        id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
+        last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
+      },
     },
   ],
 };
@@ -84,8 +84,8 @@ describe('project accounts', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -101,20 +101,20 @@ describe('project accounts', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
+          accessLevel: 'VIEWER',
           email: 'bob@example.com',
-          accessLevel: 'VIEWER',
         },
         {
+          accessLevel: 'VIEWER',
           email: 'alice@example.com',
-          accessLevel: 'VIEWER',
         },
         {
+          accessLevel: 'VIEWER',
           email: 'dave@example.com',
-          accessLevel: 'VIEWER',
         },
         {
-          email: 'charlotte@example.com',
           accessLevel: 'VIEWER',
+          email: 'charlotte@example.com',
         },
       ]);
     });
@@ -129,20 +129,20 @@ describe('project accounts', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
+          accessLevel: 'VIEWER',
           email: 'bob@example.com',
-          accessLevel: 'VIEWER',
         },
         {
+          accessLevel: 'VIEWER',
           email: 'alice@example.com',
-          accessLevel: 'VIEWER',
         },
         {
+          accessLevel: 'VIEWER',
           email: 'dave@example.com',
-          accessLevel: 'VIEWER',
         },
         {
-          email: 'charlotte@example.com',
           accessLevel: 'VIEWER',
+          email: 'charlotte@example.com',
         },
       ]);
     });

@@ -41,8 +41,8 @@ describe('auth login', () => {
     .it('API key login (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         message: 'Logged in using API key',
+        success: true,
       });
     });
   auth
@@ -54,8 +54,8 @@ describe('auth login', () => {
     .it('API key login with --key of length 31 (want 32) (--json)', (ctx) => {
       const output = JSON.parse(ctx.stderr);
       expect(output).to.deep.contain({
-        success: false,
         message: 'API key is malformed. Expected 32 characters, got 31',
+        success: false,
       });
     });
   auth
@@ -83,8 +83,8 @@ describe('auth login', () => {
     .it('Device flow authentication passing --json flag', (ctx) => {
       const output = JSON.parse(ctx.stderr);
       expect(output).to.deep.contain({
-        success: false,
         message: 'Cannot use --json with device flow authentication. Use --key instead.',
+        success: false,
       });
     });
 });

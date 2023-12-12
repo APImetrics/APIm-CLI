@@ -1,9 +1,4 @@
-import {Command} from './command';
-import {Auth} from './auth';
-import * as APITypes from './types';
-import * as util from './util';
-export {Auth};
-export {Command};
-export {APITypes as T};
-export {util};
-export default Command;
+export {Auth} from './auth';
+export {Command, Command as default} from './command';
+export * as T from './types';
+export * as util from './util';

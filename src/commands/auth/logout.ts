@@ -1,8 +1,8 @@
 import {Command} from '../../base-command';
 
 export type LogoutJson = {
-  success: boolean;
   message: string;
+  success: boolean;
 };
 
 export default class Logout extends Command<LogoutJson> {
@@ -13,6 +13,6 @@ export default class Logout extends Command<LogoutJson> {
   public async run(): Promise<LogoutJson> {
     await this.api.logout();
     this.log('Logged out');
-    return {success: true, message: 'Logged out'};
+    return {message: 'Logged out', success: true};
   }
 }
