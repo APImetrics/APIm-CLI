@@ -1,15 +1,14 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type CallList = {
-  success: boolean;
   calls: T.Call[];
+  success: boolean;
 };
 
 export default class Calls extends Command<CallList> {
   static description = 'List calls on the schedule.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %> --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA
 Name   Description Method URL
@@ -20,15 +19,17 @@ Apples             GET    https://example.com/apples`,
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
       char: 'p',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
     }),
     'schedule-id': Flags.string({
-      description: 'ID of schedule to read.',
       char: 's',
+      description: 'ID of schedule to read.',
       required: true,
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<CallList> {
     const {flags} = await this.parse(Calls);
@@ -47,38 +48,38 @@ Apples             GET    https://example.com/apples`,
     ux.table(
       calls,
       {
-        name: {
-          get: (row) => row.meta.name,
+        accept: {
+          extended: true,
+          get: (row) => row.meta.accept,
+        },
+        auth: {
+          extended: true,
+          get: (row) => row.request.auth_id,
         },
         description: {
           get: (row) => row.meta.description || '',
         },
+        domain: {
+          extended: true,
+          get: (row) => row.meta.domain,
+        },
+        id: {
+          extended: true,
+          header: 'ID',
+        },
         method: {
           get: (row) => row.request.method,
         },
-        url: {
-          header: 'URL',
-          get: (row) => row.request.url,
-        },
-        id: {
-          header: 'ID',
-          extended: true,
+        name: {
+          get: (row) => row.meta.name,
         },
         tags: {
+          extended: true,
           get: (row) => row.meta.tags.join(', '),
-          extended: true,
         },
-        domain: {
-          get: (row) => row.meta.domain,
-          extended: true,
-        },
-        auth: {
-          get: (row) => row.request.auth_id,
-          extended: true,
-        },
-        accept: {
-          get: (row) => row.meta.accept,
-          extended: true,
+        url: {
+          get: (row) => row.request.url,
+          header: 'URL',
         },
       },
       {
@@ -86,6 +87,6 @@ Apples             GET    https://example.com/apples`,
         ...flags,
       }
     );
-    return {success: true, calls: calls};
+    return {calls, success: true};
   }
 }

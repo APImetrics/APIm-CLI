@@ -1,9 +1,10 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type AccountList = {
-  success: boolean;
   accounts: T.OrgAccount[];
+  success: boolean;
 };
 
 export default class Accounts extends Command<AccountList> {
@@ -25,15 +26,15 @@ Bob               auth0|zyxwvutsrqponmlkjihgfedc`,
   static flags = {
     ...ux.table.flags(),
     'org-id': Flags.string({
-      description: 'ID of organization to read. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to read. Overrides apimetrics config org set.',
     }),
   };
 
   public async run(): Promise<AccountList> {
     const {flags} = await this.parse(Accounts);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {
@@ -48,14 +49,33 @@ Bob               auth0|zyxwvutsrqponmlkjihgfedc`,
     ux.table(
       accounts,
       {
-        name: {
-          get: (row) => row.name,
-        },
         email: {
           get: (row) => row.email,
         },
+        id: {
+          extended: true,
+          get: (row) => row.user_id,
+          header: 'ID',
+        },
+        lastLogin: {
+          get: (row) => row.last_login,
+          header: 'Last Login',
+        },
+        lastLoginIP: {
+          extended: true,
+          get: (row) => row.last_ip,
+          header: 'Login IP',
+        },
+        loginCount: {
+          extended: true,
+          get: (row) => row.logins_count,
+          header: 'Login Count',
+        },
+        name: {
+          get: (row) => row.name,
+        },
         roles: {
-          get: (row) => {
+          get(row) {
             // The location of permissions is not consistent, hence we need
             // to check a couple of different places
             if (row.app_metadata) {
@@ -78,31 +98,12 @@ Bob               auth0|zyxwvutsrqponmlkjihgfedc`,
             return '';
           },
         },
-        lastLogin: {
-          header: 'Last Login',
-          get: (row) => row.last_login,
-        },
-        lastLoginIP: {
-          header: 'Login IP',
-          get: (row) => row.last_ip,
-          extended: true,
-        },
-        loginCount: {
-          header: 'Login Count',
-          get: (row) => row.logins_count,
-          extended: true,
-        },
-        id: {
-          header: 'ID',
-          get: (row) => row.user_id,
-          extended: true,
-        },
       },
       {
         printLine: this.log.bind(this),
         ...flags,
       }
     );
-    return {success: true, accounts: accounts};
+    return {accounts, success: true};
   }
 }

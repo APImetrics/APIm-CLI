@@ -6,40 +6,40 @@ const accountResponse = {
   meta: {},
   results: [
     {
-      name: 'qcmetrics',
-      roles: ['ADMIN'],
-      created: '2023-07-15T18:32:41.626327Z',
-      invited_by: 'auth0|1234567890',
-      last_update: '2023-07-15T18:32:41.626336Z',
       access_level: 'VIEWER',
+      created: '2023-07-15T18:32:41.626327Z',
       email: 'jane@example.com',
       id: 'hij789',
-      project_id: 'abc123',
+      invited_by: 'auth0|1234567890',
       invited_email: 'bob@example.com',
+      last_update: '2023-07-15T18:32:41.626336Z',
+      name: 'qcmetrics',
+      project_id: 'abc123',
+      roles: ['ADMIN'],
     },
     {
-      name: 'qcmetrics',
-      roles: [],
-      created: '2023-07-15T18:34:27.044198Z',
-      invited_by: 'auth0|1234567890',
-      last_update: '2023-07-15T18:34:27.044204Z',
       access_level: 'VIEWER',
+      created: '2023-07-15T18:34:27.044198Z',
       email: 'john@example.com',
       id: 'efg456',
-      project_id: 'abc123',
+      invited_by: 'auth0|1234567890',
       invited_email: 'bob@example.com',
+      last_update: '2023-07-15T18:34:27.044204Z',
+      name: 'qcmetrics',
+      project_id: 'abc123',
+      roles: [],
     },
     {
-      name: 'qcmetrics',
-      roles: ['DEV_TEAM', 'TEST_ROLE'],
-      created: '2023-07-15T18:31:33.918614Z',
-      invited_by: 'auth0|1234567890',
-      last_update: '2023-07-15T18:31:33.918621Z',
       access_level: 'VIEWER',
+      created: '2023-07-15T18:31:33.918614Z',
       email: 'alice@example.com',
       id: 'abc123',
-      project_id: 'abc123',
+      invited_by: 'auth0|1234567890',
       invited_email: 'bob@example.com',
+      last_update: '2023-07-15T18:31:33.918621Z',
+      name: 'qcmetrics',
+      project_id: 'abc123',
+      roles: ['DEV_TEAM', 'TEST_ROLE'],
     },
   ],
 };
@@ -52,8 +52,8 @@ describe('projects invites', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -66,8 +66,8 @@ describe('projects invites', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -83,19 +83,19 @@ describe('projects invites', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          email: 'jane@example.com',
+          accessLevel: 'VIEWER',
           created: '2023-07-15T18:32:41.626327Z',
-          accessLevel: 'VIEWER',
+          email: 'jane@example.com',
         },
         {
-          email: 'john@example.com',
+          accessLevel: 'VIEWER',
           created: '2023-07-15T18:34:27.044198Z',
-          accessLevel: 'VIEWER',
+          email: 'john@example.com',
         },
         {
-          email: 'alice@example.com',
-          created: '2023-07-15T18:31:33.918614Z',
           accessLevel: 'VIEWER',
+          created: '2023-07-15T18:31:33.918614Z',
+          email: 'alice@example.com',
         },
       ]);
     });
@@ -110,19 +110,19 @@ describe('projects invites', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          email: 'jane@example.com',
+          accessLevel: 'VIEWER',
           created: '2023-07-15T18:32:41.626327Z',
-          accessLevel: 'VIEWER',
+          email: 'jane@example.com',
         },
         {
-          email: 'john@example.com',
+          accessLevel: 'VIEWER',
           created: '2023-07-15T18:34:27.044198Z',
-          accessLevel: 'VIEWER',
+          email: 'john@example.com',
         },
         {
-          email: 'alice@example.com',
-          created: '2023-07-15T18:31:33.918614Z',
           accessLevel: 'VIEWER',
+          created: '2023-07-15T18:31:33.918614Z',
+          email: 'alice@example.com',
         },
       ]);
     });

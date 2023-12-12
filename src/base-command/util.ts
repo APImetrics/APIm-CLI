@@ -33,13 +33,13 @@ export function replaceHeader(
   const i = headers.findIndex((value) => value.key.toLowerCase() === key.toLowerCase());
   if (i >= 0) {
     headers[i] = {
-      key: key,
-      value: value,
+      key,
+      value,
     };
   } else {
     headers.push({
-      key: key,
-      value: value,
+      key,
+      value,
     });
   }
 

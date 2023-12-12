@@ -1,37 +1,38 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type Downtime = {
-  success: boolean;
   downtime: T.Downtime;
+  success: boolean;
 };
 
 export default class Create extends Command<Downtime> {
   static description = 'Edit downtime.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `
 <%= config.bin %> <%= command.id %> --downtime-id pPbCtcWNyMwsSDU --start 2023-07-21T18:32:00Z --end 2023-07-21T19:32:00Z`,
   ];
 
   static flags = {
-    start: Flags.string({
-      description:
-        'Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).',
-    }),
-    end: Flags.string({
-      description: 'Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).',
-    }),
     'downtime-id': Flags.string({
       description: 'ID of downtime to edit.',
       required: true,
+    }),
+    end: Flags.string({
+      description: 'Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).',
     }),
     repeat: Flags.string({
       description: 'Repeat this downtime at the set interval.',
       options: ['daily', 'weekly', 'off'],
     }),
+    start: Flags.string({
+      description:
+        'Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).',
+    }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<Downtime> {
     const {flags} = await this.parse(Create);
@@ -43,12 +44,15 @@ export default class Create extends Command<Downtime> {
     let repeat = 0;
     if (flags.repeat) {
       switch (flags.repeat) {
-        case 'daily':
+        case 'daily': {
           repeat = 1;
           break;
-        case 'weekly':
+        }
+
+        case 'weekly': {
           repeat = 7;
           break;
+        }
       }
     } else {
       repeat = downtime.repeat_days;
@@ -100,12 +104,12 @@ export default class Create extends Command<Downtime> {
 
     const body: T.Downtime['schedule'] = {
       // eslint-disable-next-line camelcase
-      start_time: start.toISOString(),
-      // eslint-disable-next-line camelcase
       end_time: end.toISOString(),
-      repeated: Boolean(repeat),
       // eslint-disable-next-line camelcase
       repeat_days: repeat,
+      repeated: Boolean(repeat),
+      // eslint-disable-next-line camelcase
+      start_time: start.toISOString(),
     };
 
     const updatedDowntime = await this.api.post<T.Downtime>(
@@ -114,6 +118,6 @@ export default class Create extends Command<Downtime> {
         body: {downtime: body},
       }
     );
-    return {success: true, downtime: updatedDowntime};
+    return {downtime: updatedDowntime, success: true};
   }
 }

@@ -1,19 +1,18 @@
-/* eslint-disable camelcase */
 export type Access = {
-  project: {
-    name: string;
-    tags: string[];
-    system_tags: string[];
-    created: string;
-    org_id: string;
-    id: string;
-    last_update: string;
-  };
   access_level: string;
   account_email: string;
+  account_id?: string;
   created: string;
   id: string;
-  account_id?: string;
-  role_id?: string;
   last_update: string;
+  project: {
+    created: string;
+    id: string;
+    last_update: string;
+    name: string;
+    org_id: string;
+    system_tags: string[];
+    tags: string[];
+  };
+  role_id?: string;
 };

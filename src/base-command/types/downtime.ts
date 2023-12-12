@@ -1,16 +1,15 @@
-/* eslint-disable camelcase */
 export type Downtime = {
+  id: string;
   meta: {
-    project_id: string;
-    schedule_id: string;
     created: string;
     last_update: string;
+    project_id: string;
+    schedule_id: string;
   };
   schedule: {
-    repeat_days: number;
-    start_time: string;
     end_time: string;
+    repeat_days: number;
     repeated: boolean;
+    start_time: string;
   };
-  id: string;
 };

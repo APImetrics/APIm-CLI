@@ -1,11 +1,12 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
-import * as inquirer from 'inquirer';
 import {HTTPError} from 'http-call';
+import * as inquirer from 'inquirer';
+
+import {Command, T} from '../../../base-command';
 
 export type SetProjectJson = {
-  success: boolean;
   message: string;
+  success: boolean;
 };
 
 export default class Set extends Command<SetProjectJson> {
@@ -15,8 +16,8 @@ export default class Set extends Command<SetProjectJson> {
 
   static flags = {
     'project-id': Flags.string({
-      description: 'ID of project to switch to',
       char: 'p',
+      description: 'ID of project to switch to',
     }),
   };
 
@@ -39,7 +40,7 @@ export default class Set extends Command<SetProjectJson> {
       this.userConfig.project.current = flags['project-id'];
       await this.userConfig.save();
 
-      return {success: true, message: 'Set current project'};
+      return {message: 'Set current project', success: true};
     }
 
     if (flags.json) {
@@ -52,13 +53,13 @@ export default class Set extends Command<SetProjectJson> {
       throw new Error('Please select an organization first');
     }
 
-    const availableProjects = await this.api.get<any>('account/projects');
+    const availableProjects = await this.api.get<T.UserProjects>('account/projects');
     const projects: {name: string; value: string}[] = [];
-    for (const key of Object.keys(availableProjects.projects)) {
-      if (availableProjects.projects[key].project.org_id === this.userConfig.organization.current) {
+    for (const project of availableProjects.projects) {
+      if (project.project.org_id === this.userConfig.organization.current) {
         projects.push({
-          name: `${availableProjects.projects[key].project.name} (${availableProjects.projects[key].project.id})`,
-          value: availableProjects.projects[key].project.id,
+          name: `${project.project.name} (${project.project.id})`,
+          value: project.project.id,
         });
       }
     }
@@ -66,23 +67,23 @@ export default class Set extends Command<SetProjectJson> {
     if (projects.length === 0) {
       this.warn('No projects accessible in organization. Please create a project first.');
       return {
-        success: false,
         message: 'No projects accessible in organization. Please create a project first.',
+        success: false,
       };
     }
 
     const response = await inquirer.prompt([
       {
-        name: 'project',
-        message: 'Select a project',
-        type: 'list',
         choices: projects,
+        message: 'Select a project',
+        name: 'project',
+        type: 'list',
       },
     ]);
 
     this.userConfig.project.current = response.project;
     await this.userConfig.save();
 
-    return {success: true, message: 'Set current project'};
+    return {message: 'Set current project', success: true};
   }
 }

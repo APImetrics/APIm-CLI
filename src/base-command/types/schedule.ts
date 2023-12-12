@@ -1,19 +1,18 @@
-/* eslint-disable camelcase */
 export type Schedule = {
+  id?: string;
   meta: {
-    name: string;
     created?: string;
-    tags: string[];
     last_update?: string;
+    name: string;
     owner?: string;
     project_id: string;
+    tags: string[];
   };
   schedule: {
-    regions: string[];
+    backoff_method: null | string;
     frequency: number;
     locations: string[];
+    regions: string[];
     target_ids: string[];
-    backoff_method: string | null;
   };
-  id?: string;
 };

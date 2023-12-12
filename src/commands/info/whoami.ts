@@ -3,17 +3,15 @@ import {Command, T} from '../../base-command';
 export type WhoamiResponse = {
   success: boolean;
   whoami: {
-    id: string;
-    name: string;
-    email: string;
-    mfa: boolean;
-    // eslint-disable-next-line camelcase
     current_org: string;
-    // eslint-disable-next-line camelcase
     current_project: {
-      name: string;
       id: string;
+      name: string;
     };
+    email: string;
+    id: string;
+    mfa: boolean;
+    name: string;
   };
 };
 
@@ -36,9 +34,11 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
     let projectName: string | undefined;
 
     if (this.userConfig.project.current) {
-      projectName = (await this.api.get<T.Project>(`projects/${this.api.project}`)).name;
+      const response = await this.api.get<T.Project>(`projects/${this.api.project}`);
+      projectName = response.name;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: Record<string, {title: string; value: any}> = {
       id: {
         title: 'ID',
@@ -48,6 +48,7 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
         title: 'Name',
         value: userinfo.nickname,
       },
+      // eslint-disable-next-line perfectionist/sort-objects
       email: {
         title: 'Email',
         value: userinfo.email,
@@ -56,6 +57,7 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
         title: 'MFA enabled',
         value: userinfo['https://client.apimetrics.io/use_mfa'],
       },
+      // eslint-disable-next-line perfectionist/sort-objects
       currentOrg: {
         title: 'Current Organization',
         value: this.userConfig.organization.current || '',
@@ -64,6 +66,7 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
         title: 'Current Project Name',
         value: projectName || '',
       },
+      // eslint-disable-next-line perfectionist/sort-objects
       currentProjectID: {
         title: 'Current Project ID',
         value: this.userConfig.project.current || '',
@@ -80,17 +83,17 @@ Current Project ID:   ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM`,
     return {
       success: true,
       whoami: {
-        id: data.id.value,
-        name: data.name.value,
-        email: data.email.value,
-        mfa: data.mfa.value,
         // eslint-disable-next-line camelcase
         current_org: data.currentOrg.value,
         // eslint-disable-next-line camelcase
         current_project: {
-          name: data.currentProjectName.value,
           id: data.currentProjectID.value,
+          name: data.currentProjectName.value,
         },
+        email: data.email.value,
+        id: data.id.value,
+        mfa: data.mfa.value,
+        name: data.name.value,
       },
     };
   }

@@ -3,21 +3,21 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
 const userinfo = {
-  sub: 'auth0|109e70845ef23eb4099c209p',
-  nickname: 'Bob',
-  name: 'bob@example.com',
-  picture: 'https://s.gravatar.com/avatar/abc123',
-  updated_at: '2023-10-12T19:00:00.589Z',
   email: 'bob@example.com',
   email_verified: false,
+  'https://client.apimetrics.io/fav_orgs': [],
+  'https://client.apimetrics.io/fav_projects': [],
   'https://client.apimetrics.io/org_ids': ['companya'],
+  'https://client.apimetrics.io/permissions': [],
   'https://client.apimetrics.io/roles': {
     companya: ['DEFAULT'],
   },
-  'https://client.apimetrics.io/permissions': [],
   'https://client.apimetrics.io/use_mfa': false,
-  'https://client.apimetrics.io/fav_orgs': [],
-  'https://client.apimetrics.io/fav_projects': [],
+  name: 'bob@example.com',
+  nickname: 'Bob',
+  picture: 'https://s.gravatar.com/avatar/abc123',
+  sub: 'auth0|109e70845ef23eb4099c209p',
+  updated_at: '2023-10-12T19:00:00.589Z',
 };
 
 const project = {
@@ -32,8 +32,8 @@ describe('info whoami', () => {
         project: {current: 'ag9zfmFwaWasfHJpY3MtclpsEQsSBFVzZyu;gIDgpdG73QoM'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -47,8 +47,8 @@ describe('info whoami', () => {
         project: {current: ''},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})

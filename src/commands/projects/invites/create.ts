@@ -1,32 +1,33 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../../base-command';
 
 export type InviteResponse = {
-  success: boolean;
   invite: T.Invite;
+  success: boolean;
 };
 
 export default class Create extends Command<InviteResponse> {
   static description = 'Create an invite to the project.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %> --email alice@example.com --access-level editor
 ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA`,
   ];
 
   static flags = {
-    email: Flags.string({description: 'Email to send invite to.', required: true}),
     'access-level': Flags.string({
       description: 'Access level.',
-      required: true,
       options: ['owner', 'editor', 'analyst', 'viewer'],
+      required: true,
     }),
+    email: Flags.string({description: 'Email to send invite to.', required: true}),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
       char: 'p',
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<InviteResponse> {
     const {flags} = await this.parse(Create);
@@ -40,12 +41,12 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
 
     const invite = await this.api.post<T.Invite>(`projects/${this.api.project}/invites/`, {
       body: {
-        email: flags.email,
         // eslint-disable-next-line camelcase
         access_level: flags['access-level'].toUpperCase(),
+        email: flags.email,
       },
     });
     this.log(invite.id);
-    return {success: true, invite: invite};
+    return {invite, success: true};
   }
 }

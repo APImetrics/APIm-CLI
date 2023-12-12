@@ -11,26 +11,26 @@ const downtimes1 = {
   meta: {},
   results: [
     {
+      id: 'abc123',
       meta: {
         schedule_id: '1',
       },
       schedule: {
-        start_time: '2023-09-29T14:54:41.865000Z',
         end_time: '2023-09-30T14:54:41.865000Z',
         repeat_days: 0,
+        start_time: '2023-09-29T14:54:41.865000Z',
       },
-      id: 'abc123',
     },
     {
+      id: 'abc123',
       meta: {
         schedule_id: '1',
       },
       schedule: {
-        start_time: '2023-09-29T14:54:41.865000Z',
         end_time: '2023-09-30T14:54:41.865000Z',
         repeat_days: 7,
+        start_time: '2023-09-29T14:54:41.865000Z',
       },
-      id: 'abc123',
     },
   ],
 };
@@ -39,26 +39,26 @@ const downtimes2 = {
   meta: {},
   results: [
     {
+      id: 'abc123',
       meta: {
         schedule_id: '2',
       },
       schedule: {
-        start_time: '2023-09-29T14:54:41.865000Z',
         end_time: '2023-09-30T14:54:41.865000Z',
         repeat_days: 10,
+        start_time: '2023-09-29T14:54:41.865000Z',
       },
-      id: 'abc123',
     },
     {
+      id: 'abc123',
       meta: {
         schedule_id: '2',
       },
       schedule: {
-        start_time: '2023-09-29T14:54:41.865000Z',
         end_time: '2023-09-30T14:54:41.865000Z',
         repeat_days: 1,
+        start_time: '2023-09-29T14:54:41.865000Z',
       },
-      id: 'abc123',
     },
   ],
 };
@@ -76,8 +76,8 @@ describe('schedules downtimes', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -90,8 +90,8 @@ describe('schedules downtimes', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -113,32 +113,32 @@ describe('schedules downtimes', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          id: 'abc123',
-          scheduleId: '1',
-          start: '2023-09-29T14:54:41.865000Z',
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'never',
-        },
-        {
-          id: 'abc123',
           scheduleId: '1',
           start: '2023-09-29T14:54:41.865000Z',
+        },
+        {
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'weekly',
+          scheduleId: '1',
+          start: '2023-09-29T14:54:41.865000Z',
         },
         {
-          id: 'abc123',
-          scheduleId: '2',
-          start: '2023-09-29T14:54:41.865000Z',
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'Every 10 days',
-        },
-        {
-          id: 'abc123',
           scheduleId: '2',
           start: '2023-09-29T14:54:41.865000Z',
+        },
+        {
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'daily',
+          scheduleId: '2',
+          start: '2023-09-29T14:54:41.865000Z',
         },
       ]);
     });
@@ -163,32 +163,32 @@ describe('schedules downtimes', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          id: 'abc123',
-          scheduleId: '1',
-          start: '2023-09-29T14:54:41.865000Z',
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'never',
-        },
-        {
-          id: 'abc123',
           scheduleId: '1',
           start: '2023-09-29T14:54:41.865000Z',
+        },
+        {
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'weekly',
+          scheduleId: '1',
+          start: '2023-09-29T14:54:41.865000Z',
         },
         {
-          id: 'abc123',
-          scheduleId: '2',
-          start: '2023-09-29T14:54:41.865000Z',
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'Every 10 days',
-        },
-        {
-          id: 'abc123',
           scheduleId: '2',
           start: '2023-09-29T14:54:41.865000Z',
+        },
+        {
           end: '2023-09-30T14:54:41.865000Z',
+          id: 'abc123',
           repeat: 'daily',
+          scheduleId: '2',
+          start: '2023-09-29T14:54:41.865000Z',
         },
       ]);
     });

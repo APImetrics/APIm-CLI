@@ -10,9 +10,17 @@ const schedule = {
 };
 
 const call = {
+  id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDAtKWRiAoM',
   meta: {
-    domain: 'google.apimetrics.xyz',
+    accept: 'application/json',
+    content_type: 'application/json',
+    created: '2020-02-14T22:13:04.896102Z',
     description: 'Auto-generated API Call',
+    domain: 'google.apimetrics.xyz',
+    last_update: '2022-07-19T22:38:52.829696Z',
+    name: 'Example HTTP POST Call',
+    owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
+    project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
     tags: [
       'sector:hobbyist',
       'apimetrics:meta:domain:google.apimetrics.xyz',
@@ -22,39 +30,39 @@ const call = {
       'api_type:update',
       'apimetrics:meta:host:Google+LLC',
     ],
-    accept: 'application/json',
-    content_type: 'application/json',
-    owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
-    name: 'Example HTTP POST Call',
-    created: '2020-02-14T22:13:04.896102Z',
-    last_update: '2022-07-19T22:38:52.829696Z',
     workspace: 'global',
-    project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
   },
   request: {
-    body: '{"success": "Congratulations, this is your first APImetrics API Call!"}',
-    parameters: [],
-    url: 'http://google.apimetrics.xyz/post',
     auth_id: null,
+    body: '{"success": "Congratulations, this is your first APImetrics API Call!"}',
     headers: [
       {
-        value: 'application/json',
         key: 'Accept',
+        value: 'application/json',
       },
       {
-        value: 'application/json',
         key: 'Content-Type',
+        value: 'application/json',
       },
     ],
-    token_id: null,
     method: 'POST',
+    parameters: [],
+    token_id: null,
+    url: 'http://google.apimetrics.xyz/post',
   },
-  id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDAtKWRiAoM',
 };
 
 const callSansDescription = {
+  id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDAtKWRiAoM',
   meta: {
+    accept: 'application/json',
+    content_type: 'application/json',
+    created: '2020-02-14T22:13:04.896102Z',
     domain: 'google.apimetrics.xyz',
+    last_update: '2022-07-19T22:38:52.829696Z',
+    name: 'Example HTTP POST Call',
+    owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
+    project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
     tags: [
       'sector:hobbyist',
       'apimetrics:meta:domain:google.apimetrics.xyz',
@@ -64,34 +72,26 @@ const callSansDescription = {
       'api_type:update',
       'apimetrics:meta:host:Google+LLC',
     ],
-    accept: 'application/json',
-    content_type: 'application/json',
-    owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
-    name: 'Example HTTP POST Call',
-    created: '2020-02-14T22:13:04.896102Z',
-    last_update: '2022-07-19T22:38:52.829696Z',
     workspace: 'global',
-    project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
   },
   request: {
-    body: '{"success": "Congratulations, this is your first APImetrics API Call!"}',
-    parameters: [],
-    url: 'http://google.apimetrics.xyz/post',
     auth_id: null,
+    body: '{"success": "Congratulations, this is your first APImetrics API Call!"}',
     headers: [
       {
-        value: 'application/json',
         key: 'Accept',
+        value: 'application/json',
       },
       {
-        value: 'application/json',
         key: 'Content-Type',
+        value: 'application/json',
       },
     ],
-    token_id: null,
     method: 'POST',
+    parameters: [],
+    token_id: null,
+    url: 'http://google.apimetrics.xyz/post',
   },
-  id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDAtKWRiAoM',
 };
 
 describe('schedules calls', () => {
@@ -102,8 +102,8 @@ describe('schedules calls', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -116,8 +116,8 @@ describe('schedules calls', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -141,39 +141,39 @@ describe('schedules calls', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: '',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
       ]);
@@ -201,39 +201,39 @@ describe('schedules calls', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
         {
-          name: 'Example HTTP POST Call',
           description: 'Auto-generated API Call',
           method: 'POST',
+          name: 'Example HTTP POST Call',
           url: 'http://google.apimetrics.xyz/post',
         },
       ]);
