@@ -5,6 +5,7 @@ export {Downtime} from './downtime';
 export {Info} from './info';
 export {Invite} from './invite';
 export {ListResponse} from './listresponse';
+export {OIDCWellKnown} from './oidc-well-known';
 export {OrgAccount} from './orgaccount';
 export {Project} from './project';
 export {Role} from './role';

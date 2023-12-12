@@ -30,15 +30,17 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export class Auth {
   /** Is the user considered to be logged in? */
   public loggedIn = false;
-  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
-  private codeUrl =
-    process.env.APIMETRICS_CODE_URL || 'https://auth.apimetrics.io/oauth/device/code';
 
+  private readonly defaultAuthServer = 'https://auth.apimetrics.io';
+  // eslint-disable-next-line perfectionist/sort-classes
+  private authServer = process.env.APIMETRICS_AUTH_SERVER || this.defaultAuthServer;
+  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
+  private codeUrl = 'https://auth.apimetrics.io/oauth/device/code';
   private configDir: string;
   private debug = debug('api');
-  private revokeUrl =
-    process.env.APIMETRICS_REVOKE_URL || 'https://auth.apimetrics.io/oauth/revoke';
-
+  private revokeUrl = 'https://auth.apimetrics.io/oauth/revoke';
+  // Flag to avoid excess API calls.
+  private setAuthURLs = false;
   private token: Auth.ConfigFile = {
     expires: undefined,
     mode: undefined,
@@ -46,9 +48,8 @@ export class Auth {
     token: '',
   };
 
-  private tokenUrl = process.env.APIMETRICS_TOKEN_URL || 'https://auth.apimetrics.io/oauth/token';
-  private userinfoUrl =
-    process.env.APIMETRICS_USERINFO_URL || 'https://auth.apimetrics.io/userinfo';
+  private tokenUrl = 'https://auth.apimetrics.io/oauth/token';
+  private userInfoUrl = 'https://auth.apimetrics.io/userinfo';
 
   /**
    * @param config User config file
@@ -142,12 +143,14 @@ export class Auth {
       throw new Error('Not logged in. Run apimetrics login first.');
     }
 
+    await this.getEndpoints();
+
     if (this.token.mode === Auth.AuthType.Key) {
       throw new Error('Cannot use API key to access user info.');
     }
 
     // Normalise URL first
-    const url = new URL(this.userinfoUrl);
+    const url = new URL(this.userInfoUrl);
     const {body} = await HTTP.get<T.UserInfo>(url.toString(), {headers: await this.headers()});
     return body;
   }
@@ -159,6 +162,8 @@ export class Auth {
     if (this.loggedIn) {
       throw new Error('User already logged in. Run apimetrics auth logout first');
     }
+
+    await this.getEndpoints();
 
     const url = new URL(this.codeUrl);
     const {body: code} = await HTTP.post<DeviceCodeRes>(url.toString(), {
@@ -202,6 +207,29 @@ export class Auth {
     await this.saveToken();
     this.loggedIn = true;
     ux.action.stop(chalk.green('Logged in'));
+  }
+
+  /**
+   * Get the auth endpoints from the .well-known endpoint
+   *
+   * This should only ever run once as once it has set the endpoints, it
+   * won't make another API call again so it is fine to call this
+   * multiple times.
+   */
+  private async getEndpoints(): Promise<void> {
+    if (this.authServer === this.defaultAuthServer || this.setAuthURLs) {
+      // Don't bother with excess API calls, we already have the info
+      return;
+    }
+
+    const wellKnownEndpoint = new URL('.well-known/openid-configuration', this.authServer);
+    const {body: config} = await HTTP.get<T.OIDCWellKnown>(wellKnownEndpoint.toString());
+
+    this.tokenUrl = config.token_endpoint;
+    this.codeUrl = config.device_authorization_endpoint;
+    this.revokeUrl = config.revocation_endpoint;
+    this.userInfoUrl = config.userinfo_endpoint;
+    this.setAuthURLs = true;
   }
 
   /**
@@ -296,6 +324,8 @@ export class Auth {
    * Attempt to refresh the access token
    */
   private async refreshToken(): Promise<void> {
+    await this.getEndpoints();
+
     const url = new URL(this.tokenUrl);
     let token: TokenRes;
     try {
