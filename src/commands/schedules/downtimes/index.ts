@@ -1,15 +1,14 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type DowntimeList = {
-  success: boolean;
   downtimes: T.Downtime[];
+  success: boolean;
 };
 
 export default class Schedules extends Command<DowntimeList> {
   static description = 'List downtimes.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %>
 ID           Schedule ID  Start                       End                         Repeat
@@ -22,10 +21,12 @@ ag9zfmFwaW1… ag9zfmFwaW1… 2023-09-29T14:57:39.134000Z 2023-10-20T14:57:39.13
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
       char: 'p',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<DowntimeList> {
     const {flags} = await this.parse(Schedules);
@@ -42,48 +43,56 @@ ag9zfmFwaW1… ag9zfmFwaW1… 2023-09-29T14:57:39.134000Z 2023-10-20T14:57:39.13
       downtimeRequests.push(this.api.list<T.Downtime>(`schedules/${schedule.id}/downtime/`));
     }
 
+    const response = await Promise.all(downtimeRequests);
     // Flatten array of arrays. Each schedule has own array of downtimes
-    const downtimes = (await Promise.all(downtimeRequests)).flat(1);
+    const downtimes = response.flat(1);
 
     ux.table(
       downtimes,
       {
-        id: {
-          header: 'ID',
-          get: (row) => row.id,
-        },
-        scheduleId: {
-          header: 'Schedule ID',
-          get: (row) => row.meta.schedule_id,
-        },
-        start: {
-          get: (row) => row.schedule.start_time,
+        created: {
+          extended: true,
+          get: (row) => row.meta.created,
         },
         end: {
           get: (row) => row.schedule.end_time,
         },
+        id: {
+          get: (row) => row.id,
+          header: 'ID',
+        },
+        lastUpdated: {
+          extended: true,
+          get: (row) => row.meta.last_update,
+          header: 'Last Updated',
+        },
         repeat: {
-          get: (row) => {
+          get(row) {
             switch (row.schedule.repeat_days) {
-              case 0:
+              case 0: {
                 return 'never';
-              case 1:
+              }
+
+              case 1: {
                 return 'daily';
-              case 7:
+              }
+
+              case 7: {
                 return 'weekly';
-              default:
+              }
+
+              default: {
                 return `Every ${row.schedule.repeat_days} days`;
+              }
             }
           },
         },
-        lastUpdated: {
-          header: 'Last Updated',
-          get: (row) => row.meta.last_update,
-          extended: true,
+        scheduleId: {
+          get: (row) => row.meta.schedule_id,
+          header: 'Schedule ID',
         },
-        created: {
-          get: (row) => row.meta.created,
-          extended: true,
+        start: {
+          get: (row) => row.schedule.start_time,
         },
       },
       {
@@ -91,6 +100,6 @@ ag9zfmFwaW1… ag9zfmFwaW1… 2023-09-29T14:57:39.134000Z 2023-10-20T14:57:39.13
         ...flags,
       }
     );
-    return {success: true, downtimes: downtimes};
+    return {downtimes, success: true};
   }
 }

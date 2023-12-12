@@ -4,66 +4,66 @@ import {expect} from 'chai';
 import * as fs from 'fs-extra';
 
 const defaultWorkflow = {
-  meta: {
-    project_id: 'qwerty',
-    name: 'My Workflow',
-    workspace: 'global',
-    tags: [],
-    owner: 'qwerty',
-    deployments: null,
-    created: '2023',
-    last_update: '2023',
-    description: null,
-  },
   id: 'abc123',
+  meta: {
+    created: '2023',
+    deployments: null,
+    description: null,
+    last_update: '2023',
+    name: 'My Workflow',
+    owner: 'qwerty',
+    project_id: 'qwerty',
+    tags: [],
+    workspace: 'global',
+  },
   workflow: {
-    handle_cookies: false,
     call_ids: ['1', '2', '3'],
+    handle_cookies: false,
     stop_on_failure: true,
   },
 };
 
 const workflowBackoff = {
+  id: 'abc123',
   meta: {
-    project_id: 'qwerty',
+    created: '2023',
+    deployments: null,
+    description: null,
+    last_update: '2023',
     name: 'My Workflow',
-    workspace: 'global',
+    owner: 'qwerty',
+    project_id: 'qwerty',
     tags: [
       'apimetrics:backoff:fibo',
       'apimetrics:backoff:expo',
       'apimetrics:backoff:constant',
       'apimetrics:backoff:none',
     ],
-    owner: 'qwerty',
-    deployments: null,
-    created: '2023',
-    last_update: '2023',
-    description: null,
+    workspace: 'global',
   },
-  id: 'abc123',
   workflow: {
-    handle_cookies: false,
     call_ids: ['1', '2', '3'],
+    handle_cookies: false,
     stop_on_failure: true,
   },
 };
 
 const emptyWorkflow = {
-  meta: {
-    project_id: 'qwerty',
-    name: 'My Workflow',
-    workspace: 'global',
-    tags: [],
-    owner: 'qwerty',
-    deployments: null,
-    created: '2023',
-    last_update: '2023',
-    description: null,
-  },
   id: 'abc123',
+  meta: {
+    created: '2023',
+    deployments: null,
+    description: null,
+    last_update: '2023',
+    name: 'My Workflow',
+    owner: 'qwerty',
+    project_id: 'qwerty',
+    tags: [],
+    workspace: 'global',
+  },
   workflow: {
-    handle_cookies: false,
     call_ids: [],
+    handle_cookies: false,
     stop_on_failure: true,
   },
 };
@@ -76,8 +76,8 @@ describe('workflows edit', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -90,15 +90,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'A New Name',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'A New Name',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -115,15 +115,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: 'A description',
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -140,15 +140,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: true,
             call_ids: ['1', '2', '3'],
+            handle_cookies: true,
             stop_on_failure: true,
           },
         })
@@ -163,35 +163,35 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: true,
             call_ids: ['1', '2', '3'],
+            handle_cookies: true,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -208,15 +208,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: false,
           },
         })
@@ -231,35 +231,35 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: false,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -276,15 +276,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:project_action'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:project_action'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -299,35 +299,35 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:project_action'],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: ['apimetrics:project_action'],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -344,15 +344,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:workflow_mutex'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:workflow_mutex'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -367,35 +367,35 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:workflow_mutex'],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: ['apimetrics:workflow_mutex'],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -411,18 +411,18 @@ describe('workflows edit', () => {
         .get('/api/2/workflows/abc123/')
         .reply(200, defaultWorkflow)
         .get('/api/2/agents/info')
-        .reply(200, {locations: {us1: 'a', eu1: 'a'}})
+        .reply(200, {locations: {eu1: 'a', us1: 'a'}})
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:location_id:us1'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:location_id:us1'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -437,37 +437,37 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:location_id:eu1'],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: ['apimetrics:location_id:eu1'],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .get('/api/2/agents/info')
-        .reply(200, {locations: {us1: 'a', eu1: 'a'}})
+        .reply(200, {locations: {eu1: 'a', us1: 'a'}})
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:location_id:us1'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:location_id:us1'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -482,37 +482,37 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:location_id:eu1'],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: ['apimetrics:location_id:eu1'],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .get('/api/2/agents/info')
-        .reply(200, {locations: {us1: 'a', eu1: 'a'}})
+        .reply(200, {locations: {eu1: 'a', us1: 'a'}})
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:location_id:eu1'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:location_id:eu1'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -528,7 +528,7 @@ describe('workflows edit', () => {
         .get('/api/2/workflows/abc123/')
         .reply(200, defaultWorkflow)
         .get('/api/2/agents/info')
-        .reply(200, {locations: {us1: 'a', eu1: 'a'}});
+        .reply(200, {locations: {eu1: 'a', us1: 'a'}});
     })
     .stderr()
     .command(['workflows:edit', '--workflow-id=abc123', '--location=qwerty'])
@@ -544,35 +544,35 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:location_id:eu1'],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: ['apimetrics:location_id:eu1'],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -587,35 +587,35 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
-          meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
-          },
           id: 'abc123',
+          meta: {
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
+            name: 'My Workflow',
+            owner: 'qwerty',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
+          },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -632,15 +632,15 @@ describe('workflows edit', () => {
         .reply(200, workflowBackoff)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:backoff:fibo'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:backoff:fibo'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -657,15 +657,15 @@ describe('workflows edit', () => {
         .reply(200, workflowBackoff)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:backoff:expo'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:backoff:expo'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -682,15 +682,15 @@ describe('workflows edit', () => {
         .reply(200, workflowBackoff)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:backoff:constant'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:backoff:constant'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -707,15 +707,15 @@ describe('workflows edit', () => {
         .reply(200, workflowBackoff)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: ['apimetrics:backoff:none'],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: ['apimetrics:backoff:none'],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -732,15 +732,15 @@ describe('workflows edit', () => {
         .reply(200, workflowBackoff)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -755,43 +755,43 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            project_id: 'qwerty',
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
             name: 'My Workflow',
-            workspace: 'global',
+            owner: 'qwerty',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_base:10',
               'apimetrics:backoff_factor:10',
               'apimetrics:backoff_interval:10',
             ],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
+            workspace: 'global',
           },
-          id: 'abc123',
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
+            description: null,
             name: 'My Workflow',
-            workspace: 'global',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_base:20',
               'apimetrics:backoff_factor:20',
               'apimetrics:backoff_interval:20',
             ],
-            description: null,
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -812,43 +812,43 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            project_id: 'qwerty',
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
             name: 'My Workflow',
-            workspace: 'global',
+            owner: 'qwerty',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_base:10',
               'apimetrics:backoff_factor:10',
               'apimetrics:backoff_interval:10',
             ],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
+            workspace: 'global',
           },
-          id: 'abc123',
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
+            description: null,
             name: 'My Workflow',
-            workspace: 'global',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_base:10',
               'apimetrics:backoff_factor:10',
               'apimetrics:backoff_interval:10',
             ],
-            description: null,
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -871,19 +871,19 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
+            description: null,
             name: 'My Workflow',
-            workspace: 'global',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_base:20',
               'apimetrics:backoff_factor:20',
               'apimetrics:backoff_interval:20',
             ],
-            description: null,
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -904,43 +904,43 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            project_id: 'qwerty',
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
             name: 'My Workflow',
-            workspace: 'global',
+            owner: 'qwerty',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_max_retries:10',
               'apimetrics:backoff_skip_save:10',
               'apimetrics:backoff_skip_notifs:10',
             ],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
+            workspace: 'global',
           },
-          id: 'abc123',
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
+            description: null,
             name: 'My Workflow',
-            workspace: 'global',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_max_retries:20',
               'apimetrics:backoff_skip_save:20',
               'apimetrics:backoff_skip_notifs:20',
             ],
-            description: null,
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -961,43 +961,43 @@ describe('workflows edit', () => {
       api
         .get('/api/2/workflows/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            project_id: 'qwerty',
+            created: '2023',
+            deployments: null,
+            description: null,
+            last_update: '2023',
             name: 'My Workflow',
-            workspace: 'global',
+            owner: 'qwerty',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_max_retries:10',
               'apimetrics:backoff_skip_save:10',
               'apimetrics:backoff_skip_notifs:10',
             ],
-            owner: 'qwerty',
-            deployments: null,
-            created: '2023',
-            last_update: '2023',
-            description: null,
+            workspace: 'global',
           },
-          id: 'abc123',
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
+            description: null,
             name: 'My Workflow',
-            workspace: 'global',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_max_retries:10',
               'apimetrics:backoff_skip_save:10',
               'apimetrics:backoff_skip_notifs:10',
             ],
-            description: null,
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1020,19 +1020,19 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
+            description: null,
             name: 'My Workflow',
-            workspace: 'global',
+            project_id: 'qwerty',
             tags: [
               'apimetrics:backoff_max_retries:20',
               'apimetrics:backoff_skip_save:20',
               'apimetrics:backoff_skip_notifs:20',
             ],
-            description: null,
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1055,15 +1055,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1080,15 +1080,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1105,15 +1105,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['2'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1154,15 +1154,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '3', '4'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1179,15 +1179,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['4', '1', '2', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1204,15 +1204,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '2', '4', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1229,15 +1229,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['5', '1', '6', '2', '3', '4'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1295,15 +1295,15 @@ describe('workflows edit', () => {
         .reply(200, emptyWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['4'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })
@@ -1320,15 +1320,15 @@ describe('workflows edit', () => {
         .reply(200, defaultWorkflow)
         .post('/api/2/workflows/abc123/', {
           meta: {
-            project_id: 'qwerty',
-            name: 'My Workflow',
-            workspace: 'global',
-            tags: [],
             description: null,
+            name: 'My Workflow',
+            project_id: 'qwerty',
+            tags: [],
+            workspace: 'global',
           },
           workflow: {
-            handle_cookies: false,
             call_ids: ['1', '4', '3'],
+            handle_cookies: false,
             stop_on_failure: true,
           },
         })

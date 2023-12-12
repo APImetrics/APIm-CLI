@@ -6,63 +6,63 @@ const regionsResponse = {
   regions: [
     {
       id: 'sft',
-      name: 'IBM Cloud',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'IBM Cloud',
     },
     {
       id: 'eu',
-      name: 'Europe',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'Europe',
     },
     {
       id: 'azr',
-      name: 'Microsoft Azure',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'Microsoft Azure',
     },
     {
       id: 'na',
-      name: 'North America',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'North America',
     },
     {
       id: 'oc',
-      name: 'Oceania',
       locations: ['public_qcazureasiase'],
+      name: 'Oceania',
     },
     {
       id: 'sa',
-      name: 'South America',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'South America',
     },
     {
       id: 'aws',
-      name: 'Amazon AWS',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'Amazon AWS',
     },
     {
       id: 'all',
-      name: 'Worldwide',
       locations: ['public_qcazureasiase', 'public_qcawsuswest', 'public_qcgoogleuscentral'],
+      name: 'Worldwide',
     },
     {
       id: 'af',
-      name: 'Africa',
       locations: ['public_azuresouthafricanorth'],
+      name: 'Africa',
     },
     {
       id: 'ap',
-      name: 'Asia-Pacfic',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'Asia-Pacfic',
     },
     {
       id: 'goo',
-      name: 'Google Cloud',
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: 'Google Cloud',
     },
     {
       id: 'ww',
-      name: null,
       locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+      name: null,
     },
   ],
 };
@@ -75,8 +75,8 @@ describe('info regions', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -92,52 +92,52 @@ describe('info regions', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'IBM Cloud',
           id: 'sft',
+          name: 'IBM Cloud',
         },
         {
-          name: 'Europe',
           id: 'eu',
+          name: 'Europe',
         },
         {
-          name: 'Microsoft Azure',
           id: 'azr',
+          name: 'Microsoft Azure',
         },
         {
-          name: 'North America',
           id: 'na',
+          name: 'North America',
         },
         {
-          name: 'Oceania',
           id: 'oc',
+          name: 'Oceania',
         },
         {
-          name: 'South America',
           id: 'sa',
+          name: 'South America',
         },
         {
-          name: 'Amazon AWS',
           id: 'aws',
+          name: 'Amazon AWS',
         },
         {
-          name: 'Worldwide',
           id: 'all',
+          name: 'Worldwide',
         },
         {
-          name: 'Africa',
           id: 'af',
+          name: 'Africa',
         },
         {
-          name: 'Asia-Pacfic',
           id: 'ap',
+          name: 'Asia-Pacfic',
         },
         {
-          name: 'Google Cloud',
           id: 'goo',
+          name: 'Google Cloud',
         },
         {
-          name: 'null',
           id: 'ww',
+          name: 'null',
         },
       ]);
     });

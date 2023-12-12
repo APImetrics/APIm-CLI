@@ -2,8 +2,8 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
 const roleRequest = {
-  id: 'A_NEW_ROLE',
   description: 'A nice shiny new role',
+  id: 'A_NEW_ROLE',
 };
 
 describe('org roles create', () => {
@@ -14,8 +14,8 @@ describe('org roles create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -28,8 +28,8 @@ describe('org roles create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -42,8 +42,8 @@ describe('org roles create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})

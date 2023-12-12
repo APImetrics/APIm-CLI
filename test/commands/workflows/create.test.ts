@@ -10,8 +10,8 @@ describe('workflows create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -24,8 +24,8 @@ describe('workflows create', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -70,9 +70,9 @@ describe('workflows create', () => {
         .post('/api/2/workflows/', {
           meta: {name: 'A Workflow', tags: []},
           workflow: {
+            call_ids: ['abc123', 'def456', 'ghi789'],
             handle_cookies: false,
             stop_on_failure: true,
-            call_ids: ['abc123', 'def456', 'ghi789'],
           },
         })
         .reply(200, {id: 'abc123'})
@@ -129,7 +129,7 @@ describe('workflows create', () => {
     .nock('https://client.apimetrics.io', (api) =>
       api
         .get('/api/2/agents/info')
-        .reply(200, {locations: {us1: 'a', eu1: 'a'}})
+        .reply(200, {locations: {eu1: 'a', us1: 'a'}})
         .post('/api/2/workflows/', {
           meta: {name: 'A Workflow', tags: ['apimetrics:location_id:us1']},
           workflow: {
@@ -147,7 +147,7 @@ describe('workflows create', () => {
 
   auth
     .nock('https://client.apimetrics.io', (api) =>
-      api.get('/api/2/agents/info').reply(200, {locations: {us1: 'a', eu1: 'a'}})
+      api.get('/api/2/agents/info').reply(200, {locations: {eu1: 'a', us1: 'a'}})
     )
     .stdout()
     .command(['workflows:create', '--name=A Workflow', '--location=qwerty'])

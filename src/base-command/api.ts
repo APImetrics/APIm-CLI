@@ -1,24 +1,25 @@
 import {Interfaces} from '@oclif/core';
-import {Auth} from './auth';
-import {OutgoingHttpHeaders} from 'node:http';
-import HTTP from 'http-call';
-import {Config} from './config';
 import {debug} from 'debug';
+import {HTTP} from 'http-call';
+import {OutgoingHttpHeaders} from 'node:http';
+
+import {Auth} from './auth';
+import {Config} from './config';
 import {ListResponse, UserInfo} from './types';
 
 type RequestOptions = {
-  /** Path to call */
-  path: string;
-  /** HTTP method to send request with */
-  method: 'get' | 'post' | 'put' | 'patch' | 'delete';
-  /** Should the response be treated as plain text? */
-  plain?: boolean;
+  /** Request body */
+  body?: unknown;
   /** Cursor for further pages */
   cursor?: string;
   /** Headers to pass */
   headers?: OutgoingHttpHeaders;
-  /** Request body */
-  body?: any;
+  /** HTTP method to send request with */
+  method: 'delete' | 'get' | 'patch' | 'post' | 'put';
+  /** Path to call */
+  path: string;
+  /** Should the response be treated as plain text? */
+  plain?: boolean;
 };
 export class Api {
   private auth: Auth;
@@ -54,6 +55,17 @@ export class Api {
   }
 
   /**
+   * Make a DELETE request to the API
+   * @param path Endpoint path to call
+   * @param options Partial
+   * @returns API response
+   */
+  public async delete<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    options = options || {};
+    return this.request({method: 'delete', path, ...options});
+  }
+
+  /**
    * Make a GET request to the API
    * If the endpoint supports pagination, only the first page will be
    * returned. Use @method list instead to get subsequent pages
@@ -62,7 +74,7 @@ export class Api {
    * @returns API response
    */
   public async get<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
-    return this.request({path: path, method: 'get', ...options});
+    return this.request({method: 'get', path, ...options});
   }
 
   /**
@@ -83,11 +95,11 @@ export class Api {
       // Can disable here as we need to wait to see if there is more data
       // eslint-disable-next-line no-await-in-loop
       const data = await this.request<ListResponse<T>>({
-        path: path,
         method: 'get',
+        path,
         ...options,
+        cursor,
         plain: false, // If this isn't false, bad things will happen!
-        cursor: cursor,
       });
 
       results = [...results, ...data.results];
@@ -97,47 +109,6 @@ export class Api {
     } while (more);
 
     return results;
-  }
-
-  /**
-   * Make a POST request to the API
-   * @param path Endpoint path to call
-   * @param options Additional configuration
-   * @returns API response
-   */
-  public async post<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
-    return this.request({path: path, method: 'post', ...options});
-  }
-
-  /**
-   * Make a PUT request to the API
-   * @param path Endpoint path to call
-   * @param options Additional configuration
-   * @returns API response
-   */
-  public async put<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
-    return this.request({path: path, method: 'put', ...options});
-  }
-
-  /**
-   * Make a PATCH request to the API
-   * @param path Endpoint path to call
-   * @param options Additional configuration
-   * @returns API response
-   */
-  public async patch<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
-    return this.request({path: path, method: 'patch', ...options});
-  }
-
-  /**
-   * Make a DELETE request to the API
-   * @param path Endpoint path to call
-   * @param options Partial
-   * @returns API response
-   */
-  public async delete<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
-    options = options || {};
-    return this.request({path: path, method: 'delete', ...options});
   }
 
   /**
@@ -153,6 +124,36 @@ export class Api {
    */
   public async logout(): Promise<void> {
     return this.auth.logout();
+  }
+
+  /**
+   * Make a PATCH request to the API
+   * @param path Endpoint path to call
+   * @param options Additional configuration
+   * @returns API response
+   */
+  public async patch<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({method: 'patch', path, ...options});
+  }
+
+  /**
+   * Make a POST request to the API
+   * @param path Endpoint path to call
+   * @param options Additional configuration
+   * @returns API response
+   */
+  public async post<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({method: 'post', path, ...options});
+  }
+
+  /**
+   * Make a PUT request to the API
+   * @param path Endpoint path to call
+   * @param options Additional configuration
+   * @returns API response
+   */
+  public async put<T>(path: string, options?: Partial<RequestOptions>): Promise<T> {
+    return this.request({method: 'put', path, ...options});
   }
 
   /**
@@ -207,9 +208,9 @@ export class Api {
 
     this.debug('Calling URL %o', url.toString());
     const response = await HTTP.request<T>(url.toString(), {
-      headers: headers,
-      method: options.method,
       body: options.body,
+      headers,
+      method: options.method,
     });
 
     return response.body;

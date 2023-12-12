@@ -3,9 +3,17 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
 const callsResponse = {
+  id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDA05v5mwoM',
   meta: {
-    domain: 'google.apimetrics.xyz',
+    accept: null,
+    content_type: null,
+    created: '2021-01-28T01:19:19.594763Z',
     description: null,
+    domain: 'google.apimetrics.xyz',
+    last_update: '2022-07-19T22:38:53.838839Z',
+    name: '=1+1',
+    owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
+    project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
     tags: [
       'apimetrics:meta:domain:google.apimetrics.xyz',
       'apimetrics:meta:http:google_lb',
@@ -13,36 +21,28 @@ const callsResponse = {
       'apimetrics:meta:server:gunicorn',
       'apimetrics:meta:host:Google+LLC',
     ],
-    accept: null,
-    content_type: null,
-    owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
-    name: '=1+1',
-    created: '2021-01-28T01:19:19.594763Z',
-    last_update: '2022-07-19T22:38:53.838839Z',
     workspace: 'global',
-    project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDA1PLekQoM',
   },
   request: {
-    body: null,
-    parameters: [],
-    url: 'http://google.apimetrics.xyz/get',
     auth_id: null,
+    body: null,
     headers: [],
-    token_id: null,
     method: 'GET',
+    parameters: [],
+    token_id: null,
+    url: 'http://google.apimetrics.xyz/get',
   },
-  id: 'ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDA05v5mwoM',
 };
 
 const advancedCreateRequest = {
   meta: {name: '=1+1', tags: ['bob', 'dave']},
   request: {
-    method: 'GET',
-    url: 'http://google.apimetrics.xyz/get',
     headers: [
       {key: 'Content-type', value: ' application/json'},
       {key: 'Accept', value: 'application/json'},
     ],
+    method: 'GET',
+    url: 'http://google.apimetrics.xyz/get',
   },
 };
 
@@ -54,8 +54,8 @@ describe('calls create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -68,8 +68,8 @@ describe('calls create', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -117,13 +117,13 @@ describe('calls create', () => {
         .post('/api/2/calls/', {
           meta: {name: 'call', tags: []},
           request: {
-            method: 'POST',
-            url: 'http://google.apimetrics.xyz/get',
+            body: 'abc123456',
             headers: [
               {key: 'Content-Type', value: 'text/plain'},
               {key: 'Accept', value: 'application/json'},
             ],
-            body: 'abc123456',
+            method: 'POST',
+            url: 'http://google.apimetrics.xyz/get',
           },
         })
         .reply(200, {id: '1234'})
@@ -153,13 +153,13 @@ describe('calls create', () => {
         .post('/api/2/calls/', {
           meta: {name: 'call', tags: []},
           request: {
-            method: 'POST',
-            url: 'http://google.apimetrics.xyz/get',
+            body: 'abc123456',
             headers: [
               {key: 'Content-Type', value: 'application/json'},
               {key: 'Accept', value: 'application/json'},
             ],
-            body: 'abc123456',
+            method: 'POST',
+            url: 'http://google.apimetrics.xyz/get',
           },
         })
         .reply(200, {id: '1234'})

@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export default class Delete extends Command<{success: boolean}> {
@@ -10,20 +11,20 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'project-id': Flags.string({
-      description: 'ID of project to delete. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
       char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+    }),
+    'project-id': Flags.string({
+      char: 'p',
+      description: 'ID of project to delete. Overrides apimetrics config project set.',
     }),
   };
 
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Delete);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {

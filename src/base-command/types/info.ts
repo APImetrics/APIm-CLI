@@ -1,20 +1,19 @@
-/* eslint-disable camelcase */
 export type Info = {
   agent_list: {
+    id: string;
     meta: {
-      last_update: string;
       created: string;
       id: string;
-      remote_addr: string;
+      last_update: string;
       name: string;
+      remote_addr: string;
     };
-    id: string;
-  }[];
-  regions: {
-    id: string;
-    name?: string;
-    locations: string[];
   }[];
   locations: Record<string, string>;
   postman_locations: string[];
+  regions: {
+    id: string;
+    locations: string[];
+    name?: string;
+  }[];
 };

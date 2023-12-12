@@ -1,34 +1,27 @@
 import {Interfaces, ux} from '@oclif/core';
-import * as path from 'node:path';
-import * as fs from 'fs-extra';
 import chalk from 'chalk';
-import HTTP, {HTTPError} from 'http-call';
-import {T} from '.';
 import {debug} from 'debug';
+import * as fse from 'fs-extra';
+import {HTTP, HTTPError} from 'http-call';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+
+import {T} from '.';
 
 interface DeviceCodeRes {
-  // eslint-disable-next-line camelcase
   device_code: string;
-  // eslint-disable-next-line camelcase
-  user_code: string;
-  // eslint-disable-next-line camelcase
-  verification_uri: string;
-  // eslint-disable-next-line camelcase
   expires_in: number;
   interval: number;
-  // eslint-disable-next-line camelcase
+  user_code: string;
+  verification_uri: string;
   verification_uri_complete: string;
 }
 
 interface TokenRes {
-  // eslint-disable-next-line camelcase
   access_token: string;
-  // eslint-disable-next-line camelcase
-  refresh_token: string;
-  // eslint-disable-next-line camelcase
-  token_type: string;
-  // eslint-disable-next-line camelcase
   expires_in: number;
+  refresh_token: string;
+  token_type: string;
 }
 
 // eslint-disable-next-line no-promise-executor-return
@@ -37,27 +30,25 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export class Auth {
   /** Is the user considered to be logged in? */
   public loggedIn = false;
-
-  private token: Auth.ConfigFile = {
-    mode: undefined,
-    token: '',
-    refresh: '',
-    expires: undefined,
-  };
-
-  private tokenUrl = process.env.APIMETRICS_TOKEN_URL || 'https://auth.apimetrics.io/oauth/token';
+  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
   private codeUrl =
     process.env.APIMETRICS_CODE_URL || 'https://auth.apimetrics.io/oauth/device/code';
 
+  private configDir: string;
+  private debug = debug('api');
   private revokeUrl =
     process.env.APIMETRICS_REVOKE_URL || 'https://auth.apimetrics.io/oauth/revoke';
 
+  private token: Auth.ConfigFile = {
+    expires: undefined,
+    mode: undefined,
+    refresh: '',
+    token: '',
+  };
+
+  private tokenUrl = process.env.APIMETRICS_TOKEN_URL || 'https://auth.apimetrics.io/oauth/token';
   private userinfoUrl =
     process.env.APIMETRICS_USERINFO_URL || 'https://auth.apimetrics.io/userinfo';
-
-  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
-  private configDir: string;
-  private debug = debug('api');
 
   /**
    * @param config User config file
@@ -67,6 +58,29 @@ export class Auth {
     this.configDir = process.env.APIMETRICS_CONFIG_DIR || this.config.configDir;
     HTTP.defaults.headers = {'user-agent': config.userAgent};
     this.loadAuth();
+  }
+
+  /**
+   * Is the user restricted to only project actions
+   * Normally only restricted when user is using API key authentication
+   */
+  public get projectOnly(): boolean {
+    return this.token.mode === Auth.AuthType.Key;
+  }
+
+  /**
+   * Formatted authorization header including credentials
+   */
+  public async headers(): Promise<{Authorization: string}> {
+    const tenMinutes = 1000 * 60 * 10;
+    if (
+      this.token.expires !== undefined &&
+      new Date(this.token.expires).getTime() - Date.now() < tenMinutes
+    ) {
+      await this.refreshToken();
+    }
+
+    return {Authorization: `Bearer ${this.token.token}`};
   }
 
   /**
@@ -80,11 +94,14 @@ export class Auth {
     }
 
     switch (options.type) {
-      case Auth.AuthType.Key:
+      case Auth.AuthType.Key: {
         await this.key(options.key);
         break;
-      case Auth.AuthType.Device:
+      }
+
+      case Auth.AuthType.Device: {
         await this.deviceFlow();
+      }
     }
   }
 
@@ -117,29 +134,6 @@ export class Auth {
   }
 
   /**
-   * Formatted authorization header including credentials
-   */
-  public async headers(): Promise<{Authorization: string}> {
-    const tenMinutes = 1000 * 60 * 10;
-    if (
-      this.token.expires !== undefined &&
-      new Date(this.token.expires).getTime() - Date.now() < tenMinutes
-    ) {
-      await this.refreshToken();
-    }
-
-    return {Authorization: `Bearer ${this.token.token}`};
-  }
-
-  /**
-   * Is the user restricted to only project actions
-   * Normally only restricted when user is using API key authentication
-   */
-  public get projectOnly(): boolean {
-    return this.token.mode === Auth.AuthType.Key;
-  }
-
-  /**
    * Make call to OIDC userinfo endpoint
    * @returns User information
    */
@@ -159,28 +153,6 @@ export class Auth {
   }
 
   /**
-   * Perform basic validation of user API key
-   * Checks that the key is present and is of the correct length, but
-   * does not check that it actually works.
-   *
-   * @param key API key passed by user
-   */
-  private async key(key?: string): Promise<void> {
-    if (key) {
-      if (key.length === 32) {
-        this.token.token = key;
-        this.token.mode = Auth.AuthType.Key;
-        await this.saveToken();
-        this.loggedIn = true;
-      } else {
-        throw new Error(`API key is malformed. Expected 32 characters, got ${key.length}`);
-      }
-    } else {
-      throw new Error('No API key defined for API authentication method');
-    }
-  }
-
-  /**
    * Authenticate the user using the Device Flow
    */
   private async deviceFlow(): Promise<void> {
@@ -190,13 +162,13 @@ export class Auth {
 
     const url = new URL(this.codeUrl);
     const {body: code} = await HTTP.post<DeviceCodeRes>(url.toString(), {
-      headers: {'content-type': 'application/x-www-form-urlencoded'},
       body: `client_id=${this.clientId}&scope=openid%20profile%20email%20offline_access&audience=https%3A%2F%2Fclient.apimetrics.io`,
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
     });
 
     ux.info(`Opening browser to ${code.verification_uri_complete}`);
     // ESM doesn't want to work with mocha so we have this instead
-    const open = (await import('open')).default;
+    const {default: open} = await import('open');
     const browser = await open(code.verification_uri_complete);
 
     browser.on('error', (err) => {
@@ -233,6 +205,46 @@ export class Auth {
   }
 
   /**
+   * Perform basic validation of user API key
+   * Checks that the key is present and is of the correct length, but
+   * does not check that it actually works.
+   *
+   * @param key API key passed by user
+   */
+  private async key(key?: string): Promise<void> {
+    if (key) {
+      if (key.length === 32) {
+        this.token.token = key;
+        this.token.mode = Auth.AuthType.Key;
+        await this.saveToken();
+        this.loggedIn = true;
+      } else {
+        throw new Error(`API key is malformed. Expected 32 characters, got ${key.length}`);
+      }
+    } else {
+      throw new Error('No API key defined for API authentication method');
+    }
+  }
+
+  /**
+   * Load the authentication settings from disk
+   */
+  private loadAuth(): void {
+    const filePath = path.join(this.configDir, 'auth.json');
+    if (fs.existsSync(filePath)) {
+      // Handling for malformed contents?
+      this.token = fse.readJsonSync(filePath);
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+      return;
+    }
+
+    // If one or both are blank, we don't have valid details
+    this.loggedIn = Boolean(this.token.token && this.token.mode);
+  }
+
+  /**
    * Poll the authorization server for an access code, backing off as necessary
    * @param code Code object retrieved from auth server previously
    * @param retry Retry interval in ms
@@ -243,43 +255,41 @@ export class Auth {
     await sleep(retryms);
 
     const url = new URL(this.tokenUrl);
-    let response: TokenRes;
+    let token: TokenRes;
     try {
-      response = (
-        await HTTP.post<TokenRes>(url.toString(), {
-          headers: {'content-type': 'application/x-www-form-urlencoded'},
-          body: `grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=${encodeURIComponent(
-            code.device_code
-          )}&client_id=${this.clientId}`,
-        })
-      ).body;
+      const response = await HTTP.post<TokenRes>(url.toString(), {
+        body: `grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=${encodeURIComponent(
+          code.device_code
+        )}&client_id=${this.clientId}`,
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+      });
+      token = response.body;
     } catch (error) {
       if (error instanceof HTTPError) {
         switch (error.body.error) {
-          case 'authorization_pending':
+          case 'authorization_pending': {
             return this.pollToken(code, retryms);
-          case 'slow_down':
+          }
+
+          case 'slow_down': {
             return this.pollToken(code, retryms * 2);
+          }
+
           case 'expired_token':
-          case 'invalid_grant':
+          case 'invalid_grant': {
             throw new Error('Login timed out');
-          default:
+          }
+
+          default: {
             throw new Error('Failed to login');
+          }
         }
       }
 
       throw error;
     }
 
-    return response;
-  }
-
-  /**
-   * Save the token to permanent storage
-   */
-  private async saveToken(): Promise<void> {
-    const filePath = path.join(this.configDir, 'auth.json');
-    await fs.writeJson(filePath, this.token);
+    return token;
   }
 
   /**
@@ -289,14 +299,13 @@ export class Auth {
     const url = new URL(this.tokenUrl);
     let token: TokenRes;
     try {
-      token = (
-        await HTTP.post<TokenRes>(url.toString(), {
-          headers: {'content-type': 'application/x-www-form-urlencoded'},
-          body: `grant_type=refresh_token&client_id=${
-            this.clientId
-          }&refresh_token=${encodeURIComponent(this.token.refresh)}`,
-        })
-      ).body;
+      const response = await HTTP.post<TokenRes>(url.toString(), {
+        body: `grant_type=refresh_token&client_id=${
+          this.clientId
+        }&refresh_token=${encodeURIComponent(this.token.refresh)}`,
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+      });
+      token = response.body;
     } catch (error) {
       this.debug('%O', error);
 
@@ -319,21 +328,11 @@ export class Auth {
   }
 
   /**
-   * Load the authentication settings from disk
+   * Save the token to permanent storage
    */
-  private loadAuth(): void {
+  private async saveToken(): Promise<void> {
     const filePath = path.join(this.configDir, 'auth.json');
-    if (fs.existsSync(filePath)) {
-      // Handling for malformed contents?
-      this.token = fs.readJsonSync(filePath);
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-      return;
-    }
-
-    // If one or both are blank, we don't have valid details
-    this.loggedIn = Boolean(this.token.token && this.token.mode);
+    await fse.writeJson(filePath, this.token);
   }
 }
 
@@ -343,14 +342,14 @@ export namespace Auth {
     Key = 'key',
   }
   export interface Options {
-    type?: AuthType;
     key?: string;
+    type?: AuthType;
   }
 
   export interface ConfigFile {
-    mode: AuthType | undefined;
-    token: string;
-    refresh: string;
     expires: Date | undefined;
+    mode: AuthType | undefined;
+    refresh: string;
+    token: string;
   }
 }

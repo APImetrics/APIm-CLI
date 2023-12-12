@@ -6,52 +6,52 @@ const roles = {
   meta: {},
   results: [
     {
-      project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
-        created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
-        id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
-        last_update: '2023-08-03T19:02:42.591193Z',
-      },
       access_level: 'VIEWER',
       created: '2023-08-03T15:38:30.206605Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4NXQ68MIDA',
-      role_id: 'A_ROLE',
       last_update: '2023-08-03T15:38:30.206611Z',
-    },
-    {
       project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
         created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
         id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
         last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
       },
+      role_id: 'A_ROLE',
+    },
+    {
       access_level: 'EDITOR',
       created: '2023-08-03T15:36:36.746294Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4NWnwe4JDA',
-      role_id: 'A_ROLE',
       last_update: '2023-08-03T15:36:36.746301Z',
-    },
-    {
       project: {
-        name: 'My Project',
-        tags: [],
-        system_tags: ['active'],
         created: '2015-09-23T21:16:48Z',
-        org_id: 'qcmetrics',
         id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
         last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
       },
+      role_id: 'A_ROLE',
+    },
+    {
       access_level: 'VIEWER',
       created: '2023-08-03T15:35:09.014425Z',
       id: 'ag9zfmFwaW1ldHJpY3MtcWNyGwsSDkFjY291bnRQcm9qZWN0GICA4LX4hb4KDA',
-      role_id: 'ANOTHER_ROLE',
       last_update: '2023-08-03T15:35:09.014433Z',
+      project: {
+        created: '2015-09-23T21:16:48Z',
+        id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgICAgICAgAoM',
+        last_update: '2023-08-03T19:02:42.591193Z',
+        name: 'My Project',
+        org_id: 'qcmetrics',
+        system_tags: ['active'],
+        tags: [],
+      },
+      role_id: 'ANOTHER_ROLE',
     },
   ],
 };
@@ -64,8 +64,8 @@ describe('project roles', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -81,16 +81,16 @@ describe('project roles', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          role: 'A_ROLE',
           accessLevel: 'VIEWER',
+          role: 'A_ROLE',
         },
         {
-          role: 'A_ROLE',
           accessLevel: 'EDITOR',
+          role: 'A_ROLE',
         },
         {
-          role: 'ANOTHER_ROLE',
           accessLevel: 'VIEWER',
+          role: 'ANOTHER_ROLE',
         },
       ]);
     });
@@ -105,16 +105,16 @@ describe('project roles', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          role: 'A_ROLE',
           accessLevel: 'VIEWER',
+          role: 'A_ROLE',
         },
         {
-          role: 'A_ROLE',
           accessLevel: 'EDITOR',
+          role: 'A_ROLE',
         },
         {
-          role: 'ANOTHER_ROLE',
           accessLevel: 'VIEWER',
+          role: 'ANOTHER_ROLE',
         },
       ]);
     });

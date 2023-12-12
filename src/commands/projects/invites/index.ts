@@ -1,15 +1,14 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type InviteList = {
-  success: boolean;
   invites: T.Invite[];
+  success: boolean;
 };
 
 export default class Invites extends Command<InviteList> {
   static description = 'List invites in the project.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %>
 Email             Access Level Created
@@ -20,10 +19,12 @@ alice@example.com VIEWER       2023-08-03T22:28:02.141461Z `,
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
       char: 'p',
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<InviteList> {
     const {flags} = await this.parse(Invites);
@@ -36,25 +37,25 @@ alice@example.com VIEWER       2023-08-03T22:28:02.141461Z `,
     ux.table(
       invites,
       {
-        email: {
-          get: (row) => row.email,
-        },
         accessLevel: {
-          header: 'Access Level',
           get: (row) => row.access_level,
+          header: 'Access Level',
         },
         created: {
           get: (row) => row.created,
         },
-        invitedBy: {
-          header: 'Invited By',
-          get: (row) => row.invited_email,
-          extended: true,
+        email: {
+          get: (row) => row.email,
         },
         id: {
-          header: 'ID',
-          get: (row) => row.id,
           extended: true,
+          get: (row) => row.id,
+          header: 'ID',
+        },
+        invitedBy: {
+          extended: true,
+          get: (row) => row.invited_email,
+          header: 'Invited By',
         },
       },
       {
@@ -62,6 +63,6 @@ alice@example.com VIEWER       2023-08-03T22:28:02.141461Z `,
         ...flags,
       }
     );
-    return {success: true, invites: invites};
+    return {invites, success: true};
   }
 }
