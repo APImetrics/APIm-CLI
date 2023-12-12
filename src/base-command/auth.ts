@@ -30,15 +30,17 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export class Auth {
   /** Is the user considered to be logged in? */
   public loggedIn = false;
-  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
-  private codeUrl =
-    process.env.APIMETRICS_CODE_URL || 'https://auth.apimetrics.io/oauth/device/code';
 
+  private readonly defaultAuthServer = 'https://auth.apimetrics.io';
+  // eslint-disable-next-line perfectionist/sort-classes
+  private authServer = process.env.APIMETRICS_AUTH_SERVER || this.defaultAuthServer;
+  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
+  private codeUrl = 'https://auth.apimetrics.io/oauth/device/code';
   private configDir: string;
   private debug = debug('api');
-  private revokeUrl =
-    process.env.APIMETRICS_REVOKE_URL || 'https://auth.apimetrics.io/oauth/revoke';
-
+  private revokeUrl = 'https://auth.apimetrics.io/oauth/revoke';
+  // Flag to avoid excess API calls.
+  private setAuthURLs = false;
   private token: Auth.ConfigFile = {
     expires: undefined,
     mode: undefined,
@@ -46,19 +48,8 @@ export class Auth {
     token: '',
   };
 
-  private readonly defaultAuthServer = 'https://auth.apimetrics.io';
-  private authServer = process.env.APIMETRICS_AUTH_SERVER || this.defaultAuthServer;
-  private clientId = process.env.APIMETRICS_CLIENT_ID || 'dPbV4VPvioF4nZ3oGQMn7n1vE2pFNAAI';
-
   private tokenUrl = 'https://auth.apimetrics.io/oauth/token';
-  private codeUrl = 'https://auth.apimetrics.io/oauth/device/code';
-  private revokeUrl = 'https://auth.apimetrics.io/oauth/revoke';
   private userInfoUrl = 'https://auth.apimetrics.io/userinfo';
-  // Flag to avoid excess API calls.
-  private setAuthURLs = false;
-
-  private configDir: string;
-  private debug = debug('api');
 
   /**
    * @param config User config file
@@ -165,51 +156,6 @@ export class Auth {
   }
 
   /**
-   * Get the auth endpoints from the .well-known endpoint
-   *
-   * This should only ever run once as once it has set the endpoints, it
-   * won't make another API call again so it is fine to call this
-   * multiple times.
-   */
-  private async getEndpoints(): Promise<void> {
-    if (this.authServer === this.defaultAuthServer || this.setAuthURLs) {
-      // Don't bother with excess API calls, we already have the info
-      return;
-    }
-
-    const wellKnownEndpoint = new URL('.well-known/openid-configuration', this.authServer);
-    const {body: config} = await HTTP.get<T.OIDCWellKnown>(wellKnownEndpoint.toString());
-
-    this.tokenUrl = config.token_endpoint;
-    this.codeUrl = config.device_authorization_endpoint;
-    this.revokeUrl = config.revocation_endpoint;
-    this.userInfoUrl = config.userinfo_endpoint;
-    this.setAuthURLs = true;
-  }
-
-  /**
-   * Perform basic validation of user API key
-   * Checks that the key is present and is of the correct length, but
-   * does not check that it actually works.
-   *
-   * @param key API key passed by user
-   */
-  private async key(key?: string): Promise<void> {
-    if (key) {
-      if (key.length === 32) {
-        this.token.token = key;
-        this.token.mode = Auth.AuthType.Key;
-        await this.saveToken();
-        this.loggedIn = true;
-      } else {
-        throw new Error(`API key is malformed. Expected 32 characters, got ${key.length}`);
-      }
-    } else {
-      throw new Error('No API key defined for API authentication method');
-    }
-  }
-
-  /**
    * Authenticate the user using the Device Flow
    */
   private async deviceFlow(): Promise<void> {
@@ -261,6 +207,29 @@ export class Auth {
     await this.saveToken();
     this.loggedIn = true;
     ux.action.stop(chalk.green('Logged in'));
+  }
+
+  /**
+   * Get the auth endpoints from the .well-known endpoint
+   *
+   * This should only ever run once as once it has set the endpoints, it
+   * won't make another API call again so it is fine to call this
+   * multiple times.
+   */
+  private async getEndpoints(): Promise<void> {
+    if (this.authServer === this.defaultAuthServer || this.setAuthURLs) {
+      // Don't bother with excess API calls, we already have the info
+      return;
+    }
+
+    const wellKnownEndpoint = new URL('.well-known/openid-configuration', this.authServer);
+    const {body: config} = await HTTP.get<T.OIDCWellKnown>(wellKnownEndpoint.toString());
+
+    this.tokenUrl = config.token_endpoint;
+    this.codeUrl = config.device_authorization_endpoint;
+    this.revokeUrl = config.revocation_endpoint;
+    this.userInfoUrl = config.userinfo_endpoint;
+    this.setAuthURLs = true;
   }
 
   /**
