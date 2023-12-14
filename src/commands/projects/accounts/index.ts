@@ -7,7 +7,7 @@ export type AccountList = {
 };
 
 export default class Accounts extends Command<AccountList> {
-  static description = 'List users with access to the project.';
+  static description = 'List users with access to the Project.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %>
@@ -21,7 +21,10 @@ alice@example.com OWNER
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to delete. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

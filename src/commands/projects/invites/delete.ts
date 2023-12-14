@@ -9,9 +9,18 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'invite-id': Flags.string({description: 'Invite to delete.', required: true}),
+    'invite-id': Flags.string({
+      description:
+        'Invite to delete. Can be found in the Diff of the Audit Logs web page' +
+        ' for when the invite was created or by using the command' +
+        ' `apimetrics projects invites --columns email,roles,id`.',
+      required: true,
+    }),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

@@ -7,7 +7,7 @@ export type InviteList = {
 };
 
 export default class Invites extends Command<InviteList> {
-  static description = 'List invites in an organization.';
+  static description = 'List all current invites to the Organization.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %>
@@ -20,7 +20,9 @@ alice@example.com DEV_TEAM 2023-07-15T18:34:27.044198Z`,
   static flags = {
     ...ux.table.flags(),
     'org-id': Flags.string({
-      description: 'ID of organization to read. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to read. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
       char: 'o',
     }),
   };

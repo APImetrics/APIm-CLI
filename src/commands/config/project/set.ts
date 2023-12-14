@@ -15,7 +15,10 @@ export default class Set extends Command<SetProjectJson> {
 
   static flags = {
     'project-id': Flags.string({
-      description: 'ID of project to switch to',
+      description:
+        'ID of project to switch to. Can be found in the Project Settings' +
+        ' web page under Admin Settings. Alternatively, you may omit this flag and' +
+        ' select your project interactively.',
       char: 'p',
     }),
   };

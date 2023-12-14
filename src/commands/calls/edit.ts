@@ -15,7 +15,14 @@ export default class Edit extends Command<UpdatedCall> {
   ];
 
   static flags = {
-    'call-id': Flags.string({description: 'ID of call.', char: 'c', required: true}),
+    'call-id': Flags.string({
+      description:
+        'ID of call. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`.',
+      char: 'c',
+      required: true,
+    }),
     name: Flags.string({description: 'Name of API call.', char: 'n'}),
     url: Flags.string({description: 'URL to call.', char: 'u'}),
     method: Flags.string({
@@ -63,7 +70,10 @@ export default class Edit extends Command<UpdatedCall> {
       multiple: true,
     }),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
     description: Flags.string({description: 'Call description.'}),

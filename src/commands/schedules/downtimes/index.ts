@@ -7,7 +7,7 @@ export type DowntimeList = {
 };
 
 export default class Schedules extends Command<DowntimeList> {
-  static description = 'List downtimes.';
+  static description = 'List downtimes for all Schedules.';
   protected permitKeyAuth = true;
 
   static examples = [
@@ -22,7 +22,10 @@ ag9zfmFwaW1… ag9zfmFwaW1… 2023-09-29T14:57:39.134000Z 2023-10-20T14:57:39.13
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

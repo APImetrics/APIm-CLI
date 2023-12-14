@@ -6,7 +6,7 @@ export type LogoutJson = {
 };
 
 export default class Logout extends Command<LogoutJson> {
-  static description = 'Logout';
+  static description = 'Logout of APImetrics CLI.';
 
   static examples = ['<%= config.bin %> <%= command.id %>'];
 

@@ -35,7 +35,10 @@ Wrote project.yaml to myproject.yaml.`,
     header: Flags.boolean({description: 'Include header data.', default: true, allowNo: true}),
     webhook: Flags.boolean({description: 'Include webhook data.', default: true, allowNo: true}),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

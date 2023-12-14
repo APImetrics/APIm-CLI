@@ -1,13 +1,13 @@
 `apimetrics help`
 =================
 
-Display help for APImetrics CLI.
+Display help for apimetrics.
 
 * [`apimetrics help [COMMANDS]`](#apimetrics-help-commands)
 
 ## `apimetrics help [COMMANDS]`
 
-Display help for APImetrics CLI.
+Display help for apimetrics.
 
 ```
 USAGE

@@ -9,9 +9,17 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'webhook-id': Flags.string({description: 'Webhook to delete.', required: true}),
+    'webhook-id': Flags.string({
+      description:
+        'Webhook to delete. Can be found using the command' +
+        ' `apimetrics webhooks --columns name,id`.',
+      required: true,
+    }),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

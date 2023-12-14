@@ -19,7 +19,9 @@ export default class Projects extends Command<ProjectList> {
   static flags = {
     ...ux.table.flags(),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to read. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
       char: 'o',
     }),
   };

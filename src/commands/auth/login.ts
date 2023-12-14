@@ -7,14 +7,14 @@ export type LoginJson = {
 };
 
 export default class Login extends Command<LoginJson> {
-  static description = 'Login to APImetrics';
+  static description = 'Login to APImetrics CLI.';
 
   static examples = ['<%= config.bin %> <%= command.id %> --key <api key>'];
 
   static aliases = ['login'];
 
   static flags = {
-    key: Flags.string({description: 'API key when using API key auth', required: false}),
+    key: Flags.string({description: 'API key when using API key auth.', required: false}),
   };
 
   public async run(): Promise<LoginJson> {

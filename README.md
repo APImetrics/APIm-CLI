@@ -5,7 +5,6 @@ An easy way to interact with APImetrics, the unbiased SaaS Platform
 ensuring API products perform as agreed, are secure, meet business
 objectives, and comply with regulations.
 
-<!-- toc -->
 * [Install](#install)
   * [Requirements](#requirements)
     * [Networking](#networking)
@@ -18,7 +17,6 @@ objectives, and comply with regulations.
 * [Login](#login)
 * [Command Topics](#command-topics)
 * [Environment Variables](#environment-variables)
-<!-- tocstop -->
 
 # Install
 
@@ -71,7 +69,9 @@ Group](https://github.com/nodejs/Release).
 
 The CLI is built with Node.js and can be installed using `npm`. In order
 to use this method, you must have `node` and `npm` installed on your
-system already. You can find download instructions [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). To download run the following command:
+system already. You can find download instructions
+[here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+To download run the following command:
 
 ```sh-session
 npm install -g @apimetrics/cli
@@ -87,39 +87,53 @@ The tarballs are available in both `gz` and `xz` formats. `xz` is much
 smaller so ideal for slow connections, however `gz` has wider support
 from decompression software. If you are unsure of which to use, use `gz`.
 
-To find the latest version of your desired tarball, go to our [latest release](https://github.com/APImetrics/APIm-CLI/releases).
+To find the latest version of your desired tarball, go to our [latest
+release](https://github.com/APImetrics/APIm-CLI/releases).
 
 Once you have downloaded the tarball for your system, you should then
 extract to a location such as `/usr/local/bin/apimetrics` and ensure
 that this location is on your `PATH`.
 
 # Usage
+<!-- usage -->
 ```sh-session
 $ npm install -g @apimetrics/cli
 $ apimetrics COMMAND
 running command...
 $ apimetrics (--version)
-@apimetrics/cli/0.2.1 darwin-arm64 node-v20.9.0
+@apimetrics/cli/0.2.1 linux-x64 node-v21.0.0
 $ apimetrics --help [COMMAND]
 USAGE
   $ apimetrics COMMAND
 ...
 ```
+<!-- usagestop -->
 
 # Login
 
-To start using the APImetrics CLI, you must log into your account. If you don't have an account with APImetrics, you can sign up [here](https://client.apimetrics.io/register). To log in, run the following command:
+To start using the APImetrics CLI, you must log into your account. If
+you don't have an account with APImetrics, you can sign up
+[here](https://client.apimetrics.io/register). To log in, run the
+following command:
 
 ```sh-session
-  apimetrics login
+apimetrics login
 ```
 
-You will be redirected to a page in your browser with a code. Check this code is the same as the code displayed in your APImetrics CLI. If they are, click confirm. If you have multi-factor authentication enabled for APImetrics, you will be asked to input your one-time code. After this, you will be logged in and be able to return to your CLI.
+You will be redirected to a page in your browser with a code. Check this
+code is the same as the code displayed in your APImetrics CLI. If they
+are, click confirm. If you have multi-factor authentication enabled for
+APImetrics, you will be asked to input your one-time code. After this,
+you will be logged in and be able to return to your CLI.
 
 <img src="/docs/images/home/cli-image.png" width="50%">
 
-Now that you are logged in, the CLI will ask you to select one of the Organizations you are part of to work on. Once this is selected, it will ask you to select the Project you want to work on. Now you are ready to start with your CLI.
+Now that you are logged in, the CLI will ask you to select one of the
+Organizations you are part of to work on. Once this is selected, it will
+ask you to select the Project you want to work on. Now you are ready to
+start with your CLI.
 
+<!-- commands -->
 # Command Topics
 
 * [`apimetrics auth`](docs/auth.md) - Manage authentication options.
@@ -133,6 +147,8 @@ Now that you are logged in, the CLI will ask you to select one of the Organizati
 * [`apimetrics schedules`](docs/schedules.md) - Manage project schedules.
 * [`apimetrics webhooks`](docs/webhooks.md) - Manage project webhooks and alerts.
 * [`apimetrics workflows`](docs/workflows.md) - Manage project workflows.
+
+<!-- commandsstop -->
 
 # Environment Variables
 

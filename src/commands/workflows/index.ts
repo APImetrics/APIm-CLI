@@ -7,7 +7,7 @@ export type WorkflowsList = {
 };
 
 export default class Workflows extends Command<WorkflowsList> {
-  static description = 'List workflows.';
+  static description = 'List all workflows in the Project.';
   protected permitKeyAuth = true;
 
   static examples = [
@@ -21,7 +21,10 @@ Buy Fruit             false           false
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

@@ -9,39 +9,58 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
 
   static flags = {
     'add-owner': Flags.string({
-      description: 'ID of role to add as an owner.',
+      description:
+        'ID of role to add as an owner. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'remove-owner': Flags.string({
-      description: 'ID of role to remove as an owner',
+      description:
+        'ID of role to remove as an owner. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'add-editor': Flags.string({
-      description: 'ID of role to add as an editor.',
+      description:
+        'ID of role to add as an editor. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'remove-editor': Flags.string({
-      description: 'ID of role to remove as an editor',
+      description:
+        'ID of role to remove as an editor. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'add-analyst': Flags.string({
-      description: 'ID of role to add as an analyst.',
+      description:
+        'ID of role to add as an analyst. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'remove-analyst': Flags.string({
-      description: 'ID of role to remove as an analyst.',
+      description:
+        'ID of role to remove as an analyst. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'add-viewer': Flags.string({
-      description: 'ID of role to add as a viewer.',
+      description:
+        'ID of role to add as a viewer. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'remove-viewer': Flags.string({
-      description: 'ID of role to remove as an viewer',
+      description:
+        'ID of role to add as a viewer. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

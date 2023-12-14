@@ -7,9 +7,17 @@ export default class Delete extends Command<{success: boolean}> {
   static examples = ['<%= config.bin %> <%= command.id %> --role TEAM_A'];
 
   static flags = {
-    role: Flags.string({description: 'ID of role to delete.', char: 'r', required: true}),
+    role: Flags.string({
+      description:
+        'ID of role to delete. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
+      char: 'r',
+      required: true,
+    }),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
       char: 'o',
     }),
   };

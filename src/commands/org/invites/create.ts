@@ -7,7 +7,7 @@ export type InviteResponse = {
 };
 
 export default class Create extends Command<InviteResponse> {
-  static description = 'Create an invite to the organization.';
+  static description = 'Create an invite to the Organization.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %> --email bob@example.com --role ADMIN --role DEV_TEAM
@@ -18,7 +18,9 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM`,
     email: Flags.string({description: 'Email to send invite to.', required: true}),
     role: Flags.string({description: 'Users role.', multiple: true, required: true}),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
       char: 'o',
     }),
   };

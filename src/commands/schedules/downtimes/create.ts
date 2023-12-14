@@ -7,7 +7,7 @@ export type Downtime = {
 };
 
 export default class Create extends Command<Downtime> {
-  static description = 'Create downtime.';
+  static description = 'Create downtime for a Schedule.';
   protected permitKeyAuth = true;
 
   static examples = [
@@ -27,7 +27,9 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       required: true,
     }),
     'schedule-id': Flags.string({
-      description: 'ID of schedule to add downtime to.',
+      description:
+        'Schedule to modify. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id',
       required: true,
     }),
     repeat: Flags.string({
@@ -35,7 +37,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       options: ['daily', 'weekly'],
     }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

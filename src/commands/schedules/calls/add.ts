@@ -7,7 +7,7 @@ export type Schedule = {
 };
 
 export default class Add extends Command<Schedule> {
-  static description = 'Add call to schedule.';
+  static description = 'Add an API call to a Schedule.';
   protected permitKeyAuth = true;
 
   static examples = [
@@ -18,16 +18,24 @@ export default class Add extends Command<Schedule> {
 
   static flags = {
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
     'schedule-id': Flags.string({
-      description: 'ID of schedule to modify.',
+      description:
+        'ID of schedule to modify. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id`.',
       char: 's',
       required: true,
     }),
     'call-id': Flags.string({
-      description: 'ID of call to add.',
+      description:
+        'ID of call to add. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`.',
       char: 'c',
       required: true,
     }),

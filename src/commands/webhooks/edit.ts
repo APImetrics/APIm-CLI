@@ -16,7 +16,12 @@ export default class Edit extends Command<EditJSON> {
   static examples = [`<%= config.bin %> <%= command.id %>`];
 
   static flags = {
-    'webhook-id': Flags.string({description: 'Webhook to edit.', required: true}),
+    'webhook-id': Flags.string({
+      description:
+        'Webhook to edit. Can be found using the command' +
+        ' `apimetrics webhooks --columns name,id`.',
+      required: true,
+    }),
     name: Flags.string({description: 'Name of project.', char: 'n'}),
     'fails-in-a-row': Flags.integer({
       description:
@@ -55,13 +60,21 @@ Result: {{ result_url }}
       description: 'Password to use for authentication. Used by [generic].',
     }),
     'call-id': Flags.string({
-      description: 'APImetrics API call to run. Used by [apimetrics_api].',
+      description:
+        'APImetrics API call to run. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].',
     }),
     'workflow-id': Flags.string({
-      description: 'APImetrics workflow to run. Used by [apimetrics_workflow].',
+      description:
+        'APImetrics workflow to run. Can be found by using the command' +
+        ' `apimetrics workflows --columns name,id`. Used by [apimetrics_workflow: required].',
     }),
     'token-id': Flags.string({
-      description: 'APImetrics token to update. Used by [apimetrics_token].',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
     channel: Flags.string({
       description:
@@ -136,7 +149,10 @@ Result: {{ result_url }}
       exclusive: ['enable'],
     }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

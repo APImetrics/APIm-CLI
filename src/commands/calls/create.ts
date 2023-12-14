@@ -42,7 +42,10 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM`,
     header: Flags.string({description: 'Header to add to call.', multiple: true}),
     tag: Flags.string({description: 'Tag to add to call.', multiple: true}),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
     description: Flags.string({description: 'Call description.'}),

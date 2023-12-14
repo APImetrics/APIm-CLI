@@ -160,13 +160,20 @@ Result: {{ result_url }}
       description: 'Password to use for authentication. Used by [generic: optional].',
     }),
     'call-id': Flags.string({
-      description: 'APImetrics API call to run. Used by [apimetrics_api: required].',
+      description:
+        'APImetrics API call to run. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].',
     }),
     'workflow-id': Flags.string({
-      description: 'APImetrics workflow to run. Used by [apimetrics_workflow: required].',
+      description:
+        'APImetrics workflow to run. Can be found by using the command' +
+        ' `apimetrics workflows --columns name,id`. Used by [apimetrics_workflow: required].',
     }),
     'token-id': Flags.string({
-      description: 'APImetrics token to update. Used by [apimetrics_token: required].',
+      description:
+        'APImetrics token to update. Can be found on the Auth & Tokens web page,' +
+        ' select the desired token to see the ID. Used by [apimetrics_token: required].',
     }),
     channel: Flags.string({
       description:
@@ -222,7 +229,10 @@ Result: {{ result_url }}
       multiple: true,
     }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

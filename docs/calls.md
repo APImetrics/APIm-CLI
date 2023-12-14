@@ -1,21 +1,17 @@
 `apimetrics calls`
 ==================
 
-Manage monitoring calls, which can be separated into two sections:
+Manage monitoring calls.
 
-* [API Calls](#api-calls)
-  * [`apimetrics calls`](#apimetrics-calls)
-  * [`apimetrics calls create`](#apimetrics-calls-create)
-  * [`apimetrics calls edit`](#apimetrics-calls-edit)
-* [Schedules](#schedules)
-  * [`apimetrics calls schedules add`](#apimetrics-calls-schedules-add)
-  * [`apimetrics calls schedules delete`](#apimetrics-calls-schedules-delete)
+* [`apimetrics calls`](#apimetrics-calls)
+* [`apimetrics calls create`](#apimetrics-calls-create)
+* [`apimetrics calls edit`](#apimetrics-calls-edit)
+* [`apimetrics calls schedules add`](#apimetrics-calls-schedules-add)
+* [`apimetrics calls schedules delete`](#apimetrics-calls-schedules-delete)
 
-## API Calls
+## `apimetrics calls`
 
-### `apimetrics calls`
-
-List all API calls in the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
+List API calls in project.
 
 ```
 USAGE
@@ -23,16 +19,18 @@ USAGE
     csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
-  -x, --extended            show extra columns.
-  --columns=<value>         only show provided columns (comma-separated).
-  --csv                     output is csv format [alias: --output=csv].
-  --filter=<value>          filter property by partial string matching, ex: name=foo. Value is case-sensitive.
-  --no-header               hide table header from output.
-  --no-truncate             do not truncate output to fit screen.
-  --output=<option>         output in a more machine friendly format.
+  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set. Can be found in the Project
+                            Settings web page under the admin section or by using the command `apimetrics projects
+                            --columns name,id`.
+  -x, --extended            show extra columns
+  --columns=<value>         only show provided columns (comma-separated)
+  --csv                     output is csv format [alias: --output=csv]
+  --filter=<value>          filter property by partial string matching, ex: name=foo
+  --no-header               hide table header from output
+  --no-truncate             do not truncate output to fit screen
+  --output=<option>         output in a more machine friendly format
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending).
+  --sort=<value>            property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -54,9 +52,9 @@ EXAMPLES
 
 _See code: [src/commands/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/index.ts)_
 
-### `apimetrics calls create`
+## `apimetrics calls create`
 
-Create a new API call in the Project. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
+Create a new API call.
 
 ```
 USAGE
@@ -68,7 +66,9 @@ FLAGS
   -m, --method=<option>     [default: GET] HTTP method to use.
                             <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
   -n, --name=<value>        (required) Name of API call.
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
+  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                            Project Settings web page under the admin section or by using the command `apimetrics
+                            projects --columns name,id`.
   -u, --url=<value>         (required) URL to call.
   --accept=<value>          MIME type for accept header. Alias for --header Accept: <MIME type>.
   --body=<value>            Request body.
@@ -92,9 +92,9 @@ EXAMPLES
 
 _See code: [src/commands/calls/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/create.ts)_
 
-### `apimetrics calls edit`
+## `apimetrics calls edit`
 
-Edit an existing API call. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
+Edit an existing API call.
 
 ```
 USAGE
@@ -104,11 +104,14 @@ USAGE
     <value>] [--description <value>] [--body <value>]
 
 FLAGS
-  -c, --call-id=<value>        (required) ID of call.
+  -c, --call-id=<value>        (required) ID of call. Can be found in the expanded Audit Logs of the desired API call in
+                               the Audit tab web page or by using the command `apimetrics calls --columns name,id`.
   -m, --method=<option>        HTTP method to use.
                                <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
   -n, --name=<value>           Name of API call.
-  -p, --project-id=<value>     ID of project to modify. Overrides apimetrics config project set.
+  -p, --project-id=<value>     ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                               Project Settings web page under the admin section or by using the command `apimetrics
+                               projects --columns name,id`.
   -u, --url=<value>            URL to call.
   --accept=<value>             MIME type for accept header. Alias for --replace-header Accept: <MIME type>.
   --add-header=<value>...      Add header to the call. Specify in the form <key>: <value>.
@@ -132,26 +135,29 @@ EXAMPLES
 
 _See code: [src/commands/calls/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/calls/edit.ts)_
 
-## Schedules
+## `apimetrics calls schedules add`
 
-### `apimetrics calls schedules add`
-
-Add an API call to a Schedule. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`. 
+Add an API call to a Schedule.
 
 ```
 USAGE
   $ apimetrics calls schedules add -s <value> -c <value> [--json] [-p <value>]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to add.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+  -c, --call-id=<value>      (required) ID of call to add. Can be found in the expanded Audit Logs of the desired API
+                             call in the Audit tab web page or by using the command `apimetrics calls --columns
+                             name,id`.
+  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                             Project Settings web page under the admin section or by using the command `apimetrics
+                             projects --columns name,id`.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
+                             schedules --columns name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Add call to schedule.
+  Add an API call to a Schedule.
 
 ALIASES
   $ apimetrics calls schedules add
@@ -160,18 +166,23 @@ EXAMPLES
   $ apimetrics calls schedules add --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-### `apimetrics calls schedules delete`
+## `apimetrics calls schedules delete`
 
-Remove an API call from a Schedule. **Call IDs** can be found in the expanded Audit Logs of the desired API call in the Audit tab or by using the command `apimetrics calls --columns name,id`. **Schedule IDs** can be found by using the command `apimetrics schedules -x --no-truncate`. **Project IDs** can be found in the Project Settings under the Admin section or by using the command `apimetrics projects -x --no-truncate`.
+Remove call from schedule
 
 ```
 USAGE
   $ apimetrics calls schedules delete -s <value> -c <value> [--json] [-p <value>]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to remove.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+  -c, --call-id=<value>      (required) ID of call to add. Can be found in the expanded Audit Logs of the desired API
+                             call in the Audit tab web page or by using the command `apimetrics calls --columns
+                             name,id`.
+  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                             Project Settings web page under the admin section or by using the command `apimetrics
+                             projects --columns name,id`.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
+                             schedules --columns name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.

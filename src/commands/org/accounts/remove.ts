@@ -9,9 +9,18 @@ export default class Remove extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of user to remove.', char: 'u', required: true}),
+    'user-id': Flags.string({
+      description:
+        'ID of user to remove. Can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
+      char: 'u',
+      required: true,
+    }),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
       char: 'o',
     }),
   };

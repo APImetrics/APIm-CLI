@@ -9,7 +9,14 @@ export default class Edit extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'user-id': Flags.string({description: 'ID of user', char: 'u', required: true}),
+    'user-id': Flags.string({
+      description:
+        'ID of user. Can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
+      char: 'u',
+      required: true,
+    }),
     'add-role': Flags.string({
       description: 'Add a role to the account.',
       multiple: true,
@@ -19,7 +26,9 @@ export default class Edit extends Command<{success: boolean}> {
       multiple: true,
     }),
     'org-id': Flags.string({
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
       char: 'o',
     }),
   };

@@ -6,8 +6,8 @@ export type Schedule = {
   schedule: T.Schedule;
 };
 
-export default class Create extends Command<Schedule> {
-  static description = 'Create schedule.';
+export default class Edit extends Command<Schedule> {
+  static description = 'Edit an existing Schedule.';
   protected permitKeyAuth = true;
 
   static examples = [
@@ -99,15 +99,23 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       description: 'Remove region to run calls from.',
       multiple: true,
     }),
-    'schedule-id': Flags.string({description: 'Schedule to delete.', required: true}),
+    'schedule-id': Flags.string({
+      description:
+        'Schedule to modify. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id',
+      required: true,
+    }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };
 
   public async run(): Promise<Schedule> {
-    const {flags} = await this.parse(Create);
+    const {flags} = await this.parse(Edit);
 
     if (flags['project-id']) {
       this.api.project = flags['project-id'];

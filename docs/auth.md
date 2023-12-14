@@ -21,7 +21,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Login to APImetrics
+  Login to APImetrics CLI.
 
 ALIASES
   $ apimetrics login
@@ -44,7 +44,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Logout
+  Logout of APImetrics CLI.
 
 EXAMPLES
   $ apimetrics auth logout

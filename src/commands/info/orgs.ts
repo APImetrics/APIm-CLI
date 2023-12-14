@@ -8,7 +8,7 @@ export type OrgList = {
 };
 
 export default class Orgs extends Command<OrgList> {
-  static description = 'List organizations the current user is a member of.';
+  static description = 'List all Organizations the current user is a member of.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %>

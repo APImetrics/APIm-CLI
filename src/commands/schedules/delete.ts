@@ -10,9 +10,17 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'schedule-id': Flags.string({description: 'Schedule to delete.', required: true}),
+    'schedule-id': Flags.string({
+      description:
+        'Schedule to delete. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id',
+      required: true,
+    }),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

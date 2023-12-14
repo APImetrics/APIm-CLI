@@ -24,7 +24,9 @@ export default class Create extends Command<Downtime> {
       description: 'Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).',
     }),
     'downtime-id': Flags.string({
-      description: 'ID of downtime to edit.',
+      description:
+        'Downtime to edit. Can be found using the command' +
+        '`apimetrics schedules downtimes --columns id',
       required: true,
     }),
     repeat: Flags.string({
@@ -32,7 +34,10 @@ export default class Create extends Command<Downtime> {
       options: ['daily', 'weekly', 'off'],
     }),
     'project-id': Flags.string({
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };

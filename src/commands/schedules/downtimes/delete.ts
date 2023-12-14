@@ -2,7 +2,7 @@ import {Flags} from '@oclif/core';
 import {Command} from '../../../base-command';
 
 export default class Delete extends Command<{success: boolean}> {
-  static description = 'Delete a downtime.';
+  static description = 'Delete a downtime for a Schedule.';
   protected permitKeyAuth = true;
 
   static examples = [
@@ -10,9 +10,17 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'downtime-id': Flags.string({description: 'Downtime to delete.', required: true}),
+    'downtime-id': Flags.string({
+      description:
+        'Downtime to delete. Can be found using the command' +
+        '`apimetrics schedules downtimes --columns id',
+      required: true,
+    }),
     'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
       char: 'p',
     }),
   };
