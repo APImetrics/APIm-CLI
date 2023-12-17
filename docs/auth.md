@@ -8,7 +8,7 @@ Manage authentication options.
 
 ## `apimetrics auth login`
 
-Login to APImetrics CLI.
+Login to APImetrics
 
 ```
 USAGE
@@ -21,7 +21,7 @@ GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Login to APImetrics CLI.
+  Login to APImetrics
 
 ALIASES
   $ apimetrics login

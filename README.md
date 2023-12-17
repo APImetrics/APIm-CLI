@@ -101,7 +101,7 @@ $ npm install -g @apimetrics/cli
 $ apimetrics COMMAND
 running command...
 $ apimetrics (--version)
-@apimetrics/cli/0.3.0 darwin-arm64 node-v20.9.0
+@apimetrics/cli/0.3.0 linux-x64 node-v21.0.0
 $ apimetrics --help [COMMAND]
 USAGE
   $ apimetrics COMMAND
@@ -133,16 +133,6 @@ Organizations you are part of to work on. Once this is selected, it will
 ask you to select the Project you want to work on. Now you are ready to
 start with your CLI.
 
-# Environment Variables
-
-| Name                        | Required | Description                                                                                                                                                     |
-|-----------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `APIMETRICS_API_URL`        | :x:      | Base URL for the API. Defaults to `https://client.apimetrics.io/api/2/`.                                                                                        |
-| `APIMETRICS_AUTH_SERVER`    | :x:      | OIDC server to use for login. Defaults to `https://auth.apimetrics.io`.                                                                                         |
-| `APIMETRICS_CLIENT_ID`      | :x:      | Client ID to use for OAuth based login.                                                                                                                         |
-| `APIMETRICS_CONFIG_DIR`     | :x:      | Directory to store configuration for the CLI. Defaults to `~/.config/apimetrics` on UNIX and `%LOCALAPPDATA%\apimetrics` on Windows.                            |
-| ~~`XDG_CONFIG_HOME`~~       | :x:      | Directory to store configuration for the CLI. Not recommended for use. Use `APIMETRICS_CONFIG_DIR` instead. `APIMETRICS_CONFIG_DIR` takes priority if also set. |
-
 <!-- commands -->
 # Command Topics
 
@@ -158,3 +148,13 @@ start with your CLI.
 * [`apimetrics workflows`](docs/workflows.md) - Manage project workflows.
 
 <!-- commandsstop -->
+
+# Environment Variables
+
+| Name                        | Required | Description                                                                                                                                                     |
+|-----------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `APIMETRICS_API_URL`        | :x:      | Base URL for the API. Defaults to `https://client.apimetrics.io/api/2/`.                                                                                        |
+| `APIMETRICS_AUTH_SERVER`    | :x:      | OIDC server to use for login. Defaults to `https://auth.apimetrics.io`.                                                                                         |
+| `APIMETRICS_CLIENT_ID`      | :x:      | Client ID to use for OAuth based login.                                                                                                                         |
+| `APIMETRICS_CONFIG_DIR`     | :x:      | Directory to store configuration for the CLI. Defaults to `~/.config/apimetrics` on UNIX and `%LOCALAPPDATA%\apimetrics` on Windows.                            |
+| ~~`XDG_CONFIG_HOME`~~       | :x:      | Directory to store configuration for the CLI. Not recommended for use. Use `APIMETRICS_CONFIG_DIR` instead. `APIMETRICS_CONFIG_DIR` takes priority if also set. |

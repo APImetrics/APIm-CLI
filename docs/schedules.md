@@ -21,22 +21,22 @@ List schedules.
 
 ```
 USAGE
-  $ apimetrics schedules [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+  $ apimetrics schedules [--json] [--columns <value> | -x] [--filter <value>] [--no-header | [--csv |
+    --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>] [-p <value>]
 
 FLAGS
   -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set. Can be found in the Project
                             Settings web page under the admin section or by using the command `apimetrics projects
                             --columns name,id`.
   -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+      --columns=<value>     only show provided columns (comma-separated)
+      --csv                 output is csv format [alias: --output=csv]
+      --filter=<value>      filter property by partial string matching, ex: name=foo
+      --no-header           hide table header from output
+      --no-truncate         do not truncate output to fit screen
+      --output=<option>     output in a more machine friendly format
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+      --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -60,8 +60,8 @@ List calls on the schedule.
 
 ```
 USAGE
-  $ apimetrics schedules calls -s <value> [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>]
-    [--output csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+  $ apimetrics schedules calls -s <value> [--json] [--columns <value> | -x] [--filter <value>] [--no-header | [--csv
+    | --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>] [-p <value>]
 
 FLAGS
   -p, --project-id=<value>   ID of project to read. Overrides apimetrics config project set. Can be found in the Project
@@ -70,14 +70,14 @@ FLAGS
   -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
                              schedules --columns name,id`.
   -x, --extended             show extra columns
-  --columns=<value>          only show provided columns (comma-separated)
-  --csv                      output is csv format [alias: --output=csv]
-  --filter=<value>           filter property by partial string matching, ex: name=foo
-  --no-header                hide table header from output
-  --no-truncate              do not truncate output to fit screen
-  --output=<option>          output in a more machine friendly format
+      --columns=<value>      only show provided columns (comma-separated)
+      --csv                  output is csv format [alias: --output=csv]
+      --filter=<value>       filter property by partial string matching, ex: name=foo
+      --no-header            hide table header from output
+      --no-truncate          do not truncate output to fit screen
+      --output=<option>      output in a more machine friendly format
                              <options: csv|json|yaml>
-  --sort=<value>             property to sort by (prepend '-' for descending)
+      --sort=<value>         property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -100,11 +100,14 @@ Add an API call to a Schedule.
 
 ```
 USAGE
-  $ apimetrics schedules calls add -s <value> -c <value> [--json]
+  $ apimetrics schedules calls add -c <value> -s <value> [--json]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to add.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+  -c, --call-id=<value>      (required) ID of call to add. Can be found in the expanded Audit Logs of the desired API
+                             call in the Audit tab web page or by using the command `apimetrics calls --columns
+                             name,id`.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
+                             schedules --columns name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -127,11 +130,14 @@ Remove call from schedule
 
 ```
 USAGE
-  $ apimetrics schedules calls remove -s <value> -c <value> [--json]
+  $ apimetrics schedules calls remove -c <value> -s <value> [--json]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to remove.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+  -c, --call-id=<value>      (required) ID of call to remove. Can be found in the expanded Audit Logs of the desired API
+                             call in the Audit tab web page or by using the command `apimetrics calls --columns
+                             name,id`.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
+                             schedules --columns name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -155,28 +161,28 @@ Create a new Schedule for the Project.
 ```
 USAGE
   $ apimetrics schedules create --interval 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h --name
-    <value> [--json] [--retry-method fibonacci|exponential|constant] [--retry-base <value>] [--retry-factor <value>]
-    [--retry-interval <value>] [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>]
-    [--postman] [--location <value>] [--region <value>] [-p <value>]
+    <value> [--json] [--ignore-in-stats <value>] [--location <value>] [--max-retries <value>] [--postman] [-p <value>]
+    [--region <value>] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>] [--retry-method
+    fibonacci|exponential|constant] [--skip-notifications <value>]
 
 FLAGS
-  -p, --project-id=<value>      ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                                Project Settings web page under the admin section or by using the command `apimetrics
-                                projects --columns name,id`.
-  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
-  --interval=<option>           (required) Schedule interval.
-                                <options: 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h>
-  --location=<value>...         Location to run calls from.
-  --max-retries=<value>         Maximum number of retries to attempt.
-  --name=<value>                (required) Name of schedule.
-  --postman                     Only enable if you use the Postman Monitoring feature
-  --region=<value>...           Region to run calls from.
-  --retry-base=<value>          Base for exponential retry.
-  --retry-factor=<value>        Factor for exponential retry.
-  --retry-interval=<value>      Wait X seconds between each retry.
-  --retry-method=<option>       Algorithm for retries.
-                                <options: fibonacci|exponential|constant>
-  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
+  -p, --project-id=<value>          ID of project to modify. Overrides apimetrics config project set. Can be found in
+                                    the Project Settings web page under the admin section or by using the command
+                                    `apimetrics projects --columns name,id`.
+      --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
+      --interval=<option>           (required) Schedule interval.
+                                    <options: 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h>
+      --location=<value>...         Location to run calls from.
+      --max-retries=<value>         Maximum number of retries to attempt.
+      --name=<value>                (required) Name of schedule.
+      --postman                     Only enable if you use the Postman Monitoring feature
+      --region=<value>...           Region to run calls from.
+      --retry-base=<value>          Base for exponential retry.
+      --retry-factor=<value>        Factor for exponential retry.
+      --retry-interval=<value>      Wait X seconds between each retry.
+      --retry-method=<option>       Algorithm for retries.
+                                    <options: fibonacci|exponential|constant>
+      --skip-notifications=<value>  Number of retries to attempt before sending notifications.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -200,7 +206,8 @@ USAGE
   $ apimetrics schedules delete --schedule-id <value> [--json]
 
 FLAGS
-  --schedule-id=<value>  (required) Schedule to delete.
+  --schedule-id=<value>  (required) Schedule to delete. Can be found by using the command `apimetrics schedules
+                         --columns name,id
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -220,22 +227,22 @@ List downtimes for all Schedules.
 
 ```
 USAGE
-  $ apimetrics schedules downtimes [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+  $ apimetrics schedules downtimes [--json] [--columns <value> | -x] [--filter <value>] [--no-header | [--csv |
+    --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>] [-p <value>]
 
 FLAGS
   -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set. Can be found in the Project
                             Settings web page under the admin section or by using the command `apimetrics projects
                             --columns name,id`.
   -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+      --columns=<value>     only show provided columns (comma-separated)
+      --csv                 output is csv format [alias: --output=csv]
+      --filter=<value>      filter property by partial string matching, ex: name=foo
+      --no-header           hide table header from output
+      --no-truncate         do not truncate output to fit screen
+      --output=<option>     output in a more machine friendly format
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+      --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -259,14 +266,15 @@ Create downtime for a Schedule.
 
 ```
 USAGE
-  $ apimetrics schedules downtimes create --start <value> --end <value> --schedule-id <value> [--json] [--repeat
+  $ apimetrics schedules downtimes create --end <value> --schedule-id <value> --start <value> [--json] [--repeat
   daily|weekly]
 
 FLAGS
   --end=<value>          (required) Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
   --repeat=<option>      Repeat this downtime at the set interval.
                          <options: daily|weekly>
-  --schedule-id=<value>  (required) ID of schedule to add downtime to.
+  --schedule-id=<value>  (required) Schedule to modify. Can be found by using the command `apimetrics schedules
+                         --columns name,id
   --start=<value>        (required) Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
 
 GLOBAL FLAGS
@@ -291,11 +299,11 @@ USAGE
   $ apimetrics schedules downtimes delete --downtime-id <value> [--json] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                            Project Settings web page under the admin section or by using the command `apimetrics
-                            projects --columns name,id`.
-  --downtime-id=<value>     (required) Downtime to delete. Can be found using the command`apimetrics schedules downtimes
-                            --columns id
+  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                             Project Settings web page under the admin section or by using the command `apimetrics
+                             projects --columns name,id`.
+      --downtime-id=<value>  (required) Downtime to delete. Can be found using the command`apimetrics schedules
+                             downtimes --columns id
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -315,11 +323,12 @@ Edit downtime.
 
 ```
 USAGE
-  $ apimetrics schedules downtimes edit --downtime-id <value> [--json] [--start <value>] [--end <value>] [--repeat
-    daily|weekly|off]
+  $ apimetrics schedules downtimes edit --downtime-id <value> [--json] [--end <value>] [--repeat daily|weekly|off] [--start
+    <value>]
 
 FLAGS
-  --downtime-id=<value>  (required) ID of downtime to edit.
+  --downtime-id=<value>  (required) Downtime to edit. Can be found using the command`apimetrics schedules downtimes
+                         --columns id
   --end=<value>          Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
   --repeat=<option>      Repeat this downtime at the set interval.
                          <options: daily|weekly|off>
@@ -343,11 +352,11 @@ Edit an existing Schedule.
 
 ```
 USAGE
-  $ apimetrics schedules edit --schedule-id <value> [--json] [--interval
-    1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h] [--name <value>] [--retry-method
-    fibonacci|exponential|constant] [--retry] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
-    [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--postman] [--no-postman]
-    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>]
+  $ apimetrics schedules edit --schedule-id <value> [--json] [--add-location <value>] [--add-region <value>]
+    [--ignore-in-stats <value>] [--interval 1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h]
+    [--max-retries <value>] [--name <value>] [--no-postman] [--postman] [--remove-location <value>] [--remove-region
+    <value>] [--retry] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>] [--retry-method
+    fibonacci|exponential|constant] [--skip-notifications <value>]
 
 FLAGS
   --add-location=<value>...     Add location to run calls from.

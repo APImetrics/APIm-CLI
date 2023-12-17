@@ -15,22 +15,22 @@ List API calls in project.
 
 ```
 USAGE
-  $ apimetrics calls [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+  $ apimetrics calls [--json] [--columns <value> | -x] [--filter <value>] [--no-header | [--csv |
+    --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>] [-p <value>]
 
 FLAGS
   -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set. Can be found in the Project
                             Settings web page under the admin section or by using the command `apimetrics projects
                             --columns name,id`.
   -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+      --columns=<value>     only show provided columns (comma-separated)
+      --csv                 output is csv format [alias: --output=csv]
+      --filter=<value>      filter property by partial string matching, ex: name=foo
+      --no-header           hide table header from output
+      --no-truncate         do not truncate output to fit screen
+      --output=<option>     output in a more machine friendly format
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+      --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -58,23 +58,23 @@ Create a new API call.
 
 ```
 USAGE
-  $ apimetrics calls create -n <value> -u <value> [--json] [-m
-    get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS] [--accept <value>] [--header <value>]
-    [--tag <value>] [-p <value>] [--description <value>] [--body <value>]
+  $ apimetrics calls create -n <value> -u <value> [--json] [--accept <value>] [--body <value>] [--description
+    <value>] [--header <value>] [-m get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS] [-p
+    <value>] [--tag <value>]
 
 FLAGS
-  -m, --method=<option>     [default: GET] HTTP method to use.
-                            <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
-  -n, --name=<value>        (required) Name of API call.
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                            Project Settings web page under the admin section or by using the command `apimetrics
-                            projects --columns name,id`.
-  -u, --url=<value>         (required) URL to call.
-  --accept=<value>          MIME type for accept header. Alias for --header Accept: <MIME type>.
-  --body=<value>            Request body.
-  --description=<value>     Call description.
-  --header=<value>...       Header to add to call.
-  --tag=<value>...          Tag to add to call.
+  -m, --method=<option>      [default: GET] HTTP method to use.
+                             <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
+  -n, --name=<value>         (required) Name of API call.
+  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                             Project Settings web page under the admin section or by using the command `apimetrics
+                             projects --columns name,id`.
+  -u, --url=<value>          (required) URL to call.
+      --accept=<value>       MIME type for accept header. Alias for --header Accept: <MIME type>.
+      --body=<value>         Request body.
+      --description=<value>  Call description.
+      --header=<value>...    Header to add to call.
+      --tag=<value>...       Tag to add to call.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -98,27 +98,29 @@ Edit an existing API call.
 
 ```
 USAGE
-  $ apimetrics calls edit -c <value> [--json] [-n <value>] [-u <value>] [-m
-    get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS] [--accept <value>] [--add-header
-    <value>] [--replace-header <value>] [--remove-header <value>] [--add-tag <value>] [--remove-tag <value>]
-    [--description <value>] [--body <value>]
+  $ apimetrics calls edit -c <value> [--json] [--accept <value>] [--add-header <value>] [--add-tag <value>]
+    [--body <value>] [--description <value>] [-m
+    get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS] [-n <value>] [--remove-header
+    <value>] [--remove-tag <value>] [--replace-header <value>] [-u <value>]
 
 FLAGS
-  -c, --call-id=<value>        (required) ID of call. Can be found in the expanded Audit Logs of the desired API call in
-                               the Audit tab web page or by using the command `apimetrics calls --columns name,id`.
-  -m, --method=<option>        HTTP method to use.
-                               <options: get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
-  -n, --name=<value>           Name of API call.
-  -u, --url=<value>            URL to call.
-  --accept=<value>             MIME type for accept header. Alias for --replace-header Accept: <MIME type>.
-  --add-header=<value>...      Add header to the call. Specify in the form <key>: <value>.
-  --add-tag=<value>...         Name of tag to add. No effect if the tag already exists.
-  --body=<value>               Request body.
-  --description=<value>        Call description.
-  --remove-header=<value>...   Name of header to remove.
-  --remove-tag=<value>...      Name of tag to remove.
-  --replace-header=<value>...  Add header to the call or replace if it already exists. Specify in the form <key>:
-                               <value>.
+  -c, --call-id=<value>            (required) ID of call. Can be found in the expanded Audit Logs of the desired API
+                                   call in the Audit tab web page or by using the command `apimetrics calls --columns
+                                   name,id`.
+  -m, --method=<option>            HTTP method to use.
+                                   <options:
+                                   get|GET|head|HEAD|post|POST|put|PUT|patch|PATCH|delete|DELETE|options|OPTIONS>
+  -n, --name=<value>               Name of API call.
+  -u, --url=<value>                URL to call.
+      --accept=<value>             MIME type for accept header. Alias for --replace-header Accept: <MIME type>.
+      --add-header=<value>...      Add header to the call. Specify in the form <key>: <value>.
+      --add-tag=<value>...         Name of tag to add. No effect if the tag already exists.
+      --body=<value>               Request body.
+      --description=<value>        Call description.
+      --remove-header=<value>...   Name of header to remove.
+      --remove-tag=<value>...      Name of tag to remove.
+      --replace-header=<value>...  Add header to the call or replace if it already exists. Specify in the form <key>:
+                                   <value>.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -138,11 +140,14 @@ Add an API call to a Schedule.
 
 ```
 USAGE
-  $ apimetrics calls schedules add -s <value> -c <value> [--json]
+  $ apimetrics calls schedules add -c <value> -s <value> [--json]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to add.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+  -c, --call-id=<value>      (required) ID of call to add. Can be found in the expanded Audit Logs of the desired API
+                             call in the Audit tab web page or by using the command `apimetrics calls --columns
+                             name,id`.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
+                             schedules --columns name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -163,11 +168,14 @@ Remove call from schedule
 
 ```
 USAGE
-  $ apimetrics calls schedules delete -s <value> -c <value> [--json]
+  $ apimetrics calls schedules delete -c <value> -s <value> [--json]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to remove.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify.
+  -c, --call-id=<value>      (required) ID of call to remove. Can be found in the expanded Audit Logs of the desired API
+                             call in the Audit tab web page or by using the command `apimetrics calls --columns
+                             name,id`.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
+                             schedules --columns name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.
