@@ -115,7 +115,6 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
   ): {access_level: string; role_id: string}[] {
     const add: {
       access_level: string;
-
       role_id: string;
     }[] = [];
 

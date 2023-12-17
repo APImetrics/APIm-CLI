@@ -37,6 +37,8 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
     }),
   };
 
+  protected permitKeyAuth = true;
+
   public async run(): Promise<Downtime> {
     const {flags} = await this.parse(Create);
 

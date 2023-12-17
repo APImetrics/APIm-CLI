@@ -20,7 +20,6 @@ export default class Remove extends Command<{success: boolean}> {
         'ID or email of user to remove. ID can be found in the Accounts section of the Organization' +
         ' Settings web page or by using the command' +
         ' `apimetrics org accounts --columns name,id`.',
-
       required: true,
     }),
   };
