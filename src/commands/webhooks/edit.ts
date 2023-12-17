@@ -2,6 +2,7 @@
 // hundreds of singular exceptions, just cover whole file
 /* eslint-disable camelcase */
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../base-command';
 
 export type EditJSON = {
@@ -11,32 +12,108 @@ export type EditJSON = {
 
 export default class Edit extends Command<EditJSON> {
   static description = 'Edit a webhook.';
-  protected permitKeyAuth = true;
-
   static examples = [`<%= config.bin %> <%= command.id %>`];
 
   static flags = {
-    'webhook-id': Flags.string({
-      description:
-        'Webhook to edit. Can be found using the command' +
-        ' `apimetrics webhooks --columns name,id`.',
-      required: true,
+    'add-alert': Flags.string({
+      description: 'Add result type to fire webhook on.',
+      multiple: true,
+      options: ['PASS', 'SLOW', 'WARNING', 'FAIL'],
     }),
-    name: Flags.string({description: 'Name of project.', char: 'n'}),
+    'add-exclude-tags': Flags.string({
+      description: 'Add tag to excluded tags.',
+      multiple: true,
+    }),
+    'add-include-tags': Flags.string({
+      description: 'Add tag to included tags.',
+      multiple: true,
+    }),
+    'api-key': Flags.string({
+      description:
+        'API key to use for authentication. ' +
+        'Used by: [victorops, newrelic, datadog, ' +
+        'datadogevent, statuspage, opsgenie, opsgenieeu].',
+    }),
+    'app-key': Flags.string({
+      description: 'App key to use to identify this app. Used by [big_panda, newrelic].',
+    }),
+    'call-id': Flags.string({
+      description:
+        'APImetrics API call to run. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].',
+    }),
+    channel: Flags.string({
+      description:
+        'Integration channel name if different from that defined in the slack integration. ' +
+        'Used by [slack].',
+    }),
+    'component-id': Flags.string({
+      description: 'StatusPage component ID. Used by [statuspage].',
+    }),
+    disable: Flags.boolean({
+      description: 'Disable this webhook if not already disabled.',
+      exclusive: ['enable'],
+    }),
+    'email-address': Flags.string({
+      description: 'Your email address. Used by [email, email_text, email_template].',
+    }),
+    enable: Flags.boolean({
+      description: 'Enable this webhook if it is not already enabled',
+      exclusive: ['disable'],
+    }),
     'fails-in-a-row': Flags.integer({
       description:
         'Trigger webhook after this many successive failures. Used by all except apimetrics_token.',
       min: 0,
     }),
-    'email-address': Flags.string({
-      description: 'Your email address. Used by [email, email_text, email_template].',
+    'flow-token': Flags.string({
+      description: 'The token for the flow to post to. Used by [flowdock].',
+    }),
+    'integration-key': Flags.string({
+      description:
+        'The service integration key with Integration Type: APImetrics. ' +
+        'Used by [pager_duty, pager_duty_v2].',
+    }),
+    name: Flags.string({char: 'n', description: 'Name of project.'}),
+    'page-id': Flags.string({
+      description: 'Page ID for StatusPage. Used by [statuspage].',
+    }),
+    password: Flags.string({
+      description: 'Password to use for authentication. Used by [generic].',
+    }),
+    'project-id': Flags.string({
+      char: 'p',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
+    }),
+    'remove-alert': Flags.string({
+      description: 'Remove result type to fire webhook on.',
+      multiple: true,
+      options: ['PASS', 'SLOW', 'WARNING', 'FAIL'],
+    }),
+    'remove-exclude-tags': Flags.string({
+      description: 'Remove tag from excluded tags.',
+      multiple: true,
+    }),
+    'remove-include-tags': Flags.string({
+      description: 'Remove tag from included tags.',
+      multiple: true,
+    }),
+    'routing-key': Flags.string({
+      description: 'Routing key to route alert. Used by [victorops].',
+    }),
+    severity: Flags.string({
+      description: 'Severity of alert. Used by [pager_duty_v2].',
+      options: ['critical', 'error', 'warning', 'info'],
     }),
     'subject-template': Flags.string({
-      description: 'Template for subject line. Used by [email_template].',
       default: '[{{result_class}}]: APImetrics: {{ call_meta.name }}',
+      description: 'Template for subject line. Used by [email_template].',
     }),
     'text-template': Flags.string({
-      description: 'Template for email body. Used by [email_template].',
       default: `{{ result }}: HTTP {{ http_code }} {{ http_reason }}
 Latency: {{ response_time }} ms
 Size: {{ response_size }} bytes
@@ -49,26 +126,7 @@ Variables:
 Result: {{ result_url }}
 
       `,
-    }),
-    url: Flags.url({
-      description: 'URL for webhook to call. Used by [generic, slack, hipchat, msteams].',
-    }),
-    username: Flags.string({
-      description: 'Username to use for authentication. Used by [generic].',
-    }),
-    password: Flags.string({
-      description: 'Password to use for authentication. Used by [generic].',
-    }),
-    'call-id': Flags.string({
-      description:
-        'APImetrics API call to run. Can be found in the expanded Audit Logs of the desired' +
-        ' API call in the Audit tab web page or by using the command' +
-        ' `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].',
-    }),
-    'workflow-id': Flags.string({
-      description:
-        'APImetrics workflow to run. Can be found by using the command' +
-        ' `apimetrics workflows --columns name,id`. Used by [apimetrics_workflow: required].',
+      description: 'Template for email body. Used by [email_template].',
     }),
     'token-id': Flags.string({
       description:
@@ -76,86 +134,449 @@ Result: {{ result_url }}
         ' Can be found in the Project Settings web page under the admin' +
         ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
-    channel: Flags.string({
-      description:
-        'Integration channel name if different from that defined in the slack integration. ' +
-        'Used by [slack].',
-    }),
-    'integration-key': Flags.string({
-      description:
-        'The service integration key with Integration Type: APImetrics. ' +
-        'Used by [pager_duty, pager_duty_v2].',
-    }),
-    severity: Flags.string({
-      description: 'Severity of alert. Used by [pager_duty_v2].',
-      options: ['critical', 'error', 'warning', 'info'],
+    url: Flags.url({
+      description: 'URL for webhook to call. Used by [generic, slack, hipchat, msteams].',
     }),
     'user-key': Flags.string({
       description: 'User key to use for authentication. Used by [big_panda].',
     }),
-    'app-key': Flags.string({
-      description: 'App key to use to identify this app. Used by [big_panda, newrelic].',
+    username: Flags.string({
+      description: 'Username to use for authentication. Used by [generic].',
     }),
-    'api-key': Flags.string({
+    'webhook-id': Flags.string({
       description:
-        'API key to use for authentication. ' +
-        'Used by: [victorops, newrelic, datadog, ' +
-        'datadogevent, statuspage, opsgenie, opsgenieeu].',
+        'Webhook to edit. Can be found using the command' +
+        ' `apimetrics webhooks --columns name,id`.',
+      required: true,
     }),
-    'routing-key': Flags.string({
-      description: 'Routing key to route alert. Used by [victorops].',
-    }),
-    'page-id': Flags.string({
-      description: 'Page ID for StatusPage. Used by [statuspage].',
-    }),
-    'component-id': Flags.string({
-      description: 'StatusPage component ID. Used by [statuspage].',
-    }),
-    'flow-token': Flags.string({
-      description: 'The token for the flow to post to. Used by [flowdock].',
-    }),
-    'add-alert': Flags.string({
-      description: 'Add result type to fire webhook on.',
-      multiple: true,
-      options: ['PASS', 'SLOW', 'WARNING', 'FAIL'],
-    }),
-    'remove-alert': Flags.string({
-      description: 'Remove result type to fire webhook on.',
-      multiple: true,
-      options: ['PASS', 'SLOW', 'WARNING', 'FAIL'],
-    }),
-    'add-include-tags': Flags.string({
-      description: 'Add tag to included tags.',
-      multiple: true,
-    }),
-    'remove-include-tags': Flags.string({
-      description: 'Remove tag from included tags.',
-      multiple: true,
-    }),
-    'add-exclude-tags': Flags.string({
-      description: 'Add tag to excluded tags.',
-      multiple: true,
-    }),
-    'remove-exclude-tags': Flags.string({
-      description: 'Remove tag from excluded tags.',
-      multiple: true,
-    }),
-    enable: Flags.boolean({
-      description: 'Enable this webhook if it is not already enabled',
-      exclusive: ['disable'],
-    }),
-    disable: Flags.boolean({
-      description: 'Disable this webhook if not already disabled.',
-      exclusive: ['enable'],
-    }),
-    'project-id': Flags.string({
+    'workflow-id': Flags.string({
       description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
+        'APImetrics workflow to run. Can be found by using the command' +
+        ' `apimetrics workflows --columns name,id`. Used by [apimetrics_workflow: required].',
     }),
   };
+
+  protected permitKeyAuth = true;
+
+  public async run(): Promise<EditJSON> {
+    const {flags} = await this.parse(Edit);
+
+    if (flags['project-id']) {
+      this.api.project = flags['project-id'];
+    }
+
+    const webhook = await this.api.get<T.Webhook>(`webhooks/${flags['webhook-id']}`);
+
+    // API wants a string but we want number for easier validation
+    const failsInRow =
+      flags['fails-in-a-row']?.toString() || webhook.webhook.parameters.fails_in_a_row;
+
+    let request: T.Webhook;
+    const requestMeta: T.Webhook['meta'] = {
+      exclude_tags: this.addRemoveStrings(
+        webhook.meta.exclude_tags,
+        flags['add-exclude-tags'] || [],
+        flags['remove-exclude-tags'] || []
+      ),
+      include_tags: this.addRemoveStrings(
+        webhook.meta.include_tags,
+        flags['add-include-tags'] || [],
+        flags['remove-include-tags'] || []
+      ),
+      name: flags.name || webhook.meta.name,
+    };
+
+    const enabled = flags.disable ? false : flags.enable || webhook.webhook.enabled;
+
+    const alerts = this.addRemoveStrings(
+      webhook.webhook.alerts,
+      flags['add-alert'] || [],
+      flags['remove-alert'] || []
+    ) as ('FAIL' | 'PASS' | 'SLOW' | 'WARNING')[];
+
+    switch (webhook.webhook.type) {
+      case 'email': {
+        if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
+          throw new Error(`${flags['email-address']} is not a valid email.`);
+        }
+
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'email',
+          },
+        };
+        break;
+      }
+
+      case 'email_text': {
+        if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
+          throw new Error(`${flags['email-address']} is not a valid email.`);
+        }
+
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'email_text',
+          },
+        };
+        break;
+      }
+
+      case 'email_template': {
+        if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
+          throw new Error(`${flags['email-address']} is not a valid email.`);
+        }
+
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
+              fails_in_a_row: failsInRow,
+              subject_template:
+                flags['subject-template'] || webhook.webhook.parameters.subject_template,
+              text_template: flags['text-template'] || webhook.webhook.parameters.text_template,
+            },
+            type: 'email_template',
+          },
+        };
+        break;
+      }
+
+      case 'generic': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              password: flags.password || webhook.webhook.parameters.password,
+              url: flags.url!.toString() || webhook.webhook.parameters.url,
+              username: flags.username || webhook.webhook.parameters.username,
+            },
+            type: 'generic',
+          },
+        };
+        break;
+      }
+
+      case 'apimetrics_api': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              call_id: flags['call-id'] || webhook.webhook.parameters.call_id,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'apimetrics_api',
+          },
+        };
+        break;
+      }
+
+      case 'apimetrics_workflow': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              workflow_id: flags['workflow-id'] || webhook.webhook.parameters.workflow_id,
+            },
+            type: 'apimetrics_workflow',
+          },
+        };
+        break;
+      }
+
+      case 'apimetrics_token': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              token_id: flags['token-id'] || webhook.webhook.parameters.token_id,
+            },
+            type: 'apimetrics_token',
+          },
+        };
+        break;
+      }
+
+      case 'slack': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              channel: flags.channel || webhook.webhook.parameters.channel,
+              fails_in_a_row: failsInRow,
+              url: flags.url!.toString() || webhook.webhook.parameters.url,
+            },
+            type: 'slack',
+          },
+        };
+        break;
+      }
+
+      case 'pager_duty': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              integration_key:
+                flags['integration-key'] || webhook.webhook.parameters.integration_key,
+            },
+            type: 'pager_duty',
+          },
+        };
+        break;
+      }
+
+      case 'pager_duty_v2': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              integration_key:
+                flags['integration-key'] || webhook.webhook.parameters.integration_key,
+              severity:
+                (flags.severity as 'critical' | 'error' | 'info' | 'warning') ||
+                webhook.webhook.parameters.severity,
+            },
+            type: 'pager_duty_v2',
+          },
+        };
+        break;
+      }
+
+      case 'big_panda': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              app_key: flags['app-key'] || webhook.webhook.parameters.app_key,
+              fails_in_a_row: failsInRow,
+              user_key: flags['user-key'] || webhook.webhook.parameters.user_key,
+            },
+            type: 'big_panda',
+          },
+        };
+        break;
+      }
+
+      case 'victorops': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.app_key,
+              fails_in_a_row: failsInRow,
+              routing_key: flags['routing-key'] || webhook.webhook.parameters.routing_key,
+            },
+            type: 'victorops',
+          },
+        };
+        break;
+      }
+
+      case 'hipchat': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              url: flags.url!.toString() || webhook.webhook.parameters.url,
+            },
+            type: 'hipchat',
+          },
+        };
+        break;
+      }
+
+      case 'msteams': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              url: flags.url!.toString() || webhook.webhook.parameters.url,
+            },
+            type: 'msteams',
+          },
+        };
+        break;
+      }
+
+      case 'newrelic': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
+              app_key: flags['app-key'] || webhook.webhook.parameters.app_key,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'newrelic',
+          },
+        };
+        break;
+      }
+
+      case 'darkspark': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {},
+            type: 'darkspark',
+          },
+        };
+        break;
+      }
+
+      case 'datadog': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'datadog',
+          },
+        };
+        break;
+      }
+
+      case 'datadogevent': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'datadogevent',
+          },
+        };
+        break;
+      }
+
+      case 'statuspage': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
+              component_id: flags['component-id'] || webhook.webhook.parameters.component_id,
+              fails_in_a_row: failsInRow,
+              page_id: flags['page-id'] || webhook.webhook.parameters.page_id,
+            },
+            type: 'statuspage',
+          },
+        };
+        break;
+      }
+
+      case 'flowdock': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              fails_in_a_row: failsInRow,
+              flow_token: flags['flow-token'] || webhook.webhook.parameters.flow_token,
+            },
+            type: 'flowdock',
+          },
+        };
+        break;
+      }
+
+      case 'opsgenie': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'opsgenie',
+          },
+        };
+        break;
+      }
+
+      case 'opsgenieeu': {
+        request = {
+          meta: requestMeta,
+          webhook: {
+            alerts,
+            enabled,
+            parameters: {
+              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
+              fails_in_a_row: failsInRow,
+            },
+            type: 'opsgenieeu',
+          },
+        };
+        break;
+      }
+    }
+
+    const updatedWebhook = await this.api.post<T.Webhook>(`webhooks/${flags['webhook-id']}`, {
+      body: request,
+    });
+    return {success: true, webhook: updatedWebhook};
+  }
 
   /**
    * Add and remove strings from current list
@@ -176,382 +597,5 @@ Result: {{ result_url }}
     current = current.filter((item) => !remove.includes(item));
 
     return current;
-  }
-
-  public async run(): Promise<EditJSON> {
-    const {flags} = await this.parse(Edit);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
-
-    const webhook = await this.api.get<T.Webhook>(`webhooks/${flags['webhook-id']}`);
-
-    // API wants a string but we want number for easier validation
-    const failsInRow =
-      flags['fails-in-a-row']?.toString() || webhook.webhook.parameters.fails_in_a_row;
-
-    let request: T.Webhook;
-    const requestMeta: T.Webhook['meta'] = {
-      name: flags.name || webhook.meta.name,
-      include_tags: this.addRemoveStrings(
-        webhook.meta.include_tags,
-        flags['add-include-tags'] || [],
-        flags['remove-include-tags'] || []
-      ),
-      exclude_tags: this.addRemoveStrings(
-        webhook.meta.exclude_tags,
-        flags['add-exclude-tags'] || [],
-        flags['remove-exclude-tags'] || []
-      ),
-    };
-
-    const enabled = flags.disable ? false : flags.enable || webhook.webhook.enabled;
-
-    const alerts = this.addRemoveStrings(
-      webhook.webhook.alerts,
-      flags['add-alert'] || [],
-      flags['remove-alert'] || []
-    ) as ('PASS' | 'SLOW' | 'WARNING' | 'FAIL')[];
-
-    switch (webhook.webhook.type) {
-      case 'email':
-        if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
-          throw new Error(`${flags['email-address']} is not a valid email.`);
-        }
-
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'email',
-            parameters: {
-              email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'email_text':
-        if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
-          throw new Error(`${flags['email-address']} is not a valid email.`);
-        }
-
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'email_text',
-            parameters: {
-              email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'email_template':
-        if (flags['email-address'] && !util.validateEmail(flags['email-address']!)) {
-          throw new Error(`${flags['email-address']} is not a valid email.`);
-        }
-
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'email_template',
-            parameters: {
-              email_address: flags['email-address'] || webhook.webhook.parameters.email_address,
-              subject_template:
-                flags['subject-template'] || webhook.webhook.parameters.subject_template,
-              text_template: flags['text-template'] || webhook.webhook.parameters.text_template,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'generic':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'generic',
-            parameters: {
-              url: flags.url!.toString() || webhook.webhook.parameters.url,
-              username: flags.username || webhook.webhook.parameters.username,
-              password: flags.password || webhook.webhook.parameters.password,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'apimetrics_api':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'apimetrics_api',
-            parameters: {
-              call_id: flags['call-id'] || webhook.webhook.parameters.call_id,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'apimetrics_workflow':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'apimetrics_workflow',
-            parameters: {
-              workflow_id: flags['workflow-id'] || webhook.webhook.parameters.workflow_id,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'apimetrics_token':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'apimetrics_token',
-            parameters: {
-              token_id: flags['token-id'] || webhook.webhook.parameters.token_id,
-            },
-          },
-        };
-        break;
-      case 'slack':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'slack',
-            parameters: {
-              url: flags.url!.toString() || webhook.webhook.parameters.url,
-              channel: flags.channel || webhook.webhook.parameters.channel,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'pager_duty':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'pager_duty',
-            parameters: {
-              integration_key:
-                flags['integration-key'] || webhook.webhook.parameters.integration_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'pager_duty_v2':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'pager_duty_v2',
-            parameters: {
-              integration_key:
-                flags['integration-key'] || webhook.webhook.parameters.integration_key,
-              severity:
-                (flags.severity as 'critical' | 'error' | 'warning' | 'info') ||
-                webhook.webhook.parameters.severity,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'big_panda':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'big_panda',
-            parameters: {
-              user_key: flags['user-key'] || webhook.webhook.parameters.user_key,
-              app_key: flags['app-key'] || webhook.webhook.parameters.app_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'victorops':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'victorops',
-            parameters: {
-              api_key: flags['api-key'] || webhook.webhook.parameters.app_key,
-              routing_key: flags['routing-key'] || webhook.webhook.parameters.routing_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'hipchat':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'hipchat',
-            parameters: {
-              url: flags.url!.toString() || webhook.webhook.parameters.url,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'msteams':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'msteams',
-            parameters: {
-              url: flags.url!.toString() || webhook.webhook.parameters.url,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'newrelic':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'newrelic',
-            parameters: {
-              app_key: flags['app-key'] || webhook.webhook.parameters.app_key,
-              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'darkspark':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'darkspark',
-            parameters: {},
-          },
-        };
-        break;
-      case 'datadog':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'datadog',
-            parameters: {
-              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'datadogevent':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'datadogevent',
-            parameters: {
-              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'statuspage':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'statuspage',
-            parameters: {
-              page_id: flags['page-id'] || webhook.webhook.parameters.page_id,
-              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
-              component_id: flags['component-id'] || webhook.webhook.parameters.component_id,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'flowdock':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'flowdock',
-            parameters: {
-              flow_token: flags['flow-token'] || webhook.webhook.parameters.flow_token,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'opsgenie':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'opsgenie',
-            parameters: {
-              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-      case 'opsgenieeu':
-        request = {
-          meta: requestMeta,
-          webhook: {
-            enabled: enabled,
-            alerts: alerts,
-            type: 'opsgenieeu',
-            parameters: {
-              api_key: flags['api-key'] || webhook.webhook.parameters.api_key,
-              fails_in_a_row: failsInRow,
-            },
-          },
-        };
-        break;
-    }
-
-    const updatedWebhook = await this.api.post<T.Webhook>(`webhooks/${flags['webhook-id']}`, {
-      body: request,
-    });
-    return {success: true, webhook: updatedWebhook};
   }
 }

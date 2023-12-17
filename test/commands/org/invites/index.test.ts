@@ -6,43 +6,43 @@ const accountResponse = {
   meta: {},
   results: [
     {
-      name: 'qcmetrics',
-      roles: ['ADMIN'],
-      created: '2023-07-15T18:32:41.626327Z',
-      org_id: 'qcmetrics',
-      invited_by: 'auth0|1234567890',
-      last_update: '2023-07-15T18:32:41.626336Z',
       access_level: 'VIEWER',
+      created: '2023-07-15T18:32:41.626327Z',
       email: 'jane@example.com',
       id: 'hij789',
-      project_id: null,
+      invited_by: 'auth0|1234567890',
       invited_email: 'bob@example.com',
+      last_update: '2023-07-15T18:32:41.626336Z',
+      name: 'qcmetrics',
+      org_id: 'qcmetrics',
+      project_id: null,
+      roles: ['ADMIN'],
     },
     {
-      name: 'qcmetrics',
-      roles: [],
-      created: '2023-07-15T18:34:27.044198Z',
-      org_id: 'qcmetrics',
-      invited_by: 'auth0|1234567890',
-      last_update: '2023-07-15T18:34:27.044204Z',
       access_level: 'VIEWER',
+      created: '2023-07-15T18:34:27.044198Z',
       email: 'john@example.com',
       id: 'efg456',
-      project_id: null,
+      invited_by: 'auth0|1234567890',
       invited_email: 'bob@example.com',
+      last_update: '2023-07-15T18:34:27.044204Z',
+      name: 'qcmetrics',
+      org_id: 'qcmetrics',
+      project_id: null,
+      roles: [],
     },
     {
-      name: 'qcmetrics',
-      roles: ['DEV_TEAM', 'TEST_ROLE'],
-      created: '2023-07-15T18:31:33.918614Z',
-      org_id: 'qcmetrics',
-      invited_by: 'auth0|1234567890',
-      last_update: '2023-07-15T18:31:33.918621Z',
       access_level: 'VIEWER',
+      created: '2023-07-15T18:31:33.918614Z',
       email: 'alice@example.com',
       id: 'abc123',
-      project_id: null,
+      invited_by: 'auth0|1234567890',
       invited_email: 'bob@example.com',
+      last_update: '2023-07-15T18:31:33.918621Z',
+      name: 'qcmetrics',
+      org_id: 'qcmetrics',
+      project_id: null,
+      roles: ['DEV_TEAM', 'TEST_ROLE'],
     },
   ],
 };
@@ -55,8 +55,8 @@ describe('org invites', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -69,8 +69,8 @@ describe('org invites', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -83,8 +83,8 @@ describe('org invites', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -100,19 +100,19 @@ describe('org invites', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
+          created: '2023-07-15T18:32:41.626327Z',
           email: 'jane@example.com',
           roles: 'ADMIN',
-          created: '2023-07-15T18:32:41.626327Z',
         },
         {
+          created: '2023-07-15T18:34:27.044198Z',
           email: 'john@example.com',
           roles: 'None',
-          created: '2023-07-15T18:34:27.044198Z',
         },
         {
+          created: '2023-07-15T18:31:33.918614Z',
           email: 'alice@example.com',
           roles: 'DEV_TEAM, TEST_ROLE',
-          created: '2023-07-15T18:31:33.918614Z',
         },
       ]);
     });

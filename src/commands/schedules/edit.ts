@@ -1,15 +1,14 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../base-command';
 
 export type Schedule = {
-  success: boolean;
   schedule: T.Schedule;
+  success: boolean;
 };
 
 export default class Edit extends Command<Schedule> {
   static description = 'Edit an existing Schedule.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `
 <%= config.bin %> <%= command.id %> --name "My Schedule" --interval 5m
@@ -17,6 +16,18 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
   ];
 
   static flags = {
+    'add-location': Flags.string({
+      description: 'Add location to run calls from.',
+      multiple: true,
+    }),
+    'add-region': Flags.string({
+      description: 'Add region to run calls from.',
+      multiple: true,
+    }),
+    'ignore-in-stats': Flags.integer({
+      description: 'Number of retries to ignore in failure statistics.',
+      min: 1,
+    }),
     interval: Flags.string({
       description: 'Schedule interval.',
       options: [
@@ -41,17 +52,31 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
         '24h',
       ],
     }),
+    'max-retries': Flags.integer({
+      description: 'Maximum number of retries to attempt.',
+      min: 1,
+    }),
     name: Flags.string({
       description: 'Name of schedule.',
     }),
-    'retry-method': Flags.string({
-      description: 'Algorithm for retries.',
-      options: ['fibonacci', 'exponential', 'constant'],
+    'no-postman': Flags.boolean({
+      description: 'Disable the Postman Monitoring feature',
+    }),
+    postman: Flags.boolean({
+      description: 'Only enable if you use the Postman Monitoring feature',
+    }),
+    'remove-location': Flags.string({
+      description: 'Remove location to run calls from.',
+      multiple: true,
+    }),
+    'remove-region': Flags.string({
+      description: 'Remove region to run calls from.',
+      multiple: true,
     }),
     retry: Flags.boolean({
-      description: 'Should retry be enabled?',
-      default: true,
       allowNo: true,
+      default: true,
+      description: 'Should retry be enabled?',
     }),
     'retry-base': Flags.integer({
       description: 'Base for exponential retry.',
@@ -65,39 +90,9 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       description: 'Wait X seconds between each retry.',
       min: 1,
     }),
-    'max-retries': Flags.integer({
-      description: 'Maximum number of retries to attempt.',
-      min: 1,
-    }),
-    'skip-notifications': Flags.integer({
-      description: 'Number of retries to attempt before sending notifications.',
-      min: 1,
-    }),
-    'ignore-in-stats': Flags.integer({
-      description: 'Number of retries to ignore in failure statistics.',
-      min: 1,
-    }),
-    postman: Flags.boolean({
-      description: 'Only enable if you use the Postman Monitoring feature',
-    }),
-    'no-postman': Flags.boolean({
-      description: 'Disable the Postman Monitoring feature',
-    }),
-    'add-location': Flags.string({
-      description: 'Add location to run calls from.',
-      multiple: true,
-    }),
-    'remove-location': Flags.string({
-      description: 'Remove location to run calls from.',
-      multiple: true,
-    }),
-    'add-region': Flags.string({
-      description: 'Add region to run calls from.',
-      multiple: true,
-    }),
-    'remove-region': Flags.string({
-      description: 'Remove region to run calls from.',
-      multiple: true,
+    'retry-method': Flags.string({
+      description: 'Algorithm for retries.',
+      options: ['fibonacci', 'exponential', 'constant'],
     }),
     'schedule-id': Flags.string({
       description:
@@ -105,7 +100,13 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
         ' `apimetrics schedules --columns name,id',
       required: true,
     }),
+    'skip-notifications': Flags.integer({
+      description: 'Number of retries to attempt before sending notifications.',
+      min: 1,
+    }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Edit);
@@ -136,18 +137,23 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
 
     if (flags.retry) {
       switch (flags['retry-method']) {
-        case 'fibonacci':
+        case 'fibonacci': {
           addTags.push('apimetrics:backoff:fibo');
           removeTags.push('apimetrics:backoff:expo', 'apimetrics:backoff:constant');
           break;
-        case 'exponential':
+        }
+
+        case 'exponential': {
           addTags.push('apimetrics:backoff:expo');
           removeTags.push('apimetrics:backoff:fibo', 'apimetrics:backoff:constant');
           break;
-        case 'constant':
+        }
+
+        case 'constant': {
           addTags.push('apimetrics:backoff:constant');
           removeTags.push('apimetrics:backoff:fibo', 'apimetrics:backoff:expo');
           break;
+        }
       }
     } else {
       removeTags.push(
@@ -292,6 +298,6 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
     schedule = await this.api.post<T.Schedule>(`schedules/${flags['schedule-id']}/`, {
       body: schedule,
     });
-    return {success: true, schedule: schedule};
+    return {schedule, success: true};
   }
 }

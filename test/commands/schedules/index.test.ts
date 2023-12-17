@@ -6,75 +6,75 @@ const scheduleResponse = {
   meta: {},
   results: [
     {
+      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Mmfl8ULDA',
       meta: {
-        name: 'AWS Only',
         created: '2023-06-24T19:16:16.307068Z',
-        tags: ['apimetrics:backoff:constant'],
         last_update: '2023-06-24T19:20:40.738289Z',
+        name: 'AWS Only',
         owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
         project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
+        tags: ['apimetrics:backoff:constant'],
       },
-      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Mmfl8ULDA',
       schedule: {
-        regions: ['aws'],
+        backoff_method: 'constant',
         frequency: 43_200,
         locations: [],
+        regions: ['aws'],
         target_ids: [],
-        backoff_method: 'constant',
       },
     },
     {
+      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4IGp8NMLDA',
       meta: {
-        name: 'Default Schedule',
         created: '2023-05-17T00:48:56.286524Z',
-        tags: ['importer:default-schedule'],
         last_update: '2023-06-07T23:16:10.378774Z',
+        name: 'Default Schedule',
         owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
         project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
+        tags: ['importer:default-schedule'],
       },
-      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4IGp8NMLDA',
       schedule: {
-        regions: ['all'],
+        backoff_method: null,
         frequency: 300,
         locations: [],
+        regions: ['all'],
         target_ids: ['ag9zfmFwaW1ldHJpY3MtcWNyFAsSB1Rlc3RSdW4YgIDg3vX4ggsM'],
-        backoff_method: null,
       },
     },
     {
+      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Im7m58JDA',
       meta: {
-        name: 'Expo',
         created: '2023-06-24T19:30:22.474393Z',
-        tags: ['apimetrics:backoff:expo'],
         last_update: '2023-06-24T19:30:22.474401Z',
+        name: 'Expo',
         owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
         project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
+        tags: ['apimetrics:backoff:expo'],
       },
-      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Im7m58JDA',
       schedule: {
-        regions: ['all'],
+        backoff_method: 'expo',
         frequency: 600,
         locations: [],
+        regions: ['all'],
         target_ids: [],
-        backoff_method: 'expo',
       },
     },
     {
+      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4JmAuYMJDA',
       meta: {
-        name: 'Fibo',
         created: '2023-06-24T19:30:12.379860Z',
-        tags: ['apimetrics:backoff:fibo'],
         last_update: '2023-06-24T19:30:12.379868Z',
+        name: 'Fibo',
         owner: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
         project_id: 'ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDg3sv4jwkM',
+        tags: ['apimetrics:backoff:fibo'],
       },
-      id: 'ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4JmAuYMJDA',
       schedule: {
-        regions: ['all'],
+        backoff_method: 'fibo',
         frequency: 30,
         locations: ['aws_europe_1', 'google_america_2'],
+        regions: ['all'],
         target_ids: [],
-        backoff_method: 'fibo',
       },
     },
   ],
@@ -88,8 +88,8 @@ describe('schedules', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -102,8 +102,8 @@ describe('schedules', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -119,28 +119,28 @@ describe('schedules', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'AWS Only',
           frequency: 'Every 12 hours',
+          locations: '',
+          name: 'AWS Only',
           regions: 'aws',
-          locations: '',
         },
         {
-          name: 'Default Schedule',
           frequency: 'Every 5 minutes',
-          regions: 'all',
           locations: '',
+          name: 'Default Schedule',
+          regions: 'all',
         },
         {
-          name: 'Expo',
           frequency: 'Every 10 minutes',
-          regions: 'all',
           locations: '',
+          name: 'Expo',
+          regions: 'all',
         },
         {
-          name: 'Fibo',
           frequency: 'Every 30 seconds',
-          regions: 'all',
           locations: 'aws_europe_1, google_america_2',
+          name: 'Fibo',
+          regions: 'all',
         },
       ]);
     });
@@ -157,28 +157,28 @@ describe('schedules', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'AWS Only',
           frequency: 'Every 12 hours',
+          locations: '',
+          name: 'AWS Only',
           regions: 'aws',
-          locations: '',
         },
         {
-          name: 'Default Schedule',
           frequency: 'Every 5 minutes',
-          regions: 'all',
           locations: '',
+          name: 'Default Schedule',
+          regions: 'all',
         },
         {
-          name: 'Expo',
           frequency: 'Every 10 minutes',
-          regions: 'all',
           locations: '',
+          name: 'Expo',
+          regions: 'all',
         },
         {
-          name: 'Fibo',
           frequency: 'Every 30 seconds',
-          regions: 'all',
           locations: 'aws_europe_1, google_america_2',
+          name: 'Fibo',
+          regions: 'all',
         },
       ]);
     });

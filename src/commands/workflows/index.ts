@@ -1,4 +1,5 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type WorkflowsList = {
@@ -8,8 +9,6 @@ export type WorkflowsList = {
 
 export default class Workflows extends Command<WorkflowsList> {
   static description = 'List all workflows in the Project.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %>
 Name      Description Stop on failure Handle cookies
@@ -21,13 +20,15 @@ Buy Fruit             false           false
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
+      char: 'p',
       description:
         'ID of project to read. Overrides apimetrics config project set.' +
         ' Can be found in the Project Settings web page under the admin' +
         ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<WorkflowsList> {
     const {flags} = await this.parse(Workflows);
@@ -40,36 +41,36 @@ Buy Fruit             false           false
     ux.table(
       workflows,
       {
-        name: {
-          get: (row) => row.meta.name,
+        created: {
+          extended: true,
+          get: (row) => row.meta.created,
         },
         description: {
           get: (row) => row.meta.description || '',
         },
-        stopOnFailure: {
-          header: 'Stop on failure',
-          get: (row) => row.workflow.stop_on_failure,
-        },
         handleCookies: {
-          header: 'Handle cookies',
           get: (row) => row.workflow.handle_cookies,
+          header: 'Handle cookies',
         },
         id: {
+          extended: true,
           header: 'ID',
-          extended: true,
-        },
-        tags: {
-          get: (row) => row.meta.tags.join(', '),
-          extended: true,
         },
         lastUpdated: {
-          header: 'Last Updated',
+          extended: true,
           get: (row) => row.meta.last_update,
-          extended: true,
+          header: 'Last Updated',
         },
-        created: {
-          get: (row) => row.meta.created,
+        name: {
+          get: (row) => row.meta.name,
+        },
+        stopOnFailure: {
+          get: (row) => row.workflow.stop_on_failure,
+          header: 'Stop on failure',
+        },
+        tags: {
           extended: true,
+          get: (row) => row.meta.tags.join(', '),
         },
       },
       {
@@ -77,6 +78,6 @@ Buy Fruit             false           false
         ...flags,
       }
     );
-    return {success: true, workflows: workflows};
+    return {success: true, workflows};
   }
 }

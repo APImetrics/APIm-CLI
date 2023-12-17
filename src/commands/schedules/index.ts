@@ -1,15 +1,14 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type ScheduleList = {
-  success: boolean;
   schedules: T.Schedule[];
+  success: boolean;
 };
 
 export default class Schedules extends Command<ScheduleList> {
   static description = 'List schedules.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %>
 Name          Frequency        Regions
@@ -22,13 +21,15 @@ Schedule 2    Every 5 minutes  all, oc
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
+      char: 'p',
       description:
         'ID of project to read. Overrides apimetrics config project set.' +
         ' Can be found in the Project Settings web page under the admin' +
         ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<ScheduleList> {
     const {flags} = await this.parse(Schedules);
@@ -42,11 +43,31 @@ Schedule 2    Every 5 minutes  all, oc
     ux.table(
       schedules,
       {
-        name: {
-          get: (row) => row.meta.name,
+        backoff: {
+          extended: true,
+          get(row) {
+            switch (row.schedule.backoff_method) {
+              case 'fibo': {
+                return 'fibonacci';
+              }
+
+              case 'expo': {
+                return 'exponential';
+              }
+
+              default: {
+                return row.schedule.backoff_method;
+              }
+            }
+          },
+          header: 'Backoff method',
+        },
+        created: {
+          extended: true,
+          get: (row) => row.meta.created,
         },
         frequency: {
-          get: (row) => {
+          get(row) {
             const intervalMins = row.schedule.frequency / 60;
             if (intervalMins >= 60) {
               return `Every ${intervalMins / 60} hours`;
@@ -59,42 +80,27 @@ Schedule 2    Every 5 minutes  all, oc
             return `Every ${intervalMins * 60} seconds`;
           },
         },
-        regions: {
-          get: (row) => row.schedule.regions.join(', '),
+        id: {
+          extended: true,
+          header: 'ID',
+        },
+        lastUpdated: {
+          extended: true,
+          get: (row) => row.meta.last_update,
+          header: 'Last Updated',
         },
         locations: {
           get: (row) => row.schedule.locations.join(', '),
         },
-        id: {
-          header: 'ID',
-          extended: true,
+        name: {
+          get: (row) => row.meta.name,
+        },
+        regions: {
+          get: (row) => row.schedule.regions.join(', '),
         },
         tags: {
+          extended: true,
           get: (row) => row.meta.tags.join(', '),
-          extended: true,
-        },
-        lastUpdated: {
-          header: 'Last Updated',
-          get: (row) => row.meta.last_update,
-          extended: true,
-        },
-        created: {
-          get: (row) => row.meta.created,
-          extended: true,
-        },
-        backoff: {
-          header: 'Backoff method',
-          get: (row) => {
-            switch (row.schedule.backoff_method) {
-              case 'fibo':
-                return 'fibonacci';
-              case 'expo':
-                return 'exponential';
-              default:
-                return row.schedule.backoff_method;
-            }
-          },
-          extended: true,
         },
       },
       {
@@ -102,6 +108,6 @@ Schedule 2    Every 5 minutes  all, oc
         ...flags,
       }
     );
-    return {success: true, schedules: schedules};
+    return {schedules, success: true};
   }
 }

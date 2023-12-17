@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean}> {
@@ -9,34 +10,32 @@ export default class Edit extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'user-id': Flags.string({
-      description:
-        'ID or email of user. ID can be found in the Accounts section of the Organization' +
-        ' Settings web page or by using the command' +
-        ' `apimetrics org accounts --columns name,id`.',
-      char: 'u',
-      required: true,
-    }),
     'add-role': Flags.string({
       description: 'Add a role to the account.',
       multiple: true,
+    }),
+    'org-id': Flags.string({
+      char: 'o',
+      description: 'ID of organization to modify. Overrides apimetrics config org set.',
     }),
     'remove-role': Flags.string({
       description: 'Name of role to remove.',
       multiple: true,
     }),
-    'org-id': Flags.string({
+    'user-id': Flags.string({
+      char: 'u',
       description:
-        'ID of organization to modify. Overrides apimetrics config org set.' +
-        'Can be found on the Organization Settings web page.',
-      char: 'o',
+        'ID or email of user. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
+      required: true,
     }),
   };
 
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Edit);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {

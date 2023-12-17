@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command} from '../../../base-command';
 
 export type DeleteResponse = {
@@ -21,17 +22,17 @@ export default class Delete extends Command<DeleteResponse> {
       required: true,
     }),
     'org-id': Flags.string({
+      char: 'o',
       description:
         'ID of organization to modify. Overrides apimetrics config org set.' +
         'Can be found on the Organization Settings web page.',
-      char: 'o',
     }),
   };
 
   public async run(): Promise<DeleteResponse> {
     const {flags} = await this.parse(Delete);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {

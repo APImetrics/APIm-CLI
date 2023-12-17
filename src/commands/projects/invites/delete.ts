@@ -1,9 +1,8 @@
 import {Flags} from '@oclif/core';
+
 import {Command} from '../../../base-command';
 export default class Delete extends Command<{success: boolean}> {
   static description = 'Delete an invite to the project.';
-  protected permitKeyAuth = true;
-
   static examples = [
     '<%= config.bin %> <%= command.id %> --invite-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA',
   ];
@@ -17,6 +16,8 @@ export default class Delete extends Command<{success: boolean}> {
       required: true,
     }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Delete);

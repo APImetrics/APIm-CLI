@@ -7,42 +7,42 @@ const webhooks = {
   results: [
     {
       meta: {
-        name: 'A Webhook',
-        include_tags: ['tag', 'tag'],
         exclude_tags: ['tag', 'tag'],
+        include_tags: ['tag', 'tag'],
+        name: 'A Webhook',
         tags: ['tag', 'tag'],
       },
       webhook: {
-        type: 'email',
         enabled: true,
         parameters: {
           email_address: 'bob@example.com',
         },
+        type: 'email',
       },
     },
     {
       meta: {
-        name: 'A Webhook',
-        include_tags: [],
         exclude_tags: [],
+        include_tags: [],
+        name: 'A Webhook',
         tags: [],
       },
       webhook: {
-        type: 'email',
         enabled: true,
         parameters: {},
+        type: 'email',
       },
     },
     {
       meta: {
-        name: 'A Webhook',
-        include_tags: [],
         exclude_tags: [],
+        include_tags: [],
+        name: 'A Webhook',
       },
       webhook: {
-        type: 'email',
         enabled: true,
         parameters: {},
+        type: 'email',
       },
     },
   ],
@@ -56,8 +56,8 @@ describe('webhooks', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -70,8 +70,8 @@ describe('webhooks', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -85,25 +85,25 @@ describe('webhooks', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'A Webhook',
-          type: 'email',
-          includeTags: 'tag, tag',
+          enabled: 'true',
           excludeTags: 'tag, tag',
-          enabled: 'true',
-        },
-        {
+          includeTags: 'tag, tag',
           name: 'A Webhook',
           type: 'email',
-          includeTags: 'None',
-          excludeTags: 'None',
-          enabled: 'true',
         },
         {
+          enabled: 'true',
+          excludeTags: 'None',
+          includeTags: 'None',
           name: 'A Webhook',
           type: 'email',
-          includeTags: 'None',
-          excludeTags: 'None',
+        },
+        {
           enabled: 'true',
+          excludeTags: 'None',
+          includeTags: 'None',
+          name: 'A Webhook',
+          type: 'email',
         },
       ]);
     });
@@ -142,25 +142,25 @@ describe('webhooks', () => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal([
         {
-          name: 'A Webhook',
-          type: 'email',
-          includeTags: 'tag, tag',
+          enabled: 'true',
           excludeTags: 'tag, tag',
-          enabled: 'true',
-        },
-        {
+          includeTags: 'tag, tag',
           name: 'A Webhook',
           type: 'email',
-          includeTags: 'None',
-          excludeTags: 'None',
-          enabled: 'true',
         },
         {
+          enabled: 'true',
+          excludeTags: 'None',
+          includeTags: 'None',
           name: 'A Webhook',
           type: 'email',
-          includeTags: 'None',
-          excludeTags: 'None',
+        },
+        {
           enabled: 'true',
+          excludeTags: 'None',
+          includeTags: 'None',
+          name: 'A Webhook',
+          type: 'email',
         },
       ]);
     });

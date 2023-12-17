@@ -1,4 +1,5 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type WorkflowResponse = {
@@ -8,19 +9,40 @@ export type WorkflowResponse = {
 
 export default class Create extends Command<WorkflowResponse> {
   static description = 'Create a new workflow.';
-  protected permitKeyAuth = true;
-
   static examples = ['<%= config.bin %> <%= command.id %> --name="My Workflow"'];
 
   static flags = {
+    call: Flags.string({
+      description: 'ID of call to add to workflow.',
+      multiple: true,
+    }),
+    description: Flags.string({description: 'Description for this workflow.'}),
+    'handle-cookies': Flags.boolean({
+      allowNo: true,
+      default: false,
+      description: 'Should cookies be handled?',
+    }),
+    'ignore-in-stats': Flags.integer({
+      description: 'Number of retries to ignore in failure statistics.',
+      min: 1,
+    }),
+    location: Flags.string({description: 'Only run calls from this location.'}),
+    'max-retries': Flags.integer({
+      description: 'Maximum number of retries to attempt.',
+      min: 1,
+    }),
     name: Flags.string({
       description: 'Name for workflow.',
       required: true,
     }),
-    description: Flags.string({description: 'Description for this workflow.'}),
-    'retry-method': Flags.string({
-      description: 'Algorithm for retries.',
-      options: ['fibonacci', 'exponential', 'constant', 'never'],
+    parallel: Flags.boolean({
+      allowNo: true,
+      default: true,
+      description: 'Should parallel execution be allowed?',
+    }),
+    'project-id': Flags.string({
+      char: 'p',
+      description: 'ID of project to modify. Overrides apimetrics config project set.',
     }),
     'retry-base': Flags.integer({
       description: 'Base for exponential retry.',
@@ -34,45 +56,24 @@ export default class Create extends Command<WorkflowResponse> {
       description: 'Wait X seconds between each retry.',
       min: 1,
     }),
-    'max-retries': Flags.integer({
-      description: 'Maximum number of retries to attempt.',
-      min: 1,
+    'retry-method': Flags.string({
+      description: 'Algorithm for retries.',
+      options: ['fibonacci', 'exponential', 'constant', 'never'],
     }),
+    'show-as-action': Flags.boolean({description: 'Show on project home page as action.'}),
     'skip-notifications': Flags.integer({
       description: 'Number of retries to attempt before sending notifications.',
       min: 1,
     }),
-    'ignore-in-stats': Flags.integer({
-      description: 'Number of retries to ignore in failure statistics.',
-      min: 1,
-    }),
-    location: Flags.string({description: 'Only run calls from this location.'}),
-    'show-as-action': Flags.boolean({description: 'Show on project home page as action.'}),
-    parallel: Flags.boolean({
-      description: 'Should parallel execution be allowed?',
-      default: true,
+    'stop-on-failure': Flags.boolean({
       allowNo: true,
+      default: true,
+      description: 'Should the workflow stop execution on a failed call?',
     }),
     tag: Flags.string({description: 'Tag to add to workflow.', multiple: true}),
-    call: Flags.string({
-      description: 'ID of call to add to workflow.',
-      multiple: true,
-    }),
-    'stop-on-failure': Flags.boolean({
-      description: 'Should the workflow stop execution on a failed call?',
-      default: true,
-      allowNo: true,
-    }),
-    'handle-cookies': Flags.boolean({
-      description: 'Should cookies be handled?',
-      default: false,
-      allowNo: true,
-    }),
-    'project-id': Flags.string({
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
-      char: 'p',
-    }),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<WorkflowResponse> {
     const {flags} = await this.parse(Create);
@@ -82,17 +83,17 @@ export default class Create extends Command<WorkflowResponse> {
 
     const body = {
       meta: {
-        name: flags.name,
         description: flags.description,
+        name: flags.name,
         tags: [...(flags.tag || [])] as string[],
       },
       workflow: {
         // eslint-disable-next-line camelcase
+        call_ids: flags.call,
+        // eslint-disable-next-line camelcase
         handle_cookies: flags['handle-cookies'],
         // eslint-disable-next-line camelcase
         stop_on_failure: flags['stop-on-failure'],
-        // eslint-disable-next-line camelcase
-        call_ids: flags.call,
       },
     };
 
@@ -117,10 +118,12 @@ export default class Create extends Command<WorkflowResponse> {
 
     // Handle retry flags
     switch (flags['retry-method']) {
-      case 'fibonacci':
+      case 'fibonacci': {
         body.meta.tags.push('apimetrics:backoff:fibo');
         break;
-      case 'exponential':
+      }
+
+      case 'exponential': {
         body.meta.tags.push('apimetrics:backoff:expo');
         if (flags['retry-base']) {
           body.meta.tags.push(`apimetrics:backoff_base:${flags['retry-base']}`);
@@ -131,16 +134,21 @@ export default class Create extends Command<WorkflowResponse> {
         }
 
         break;
-      case 'constant':
+      }
+
+      case 'constant': {
         body.meta.tags.push('apimetrics:backoff:constant');
         if (flags['retry-interval']) {
           body.meta.tags.push(`apimetrics:backoff_interval:${flags['retry-interval']}`);
         }
 
         break;
-      case 'never':
+      }
+
+      case 'never': {
         body.meta.tags.push('apimetrics:backoff:none');
         break;
+      }
     }
 
     if (flags['max-retries']) {
@@ -155,8 +163,8 @@ export default class Create extends Command<WorkflowResponse> {
       body.meta.tags.push(`apimetrics:backoff_skip_notifs:${flags['skip-notifications']}`);
     }
 
-    const workflow = await this.api.post<T.Workflow>(`workflows/`, {body: body});
+    const workflow = await this.api.post<T.Workflow>(`workflows/`, {body});
     this.log(workflow.id);
-    return {success: true, workflow: workflow};
+    return {success: true, workflow};
   }
 }

@@ -1,9 +1,10 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type RoleList = {
-  success: boolean;
   roles: T.Access[];
+  success: boolean;
 };
 
 export default class Roles extends Command<RoleList> {
@@ -23,11 +24,11 @@ ADMIN     VIEWER  `,
   static flags = {
     ...ux.table.flags(),
     'project-id': Flags.string({
+      char: 'p',
       description:
         'ID of project to read. Overrides apimetrics config project set.' +
         ' Can be found in the Project Settings web page under the admin' +
         ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
     }),
   };
 
@@ -43,12 +44,12 @@ ADMIN     VIEWER  `,
     ux.table(
       roles,
       {
+        accessLevel: {
+          get: (row) => row.access_level,
+          header: 'Access Level',
+        },
         role: {
           get: (row) => row.role_id,
-        },
-        accessLevel: {
-          header: 'Access Level',
-          get: (row) => row.access_level,
         },
       },
       {
@@ -56,6 +57,6 @@ ADMIN     VIEWER  `,
         ...flags,
       }
     );
-    return {success: true, roles: roles};
+    return {roles, success: true};
   }
 }

@@ -1,9 +1,10 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type RoleList = {
-  success: boolean;
   roles: T.Role[];
+  success: boolean;
 };
 
 export default class Roles extends Command<RoleList> {
@@ -20,17 +21,17 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
   static flags = {
     ...ux.table.flags({except: ['extended']}),
     'org-id': Flags.string({
+      char: 'o',
       description:
         'ID of organization to read. Overrides apimetrics config org set.' +
         'Can be found on the Organization Settings web page.',
-      char: 'o',
     }),
   };
 
   public async run(): Promise<RoleList> {
     const {flags} = await this.parse(Roles);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {
@@ -43,14 +44,14 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
     ux.table(
       roles,
       {
-        role: {
-          get: (row) => row.id,
+        created: {
+          get: (row) => row.created,
         },
         description: {
           get: (row) => row.description,
         },
-        created: {
-          get: (row) => row.created,
+        role: {
+          get: (row) => row.id,
         },
       },
       {
@@ -58,6 +59,6 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
         ...flags,
       }
     );
-    return {success: true, roles: roles};
+    return {roles, success: true};
   }
 }

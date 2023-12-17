@@ -1,22 +1,15 @@
 import {Flags, ux} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean; warnings?: string[]}> {
   static description = 'Edit role access on the project.';
-  private warnings: string[] = [];
-
   static examples = ['<%= config.bin %> <%= command.id %> --add-owner ADMIN --remove-editor DEBUG'];
 
   static flags = {
-    'add-owner': Flags.string({
+    'add-analyst': Flags.string({
       description:
-        'ID of role to add as an owner. This is the name of the role capitalized' +
-        ' and with whitespace replaced by underscores.',
-      multiple: true,
-    }),
-    'remove-owner': Flags.string({
-      description:
-        'ID of role to remove as an owner. This is the name of the role capitalized' +
+        'ID of role to add as an analyst. This is the name of the role capitalized' +
         ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
@@ -26,21 +19,9 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
         ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
-    'remove-editor': Flags.string({
+    'add-owner': Flags.string({
       description:
-        'ID of role to remove as an editor. This is the name of the role capitalized' +
-        ' and with whitespace replaced by underscores.',
-      multiple: true,
-    }),
-    'add-analyst': Flags.string({
-      description:
-        'ID of role to add as an analyst. This is the name of the role capitalized' +
-        ' and with whitespace replaced by underscores.',
-      multiple: true,
-    }),
-    'remove-analyst': Flags.string({
-      description:
-        'ID of role to remove as an analyst. This is the name of the role capitalized' +
+        'ID of role to add as an owner. This is the name of the role capitalized' +
         ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
@@ -50,83 +31,37 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
         ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
+    'project-id': Flags.string({
+      char: 'p',
+      description: 'ID of project to read. Overrides apimetrics config project set.',
+    }),
+    'remove-analyst': Flags.string({
+      description:
+        'ID of role to remove as an analyst. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
+      multiple: true,
+    }),
+    'remove-editor': Flags.string({
+      description:
+        'ID of role to remove as an editor. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
+      multiple: true,
+    }),
+    'remove-owner': Flags.string({
+      description:
+        'ID of role to remove as an owner. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
+      multiple: true,
+    }),
     'remove-viewer': Flags.string({
       description:
         'ID of role to add as a viewer. This is the name of the role capitalized' +
         ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
   };
 
-  /**
-   * Get access IDs for roles to remove
-   * @param existingAccess Roles who currently have access to project
-   * @param level Access level to remove role at
-   * @param roles Array of IDs to remove
-   * @returns Array of access IDs ready for requests
-   */
-  private getAccessIDs(existingAccess: T.Access[], level: string, roles?: string[]): string[] {
-    const removal: string[] = [];
-    if (roles) {
-      for (const role of roles) {
-        const roleAccess = existingAccess.find(
-          (access) => access.role_id === role && access.access_level === level
-        );
-        if (roleAccess) {
-          removal.push(roleAccess.id);
-        } else {
-          ux.warn(`Could not find role with ID ${role} for access level ${level}. Skipping.`);
-          this.warnings.push(
-            `Could not find role with ID ${role} for access level ${level}. Skipping.`
-          );
-        }
-      }
-    }
-
-    return removal;
-  }
-
-  /**
-   * Format request bodies for access requests
-   * @param orgRoles Roles that currently exist on the organisation
-   * @param level Access level to add role at
-   * @param roles Array of IDs to add
-   * @returns Array of access bodies ready for requests
-   */
-  private formatAccessRequests(
-    orgRoles: T.Role[],
-    level: string,
-    roles?: string[]
-    // eslint-disable-next-line camelcase
-  ): {access_level: string; role_id: string}[] {
-    const add: {
-      // eslint-disable-next-line camelcase
-      access_level: string;
-      // eslint-disable-next-line camelcase
-      role_id: string;
-    }[] = [];
-
-    if (roles) {
-      for (const role of roles) {
-        if (orgRoles.some((access) => access.id === role)) {
-          // eslint-disable-next-line camelcase
-          add.push({access_level: level, role_id: role});
-        } else {
-          ux.warn(`Could not find role with ID ${role}. Skipping.`);
-          this.warnings.push(`Could not find role with ID ${role}. Skipping.`);
-        }
-      }
-    }
-
-    return add;
-  }
+  private warnings: string[] = [];
 
   public async run(): Promise<{success: boolean; warnings?: string[]}> {
     const {flags} = await this.parse(Edit);
@@ -164,5 +99,66 @@ export default class Edit extends Command<{success: boolean; warnings?: string[]
 
     await Promise.all(responses); // Wait for all requests to finish
     return {success: this.warnings.length === 0, warnings: this.warnings};
+  }
+
+  /**
+   * Format request bodies for access requests
+   * @param orgRoles Roles that currently exist on the organisation
+   * @param level Access level to add role at
+   * @param roles Array of IDs to add
+   * @returns Array of access bodies ready for requests
+   */
+  private formatAccessRequests(
+    orgRoles: T.Role[],
+    level: string,
+    roles?: string[]
+  ): {access_level: string; role_id: string}[] {
+    const add: {
+      access_level: string;
+
+      role_id: string;
+    }[] = [];
+
+    if (roles) {
+      for (const role of roles) {
+        if (orgRoles.some((access) => access.id === role)) {
+          // eslint-disable-next-line camelcase
+          add.push({access_level: level, role_id: role});
+        } else {
+          ux.warn(`Could not find role with ID ${role}. Skipping.`);
+          this.warnings.push(`Could not find role with ID ${role}. Skipping.`);
+        }
+      }
+    }
+
+    return add;
+  }
+
+  /**
+   * Get access IDs for roles to remove
+   * @param existingAccess Roles who currently have access to project
+   * @param level Access level to remove role at
+   * @param roles Array of IDs to remove
+   * @returns Array of access IDs ready for requests
+   */
+  private getAccessIDs(existingAccess: T.Access[], level: string, roles?: string[]): string[] {
+    const removal: string[] = [];
+    if (roles) {
+      for (const role of roles) {
+        const roleAccess = existingAccess.find(
+          (access) => access.role_id === role && access.access_level === level
+        );
+        if (roleAccess) {
+          removal.push(roleAccess.id);
+        } else {
+          ux.warn(`Could not find role with ID ${role} for access level ${level}. Skipping.`);
+          this.warnings.push(
+            `Could not find role with ID ${role} for access level ${level}. Skipping.`
+          );
+        }
+      }
+    }
+
+    return removal;
   }
 }

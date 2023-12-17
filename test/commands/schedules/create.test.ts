@@ -3,52 +3,52 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
 const scheduleResponse = {
+  id: 'qwerty',
   meta: {
-    name: 'schedule',
     created: '2023-05-17T00:48:56.286524Z',
-    tags: ['importer:default-schedule'],
     last_update: '2023-06-07T23:16:10.378774Z',
+    name: 'schedule',
     owner: 'abc123',
     project_id: 'abc123',
+    tags: ['importer:default-schedule'],
   },
-  id: 'qwerty',
   schedule: {
-    regions: ['all'],
+    backoff_method: null,
     frequency: 300,
     locations: [],
+    regions: ['all'],
     target_ids: [],
-    backoff_method: null,
   },
 };
 
 const info = {
-  regions: [
-    {id: 'sft', name: 'IBM Cloud', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'eu', name: 'Europe', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'azr', name: 'Microsoft Azure', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'na', name: 'North America', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'oc', name: 'Oceania', locations: ['public_qcazureasiase']},
-    {id: 'sa', name: 'South America', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'aws', name: 'Amazon AWS', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {
-      id: 'all',
-      name: 'Worldwide',
-      locations: ['public_qcazureasiase', 'public_qcawsuswest', 'public_qcgoogleuscentral'],
-    },
-    {id: 'af', name: 'Africa', locations: ['public_azuresouthafricanorth']},
-    {id: 'ap', name: 'Asia-Pacfic', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'goo', name: 'Google Cloud', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'ww', name: null, locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-  ],
   locations: {
     '': 'QC Default - QC AWS US West (Oregon)',
+    public_qcawsuswest: 'AWS QC Oregon [United States, North America]',
     public_qcazureasiase:
       'Azure QC Singapore With a Really Really Really Really Really Really Really Really Really Really Long Name [Singapore, Asia]',
-    public_qcawsuswest: 'AWS QC Oregon [United States, North America]',
     public_qcgoogleuscentral: 'Google QC US Central [United States, North America]',
     qcmetrics_demoagent: 'Demo Agent [United States, North America]',
   },
   postman_locations: ['public_qcawsuswest', 'public_qcgoogleuscentral', 'public_qcazureasiase'],
+  regions: [
+    {id: 'sft', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'IBM Cloud'},
+    {id: 'eu', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Europe'},
+    {id: 'azr', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Microsoft Azure'},
+    {id: 'na', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'North America'},
+    {id: 'oc', locations: ['public_qcazureasiase'], name: 'Oceania'},
+    {id: 'sa', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'South America'},
+    {id: 'aws', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Amazon AWS'},
+    {
+      id: 'all',
+      locations: ['public_qcazureasiase', 'public_qcawsuswest', 'public_qcgoogleuscentral'],
+      name: 'Worldwide',
+    },
+    {id: 'af', locations: ['public_azuresouthafricanorth'], name: 'Africa'},
+    {id: 'ap', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Asia-Pacfic'},
+    {id: 'goo', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Google Cloud'},
+    {id: 'ww', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: null},
+  ],
 };
 
 describe('schedules create', () => {
@@ -59,8 +59,8 @@ describe('schedules create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -73,8 +73,8 @@ describe('schedules create', () => {
         project: {},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -93,7 +93,7 @@ describe('schedules create', () => {
     .command(['schedules:create', '--name=schedule', '--interval=5m', '--json'])
     .it('Create minimal schedule', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -109,7 +109,7 @@ describe('schedules create', () => {
     .command(['schedules:create', '--name=schedule', '--interval=24h', '--json'])
     .it('Create minimal schedule with 24h interval', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -125,7 +125,7 @@ describe('schedules create', () => {
     .command(['schedules:create', '--name=schedule', '--interval=5m', '--json', '--postman'])
     .it('Postman flag', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -147,7 +147,7 @@ describe('schedules create', () => {
     ])
     .it('Fibonacci retry', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -169,7 +169,7 @@ describe('schedules create', () => {
     ])
     .it('Exponential retry minimal', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -200,7 +200,7 @@ describe('schedules create', () => {
     ])
     .it('Exponential retry full options', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -222,7 +222,7 @@ describe('schedules create', () => {
     ])
     .it('Constant retry minimal', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -248,7 +248,7 @@ describe('schedules create', () => {
     ])
     .it('Constant retry full options', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -279,7 +279,7 @@ describe('schedules create', () => {
     ])
     .it('General retry options', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -312,7 +312,7 @@ describe('schedules create', () => {
     ])
     .it('Specify locations', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -363,7 +363,7 @@ describe('schedules create', () => {
     ])
     .it('Specify regions', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 
   auth
@@ -406,6 +406,6 @@ describe('schedules create', () => {
     ])
     .it('Pass --project-id flag', (ctx) => {
       const output = JSON.parse(ctx.stdout);
-      expect(output).to.deep.equal({success: true, schedule: scheduleResponse});
+      expect(output).to.deep.equal({schedule: scheduleResponse, success: true});
     });
 });

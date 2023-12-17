@@ -1,10 +1,11 @@
 import {ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type OrgList = {
-  success: boolean;
   organizations: T.UserProjects['organizations'];
   roles: T.UserProjects['meta']['roles'];
+  success: boolean;
 };
 
 export default class Orgs extends Command<OrgList> {
@@ -27,59 +28,59 @@ An Org                       companyb PLAN
     const {flags} = await this.parse(Orgs);
 
     const {
-      organizations,
       meta: {roles},
+      organizations,
     } = await this.api.get<T.UserProjects>('account/projects');
 
     ux.table(
       Object.values(organizations),
       {
+        billingAdminID: {
+          extended: true,
+          get: (row) => row.billing_admin_id,
+          header: 'Billing Admin ID',
+        },
+        created: {
+          extended: true,
+          get: (row) => row.created,
+        },
+        enforce2fa: {
+          extended: true,
+          get: (row) => row.enforce_2fa,
+          header: 'Enforce 2FA',
+        },
+        id: {
+          get: (row) => row.id,
+          header: 'ID',
+        },
+        kmsEnabled: {
+          extended: true,
+          get: (row) => row.kms_enabled,
+          header: 'KMS Enabled',
+        },
         name: {
           get: (row) => row.name,
         },
-        id: {
-          header: 'ID',
-          get: (row) => row.id,
+        passwordExpiryDays: {
+          extended: true,
+          get: (row) => row.password_expiry_days,
+          header: 'Password Expiry Days',
         },
         roles: {
           get: (row) => roles[row.id]?.join(', ') || '',
         },
         subscriptionLevel: {
-          header: 'Subscription Level',
           get: (row) => row.subscription_level,
-        },
-        billingAdminID: {
-          header: 'Billing Admin ID',
-          get: (row) => row.billing_admin_id,
-          extended: true,
-        },
-        enforce2fa: {
-          header: 'Enforce 2FA',
-          get: (row) => row.enforce_2fa,
-          extended: true,
-        },
-        passwordExpiryDays: {
-          header: 'Password Expiry Days',
-          get: (row) => row.password_expiry_days,
-          extended: true,
-        },
-        kmsEnabled: {
-          header: 'KMS Enabled',
-          get: (row) => row.kms_enabled,
-          extended: true,
-        },
-        tags: {
-          get: (row) => row.tags.join(', '),
-          extended: true,
+          header: 'Subscription Level',
         },
         systemTags: {
-          header: 'System Tags',
+          extended: true,
           get: (row) => row.system_tags.join(', '),
-          extended: true,
+          header: 'System Tags',
         },
-        created: {
-          get: (row) => row.created,
+        tags: {
           extended: true,
+          get: (row) => row.tags.join(', '),
         },
       },
       {
@@ -87,6 +88,6 @@ An Org                       companyb PLAN
         ...flags,
       }
     );
-    return {success: true, organizations: organizations, roles: roles};
+    return {organizations, roles, success: true};
   }
 }

@@ -1,9 +1,10 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T} from '../../../base-command';
 
 export type RoleResponse = {
-  success: boolean;
   role: T.Role;
+  success: boolean;
 };
 
 export default class Create extends Command<RoleResponse> {
@@ -15,35 +16,35 @@ TEAM_A`,
   ];
 
   static flags = {
-    name: Flags.string({description: 'Name of role.', required: true, char: 'n'}),
-    description: Flags.string({description: 'Role description.', required: true, char: 'd'}),
+    description: Flags.string({char: 'd', description: 'Role description.', required: true}),
+    name: Flags.string({char: 'n', description: 'Name of role.', required: true}),
     'org-id': Flags.string({
+      char: 'o',
       description:
         'ID of organization to modify. Overrides apimetrics config org set.' +
         'Can be found on the Organization Settings web page.',
-      char: 'o',
     }),
   };
 
   public async run(): Promise<RoleResponse> {
     const {flags} = await this.parse(Create);
 
-    const orgId = flags['org-id'] ? flags['org-id'] : this.userConfig.organization.current;
+    const orgId = flags['org-id'] ?? this.userConfig.organization.current;
     if (orgId === undefined) {
       throw new Error('Current organization not set. Run `apimetrics config org set` first.');
     } else if (orgId === '') {
       throw new Error('Organization roles not supported for personal projects.');
     }
 
-    flags.name = flags.name.toUpperCase().replace(/ /gm, '_');
+    flags.name = flags.name.toUpperCase().replaceAll(/ /gm, '_');
 
     const endpoint = `organizations/${orgId}/roles/`;
     const data = {
-      id: flags.name,
       description: flags.description,
+      id: flags.name,
     };
     const role = await this.api.post<T.Role>(endpoint, {body: data});
     this.log(role.id);
-    return {success: true, role: role};
+    return {role, success: true};
   }
 }

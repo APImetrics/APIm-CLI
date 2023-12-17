@@ -25,8 +25,8 @@ describe('projects create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -38,8 +38,8 @@ describe('projects create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -51,8 +51,8 @@ describe('projects create', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -71,8 +71,8 @@ describe('projects create', () => {
     .it('Create project basic (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         project: {id: 'abc123', name: 'project'},
+        success: true,
         warnings: [],
       });
     });
@@ -90,8 +90,8 @@ describe('projects create', () => {
     .it('Create project basic passing --org-id flag (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         project: {id: 'abc123', name: 'project'},
+        success: true,
         warnings: [],
       });
     });
@@ -147,8 +147,8 @@ describe('projects create', () => {
     .it('Create project with access and roles (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: true,
         project: {id: 'abc123', name: 'project'},
+        success: true,
         warnings: [],
       });
     });
@@ -166,8 +166,8 @@ describe('projects create', () => {
     .it('Create project with invalid role (--json)', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
-        success: false,
         project: {id: 'abc123', name: 'project'},
+        success: false,
         warnings: ['Unrecognised role AN_INVALID_ROLE. Skipping.'],
       });
     });

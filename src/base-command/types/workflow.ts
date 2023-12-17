@@ -1,20 +1,19 @@
-/* eslint-disable camelcase */
 export type Workflow = {
+  id?: string;
   meta: {
-    project_id?: string;
-    name: string;
-    workspace?: string;
-    tags: string[];
-    owner?: string;
-    deployments?: string | null;
     created?: string;
+    deployments?: null | string;
+    description: null | string;
     last_update?: string;
-    description: string | null;
+    name: string;
+    owner?: string;
+    project_id?: string;
+    tags: string[];
+    workspace?: string;
   };
   workflow: {
-    handle_cookies: boolean;
     call_ids: string[];
+    handle_cookies: boolean;
     stop_on_failure: boolean;
   };
-  id?: string;
 };

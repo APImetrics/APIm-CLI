@@ -1,11 +1,12 @@
 import {Flags} from '@oclif/core';
-import {Command} from '../../../base-command';
-import * as inquirer from 'inquirer';
 import {HTTPError} from 'http-call';
+import * as inquirer from 'inquirer';
+
+import {Command, T} from '../../../base-command';
 
 export type SetOrgJson = {
-  success: boolean;
   message: string;
+  success: boolean;
 };
 
 export default class Set extends Command<SetOrgJson> {
@@ -15,11 +16,11 @@ export default class Set extends Command<SetOrgJson> {
 
   static flags = {
     'org-id': Flags.string({
+      char: 'o',
       description:
         'ID of org to switch to. Can be found on the Organization Settings' +
         ' web page. Alternatively, you may omit this flag and select your organization' +
         ' interactively.',
-      char: 'o',
     }),
   };
 
@@ -41,7 +42,7 @@ export default class Set extends Command<SetOrgJson> {
       this.userConfig.organization.current = flags['org-id'];
       await this.userConfig.save();
 
-      return {success: true, message: 'Set current organization.'};
+      return {message: 'Set current organization.', success: true};
     }
 
     if (flags.json) {
@@ -50,7 +51,7 @@ export default class Set extends Command<SetOrgJson> {
       );
     }
 
-    const availableOrgs = await this.api.get<any>('account/projects');
+    const availableOrgs = await this.api.get<T.UserProjects>('account/projects');
     this.debug('%O', availableOrgs);
 
     // Personal projects have an org ID of ""
@@ -64,10 +65,10 @@ export default class Set extends Command<SetOrgJson> {
 
     const response = await inquirer.prompt([
       {
-        name: 'organization',
-        message: 'Select an organization',
-        type: 'list',
         choices: orgs,
+        message: 'Select an organization',
+        name: 'organization',
+        type: 'list',
       },
     ]);
 
@@ -76,6 +77,6 @@ export default class Set extends Command<SetOrgJson> {
     this.userConfig.project.current = undefined;
     await this.userConfig.save();
 
-    return {success: true, message: 'Set current organization.'};
+    return {message: 'Set current organization.', success: true};
   }
 }

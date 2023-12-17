@@ -10,9 +10,9 @@ describe('auth logout', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
-        refresh: 'abc123',
         mode: 'device',
+        refresh: 'abc123',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -27,9 +27,9 @@ describe('auth logout', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
-        refresh: '',
         mode: 'device',
+        refresh: '',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})

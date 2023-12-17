@@ -1,10 +1,9 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../base-command';
 
 export default class Create extends Command<T.Call> {
   static description = 'Create a new API call.';
-  protected permitKeyAuth = true;
-
   static examples = [
     `<%= config.bin %> <%= command.id %> --name Apples --url https://example.com/v1/apples
 ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM`,
@@ -13,9 +12,15 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM`,
   ];
 
   static flags = {
-    name: Flags.string({description: 'Name of API call.', char: 'n', required: true}),
-    url: Flags.string({description: 'URL to call.', char: 'u', required: true}),
+    accept: Flags.string({
+      description: 'MIME type for accept header. Alias for --header Accept: <MIME type>.',
+    }),
+    body: Flags.string({description: 'Request body.'}),
+    description: Flags.string({description: 'Call description.'}),
+    header: Flags.string({description: 'Header to add to call.', multiple: true}),
     method: Flags.string({
+      char: 'm',
+      default: 'GET',
       description: 'HTTP method to use.',
       options: [
         'get',
@@ -33,24 +38,20 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM`,
         'options',
         'OPTIONS',
       ],
-      char: 'm',
-      default: 'GET',
     }),
-    accept: Flags.string({
-      description: 'MIME type for accept header. Alias for --header Accept: <MIME type>.',
-    }),
-    header: Flags.string({description: 'Header to add to call.', multiple: true}),
-    tag: Flags.string({description: 'Tag to add to call.', multiple: true}),
+    name: Flags.string({char: 'n', description: 'Name of API call.', required: true}),
     'project-id': Flags.string({
+      char: 'p',
       description:
         'ID of project to modify. Overrides apimetrics config project set.' +
         ' Can be found in the Project Settings web page under the admin' +
         ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
     }),
-    description: Flags.string({description: 'Call description.'}),
-    body: Flags.string({description: 'Request body.'}),
+    tag: Flags.string({description: 'Tag to add to call.', multiple: true}),
+    url: Flags.string({char: 'u', description: 'URL to call.', required: true}),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<T.Call> {
     const {flags} = await this.parse(Create);
@@ -85,8 +86,8 @@ ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM`,
 
     const call = await this.api.post<T.Call>('calls/', {
       body: {
-        meta: {name: flags.name, description: flags.description, tags: tags},
-        request: {method: flags.method, url: flags.url, headers: headers, body: flags.body},
+        meta: {description: flags.description, name: flags.name, tags},
+        request: {body: flags.body, headers, method: flags.method, url: flags.url},
       },
     });
     this.log(call.id);

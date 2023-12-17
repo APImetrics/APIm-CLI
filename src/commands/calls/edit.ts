@@ -1,31 +1,42 @@
 import {Flags} from '@oclif/core';
+
 import {Command, T, util} from '../../base-command';
 
 export type UpdatedCall = {
-  success: boolean;
   call: T.Call;
+  success: boolean;
 };
 
 export default class Edit extends Command<UpdatedCall> {
   static description = 'Edit an existing API call.';
-  protected permitKeyAuth = true;
-
   static examples = [
     '<%= config.bin %> <%= command.id %> --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM --url https://example.com/v2/apples',
   ];
 
   static flags = {
+    accept: Flags.string({
+      description: 'MIME type for accept header. Alias for --replace-header Accept: <MIME type>.',
+    }),
+    'add-header': Flags.string({
+      description: 'Add header to the call. Specify in the form <key>: <value>.',
+      multiple: true,
+    }),
+    'add-tag': Flags.string({
+      description: 'Name of tag to add. No effect if the tag already exists.',
+      multiple: true,
+    }),
+    body: Flags.string({description: 'Request body.'}),
     'call-id': Flags.string({
+      char: 'c',
       description:
         'ID of call. Can be found in the expanded Audit Logs of the desired' +
         ' API call in the Audit tab web page or by using the command' +
         ' `apimetrics calls --columns name,id`.',
-      char: 'c',
-      required: true,
+      required: true
     }),
-    name: Flags.string({description: 'Name of API call.', char: 'n'}),
-    url: Flags.string({description: 'URL to call.', char: 'u'}),
+    description: Flags.string({description: 'Call description.'}),
     method: Flags.string({
+      char: 'm',
       description: 'HTTP method to use.',
       options: [
         'get',
@@ -43,13 +54,14 @@ export default class Edit extends Command<UpdatedCall> {
         'options',
         'OPTIONS',
       ],
-      char: 'm',
     }),
-    accept: Flags.string({
-      description: 'MIME type for accept header. Alias for --replace-header Accept: <MIME type>.',
+    name: Flags.string({char: 'n', description: 'Name of API call.'}),
+    'remove-header': Flags.string({
+      description: 'Name of header to remove.',
+      multiple: true,
     }),
-    'add-header': Flags.string({
-      description: 'Add header to the call. Specify in the form <key>: <value>.',
+    'remove-tag': Flags.string({
+      description: 'Name of tag to remove.',
       multiple: true,
     }),
     'replace-header': Flags.string({
@@ -57,21 +69,10 @@ export default class Edit extends Command<UpdatedCall> {
         'Add header to the call or replace if it already exists. Specify in the form <key>: <value>.',
       multiple: true,
     }),
-    'remove-header': Flags.string({
-      description: 'Name of header to remove.',
-      multiple: true,
-    }),
-    'add-tag': Flags.string({
-      description: 'Name of tag to add. No effect if the tag already exists.',
-      multiple: true,
-    }),
-    'remove-tag': Flags.string({
-      description: 'Name of tag to remove.',
-      multiple: true,
-    }),
-    description: Flags.string({description: 'Call description.'}),
-    body: Flags.string({description: 'Request body.'}),
+    url: Flags.string({char: 'u', description: 'URL to call.'}),
   };
+
+  protected permitKeyAuth = true;
 
   public async run(): Promise<UpdatedCall> {
     const {flags} = await this.parse(Edit);
@@ -124,18 +125,18 @@ export default class Edit extends Command<UpdatedCall> {
     const updatedCall = await this.api.post<T.Call>(endpoint, {
       body: {
         meta: {
-          name: flags.name || call.meta.name,
           description: flags.description || call.meta.description,
+          name: flags.name || call.meta.name,
           tags: call.meta.tags,
         },
         request: {
+          body: flags.body || call.request.body,
+          headers: call.request.headers,
           method: flags.method || call.request.method,
           url: flags.url || call.request.url,
-          headers: call.request.headers,
-          body: flags.body || call.request.body,
         },
       },
     });
-    return {success: true, call: updatedCall};
+    return {call: updatedCall, success: true};
   }
 }

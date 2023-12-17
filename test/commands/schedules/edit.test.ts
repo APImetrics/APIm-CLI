@@ -3,71 +3,71 @@ import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
 const scheduleResponse = {
+  id: 'abc123',
   meta: {
-    name: 'schedule',
     created: '2023-05-17T00:48:56.286524Z',
-    tags: [],
     last_update: '2023-06-07T23:16:10.378774Z',
+    name: 'schedule',
     owner: 'abc123',
     project_id: 'abc123',
+    tags: [],
   },
-  id: 'abc123',
   schedule: {
-    regions: ['all'],
+    backoff_method: null,
     frequency: 300,
     locations: [],
+    regions: ['all'],
     target_ids: [],
-    backoff_method: null,
   },
 };
 
 const scheduleResponseBackoff = {
+  id: 'abc123',
   meta: {
-    name: 'schedule',
     created: '2023-05-17T00:48:56.286524Z',
-    tags: ['apimetrics:backoff:fibo', 'apimetrics:backoff:expo', 'apimetrics:backoff:constant'],
     last_update: '2023-06-07T23:16:10.378774Z',
+    name: 'schedule',
     owner: 'abc123',
     project_id: 'abc123',
+    tags: ['apimetrics:backoff:fibo', 'apimetrics:backoff:expo', 'apimetrics:backoff:constant'],
   },
-  id: 'abc123',
   schedule: {
-    regions: ['all'],
+    backoff_method: null,
     frequency: 300,
     locations: [],
+    regions: ['all'],
     target_ids: [],
-    backoff_method: null,
   },
 };
 
 const info = {
-  regions: [
-    {id: 'sft', name: 'IBM Cloud', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'eu', name: 'Europe', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'azr', name: 'Microsoft Azure', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'na', name: 'North America', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'oc', name: 'Oceania', locations: ['public_qcazureasiase']},
-    {id: 'sa', name: 'South America', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'aws', name: 'Amazon AWS', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {
-      id: 'all',
-      name: 'Worldwide',
-      locations: ['public_qcazureasiase', 'public_qcawsuswest', 'public_qcgoogleuscentral'],
-    },
-    {id: 'af', name: 'Africa', locations: ['public_azuresouthafricanorth']},
-    {id: 'ap', name: 'Asia-Pacfic', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'goo', name: 'Google Cloud', locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-    {id: 'ww', name: null, locations: ['public_qcazureasiase', 'public_qcawsuswest']},
-  ],
   locations: {
     '': 'QC Default - QC AWS US West (Oregon)',
+    public_qcawsuswest: 'AWS QC Oregon [United States, North America]',
     public_qcazureasiase:
       'Azure QC Singapore With a Really Really Really Really Really Really Really Really Really Really Long Name [Singapore, Asia]',
-    public_qcawsuswest: 'AWS QC Oregon [United States, North America]',
     public_qcgoogleuscentral: 'Google QC US Central [United States, North America]',
     qcmetrics_demoagent: 'Demo Agent [United States, North America]',
   },
   postman_locations: ['public_qcawsuswest', 'public_qcgoogleuscentral', 'public_qcazureasiase'],
+  regions: [
+    {id: 'sft', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'IBM Cloud'},
+    {id: 'eu', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Europe'},
+    {id: 'azr', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Microsoft Azure'},
+    {id: 'na', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'North America'},
+    {id: 'oc', locations: ['public_qcazureasiase'], name: 'Oceania'},
+    {id: 'sa', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'South America'},
+    {id: 'aws', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Amazon AWS'},
+    {
+      id: 'all',
+      locations: ['public_qcazureasiase', 'public_qcawsuswest', 'public_qcgoogleuscentral'],
+      name: 'Worldwide',
+    },
+    {id: 'af', locations: ['public_azuresouthafricanorth'], name: 'Africa'},
+    {id: 'ap', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Asia-Pacfic'},
+    {id: 'goo', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: 'Google Cloud'},
+    {id: 'ww', locations: ['public_qcazureasiase', 'public_qcawsuswest'], name: null},
+  ],
 };
 
 describe('schedules edit', () => {
@@ -78,8 +78,8 @@ describe('schedules edit', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -93,15 +93,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 60,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -118,15 +118,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 86_400,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -143,15 +143,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'abc',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -168,15 +168,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: ['apimetrics:postman'],
             project_id: 'abc123',
+            tags: ['apimetrics:postman'],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -192,29 +192,29 @@ describe('schedules edit', () => {
         .reply(200, {
           meta: {
             name: 'schedule',
-            tags: ['apimetrics:postman'],
             project_id: 'abc123',
+            tags: ['apimetrics:postman'],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -231,15 +231,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: ['apimetrics:backoff:fibo'],
             project_id: 'abc123',
+            tags: ['apimetrics:backoff:fibo'],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -256,15 +256,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: ['apimetrics:backoff:expo'],
             project_id: 'abc123',
+            tags: ['apimetrics:backoff:expo'],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -281,15 +281,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: ['apimetrics:backoff:constant'],
             project_id: 'abc123',
+            tags: ['apimetrics:backoff:constant'],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -306,15 +306,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -328,43 +328,43 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
+            last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
+            owner: 'abc123',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_base:10',
               'apimetrics:backoff_factor:10',
               'apimetrics:backoff_interval:10',
             ],
-            last_update: '2023-06-07T23:16:10.378774Z',
-            owner: 'abc123',
-            project_id: 'abc123',
           },
-          id: 'abc123',
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_base:20',
               'apimetrics:backoff_factor:20',
               'apimetrics:backoff_interval:20',
             ],
-            project_id: 'abc123',
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -384,43 +384,43 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
+            last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
+            owner: 'abc123',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_base:10',
               'apimetrics:backoff_factor:10',
               'apimetrics:backoff_interval:10',
             ],
-            last_update: '2023-06-07T23:16:10.378774Z',
-            owner: 'abc123',
-            project_id: 'abc123',
           },
-          id: 'abc123',
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_base:10',
               'apimetrics:backoff_factor:10',
               'apimetrics:backoff_interval:10',
             ],
-            project_id: 'abc123',
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -440,39 +440,39 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
-            tags: [],
             last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
             owner: 'abc123',
             project_id: 'abc123',
+            tags: [],
           },
-          id: 'abc123',
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_base:20',
               'apimetrics:backoff_factor:20',
               'apimetrics:backoff_interval:20',
             ],
-            project_id: 'abc123',
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -492,43 +492,43 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
+            last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
+            owner: 'abc123',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_max_retries:10',
               'apimetrics:backoff_skip_save:10',
               'apimetrics:backoff_skip_notifs:10',
             ],
-            last_update: '2023-06-07T23:16:10.378774Z',
-            owner: 'abc123',
-            project_id: 'abc123',
           },
-          id: 'abc123',
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_max_retries:20',
               'apimetrics:backoff_skip_save:20',
               'apimetrics:backoff_skip_notifs:20',
             ],
-            project_id: 'abc123',
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -548,43 +548,43 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
+            last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
+            owner: 'abc123',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_max_retries:10',
               'apimetrics:backoff_skip_save:10',
               'apimetrics:backoff_skip_notifs:10',
             ],
-            last_update: '2023-06-07T23:16:10.378774Z',
-            owner: 'abc123',
-            project_id: 'abc123',
           },
-          id: 'abc123',
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_max_retries:10',
               'apimetrics:backoff_skip_save:10',
               'apimetrics:backoff_skip_notifs:10',
             ],
-            project_id: 'abc123',
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -604,39 +604,39 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
-            tags: [],
             last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
             owner: 'abc123',
             project_id: 'abc123',
+            tags: [],
           },
-          id: 'abc123',
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
+            project_id: 'abc123',
             tags: [
               'apimetrics:backoff_max_retries:20',
               'apimetrics:backoff_skip_save:20',
               'apimetrics:backoff_skip_notifs:20',
             ],
-            project_id: 'abc123',
           },
           schedule: {
-            regions: ['all'],
+            backoff_method: null,
             frequency: 300,
             locations: [],
+            regions: ['all'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -661,15 +661,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['all', 'eu'],
+            backoff_method: null,
             frequency: 300,
             locations: ['public_qcazureasiase'],
+            regions: ['all', 'eu'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})
@@ -688,21 +688,21 @@ describe('schedules edit', () => {
       api
         .get('/api/2/schedules/abc123/')
         .reply(200, {
+          id: 'abc123',
           meta: {
-            name: 'schedule',
             created: '2023-05-17T00:48:56.286524Z',
-            tags: [],
             last_update: '2023-06-07T23:16:10.378774Z',
+            name: 'schedule',
             owner: 'abc123',
             project_id: 'abc123',
+            tags: [],
           },
-          id: 'abc123',
           schedule: {
-            regions: ['eu', 'us'],
+            backoff_method: null,
             frequency: 300,
             locations: ['public_qcazureasiase', 'public_qcawsuswest'],
+            regions: ['eu', 'us'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .get('/api/2/agents/info')
@@ -710,15 +710,15 @@ describe('schedules edit', () => {
         .post('/api/2/schedules/abc123/', {
           meta: {
             name: 'schedule',
-            tags: [],
             project_id: 'abc123',
+            tags: [],
           },
           schedule: {
-            regions: ['us'],
+            backoff_method: null,
             frequency: 300,
             locations: ['public_qcawsuswest'],
+            regions: ['us'],
             target_ids: [],
-            backoff_method: null,
           },
         })
         .reply(200, {})

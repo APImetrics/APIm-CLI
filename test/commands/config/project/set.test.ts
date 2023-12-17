@@ -28,8 +28,8 @@ describe('config project set', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -42,8 +42,8 @@ describe('config project set', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: '',
         mode: '',
+        token: '',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -60,9 +60,9 @@ describe('config project set', () => {
     .it('Set project passing --json flag without --project-id', (ctx) => {
       const output = JSON.parse(ctx.stderr);
       expect(output).to.deep.contain({
-        success: false,
         message:
           'Cannot use --json with interactive mode. Specify project using --project-id instead.',
+        success: false,
       });
     });
   conf

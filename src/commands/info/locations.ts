@@ -1,9 +1,10 @@
 import {ux} from '@oclif/core';
+
 import {Command, T} from '../../base-command';
 
 export type LocationList = {
-  success: boolean;
   locations: T.Info['agent_list'];
+  success: boolean;
 };
 
 export default class Locations extends Command<LocationList> {
@@ -31,22 +32,22 @@ public_googleuscentral 35.226.77.27`,
     ux.table(
       agents,
       {
-        name: {
-          get: (row) => row.meta.name,
+        id: {
+          extended: true,
+          get: (row) => row.id,
+          header: 'ID',
         },
         ip: {
-          header: 'IP',
           get: (row) => row.meta.remote_addr,
-        },
-        id: {
-          header: 'ID',
-          get: (row) => row.id,
-          extended: true,
+          header: 'IP',
         },
         metaId: {
-          header: 'Meta ID',
-          get: (row) => row.meta.id,
           extended: true,
+          get: (row) => row.meta.id,
+          header: 'Meta ID',
+        },
+        name: {
+          get: (row) => row.meta.name,
         },
       },
       {
@@ -54,6 +55,6 @@ public_googleuscentral 35.226.77.27`,
         ...flags,
       }
     );
-    return {success: true, locations: agents};
+    return {locations: agents, success: true};
   }
 }

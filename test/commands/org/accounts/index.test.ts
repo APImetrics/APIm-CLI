@@ -6,42 +6,42 @@ const accountResponse = {
   meta: {},
   results: [
     {
-      name: 'Bob',
-      email: 'bob@example.com',
-      last_login: '2021-09-01T05:23:20.337Z',
-      last_ip: '123.123.123.123',
-      logins_count: 2,
       app_metadata: {
         org_roles: {
           abc123: ['DEFAULT', 'DAVE'],
         },
       },
+      email: 'bob@example.com',
+      last_ip: '123.123.123.123',
+      last_login: '2021-09-01T05:23:20.337Z',
+      logins_count: 2,
+      name: 'Bob',
     },
     {
-      name: 'Dave',
-      email: 'dave@example.com',
-      last_login: '2021-09-01T05:23:20.337Z',
-      last_ip: '123.123.123.123',
-      logins_count: 2,
       app_metadata: {
         abc123: ['DEFAULT', 'DAVE'],
       },
+      email: 'dave@example.com',
+      last_ip: '123.123.123.123',
+      last_login: '2021-09-01T05:23:20.337Z',
+      logins_count: 2,
+      name: 'Dave',
     },
     {
-      name: 'Alice',
       email: 'alice@example.com',
-      last_login: '2021-09-01T05:23:20.337Z',
       last_ip: '123.123.123.123',
+      last_login: '2021-09-01T05:23:20.337Z',
       logins_count: 2,
+      name: 'Alice',
       permissions: ['DEFAULT', 'DAVE'],
     },
     {
-      name: 'Fred',
-      email: 'fred@example.com',
-      last_login: '2021-09-01T05:23:20.337Z',
-      last_ip: '123.123.123.123',
-      logins_count: 2,
       app_metadata: {},
+      email: 'fred@example.com',
+      last_ip: '123.123.123.123',
+      last_login: '2021-09-01T05:23:20.337Z',
+      logins_count: 2,
+      name: 'Fred',
     },
   ],
 };
@@ -54,8 +54,8 @@ describe('org accounts', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -68,8 +68,8 @@ describe('org accounts', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'key',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
@@ -82,8 +82,8 @@ describe('org accounts', () => {
         project: {current: 'abc123'},
       });
       fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
         mode: 'bearer',
+        token: 'abc123',
       });
     })
     .env({APIMETRICS_CONFIG_DIR: './.test'})
