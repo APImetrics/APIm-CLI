@@ -16,20 +16,12 @@ export default class Delete extends Command<{success: boolean}> {
         ' `apimetrics projects invites --columns email,roles,id`.',
       required: true,
     }),
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<{success: boolean}> {
     const {flags} = await this.parse(Delete);
 
-    const projectId = flags['project-id'] ? flags['project-id'] : this.userConfig.project.current;
-    await this.api.delete(`projects/${projectId}/invites/${flags['invite-id']}/`);
+    await this.api.delete(`projects/${this.api.project}/invites/${flags['invite-id']}/`);
     return {success: true};
   }
 }

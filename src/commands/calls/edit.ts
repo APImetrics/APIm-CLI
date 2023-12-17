@@ -69,23 +69,12 @@ export default class Edit extends Command<UpdatedCall> {
       description: 'Name of tag to remove.',
       multiple: true,
     }),
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
     description: Flags.string({description: 'Call description.'}),
     body: Flags.string({description: 'Request body.'}),
   };
 
   public async run(): Promise<UpdatedCall> {
     const {flags} = await this.parse(Edit);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     const endpoint = `calls/${flags['call-id']}/`;
     const call = await this.api.get<T.Call>(endpoint);

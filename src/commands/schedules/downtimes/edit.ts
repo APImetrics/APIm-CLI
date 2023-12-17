@@ -33,21 +33,10 @@ export default class Create extends Command<Downtime> {
       description: 'Repeat this downtime at the set interval.',
       options: ['daily', 'weekly', 'off'],
     }),
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<Downtime> {
     const {flags} = await this.parse(Create);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     const {schedule: downtime} = await this.api.get<T.Downtime>(
       `schedules/downtime/${flags['downtime-id']}/`

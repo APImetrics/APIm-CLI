@@ -1,11 +1,7 @@
 import {expect, test} from '@oclif/test';
 import * as fs from 'fs-extra';
 
-const schedule = {
-  id: 'qwerty',
-};
-
-describe('schedules calls remove', () => {
+describe('workflows delete', () => {
   const auth = test
     .do(() => {
       fs.writeJsonSync('./.test/config.json', {
@@ -22,25 +18,22 @@ describe('schedules calls remove', () => {
 
   auth
     .nock('https://client.apimetrics.io', (api) =>
-      api.delete('/api/2/schedules/abc123/call/def456').reply(200, schedule)
+      api.delete('/api/2/workflows/qwerty/').reply(200, {})
     )
     .stdout()
-    .command(['schedules:calls:remove', '--schedule-id=abc123', '--call-id=def456', '--json'])
-    .it('Remove call from schedule', (ctx) => {
+    .command(['workflows:delete', '--workflow-id=qwerty', '--json'])
+    .it('Delete workflow', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({
         success: true,
-        schedule: {id: 'qwerty'},
       });
     });
 
   auth
     .stderr()
-    .command(['schedules:calls:remove'])
+    .command(['workflows:delete'])
     .catch((error) => {
-      expect(error.message)
-        .to.contain('Missing required flag schedule-id')
-        .and.to.contain('Missing required flag call-id');
+      expect(error.message).to.contain('Missing required flag workflow-id');
     })
     .it('Missing required options');
 });

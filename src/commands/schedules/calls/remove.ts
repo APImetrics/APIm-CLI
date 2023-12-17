@@ -17,13 +17,6 @@ export default class Remove extends Command<Schedule> {
   static aliases = ['calls:schedules:delete'];
 
   static flags = {
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
     'schedule-id': Flags.string({
       description:
         'ID of schedule to modify. Can be found by using the command' +
@@ -43,12 +36,10 @@ export default class Remove extends Command<Schedule> {
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Remove);
-    const endpoint = `schedules/${flags['schedule-id']}/call/${flags['call-id']}`;
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
-
-    const schedule = await this.api.delete<T.Schedule>(endpoint, {});
+    const schedule = await this.api.delete<T.Schedule>(
+      `schedules/${flags['schedule-id']}/call/${flags['call-id']}`,
+      {}
+    );
     return {success: true, schedule: schedule};
   }
 }

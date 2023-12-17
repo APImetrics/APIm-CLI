@@ -65,6 +65,22 @@ const noRoles = {
   logins_count: 2,
 };
 
+const orgAccounts = {
+  meta: {},
+  results: [
+    {email: 'abc@example.com', id: 'auth0|abc123'},
+    {email: 'def@example.com', id: 'auth0|def123'},
+    {email: 'ghi@example.com', id: 'auth0|ghi123'},
+    {email: 'jkl@example.com', id: 'auth0|jkl123'},
+    {email: 'mno@example.com', id: 'auth0|mno123'},
+    {email: 'pqr@example.com', id: 'auth0|pqr123'},
+    {email: 'stu@example.com', id: 'auth0|stu123'},
+    {email: 'vwx@example.com', id: 'auth0|vwx123'},
+    {email: 'yza@example.com', id: 'auth0|yza123'},
+    {email: 'yza@example.com', id: 'auth0|yza123'},
+  ],
+};
+
 describe('org accounts edit', () => {
   const bearerAuth = test
     .do(() => {
@@ -127,6 +143,35 @@ describe('org accounts edit', () => {
       '--json',
     ])
     .it('Add and remove roles from a user with role in app_metadata (--json)', (ctx) => {
+      const output = JSON.parse(ctx.stdout);
+      expect(output).to.deep.equal({success: true});
+    });
+
+  bearerAuth
+    .nock('https://client.apimetrics.io', (api) => {
+      api
+        .get('/api/2/organizations/abc123/roles/')
+        .reply(200, roles)
+        .get('/api/2/organizations/abc123/accounts/')
+        .reply(200, orgAccounts)
+        .get('/api/2/organizations/abc123/accounts/auth0%7Cabc123')
+        .reply(200, appMetadata);
+
+      // These calls are async
+      api.post('/api/2/organizations/abc123/accounts/auth0%7Cabc123/role/A_ROLE/').reply(200, {});
+      api
+        .delete('/api/2/organizations/abc123/accounts/auth0%7Cabc123/role/ANOTHER_ROLE/')
+        .reply(200, {});
+    })
+    .stdout()
+    .command([
+      'org:accounts:edit',
+      '--add-role=A_ROLE',
+      '--remove-role=ANOTHER_ROLE',
+      '--user-id=abc@example.com',
+      '--json',
+    ])
+    .it('Add and remove roles from a user using email', (ctx) => {
       const output = JSON.parse(ctx.stdout);
       expect(output).to.deep.equal({success: true});
     });

@@ -17,20 +17,6 @@ describe('schedules downtimes create', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
-  const noProject = test
-    .do(() => {
-      fs.writeJsonSync('./.test/config.json', {
-        organization: {current: 'abc123'},
-        project: {},
-      });
-      fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
-        mode: 'key',
-      });
-    })
-    .env({APIMETRICS_CONFIG_DIR: './.test'})
-    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
-
   bearerAuth
     .nock('https://client.apimetrics.io', (api) =>
       api
@@ -52,34 +38,6 @@ describe('schedules downtimes create', () => {
       '--end=2023-09-30T14:54:41.865Z',
     ])
     .it('Minimal downtime', (ctx) => {
-      expect(ctx.stdout).to.contain('abc123');
-    });
-
-  noProject
-    .nock(
-      'https://client.apimetrics.io',
-      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
-      (api) =>
-        api
-          .post('/api/2/schedules/1/downtime/', {
-            downtime: {
-              start_time: '2023-09-29T14:54:41.865Z',
-              end_time: '2023-09-30T14:54:41.865Z',
-              repeated: false,
-              repeat_days: 0,
-            },
-          })
-          .reply(200, {id: 'abc123'})
-    )
-    .stdout()
-    .command([
-      'schedules:downtimes:create',
-      '--schedule-id=1',
-      '--start=2023-09-29T14:54:41.865Z',
-      '--end=2023-09-30T14:54:41.865Z',
-      '-p=abc123',
-    ])
-    .it('Minimal downtime passing project ID', (ctx) => {
       expect(ctx.stdout).to.contain('abc123');
     });
 

@@ -36,21 +36,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       description: 'Repeat this downtime at the set interval.',
       options: ['daily', 'weekly'],
     }),
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<Downtime> {
     const {flags} = await this.parse(Create);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     let repeat = 0;
     switch (flags.repeat) {

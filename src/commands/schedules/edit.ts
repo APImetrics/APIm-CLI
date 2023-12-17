@@ -105,21 +105,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
         ' `apimetrics schedules --columns name,id',
       required: true,
     }),
-    'project-id': Flags.string({
-      description:
-        'ID of project to modify. Overrides apimetrics config project set.' +
-        ' Can be found in the Project Settings web page under the admin' +
-        ' section or by using the command `apimetrics projects --columns name,id`.',
-      char: 'p',
-    }),
   };
 
   public async run(): Promise<Schedule> {
     const {flags} = await this.parse(Edit);
-
-    if (flags['project-id']) {
-      this.api.project = flags['project-id'];
-    }
 
     let schedule = await this.api.get<T.Schedule>(`schedules/${flags['schedule-id']}/`);
 

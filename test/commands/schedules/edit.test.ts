@@ -85,20 +85,6 @@ describe('schedules edit', () => {
     .env({APIMETRICS_CONFIG_DIR: './.test'})
     .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
 
-  const noProject = test
-    .do(() => {
-      fs.writeJsonSync('./.test/config.json', {
-        organization: {current: 'abc123'},
-        project: {},
-      });
-      fs.writeJsonSync('./.test/auth.json', {
-        token: 'abc123',
-        mode: 'key',
-      });
-    })
-    .env({APIMETRICS_CONFIG_DIR: './.test'})
-    .env({APIMETRICS_API_URL: 'https://client.apimetrics.io/api/2/'});
-
   auth
     .nock('https://client.apimetrics.io', (api) =>
       api
@@ -148,34 +134,6 @@ describe('schedules edit', () => {
     .stdout()
     .command(['schedules:edit', '--schedule-id=abc123', '--interval=24h'])
     .it('Edit interval (h)');
-
-  noProject
-    .nock(
-      'https://client.apimetrics.io',
-      {reqheaders: {'Apimetrics-Project-Id': (val) => val === 'abc123'}},
-      (api) =>
-        api
-          .get('/api/2/schedules/abc123/')
-          .reply(200, scheduleResponse)
-          .post('/api/2/schedules/abc123/', {
-            meta: {
-              name: 'schedule',
-              tags: [],
-              project_id: 'abc123',
-            },
-            schedule: {
-              regions: ['all'],
-              frequency: 60,
-              locations: [],
-              target_ids: [],
-              backoff_method: null,
-            },
-          })
-          .reply(200, {})
-    )
-    .stdout()
-    .command(['schedules:edit', '--schedule-id=abc123', '--interval=1m', '-p=abc123'])
-    .it('Pass project ID');
 
   auth
     .nock('https://client.apimetrics.io', (api) =>

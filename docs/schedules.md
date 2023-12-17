@@ -52,7 +52,7 @@ EXAMPLES
   Schedule 2    Every 5 minutes  all, oc
 ```
 
-_See code: [src/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/index.ts)_
+_See code: [src/commands/schedules/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/index.ts)_
 
 ## `apimetrics schedules calls`
 
@@ -92,7 +92,7 @@ EXAMPLES
   Apples             GET    https://example.com/apples
 ```
 
-_See code: [src/commands/schedules/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/calls/index.ts)_
+_See code: [src/commands/schedules/calls/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/calls/index.ts)_
 
 ## `apimetrics schedules calls add`
 
@@ -100,17 +100,11 @@ Add an API call to a Schedule.
 
 ```
 USAGE
-  $ apimetrics schedules calls add -s <value> -c <value> [--json] [-p <value>]
+  $ apimetrics schedules calls add -s <value> -c <value> [--json]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to add. Can be found in the expanded Audit Logs of the desired API
-                             call in the Audit tab web page or by using the command `apimetrics calls --columns
-                             name,id`.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                             Project Settings web page under the admin section or by using the command `apimetrics
-                             projects --columns name,id`.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
-                             schedules --columns name,id`.
+  -c, --call-id=<value>      (required) ID of call to add.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -125,7 +119,7 @@ EXAMPLES
   $ apimetrics schedules calls add --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9f3DuAoM
 ```
 
-_See code: [src/commands/schedules/calls/add.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/calls/add.ts)_
+_See code: [src/commands/schedules/calls/add.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/calls/add.ts)_
 
 ## `apimetrics schedules calls remove`
 
@@ -133,17 +127,11 @@ Remove call from schedule
 
 ```
 USAGE
-  $ apimetrics schedules calls remove -s <value> -c <value> [--json] [-p <value>]
+  $ apimetrics schedules calls remove -s <value> -c <value> [--json]
 
 FLAGS
-  -c, --call-id=<value>      (required) ID of call to add. Can be found in the expanded Audit Logs of the desired API
-                             call in the Audit tab web page or by using the command `apimetrics calls --columns
-                             name,id`.
-  -p, --project-id=<value>   ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                             Project Settings web page under the admin section or by using the command `apimetrics
-                             projects --columns name,id`.
-  -s, --schedule-id=<value>  (required) ID of schedule to modify. Can be found by using the command `apimetrics
-                             schedules --columns name,id`.
+  -c, --call-id=<value>      (required) ID of call to remove.
+  -s, --schedule-id=<value>  (required) ID of schedule to modify.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -158,7 +146,7 @@ EXAMPLES
   $ apimetrics schedules calls remove --schedule-id ag9zfmFwaW1ldHJpY3MtcWNyFQsSCFNjaGVkdWxlGICA4Pbn4ZILDA --call-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXRjklafJhslw62dahoM
 ```
 
-_See code: [src/commands/schedules/calls/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/calls/remove.ts)_
+_See code: [src/commands/schedules/calls/remove.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/calls/remove.ts)_
 
 ## `apimetrics schedules create`
 
@@ -201,7 +189,7 @@ EXAMPLES
   ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/schedules/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/create.ts)_
+_See code: [src/commands/schedules/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/create.ts)_
 
 ## `apimetrics schedules delete`
 
@@ -209,14 +197,10 @@ Delete a schedule.
 
 ```
 USAGE
-  $ apimetrics schedules delete --schedule-id <value> [--json] [-p <value>]
+  $ apimetrics schedules delete --schedule-id <value> [--json]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                            Project Settings web page under the admin section or by using the command `apimetrics
-                            projects --columns name,id`.
-  --schedule-id=<value>     (required) Schedule to delete. Can be found by using the command `apimetrics schedules
-                            --columns name,id
+  --schedule-id=<value>  (required) Schedule to delete.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -228,7 +212,7 @@ EXAMPLES
   $ apimetrics schedules delete --schedule-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/schedules/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/delete.ts)_
+_See code: [src/commands/schedules/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/delete.ts)_
 
 ## `apimetrics schedules downtimes`
 
@@ -267,7 +251,7 @@ EXAMPLES
   ag9zfmFwaW1… ag9zfmFwaW1… 2023-09-29T14:57:39.134000Z 2023-10-20T14:57:39.134000Z daily
 ```
 
-_See code: [src/commands/schedules/downtimes/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/index.ts)_
+_See code: [src/commands/schedules/downtimes/index.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/downtimes/index.ts)_
 
 ## `apimetrics schedules downtimes create`
 
@@ -275,19 +259,15 @@ Create downtime for a Schedule.
 
 ```
 USAGE
-  $ apimetrics schedules downtimes create --start <value> --end <value> --schedule-id <value> [--json] [--repeat daily|weekly]
-    [-p <value>]
+  $ apimetrics schedules downtimes create --start <value> --end <value> --schedule-id <value> [--json] [--repeat
+  daily|weekly]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                            Project Settings web page under the admin section or by using the command `apimetrics
-                            projects --columns name,id`.
-  --end=<value>             (required) Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
-  --repeat=<option>         Repeat this downtime at the set interval.
-                            <options: daily|weekly>
-  --schedule-id=<value>     (required) Schedule to modify. Can be found by using the command `apimetrics schedules
-                            --columns name,id
-  --start=<value>           (required) Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --end=<value>          (required) Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --repeat=<option>      Repeat this downtime at the set interval.
+                         <options: daily|weekly>
+  --schedule-id=<value>  (required) ID of schedule to add downtime to.
+  --start=<value>        (required) Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -300,7 +280,7 @@ EXAMPLES
   ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/schedules/downtimes/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/create.ts)_
+_See code: [src/commands/schedules/downtimes/create.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/downtimes/create.ts)_
 
 ## `apimetrics schedules downtimes delete`
 
@@ -327,7 +307,7 @@ EXAMPLES
   $ apimetrics schedules downtimes delete --downtime-id ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/schedules/downtimes/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/delete.ts)_
+_See code: [src/commands/schedules/downtimes/delete.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/downtimes/delete.ts)_
 
 ## `apimetrics schedules downtimes edit`
 
@@ -336,18 +316,14 @@ Edit downtime.
 ```
 USAGE
   $ apimetrics schedules downtimes edit --downtime-id <value> [--json] [--start <value>] [--end <value>] [--repeat
-    daily|weekly|off] [-p <value>]
+    daily|weekly|off]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                            Project Settings web page under the admin section or by using the command `apimetrics
-                            projects --columns name,id`.
-  --downtime-id=<value>     (required) Downtime to edit. Can be found using the command`apimetrics schedules downtimes
-                            --columns id
-  --end=<value>             Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
-  --repeat=<option>         Repeat this downtime at the set interval.
-                            <options: daily|weekly|off>
-  --start=<value>           Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --downtime-id=<value>  (required) ID of downtime to edit.
+  --end=<value>          Date and time to end downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
+  --repeat=<option>      Repeat this downtime at the set interval.
+                         <options: daily|weekly|off>
+  --start=<value>        Date and time to start downtime in Date Time format (YYYY-MM-DDTHH:mm:ss.sssZ).
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -359,7 +335,7 @@ EXAMPLES
   $ apimetrics schedules downtimes edit --downtime-id pPbCtcWNyMwsSDU --start 2023-07-21T18:32:00Z --end 2023-07-21T19:32:00Z
 ```
 
-_See code: [src/commands/schedules/downtimes/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/downtimes/edit.ts)_
+_See code: [src/commands/schedules/downtimes/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/downtimes/edit.ts)_
 
 ## `apimetrics schedules edit`
 
@@ -371,12 +347,9 @@ USAGE
     1m|2m|3m|4m|5m|6m|10m|12m|15m|20m|30m|60m|2h|3h|4h|6h|8h|12h|24h] [--name <value>] [--retry-method
     fibonacci|exponential|constant] [--retry] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
     [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--postman] [--no-postman]
-    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>] [-p <value>]
+    [--add-location <value>] [--remove-location <value>] [--add-region <value>] [--remove-region <value>]
 
 FLAGS
-  -p, --project-id=<value>      ID of project to modify. Overrides apimetrics config project set. Can be found in the
-                                Project Settings web page under the admin section or by using the command `apimetrics
-                                projects --columns name,id`.
   --add-location=<value>...     Add location to run calls from.
   --add-region=<value>...       Add region to run calls from.
   --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
@@ -409,4 +382,4 @@ EXAMPLES
   ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY85RT7jdteFdmDA
 ```
 
-_See code: [src/commands/schedules/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.2.1/src/commands/schedules/edit.ts)_
+_See code: [src/commands/schedules/edit.ts](https://github.com/APImetrics/APIm-CLI/blob/v0.3.0/src/commands/schedules/edit.ts)_
