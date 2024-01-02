@@ -9,7 +9,12 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'schedule-id': Flags.string({description: 'Schedule to delete.', required: true}),
+    'schedule-id': Flags.string({
+      description:
+        'Schedule to delete. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id',
+      required: true,
+    }),
   };
 
   protected permitKeyAuth = true;

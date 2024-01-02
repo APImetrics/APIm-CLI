@@ -7,8 +7,8 @@ export type Schedule = {
   success: boolean;
 };
 
-export default class Create extends Command<Schedule> {
-  static description = 'Create schedule.';
+export default class Edit extends Command<Schedule> {
+  static description = 'Edit an existing Schedule.';
   static examples = [
     `
 <%= config.bin %> <%= command.id %> --name "My Schedule" --interval 5m
@@ -94,7 +94,12 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       description: 'Algorithm for retries.',
       options: ['fibonacci', 'exponential', 'constant'],
     }),
-    'schedule-id': Flags.string({description: 'Schedule to delete.', required: true}),
+    'schedule-id': Flags.string({
+      description:
+        'Schedule to modify. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id',
+      required: true,
+    }),
     'skip-notifications': Flags.integer({
       description: 'Number of retries to attempt before sending notifications.',
       min: 1,
@@ -104,7 +109,7 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
   protected permitKeyAuth = true;
 
   public async run(): Promise<Schedule> {
-    const {flags} = await this.parse(Create);
+    const {flags} = await this.parse(Edit);
 
     let schedule = await this.api.get<T.Schedule>(`schedules/${flags['schedule-id']}/`);
 

@@ -16,7 +16,10 @@ export default class Remove extends Command<{success: boolean}> {
     }),
     'user-id': Flags.string({
       char: 'u',
-      description: 'ID or email of user to remove.',
+      description:
+        'ID or email of user to remove. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       required: true,
     }),
   };

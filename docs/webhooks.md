@@ -10,30 +10,32 @@ Manage project webhooks and alerts.
 
 ## `apimetrics webhooks`
 
-List webhooks on a project.
+List all webhooks in a Project.
 
 ```
 USAGE
-  $ apimetrics webhooks [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+  $ apimetrics webhooks [--json] [--columns <value> | -x] [--filter <value>] [--no-header | [--csv |
+    --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set.
+  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set. Can be found in the Project
+                            Settings web page under the admin section or by using the command `apimetrics projects
+                            --columns name,id`.
   -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+      --columns=<value>     only show provided columns (comma-separated)
+      --csv                 output is csv format [alias: --output=csv]
+      --filter=<value>      filter property by partial string matching, ex: name=foo
+      --no-header           hide table header from output
+      --no-truncate         do not truncate output to fit screen
+      --output=<option>     output in a more machine friendly format
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+      --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  List webhooks on a project.
+  List all webhooks in a Project.
 
 EXAMPLES
   $ apimetrics webhooks
@@ -53,15 +55,14 @@ Create a new webhook.
 
 ```
 USAGE
-  $ apimetrics webhooks create -n <value> --type
+  $ apimetrics webhooks create --alert PASS|SLOW|WARNING|FAIL -n <value> --type
     generic|apimetrics_api|apimetrics_workflow|apimetrics_token|email|email_text|email_template|big_panda|darkspark|data
     dog|datadogevent|flowdock|hipchat|msteams|newrelic|opsgenie|opsgenieeu|pager_duty|pager_duty_v2|slack|statuspage|vic
-    torops --alert PASS|SLOW|WARNING|FAIL [--json] [--fails-in-a-row <value>] [--email-address <value>]
-    [--subject-template <value>] [--text-template <value>] [--url <value>] [--username <value>] [--password <value>]
-    [--call-id <value>] [--workflow-id <value>] [--token-id <value>] [--channel <value>] [--integration-key <value>]
-    [--severity critical|error|warning|info] [--user-key <value>] [--app-key <value>] [--api-key <value>] [--routing-key
-    <value>] [--page-id <value>] [--component-id <value>] [--flow-token <value>] [--include-tags <value>]
-    [--exclude-tags <value>] [-p <value>]
+    torops [--json] [--api-key <value>] [--app-key <value>] [--call-id <value>] [--channel <value>] [--component-id
+    <value>] [--email-address <value>] [--exclude-tags <value>] [--fails-in-a-row <value>] [--flow-token <value>]
+    [--include-tags <value>] [--integration-key <value>] [--page-id <value>] [--password <value>] [-p <value>]
+    [--routing-key <value>] [--severity critical|error|warning|info] [--subject-template <value>] [--text-template
+    <value>] [--token-id <value>] [--url <value>] [--user-key <value>] [--username <value>] [--workflow-id <value>]
 
 FLAGS
   -n, --name=<value>
@@ -82,7 +83,8 @@ FLAGS
       App key to use to identify this app. Used by [big_panda: required, newrelic: required].
 
   --call-id=<value>
-      APImetrics API call to run. Used by [apimetrics_api: required].
+      APImetrics API call to run. Can be found in the expanded Audit Logs of the desired API call in the Audit tab web
+      page or by using the command `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].
 
   --channel=<value>
       Integration channel name if different from that defined in the slack integration. Used by [slack: optional].
@@ -141,7 +143,8 @@ FLAGS
       ] Template for email body. Used by [email_template: required].
 
   --token-id=<value>
-      APImetrics token to update. Used by [apimetrics_token: required].
+      APImetrics token to update. Can be found on the Auth & Tokens web page, select the desired token to see the ID. Used
+      by [apimetrics_token: required].
 
   --type=<option>
       (required) Type of webhook to create.
@@ -159,7 +162,8 @@ FLAGS
       Username to use for authentication. Used by [generic: optional].
 
   --workflow-id=<value>
-      APImetrics workflow to run. Used by [apimetrics_workflow: required].
+      APImetrics workflow to run. Can be found by using the command `apimetrics workflows --columns name,id`. Used by
+      [apimetrics_workflow: required].
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -182,8 +186,11 @@ USAGE
   $ apimetrics webhooks delete --webhook-id <value> [--json] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
-  --webhook-id=<value>      (required) Webhook to delete.
+  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set. Can be found in the
+                            Project Settings web page under the admin section or by using the command `apimetrics
+                            projects --columns name,id`.
+      --webhook-id=<value>  (required) Webhook to delete. Can be found using the command `apimetrics webhooks --columns
+                            name,id`.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -203,20 +210,21 @@ Edit a webhook.
 
 ```
 USAGE
-  $ apimetrics webhooks edit --webhook-id <value> [--json] [-n <value>] [--fails-in-a-row <value>] [--email-address
-    <value>] [--subject-template <value>] [--text-template <value>] [--url <value>] [--username <value>] [--password
-    <value>] [--call-id <value>] [--workflow-id <value>] [--token-id <value>] [--channel <value>] [--integration-key
-    <value>] [--severity critical|error|warning|info] [--user-key <value>] [--app-key <value>] [--api-key <value>]
-    [--routing-key <value>] [--page-id <value>] [--component-id <value>] [--flow-token <value>] [--add-alert
-    PASS|SLOW|WARNING|FAIL] [--remove-alert PASS|SLOW|WARNING|FAIL] [--add-include-tags <value>] [--remove-include-tags
-    <value>] [--add-exclude-tags <value>] [--remove-exclude-tags <value>] [--enable | --disable] [-p <value>]
+  $ apimetrics webhooks edit --webhook-id <value> [--json] [--add-alert PASS|SLOW|WARNING|FAIL] [--add-exclude-tags
+    <value>] [--add-include-tags <value>] [--api-key <value>] [--app-key <value>] [--call-id <value>] [--channel
+    <value>] [--component-id <value>] [--disable | --enable] [--email-address <value>] [--fails-in-a-row <value>]
+    [--flow-token <value>] [--integration-key <value>] [-n <value>] [--page-id <value>] [--password <value>] [-p
+    <value>] [--remove-alert PASS|SLOW|WARNING|FAIL] [--remove-exclude-tags <value>] [--remove-include-tags <value>]
+    [--routing-key <value>] [--severity critical|error|warning|info] [--subject-template <value>] [--text-template
+    <value>] [--token-id <value>] [--url <value>] [--user-key <value>] [--username <value>] [--workflow-id <value>]
 
 FLAGS
   -n, --name=<value>
       Name of project.
 
   -p, --project-id=<value>
-      ID of project to read. Overrides apimetrics config project set.
+      ID of project to modify. Overrides apimetrics config project set. Can be found in the Project Settings web page
+      under the admin section or by using the command `apimetrics projects --columns name,id`.
 
   --add-alert=<option>...
       Add result type to fire webhook on.
@@ -236,7 +244,8 @@ FLAGS
       App key to use to identify this app. Used by [big_panda, newrelic].
 
   --call-id=<value>
-      APImetrics API call to run. Used by [apimetrics_api].
+      APImetrics API call to run. Can be found in the expanded Audit Logs of the desired API call in the Audit tab web
+      page or by using the command `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].
 
   --channel=<value>
       Integration channel name if different from that defined in the slack integration. Used by [slack].
@@ -303,7 +312,8 @@ FLAGS
       ] Template for email body. Used by [email_template].
 
   --token-id=<value>
-      APImetrics token to update. Used by [apimetrics_token].
+      ID of project to modify. Overrides apimetrics config project set. Can be found in the Project Settings web page
+      under the admin section or by using the command `apimetrics projects --columns name,id`.
 
   --url=<value>
       URL for webhook to call. Used by [generic, slack, hipchat, msteams].
@@ -315,10 +325,11 @@ FLAGS
       Username to use for authentication. Used by [generic].
 
   --webhook-id=<value>
-      (required) Webhook to edit.
+      (required) Webhook to edit. Can be found using the command `apimetrics webhooks --columns name,id`.
 
   --workflow-id=<value>
-      APImetrics workflow to run. Used by [apimetrics_workflow].
+      APImetrics workflow to run. Can be found by using the command `apimetrics workflows --columns name,id`. Used by
+      [apimetrics_workflow: required].
 
 GLOBAL FLAGS
   --json  Format output as json.

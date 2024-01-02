@@ -8,7 +8,7 @@ export type RoleResponse = {
 };
 
 export default class Create extends Command<RoleResponse> {
-  static description = 'Create a role in the organization.';
+  static description = 'Create a new role within the Organization.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %> --name TEAM_A --description "Development team A"
@@ -20,7 +20,9 @@ TEAM_A`,
     name: Flags.string({char: 'n', description: 'Name of role.', required: true}),
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
     }),
   };
 

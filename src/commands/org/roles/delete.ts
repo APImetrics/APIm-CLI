@@ -10,9 +10,17 @@ export default class Delete extends Command<{success: boolean}> {
   static flags = {
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
     }),
-    role: Flags.string({char: 'r', description: 'ID of role to delete.', required: true}),
+    role: Flags.string({
+      char: 'r',
+      description:
+        'ID of role to delete. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
+      required: true,
+    }),
   };
 
   public async run(): Promise<{success: boolean}> {

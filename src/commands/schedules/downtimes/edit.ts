@@ -16,7 +16,9 @@ export default class Create extends Command<Downtime> {
 
   static flags = {
     'downtime-id': Flags.string({
-      description: 'ID of downtime to edit.',
+      description:
+        'Downtime to edit. Can be found using the command' +
+        '`apimetrics schedules downtimes --columns id',
       required: true,
     }),
     end: Flags.string({

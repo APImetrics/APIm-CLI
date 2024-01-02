@@ -8,20 +8,21 @@ Manage CLI configuration options.
 
 ## `apimetrics config org set`
 
-Set the current working organization.
+Change the Organization the CLI is working in.
 
 ```
 USAGE
   $ apimetrics config org set [--json] [-o <value>]
 
 FLAGS
-  -o, --org-id=<value>  ID of org to set to.
+  -o, --org-id=<value>  ID of org to switch to. Can be found on the Organization Settings web page. Alternatively, you
+                        may omit this flag and select your organization interactively.
 
 GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  Set the current working organization.
+  Change the Organization the CLI is working in.
 
 EXAMPLES
   $ apimetrics config org set  --org-id abccorp
@@ -38,7 +39,8 @@ USAGE
   $ apimetrics config project set [--json] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to switch to
+  -p, --project-id=<value>  ID of project to switch to. Can be found in the Project Settings web page under Admin
+                            Settings. Alternatively, you may omit this flag and select your project interactively.
 
 GLOBAL FLAGS
   --json  Format output as json.

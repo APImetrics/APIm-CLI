@@ -10,14 +10,17 @@ export type SetOrgJson = {
 };
 
 export default class Set extends Command<SetOrgJson> {
-  static description = 'Set the current working organization.';
+  static description = 'Change the Organization the CLI is working in.';
 
   static examples = ['<%= config.bin %> <%= command.id %>  --org-id abccorp'];
 
   static flags = {
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of org to set to.',
+      description:
+        'ID of org to switch to. Can be found on the Organization Settings' +
+        ' web page. Alternatively, you may omit this flag and select your organization' +
+        ' interactively.',
     }),
   };
 

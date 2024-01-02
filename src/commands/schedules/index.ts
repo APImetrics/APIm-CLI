@@ -22,7 +22,10 @@ Schedule 2    Every 5 minutes  all, oc
     ...ux.table.flags(),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
   };
 

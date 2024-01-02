@@ -10,14 +10,12 @@ export type CreateJSON = {
 
 type AccessRequestBody = {
   access_level: string;
-
   account_id?: string;
-
   role_id?: string;
 };
 
 export default class Create extends Command<CreateJSON> {
-  static description = 'Create a new project.';
+  static description = 'Create a new project in the Organization.';
   static examples = [
     `<%= config.bin %> <%= command.id %> --name "My Project"
 ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtdTd3QkM`,
@@ -27,19 +25,30 @@ ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM`,
 
   static flags = {
     'analyst-role': Flags.string({
-      description: 'ID of role to give analyst access.',
+      description:
+        'ID of role to give analyst access. Can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'analyst-user': Flags.string({
-      description: 'ID of user to give analyst access.',
+      description:
+        'ID of user to give analyst access. Can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'editor-role': Flags.string({
-      description: 'ID of role to give editor access.',
+      description:
+        'ID of role to give editor access. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'editor-user': Flags.string({
-      description: 'ID of user to give editor access.',
+      description:
+        'ID of user to give editor access. Can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     name: Flags.string({char: 'n', description: 'Name of project.', required: true}),
@@ -48,19 +57,28 @@ ag9zfmFwaW1ldHJpY3MtcWNyEQsSBFVzZXIYgIDgtj9TyQkM`,
       description: 'ID of organization to modify. Overrides apimetrics config org set.',
     }),
     'owner-role': Flags.string({
-      description: 'ID of role to give owner access.',
+      description:
+        'ID of role to give owner access. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'owner-user': Flags.string({
-      description: 'ID of user to give owner access.',
+      description:
+        'ID of user to give owner access. Can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'viewer-role': Flags.string({
-      description: 'ID of role to give viewer access.',
+      description:
+        'ID of role to give viewer access. This is the name of the role capitalized' +
+        ' and with whitespace replaced by underscores.',
       multiple: true,
     }),
     'viewer-user': Flags.string({
-      description: 'ID of user to give viewer access.',
+      description:
+        'ID of user to give viewer access.' +
+        'Can be found on the Organization Settings web page.',
       multiple: true,
     }),
   };

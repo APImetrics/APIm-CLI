@@ -8,7 +8,7 @@ export type WebhookList = {
 };
 
 export default class Webhooks extends Command<WebhookList> {
-  static description = 'List webhooks on a project.';
+  static description = 'List all webhooks in a Project.';
   static examples = [
     `<%= config.bin %> <%= command.id %>
 Name         Type      Enabled Include Tags Exclude Tags
@@ -24,7 +24,10 @@ GEn          generic   false   None         None
     ...ux.table.flags(),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
   };
 

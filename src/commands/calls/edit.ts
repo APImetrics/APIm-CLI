@@ -26,7 +26,14 @@ export default class Edit extends Command<UpdatedCall> {
       multiple: true,
     }),
     body: Flags.string({description: 'Request body.'}),
-    'call-id': Flags.string({char: 'c', description: 'ID of call.', required: true}),
+    'call-id': Flags.string({
+      char: 'c',
+      description:
+        'ID of call. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`.',
+      required: true
+    }),
     description: Flags.string({description: 'Call description.'}),
     method: Flags.string({
       char: 'm',

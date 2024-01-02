@@ -18,12 +18,17 @@ export default class Remove extends Command<Schedule> {
   static flags = {
     'call-id': Flags.string({
       char: 'c',
-      description: 'ID of call to remove.',
+      description:
+        'ID of call to remove. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`.',
       required: true,
     }),
     'schedule-id': Flags.string({
       char: 's',
-      description: 'ID of schedule to modify.',
+      description:
+        'ID of schedule to modify. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id`.',
       required: true,
     }),
   };

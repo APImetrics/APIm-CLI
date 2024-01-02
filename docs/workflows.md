@@ -10,30 +10,32 @@ Manage project workflows.
 
 ## `apimetrics workflows`
 
-List workflows.
+List all workflows in the Project.
 
 ```
 USAGE
-  $ apimetrics workflows [--json] [--columns <value> | -x] [--sort <value>] [--filter <value>] [--output
-    csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ] [-p <value>]
+  $ apimetrics workflows [--json] [--columns <value> | -x] [--filter <value>] [--no-header | [--csv |
+    --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>] [-p <value>]
 
 FLAGS
-  -p, --project-id=<value>  ID of project to modify. Overrides apimetrics config project set.
+  -p, --project-id=<value>  ID of project to read. Overrides apimetrics config project set. Can be found in the Project
+                            Settings web page under the admin section or by using the command `apimetrics projects
+                            --columns name,id`.
   -x, --extended            show extra columns
-  --columns=<value>         only show provided columns (comma-separated)
-  --csv                     output is csv format [alias: --output=csv]
-  --filter=<value>          filter property by partial string matching, ex: name=foo
-  --no-header               hide table header from output
-  --no-truncate             do not truncate output to fit screen
-  --output=<option>         output in a more machine friendly format
+      --columns=<value>     only show provided columns (comma-separated)
+      --csv                 output is csv format [alias: --output=csv]
+      --filter=<value>      filter property by partial string matching, ex: name=foo
+      --no-header           hide table header from output
+      --no-truncate         do not truncate output to fit screen
+      --output=<option>     output in a more machine friendly format
                             <options: csv|json|yaml>
-  --sort=<value>            property to sort by (prepend '-' for descending)
+      --sort=<value>        property to sort by (prepend '-' for descending)
 
 GLOBAL FLAGS
   --json  Format output as json.
 
 DESCRIPTION
-  List workflows.
+  List all workflows in the Project.
 
 EXAMPLES
   $ apimetrics workflows
@@ -50,30 +52,30 @@ Create a new workflow.
 
 ```
 USAGE
-  $ apimetrics workflows create --name <value> [--json] [--description <value>] [--retry-method
-    fibonacci|exponential|constant|never] [--retry-base <value>] [--retry-factor <value>] [--retry-interval <value>]
-    [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>] [--location <value>]
-    [--show-as-action] [--parallel] [--tag <value>] [--call <value>] [--stop-on-failure] [--handle-cookies] [-p <value>]
+  $ apimetrics workflows create --name <value> [--json] [--call <value>] [--description <value>] [--handle-cookies]
+    [--ignore-in-stats <value>] [--location <value>] [--max-retries <value>] [--parallel] [-p <value>] [--retry-base
+    <value>] [--retry-factor <value>] [--retry-interval <value>] [--retry-method fibonacci|exponential|constant|never]
+    [--show-as-action] [--skip-notifications <value>] [--stop-on-failure] [--tag <value>]
 
 FLAGS
-  -p, --project-id=<value>      ID of project to modify. Overrides apimetrics config project set.
-  --call=<value>...             ID of call to add to workflow.
-  --description=<value>         Description for this workflow.
-  --[no-]handle-cookies         Should cookies be handled?
-  --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
-  --location=<value>            Only run calls from this location.
-  --max-retries=<value>         Maximum number of retries to attempt.
-  --name=<value>                (required) Name for workflow.
-  --[no-]parallel               Should parallel execution be allowed?
-  --retry-base=<value>          Base for exponential retry.
-  --retry-factor=<value>        Factor for exponential retry.
-  --retry-interval=<value>      Wait X seconds between each retry.
-  --retry-method=<option>       Algorithm for retries.
-                                <options: fibonacci|exponential|constant|never>
-  --show-as-action              Show on project home page as action.
-  --skip-notifications=<value>  Number of retries to attempt before sending notifications.
-  --[no-]stop-on-failure        Should the workflow stop execution on a failed call?
-  --tag=<value>...              Tag to add to workflow.
+  -p, --project-id=<value>          ID of project to modify. Overrides apimetrics config project set.
+      --call=<value>...             ID of call to add to workflow.
+      --description=<value>         Description for this workflow.
+      --[no-]handle-cookies         Should cookies be handled?
+      --ignore-in-stats=<value>     Number of retries to ignore in failure statistics.
+      --location=<value>            Only run calls from this location.
+      --max-retries=<value>         Maximum number of retries to attempt.
+      --name=<value>                (required) Name for workflow.
+      --[no-]parallel               Should parallel execution be allowed?
+      --retry-base=<value>          Base for exponential retry.
+      --retry-factor=<value>        Factor for exponential retry.
+      --retry-interval=<value>      Wait X seconds between each retry.
+      --retry-method=<option>       Algorithm for retries.
+                                    <options: fibonacci|exponential|constant|never>
+      --show-as-action              Show on project home page as action.
+      --skip-notifications=<value>  Number of retries to attempt before sending notifications.
+      --[no-]stop-on-failure        Should the workflow stop execution on a failed call?
+      --tag=<value>...              Tag to add to workflow.
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -116,12 +118,12 @@ Edit a workflow.
 
 ```
 USAGE
-  $ apimetrics workflows edit --workflow-id <value> [--json] [--name <value>] [--description <value>] [--retry]
-    [--retry-method fibonacci|exponential|constant|never] [--retry-base <value>] [--retry-factor <value>]
-    [--retry-interval <value>] [--max-retries <value>] [--skip-notifications <value>] [--ignore-in-stats <value>]
-    [--location <value>] [--no-location] [--show-as-action] [--no-show-as-action] [--parallel] [--no-parallel]
-    [--add-tag <value>] [--remove-tag <value>] [--add-call <value>] [--remove-call <value>] [--stop-on-failure]
-    [--no-stop-on-failure] [--handle-cookies] [--no-handle-cookies]
+  $ apimetrics workflows edit --workflow-id <value> [--json] [--add-call <value>] [--add-tag <value>] [--description
+    <value>] [--handle-cookies] [--ignore-in-stats <value>] [--location <value>] [--max-retries <value>] [--name
+    <value>] [--no-handle-cookies] [--no-location] [--no-parallel] [--no-show-as-action] [--no-stop-on-failure]
+    [--parallel] [--remove-call <value>] [--remove-tag <value>] [--retry] [--retry-base <value>] [--retry-factor
+    <value>] [--retry-interval <value>] [--retry-method fibonacci|exponential|constant|never] [--show-as-action]
+    [--skip-notifications <value>] [--stop-on-failure]
 
 FLAGS
   --add-call=<value>...         ID and index of call to add in a comma seperated format. To add to end, use index -1.

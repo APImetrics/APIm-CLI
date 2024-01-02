@@ -38,7 +38,10 @@ export default class Edit extends Command<EditJSON> {
       description: 'App key to use to identify this app. Used by [big_panda, newrelic].',
     }),
     'call-id': Flags.string({
-      description: 'APImetrics API call to run. Used by [apimetrics_api].',
+      description:
+        'APImetrics API call to run. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].',
     }),
     channel: Flags.string({
       description:
@@ -81,7 +84,10 @@ export default class Edit extends Command<EditJSON> {
     }),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
     'remove-alert': Flags.string({
       description: 'Remove result type to fire webhook on.',
@@ -123,7 +129,10 @@ Result: {{ result_url }}
       description: 'Template for email body. Used by [email_template].',
     }),
     'token-id': Flags.string({
-      description: 'APImetrics token to update. Used by [apimetrics_token].',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
     url: Flags.url({
       description: 'URL for webhook to call. Used by [generic, slack, hipchat, msteams].',
@@ -134,9 +143,16 @@ Result: {{ result_url }}
     username: Flags.string({
       description: 'Username to use for authentication. Used by [generic].',
     }),
-    'webhook-id': Flags.string({description: 'Webhook to edit.', required: true}),
+    'webhook-id': Flags.string({
+      description:
+        'Webhook to edit. Can be found using the command' +
+        ' `apimetrics webhooks --columns name,id`.',
+      required: true,
+    }),
     'workflow-id': Flags.string({
-      description: 'APImetrics workflow to run. Used by [apimetrics_workflow].',
+      description:
+        'APImetrics workflow to run. Can be found by using the command' +
+        ' `apimetrics workflows --columns name,id`. Used by [apimetrics_workflow: required].',
     }),
   };
 

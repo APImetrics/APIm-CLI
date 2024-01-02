@@ -8,7 +8,7 @@ export type RoleList = {
 };
 
 export default class Roles extends Command<RoleList> {
-  static description = 'List roles in the organization.';
+  static description = 'List all roles within the Organization.';
 
   static examples = [
     `<%= config.bin %> <%= command.id %>
@@ -22,7 +22,9 @@ TEAM_A Development team A              2023-07-16T21:53:30.522729Z`,
     ...ux.table.flags({except: ['extended']}),
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of organization to read. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to read. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
     }),
   };
 

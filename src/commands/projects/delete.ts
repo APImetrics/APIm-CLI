@@ -13,11 +13,16 @@ export default class Delete extends Command<{success: boolean}> {
   static flags = {
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
     }),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to delete. Overrides apimetrics config project set.',
+      description:
+        'ID of project to delete. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
   };
 

@@ -8,7 +8,13 @@ export default class Delete extends Command<{success: boolean}> {
   ];
 
   static flags = {
-    'invite-id': Flags.string({description: 'Invite to delete.', required: true}),
+    'invite-id': Flags.string({
+      description:
+        'Invite to delete. Can be found in the Diff of the Audit Logs web page' +
+        ' for when the invite was created or by using the command' +
+        ' `apimetrics projects invites --columns email,roles,id`.',
+      required: true,
+    }),
   };
 
   protected permitKeyAuth = true;

@@ -16,7 +16,7 @@ Name              Email             Roles                    Last login
 ───────────────── ───────────────── ──────────────────────── ────────────────────────
 alice@example.com alice@example.com DEFAULT                  2023-08-02T21:15:48.072Z
 Bob               bob@example.com   DEFAULT, ADMIN, DEV_TEAM 2023-08-01T23:41:07.733Z `,
-    `<%= config.bin %> <%= command.id %>
+    `<%= config.bin %> <%= command.id %> --columns name,id
 Name              ID
 ───────────────── ──────────────────────────────
 alice@example.com auth0|abcdefghijklmnopqrstuvwx
@@ -27,7 +27,9 @@ Bob               auth0|zyxwvutsrqponmlkjihgfedc`,
     ...ux.table.flags(),
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of organization to read. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to read. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
     }),
   };
 

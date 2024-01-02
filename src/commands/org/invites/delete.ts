@@ -7,17 +7,25 @@ export type DeleteResponse = {
 };
 
 export default class Delete extends Command<DeleteResponse> {
-  static description = 'Delete an invite to the organization.';
+  static description = 'Delete an invite to the Organization.';
 
   static examples = [
     '<%= config.bin %> <%= command.id %> --invite-id ag9zfmFwaW1ldHJpY3MtcWNyFwsSClRlc3RTZXR1cDIYgIDg9ajJsyoM',
   ];
 
   static flags = {
-    'invite-id': Flags.string({description: 'Invite to delete.', required: true}),
+    'invite-id': Flags.string({
+      description:
+        'Invite to delete. Can be found in the Diff of the Audit Logs web page' +
+        ' for when the invite was created or by using the command' +
+        ' `apimetrics org invites --columns email,roles,id`.',
+      required: true,
+    }),
     'org-id': Flags.string({
       char: 'o',
-      description: 'ID of organization to modify. Overrides apimetrics config org set.',
+      description:
+        'ID of organization to modify. Overrides apimetrics config org set.' +
+        'Can be found on the Organization Settings web page.',
     }),
   };
 

@@ -8,7 +8,7 @@ export type Schedule = {
 };
 
 export default class Create extends Command<Schedule> {
-  static description = 'Create schedule.';
+  static description = 'Create a new Schedule for the Project.';
   static examples = [
     `
 <%= config.bin %> <%= command.id %> --name "My Schedule" --interval 5m
@@ -62,7 +62,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
     }),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to read. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
     region: Flags.string({
       description: 'Region to run calls from.',

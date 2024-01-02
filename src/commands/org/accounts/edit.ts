@@ -22,7 +22,14 @@ export default class Edit extends Command<{success: boolean}> {
       description: 'Name of role to remove.',
       multiple: true,
     }),
-    'user-id': Flags.string({char: 'u', description: 'ID or email of user', required: true}),
+    'user-id': Flags.string({
+      char: 'u',
+      description:
+        'ID or email of user. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
+      required: true,
+    }),
   };
 
   public async run(): Promise<{success: boolean}> {

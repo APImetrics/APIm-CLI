@@ -32,7 +32,10 @@ export default class Create extends Command<CreateJSON> {
         'App key to use to identify this app. Used by [big_panda: required, newrelic: required].',
     }),
     'call-id': Flags.string({
-      description: 'APImetrics API call to run. Used by [apimetrics_api: required].',
+      description:
+        'APImetrics API call to run. Can be found in the expanded Audit Logs of the desired' +
+        ' API call in the Audit tab web page or by using the command' +
+        ' `apimetrics calls --columns name,id`. Used by [apimetrics_api: required].',
     }),
     channel: Flags.string({
       description:
@@ -106,7 +109,9 @@ Result: {{ result_url }}
       description: 'Template for email body. Used by [email_template: required].',
     }),
     'token-id': Flags.string({
-      description: 'APImetrics token to update. Used by [apimetrics_token: required].',
+      description:
+        'APImetrics token to update. Can be found on the Auth & Tokens web page,' +
+        ' select the desired token to see the ID. Used by [apimetrics_token: required].',
     }),
     type: Flags.string({
       description: 'Type of webhook to create.',
@@ -222,7 +227,9 @@ Result: {{ result_url }}
       description: 'Username to use for authentication. Used by [generic: optional].',
     }),
     'workflow-id': Flags.string({
-      description: 'APImetrics workflow to run. Used by [apimetrics_workflow: required].',
+      description:
+        'APImetrics workflow to run. Can be found by using the command' +
+        ' `apimetrics workflows --columns name,id`. Used by [apimetrics_workflow: required].',
     }),
   };
 

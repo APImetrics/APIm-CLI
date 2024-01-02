@@ -3,47 +3,73 @@ import {Flags, ux} from '@oclif/core';
 import {Command, T, util} from '../../../base-command';
 
 export default class Edit extends Command<{success: boolean; warnings?: string[]}> {
-  static description = 'Edit account access for the project.';
+  static description = 'Edit account access for the Project.';
   static examples = [
     '<%= config.bin %> <%= command.id %> --add-owner auth0|abcdefghijklmnopqrstuvwx --remove-viewer auth0|zyxwvutsrqponmlkjihgfedc',
   ];
 
   static flags = {
     'add-analyst': Flags.string({
-      description: 'ID or email of user to add as an analyst.',
+      description:
+        'ID or email of user to add as an analyst. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'add-editor': Flags.string({
-      description: 'ID or email of user to add as an editor.',
+      description:
+        'ID or email of user to add as an editor. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'add-owner': Flags.string({
-      description: 'ID or email of user to add as an owner.',
+      description:
+        'ID or email of user to add as an owner. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'add-viewer': Flags.string({
-      description: 'ID or email of user to add as a viewer.',
+      description:
+        'ID or email of user to add as a viewer. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'project-id': Flags.string({
       char: 'p',
       description:
-        'ID of project to read. Overrides apimetrics config project set. This must be in the specified organization.',
+        'ID of project to delete. Overrides apimetrics config project set. This must be in the specified organization.' +
+        ' ID an be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
     'remove-analyst': Flags.string({
-      description: 'ID or email of user to remove as an analyst',
+      description:
+        'ID or email of user to remove as an analyst. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'remove-editor': Flags.string({
-      description: 'ID or email of user to remove as an editor',
+      description:
+        'ID or email of user to remove as an editor. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'remove-owner': Flags.string({
-      description: 'ID or email of user to remove as an owner',
+      description:
+        'ID or email of user to remove as an owner. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
     'remove-viewer': Flags.string({
-      description: 'ID or email of user to remove as an viewer',
+      description:
+        'ID or email of user to remove as a viewer. ID can be found in the Accounts section of the Organization' +
+        ' Settings web page or by using the command' +
+        ' `apimetrics org accounts --columns name,id`.',
       multiple: true,
     }),
   };

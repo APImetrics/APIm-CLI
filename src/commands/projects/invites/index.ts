@@ -20,7 +20,10 @@ alice@example.com VIEWER       2023-08-03T22:28:02.141461Z `,
     ...ux.table.flags(),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to read. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
   };
 

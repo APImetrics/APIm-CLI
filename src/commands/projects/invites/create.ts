@@ -23,7 +23,10 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
     email: Flags.string({description: 'Email to send invite to.', required: true}),
     'project-id': Flags.string({
       char: 'p',
-      description: 'ID of project to modify. Overrides apimetrics config project set.',
+      description:
+        'ID of project to modify. Overrides apimetrics config project set.' +
+        ' Can be found in the Project Settings web page under the admin' +
+        ' section or by using the command `apimetrics projects --columns name,id`.',
     }),
   };
 

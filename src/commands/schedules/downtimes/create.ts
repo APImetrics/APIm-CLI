@@ -8,7 +8,7 @@ export type Downtime = {
 };
 
 export default class Create extends Command<Downtime> {
-  static description = 'Create downtime.';
+  static description = 'Create downtime for a Schedule.';
   static examples = [
     `
 <%= config.bin %> <%= command.id %> --schedule-id pPbCtcWNyMwsSDU --start 2023-07-21T18:32:00Z --end 2023-07-21T19:32:00Z
@@ -25,7 +25,9 @@ ag9zfmFwaW1ldHlpPbCtcWNyMwsSDUFjY29lpo95kAab4GUiIHpYSTQxY2JEajkzcWRFbE5GTEVajkuY
       options: ['daily', 'weekly'],
     }),
     'schedule-id': Flags.string({
-      description: 'ID of schedule to add downtime to.',
+      description:
+        'Schedule to modify. Can be found by using the command' +
+        ' `apimetrics schedules --columns name,id',
       required: true,
     }),
     start: Flags.string({
