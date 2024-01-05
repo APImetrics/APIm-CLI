@@ -22,6 +22,7 @@
   "dependencies": {
     "@oclif/core": "^3.15.1",
     "@oclif/plugin-help": "^6.0.9",
+    "@oclif/plugin-warn-if-update-available": "^3.0.8",
     "chalk": "^4.1.2",
     "debug": "^4.3.4",
     "fs-extra": "^11.2.0",
@@ -57,8 +58,12 @@
     "dirname": "apimetrics",
     "commands": "./dist/commands",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@oclif/plugin-warn-if-update-available"
     ],
+    "warn-if-update-available": {
+      "timeoutInDays": 7
+    },
     "topicSeparator": " ",
     "topics": {
       "auth": {
