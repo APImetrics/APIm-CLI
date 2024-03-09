@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@oclif/core": "^3.15.1",
-    "@oclif/plugin-help": "^6.0.9",
+    "@oclif/plugin-help": "^6.0.17",
     "chalk": "^4.1.2",
     "debug": "^4.3.4",
     "fs-extra": "^11.2.0",
